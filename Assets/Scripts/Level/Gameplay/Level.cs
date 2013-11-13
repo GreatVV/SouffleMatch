@@ -17,8 +17,8 @@ public class CellSprite
     public CellTypes Type;
 }
 
-[Serializable]
-public class Level
+[RequireComponent(typeof(Gamefield))]
+public class Level : MonoBehaviour
 {
     #region Set in editor
 
@@ -26,9 +26,11 @@ public class Level
 
     public GameObject[] ChuzzlePrefabs;
     public GameObject CounterPrefab;
-
-    public GameObject Gamefield;
+  
     public GameObject PlacePrefab;
+
+    [HideInInspector]
+    public Gamefield Gamefield;
 
     #endregion
 
@@ -37,7 +39,6 @@ public class Level
 
     public List<GameObject> CellSprites = new List<GameObject>();
     public List<Cell> Cells = new List<Cell>();
-    public Vector3 ChuzzleSize = new Vector3(80, 80);
     public List<Chuzzle> Chuzzles = new List<Chuzzle>();
     public int CurrentMaxY;
     public int CurrentMinY;
@@ -45,6 +46,11 @@ public class Level
     public int NumberOfColors = 6;
     public SerializedLevel Serialized;
     public int Width = 6;
+
+    void Awake()
+    {
+        Gamefield = GetComponent<Gamefield>();
+    }
 
     public void InitRandom()
     {
@@ -68,9 +74,9 @@ public class Level
     private void CreateTileSprite(Cell cell)
     {
         var prefab = CellPrefabs.First(x => x.Type == cell.Type).CellPrefab;
-        var cellSprite = NGUITools.AddChild(Gamefield, prefab);
+        var cellSprite = NGUITools.AddChild(Gamefield.gameObject, prefab);
         CellSprites.Add(cellSprite);
-        cellSprite.transform.localPosition = GamefieldUtility.ConvertXYToPosition(cell.x, cell.y, ChuzzleSize);
+        cellSprite.transform.localPosition = GamefieldUtility.ConvertXYToPosition(cell.x, cell.y, Vector3.one);
        /* var sprite = cellSprite as Sprite;
         ScaleSprite(sprite);*/
         cell.GameObject = cellSprite;
@@ -98,12 +104,6 @@ public class Level
 
         Random.seed = level.Seed;
 
-        //BUG change 480 for other resolutiion
-        ChuzzleSize = new Vector3(480, 480, 0)/Width;
-        if (ChuzzleSize.x > 80)
-        {
-            ChuzzleSize = new Vector3(80,80,0);
-        }
         Debug.Log("Add cells");
         foreach (var newCell in level.SpecialCells)
         {
@@ -151,14 +151,7 @@ public class Level
             ActiveChuzzles.Add(chuzzle);
         }
         return chuzzle;
-    }
-
-    public void ScaleSprite(Sprite sprite)
-    {
-        var size = ChuzzleSize;
-        GamefieldUtility.ScaleSprite(sprite, size);
-    }
-
+    }                            
    
 
     public Cell GetCellAt(int x, int y, bool createIfNotFound = true)

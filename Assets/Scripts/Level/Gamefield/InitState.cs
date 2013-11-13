@@ -15,8 +15,8 @@ public class InitState : GamefieldState
         Gamefield.PointSystem.Reset();
         Gamefield.Level.Reset();            
         
-        Gamefield.Level.InitFromFile(Gamefield.LastLoadedLevel);
-        Gamefield.StageManager.Init(Gamefield.LastLoadedLevel.Stages);
+        Gamefield.Level.InitFromFile(Player.Instance.LastPlayedLevel);
+        Gamefield.StageManager.Init(Player.Instance.LastPlayedLevel.Stages);
 
 
         Gamefield.NewTilesInColumns = new int[Gamefield.Level.Width];

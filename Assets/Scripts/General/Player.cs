@@ -9,6 +9,8 @@ public class Player : MonoBehaviour
     public List<LevelInfo> Levels;
     public LifeSystem Lifes;
 
+    public SerializedLevel LastPlayedLevel;
+
     private void Awake()
     {
         Instance = this;

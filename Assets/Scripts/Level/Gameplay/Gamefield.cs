@@ -6,6 +6,9 @@ using UnityEngine;
 
 #endregion
 
+[RequireComponent(typeof(Level))]
+[RequireComponent(typeof(StageManager))]
+[RequireComponent(typeof(Points))]
 public class Gamefield : MonoBehaviour
 {
    
@@ -27,14 +30,18 @@ public class Gamefield : MonoBehaviour
     public int[] NewTilesInColumns = new int[0];
     public GameMode GameMode = GameModeFactory.CreateGameMode(GameModeDescription.CreateFromJson(null));
 
-    public SerializedLevel LastLoadedLevel = null;
-    public Level Level = new Level();
+    [HideInInspector]
+    public Level Level;
 
-    public Points PointSystem = new Points();
+    [HideInInspector]
+    public Points PointSystem;
 
     public List<Pair> PowerTypePrefabs = new List<Pair>();
 
-    public StageManager StageManager = new StageManager();
+    [HideInInspector]
+    public StageManager StageManager;
+
+
     public float TimeFromTip = 0;
 
     public bool IsPause;
@@ -87,7 +94,11 @@ public class Gamefield : MonoBehaviour
         GameOverState = new GameOverState(this);
         WinState = new WinState(this);
         FieldState = new Field(this);
-        //PauseState = new PauseState(this);
+
+        Level = GetComponent<Level>();
+        StageManager = GetComponent<StageManager>();
+        PointSystem = GetComponent<Points>();
+
     }
 
 
@@ -121,7 +132,7 @@ public class Gamefield : MonoBehaviour
 
     public void StartGame(SerializedLevel level = null)
     {
-        LastLoadedLevel = level;
+        Player.Instance.LastPlayedLevel = level;
         _currentState = new InitState(this);
         _currentState.OnEnter();
     }

@@ -36,16 +36,22 @@ public class Stage
 
 }
 
-[Serializable]
-public class StageManager
+[RequireComponent(typeof(Gamefield))]
+public class StageManager : MonoBehaviour
 {
     public List<Stage> Stages = new List<Stage>();
 
     public Stage CurrentStage;
 
+    [HideInInspector]
     public Gamefield Gamefield;
 
     public GameObject Camera;
+
+    public void Awake()
+    {
+        Gamefield = GetComponent<Gamefield>();
+    }
 
     public void Init(List<Stage> stages)
     {   

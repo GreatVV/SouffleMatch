@@ -23,9 +23,6 @@ public class WinState : GamefieldState
 
         levelInfo.IsCompleted = true;
         levelInfo.NumberOfAttempts++;
-
-        
-        var numberOfStars = currentPoints <= level.Star2Score ? 1 : (currentPoints <= level.Star3Score ? 2 : 3);
     }
 
     public override void OnExit()

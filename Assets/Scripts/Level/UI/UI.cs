@@ -67,7 +67,7 @@ public class UI : MonoBehaviour
 
     public void Restart()
     {   
-        TryStartLevel(Gamefield.LastLoadedLevel);
+        TryStartLevel(Player.Instance.LastPlayedLevel);
     }
 
     private void AddEventHandlers()
