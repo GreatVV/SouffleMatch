@@ -7,11 +7,7 @@ using Object = UnityEngine.Object;
 [Serializable]
 public class CreateNewState : GamefieldState
 {
-    public List<Chuzzle> NewTilesAnimationChuzzles = new List<Chuzzle>();
-
-    public CreateNewState(Gamefield gamefield = null) : base(gamefield)
-    {
-    }
+    public List<Chuzzle> NewTilesAnimationChuzzles = new List<Chuzzle>();    
 
     #region Event Handlers
 
@@ -22,6 +18,7 @@ public class CreateNewState : GamefieldState
 
     public override void OnExit()
     {
+        Gamefield.NewTilesInColumns = new int[Gamefield.Level.Width];
     }
 
     public void OnCompleteNewChuzzleTween(object chuzzleObject)
@@ -42,7 +39,7 @@ public class CreateNewState : GamefieldState
             var combinations = GamefieldUtility.FindCombinations(Gamefield.Level.ActiveChuzzles);
             if (combinations.Count > 0)
             {
-                Gamefield.SwitchStateTo(Gamefield.CheckSpecial);
+                Gamefield.SwitchStateTo(Gamefield.CheckSpecialState);
             }
             else
             {
@@ -57,11 +54,11 @@ public class CreateNewState : GamefieldState
 
     #endregion
 
-    public override void Update()
+    public override void UpdateState()
     {
     }
 
-    public override void LateUpdate()
+    public override void LateUpdateState()
     {
     }
 
@@ -70,7 +67,7 @@ public class CreateNewState : GamefieldState
         var hasNew = Gamefield.NewTilesInColumns.Any(x => x > 0);
         if (!hasNew)
         {
-            Gamefield.SwitchStateTo(Gamefield.CheckSpecial);
+            Gamefield.SwitchStateTo(Gamefield.CheckSpecialState);
             return false;
         }
 
@@ -115,8 +112,6 @@ public class CreateNewState : GamefieldState
             }
         }
 
-        Gamefield.NewTilesInColumns = new int[Gamefield.Level.Width];
-
         foreach (var c in Gamefield.Level.Chuzzles)
         {
             if (c.MoveTo.y != c.Current.y)
@@ -132,7 +127,7 @@ public class CreateNewState : GamefieldState
 
         if (!NewTilesAnimationChuzzles.Any())
         {
-            Gamefield.SwitchStateTo(Gamefield.CheckSpecial);
+            Gamefield.SwitchStateTo(Gamefield.CheckSpecialState);
         }
         return true;
     }

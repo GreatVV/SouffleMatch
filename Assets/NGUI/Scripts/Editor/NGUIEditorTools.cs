@@ -667,13 +667,14 @@ public class NGUIEditorTools
 			GUILayout.Label(prefix, GUILayout.Width(74f));
 		}
 
-		EditorGUIUtility.LookLikeControls(48f);
+		EditorGUIUtility.labelWidth = 48f;
 
 		IntVector retVal;
 		retVal.x = EditorGUILayout.IntField(leftCaption, x, GUILayout.MinWidth(30f));
 		retVal.y = EditorGUILayout.IntField(rightCaption, y, GUILayout.MinWidth(30f));
 
-		EditorGUIUtility.LookLikeControls(80f);
+	    EditorGUIUtility.labelWidth = 80f;
+            
 
 		GUILayout.EndHorizontal();
 		return retVal;

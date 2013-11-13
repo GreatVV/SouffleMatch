@@ -26,7 +26,7 @@ public class GuiTaskPopup : Window
     public void OnCloseAnimationComplete()
     {
         Disable();
-        UI.Instance.Gamefield.SwitchStateTo(UI.Instance.Gamefield.CheckSpecial);
+        UI.Instance.Gamefield.SwitchStateTo(UI.Instance.Gamefield.CheckSpecialState);
     }
 
     public void Show(GameMode gameMode)

@@ -528,7 +528,6 @@ public class GamefieldUtility
         }
 
         down.transform.parent = from.transform;
-        down.transform.localPosition = from.Scale/2f;
 
         from.Arrow = down;
     }

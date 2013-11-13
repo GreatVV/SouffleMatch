@@ -1,11 +1,11 @@
 ﻿public enum ChuzzleType
 {
-    Red,
-    Orange,
-    Yellow,
-    Violet,
+    Blue,
     Green,
     LightBlue,
-    Blue,
-    Pink
+    Orange,
+    Pink,
+    Red,
+    Violet,
+    Yellow
 }

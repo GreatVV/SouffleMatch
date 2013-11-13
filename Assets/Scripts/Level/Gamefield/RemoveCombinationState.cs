@@ -11,12 +11,7 @@ using Object = UnityEngine.Object;
 [Serializable]
 public class RemoveCombinationState : GamefieldState
 {
-    public List<Chuzzle> DeathAnimationChuzzles = new List<Chuzzle>();
-
-    public RemoveCombinationState(Gamefield gamefield = null)
-        : base(gamefield)
-    {
-    }
+    public List<Chuzzle> DeathAnimationChuzzles = new List<Chuzzle>();          
 
     #region Event Handlers
 
@@ -46,17 +41,17 @@ public class RemoveCombinationState : GamefieldState
 
         if (DeathAnimationChuzzles.Count == 0)
         {
-            Gamefield.SwitchStateTo(Gamefield.CreateNew);
+            Gamefield.SwitchStateTo(Gamefield.CreateNewState);
         }
     }
 
     #endregion
 
-    public override void Update()
+    public override void UpdateState()
     {
     }
 
-    public override void LateUpdate()
+    public override void LateUpdateState()
     {
     }
 
@@ -114,7 +109,7 @@ public class RemoveCombinationState : GamefieldState
 
         if (!DeathAnimationChuzzles.Any())
         {
-            Gamefield.SwitchStateTo(Gamefield.CreateNew);
+            Gamefield.SwitchStateTo(Gamefield.CreateNewState);
         }
     }
 }

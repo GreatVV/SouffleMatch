@@ -2,12 +2,7 @@
 
 [Serializable]
 public class InitState : GamefieldState
-{
-    public InitState(Gamefield gamefield = null)
-        : base(gamefield)
-    {
-    }
-
+{           
     #region Event Handlers
 
     public override void OnEnter()
@@ -16,8 +11,7 @@ public class InitState : GamefieldState
         Gamefield.Level.Reset();            
         
         Gamefield.Level.InitFromFile(Player.Instance.LastPlayedLevel);
-        Gamefield.StageManager.Init(Player.Instance.LastPlayedLevel.Stages);
-
+        Gamefield.StageManager.Init(Player.Instance.LastPlayedLevel.Stages);  
 
         Gamefield.NewTilesInColumns = new int[Gamefield.Level.Width];
 
@@ -33,11 +27,11 @@ public class InitState : GamefieldState
 
     #endregion
 
-    public override void Update()
+    public override void UpdateState()
     {
     }
 
-    public override void LateUpdate()
+    public override void LateUpdateState()
     {
     }
 }

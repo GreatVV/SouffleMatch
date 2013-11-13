@@ -1,17 +1,17 @@
 ﻿#region
 
 using System;
+using UnityEngine;
 
 #endregion
 
-[Serializable]
-public abstract class GamefieldState
-{      
-    protected GamefieldState(Gamefield gamefield)
+[RequireComponent(typeof(Gamefield))]
+public abstract class GamefieldState : MonoBehaviour
+{
+    void Awake()
     {
-        Gamefield = gamefield;
+        Gamefield = GetComponent<Gamefield>();
     }
-
     public Gamefield Gamefield { get; private set; }
 
     #region Event Handlers
@@ -21,6 +21,6 @@ public abstract class GamefieldState
 
     #endregion
 
-    public abstract void Update();
-    public abstract void LateUpdate();
+    public abstract void UpdateState();
+    public abstract void LateUpdateState();
 }

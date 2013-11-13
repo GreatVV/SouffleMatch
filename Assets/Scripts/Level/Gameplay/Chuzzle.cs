@@ -4,6 +4,7 @@ using UnityEngine;
 
 #endregion
 
+[RequireComponent(typeof(TeleportableEntity))]
 public class Chuzzle : MonoBehaviour
 {
     public Cell Current;

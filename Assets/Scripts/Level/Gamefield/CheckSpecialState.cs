@@ -14,9 +14,7 @@ public class CheckSpecialState : GamefieldState
 {
     public List<Chuzzle> SpecialTilesAnimated = new List<Chuzzle>();
 
-    public CheckSpecialState(Gamefield gamefield = null) : base(gamefield)
-    {
-    }
+    public List<Pair> PowerTypePrefabs = new List<Pair>();
 
     #region Event Handlers
 
@@ -42,17 +40,17 @@ public class CheckSpecialState : GamefieldState
 
         if (SpecialTilesAnimated.Count == 0)
         {
-            Gamefield.SwitchStateTo(Gamefield.CreateNew);
+            Gamefield.SwitchStateTo(Gamefield.CreateNewState);
         }
     }
 
     #endregion
 
-    public override void Update()
+    public override void UpdateState()
     {
     }
 
-    public override void LateUpdate()
+    public override void LateUpdateState()
     {
     }
 
@@ -105,8 +103,7 @@ public class CheckSpecialState : GamefieldState
             }
         }
 
-        var powerUp =
-            Gamefield.PowerTypePrefabs.First(x => x.Type == powerType && x.ChuzzleType == targetTile.Type).Prefab;
+        var powerUp = PowerTypePrefabs.First(x => x.Type == powerType && x.ChuzzleType == targetTile.Type).Prefab;
         var powerUpChuzzle = Gamefield.Level.CreateChuzzle(targetTile.Current.x, targetTile.Current.y, powerUp);
         powerUpChuzzle.Type = targetTile.Type;
         powerUpChuzzle.PowerType = powerType;

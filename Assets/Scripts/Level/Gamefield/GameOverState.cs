@@ -3,10 +3,7 @@
 [Serializable]
 public class GameOverState : GamefieldState
 {
-    public GameOverState(Gamefield gamefield = null)
-        : base(gamefield)
-    {
-    }
+  
 
     #region Event Handlers
 
@@ -20,11 +17,11 @@ public class GameOverState : GamefieldState
 
     #endregion
 
-    public override void Update()
+    public override void UpdateState()
     {
     }
 
-    public override void LateUpdate()
+    public override void LateUpdateState()
     {
     }
 }

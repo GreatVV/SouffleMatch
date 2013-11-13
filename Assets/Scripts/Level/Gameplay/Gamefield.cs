@@ -6,46 +6,52 @@ using UnityEngine;
 
 #endregion
 
-[RequireComponent(typeof(Level))]
-[RequireComponent(typeof(StageManager))]
-[RequireComponent(typeof(Points))]
+[RequireComponent(typeof (Level))]
+[RequireComponent(typeof (StageManager))]
+[RequireComponent(typeof (Points))]
+[RequireComponent(typeof (CheckSpecialState))]
+[RequireComponent(typeof (CreateNewState))]
+[RequireComponent(typeof (GameOverState))]
+[RequireComponent(typeof (WinState))]
+[RequireComponent(typeof (FieldState))]
+[RequireComponent(typeof (RemoveCombinationState))]
+[RequireComponent(typeof (InitState))]
 public class Gamefield : MonoBehaviour
 {
-   
     public LayerMask ChuzzleMask;
 
     #region State
 
-    private GamefieldState _currentState = null;
+    private GamefieldState _currentState;
 
-    public CheckSpecialState CheckSpecial = null;
-    public CreateNewState CreateNew = null;
-    public GameOverState GameOverState = null;
-    public WinState WinState = null;
-    public Field FieldState = null;
-    public RemoveCombinationState RemoveState = null;
+    [HideInInspector] public CheckSpecialState CheckSpecialState = null;
 
-    #endregion                                  
+    [HideInInspector] public CreateNewState CreateNewState = null;
 
-    public int[] NewTilesInColumns = new int[0];
-    public GameMode GameMode = GameModeFactory.CreateGameMode(GameModeDescription.CreateFromJson(null));
+    [HideInInspector] public GameOverState GameOverState = null;
+    
+    [HideInInspector] public WinState WinState = null;
 
-    [HideInInspector]
-    public Level Level;
+    [HideInInspector] public FieldState FieldState = null;
 
-    [HideInInspector]
-    public Points PointSystem;
+    [HideInInspector] public RemoveCombinationState RemoveState = null;
 
-    public List<Pair> PowerTypePrefabs = new List<Pair>();
+    [HideInInspector] public InitState InitState = null;
 
-    [HideInInspector]
-    public StageManager StageManager;
+    #endregion
 
+    public int[] NewTilesInColumns;
 
-    public float TimeFromTip = 0;
+    public GameMode GameMode;
+
+    [HideInInspector] public Level Level;
+
+    [HideInInspector] public Points PointSystem;
+
+    [HideInInspector] public StageManager StageManager;
 
     public bool IsPause;
-    public GameObject DownArrow;
+
 
     public event Action<List<Chuzzle>> CombinationDestroyed;
 
@@ -88,17 +94,17 @@ public class Gamefield : MonoBehaviour
 
     public void Awake()
     {
-        CheckSpecial = new CheckSpecialState(this);
-        CreateNew = new CreateNewState(this);
-        RemoveState = new RemoveCombinationState(this);
-        GameOverState = new GameOverState(this);
-        WinState = new WinState(this);
-        FieldState = new Field(this);
+        InitState = GetComponent<InitState>();
+        CheckSpecialState = GetComponent<CheckSpecialState>();
+        CreateNewState = GetComponent<CreateNewState>();
+        RemoveState = GetComponent<RemoveCombinationState>();
+        GameOverState = GetComponent<GameOverState>();
+        WinState = GetComponent<WinState>();
+        FieldState = GetComponent<FieldState>();
 
         Level = GetComponent<Level>();
         StageManager = GetComponent<StageManager>();
         PointSystem = GetComponent<Points>();
-
     }
 
 
@@ -106,7 +112,7 @@ public class Gamefield : MonoBehaviour
     {
         if (_currentState != null && !IsPause)
         {
-            _currentState.LateUpdate();
+            _currentState.LateUpdateState();
         }
     }
 
@@ -133,7 +139,7 @@ public class Gamefield : MonoBehaviour
     public void StartGame(SerializedLevel level = null)
     {
         Player.Instance.LastPlayedLevel = level;
-        _currentState = new InitState(this);
+        _currentState = InitState;
         _currentState.OnEnter();
     }
 
@@ -154,7 +160,7 @@ public class Gamefield : MonoBehaviour
     {
         if (_currentState != null && !IsPause)
         {
-            _currentState.Update();
+            _currentState.UpdateState();
         }
     }
 

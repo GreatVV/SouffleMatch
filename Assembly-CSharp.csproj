@@ -181,10 +181,10 @@
      <Compile Include="Assets\Scripts\Level\GameMode\TargetScoreGameMode.cs" />
      <Compile Include="Assets\Scripts\Level\Gamefield\CheckSpecialState.cs" />
      <Compile Include="Assets\Scripts\Level\Gamefield\CreateNewState.cs" />
+     <Compile Include="Assets\Scripts\Level\Gamefield\FieldState.cs" />
      <Compile Include="Assets\Scripts\Level\Gamefield\GameOverState.cs" />
      <Compile Include="Assets\Scripts\Level\Gamefield\GamefieldState.cs" />
      <Compile Include="Assets\Scripts\Level\Gamefield\InitState.cs" />
-     <Compile Include="Assets\Scripts\Level\Gamefield\PauseState.cs" />
      <Compile Include="Assets\Scripts\Level\Gamefield\RemoveCombinationState.cs" />
      <Compile Include="Assets\Scripts\Level\Gamefield\WinState.cs" />
      <Compile Include="Assets\Scripts\Level\Gameplay\Cell.cs" />
@@ -193,7 +193,6 @@
      <Compile Include="Assets\Scripts\Level\Gameplay\ChuzzleType.cs" />
      <Compile Include="Assets\Scripts\Level\Gameplay\Conditions\Condition.cs" />
      <Compile Include="Assets\Scripts\Level\Gameplay\Conditions\StageManager.cs" />
-     <Compile Include="Assets\Scripts\Level\Gameplay\Field.cs" />
      <Compile Include="Assets\Scripts\Level\Gameplay\Gamefield.cs" />
      <Compile Include="Assets\Scripts\Level\Gameplay\Level.cs" />
      <Compile Include="Assets\Scripts\Level\Gameplay\Points.cs" />
