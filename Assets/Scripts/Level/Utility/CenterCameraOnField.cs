@@ -24,8 +24,8 @@ public class CenterCameraOnField : MonoBehaviour
         var maxX = targetChuzzles.Max(x => x.transform.position.x);
         var maxY = targetChuzzles.Max(x => x.transform.position.y);
 
-        var centerPosition = new Vector3((minX + maxX + targetChuzzles[0].Scale.x)/2,
-            (minY + maxY + targetChuzzles[0].Scale.y)/2, DefaultPosition.z);
+        var centerPosition = new Vector3((minX + maxX)/2,
+            (minY + maxY)/2, DefaultPosition.z);
 
         if (Vector3.Distance(Camera.transform.position, centerPosition) > 0.1f)
         {

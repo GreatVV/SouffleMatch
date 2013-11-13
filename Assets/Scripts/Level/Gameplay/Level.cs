@@ -127,13 +127,8 @@ public class Level
     public Chuzzle CreateChuzzle(int x, int y, GameObject prefab, bool toActive = false)
     {
         var gameObject = NGUITools.AddChild(Gamefield.gameObject, prefab);
-        gameObject.layer = prefab.layer;
-
-      /*  var sprite = gameObject.GetComponent<Sprite>();
-        ScaleSprite(sprite);*/
-
-        ((BoxCollider) gameObject.collider).size = ChuzzleSize;
-        ((BoxCollider) gameObject.collider).center = ChuzzleSize/2;
+        gameObject.layer = prefab.layer;                                  
+    
         var chuzzle = gameObject.GetComponent<Chuzzle>();
         chuzzle.Real = chuzzle.MoveTo = chuzzle.Current = GetCellAt(x, y);
 

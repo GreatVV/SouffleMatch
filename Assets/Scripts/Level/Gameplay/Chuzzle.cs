@@ -18,10 +18,8 @@ public class Chuzzle : MonoBehaviour
 
     public PowerType PowerType;
 
-    public int Counter;
-
-
-    public Sprite Sprite;
+    public int Counter;         
+    public SpriteRenderer Sprite;
 
     public bool _shine;
 
@@ -47,7 +45,7 @@ public class Chuzzle : MonoBehaviour
 
     public Vector3 Scale
     {
-        get { return collider.bounds.size; }
+        get { return transform.localScale; }
     }
 
     public override string ToString()

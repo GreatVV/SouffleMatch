@@ -3,9 +3,9 @@
     Red,
     Orange,
     Yellow,
-    Black,
+    Violet,
     Green,
-    White,
+    LightBlue,
     Blue,
     Pink
 }

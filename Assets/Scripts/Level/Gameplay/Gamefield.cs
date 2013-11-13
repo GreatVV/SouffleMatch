@@ -11,13 +11,18 @@ public class Gamefield : MonoBehaviour
    
     public LayerMask ChuzzleMask;
 
+    #region State
+
+    private GamefieldState _currentState = null;
+
     public CheckSpecialState CheckSpecial = null;
     public CreateNewState CreateNew = null;
-    private GamefieldState _currentState = null;
     public GameOverState GameOverState = null;
     public WinState WinState = null;
     public Field FieldState = null;
     public RemoveCombinationState RemoveState = null;
+
+    #endregion                                  
 
     public int[] NewTilesInColumns = new int[0];
     public GameMode GameMode = GameModeFactory.CreateGameMode(GameModeDescription.CreateFromJson(null));
