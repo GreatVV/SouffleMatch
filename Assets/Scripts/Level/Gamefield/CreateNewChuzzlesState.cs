@@ -5,7 +5,7 @@ using UnityEngine;
 using Object = UnityEngine.Object;
 
 [Serializable]
-public class CreateNewState : GamefieldState
+public class CreateNewChuzzlesState : GamefieldState
 {
     public List<Chuzzle> NewTilesAnimationChuzzles = new List<Chuzzle>();    
 

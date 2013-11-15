@@ -10,7 +10,7 @@ using UnityEngine;
 [RequireComponent(typeof (StageManager))]
 [RequireComponent(typeof (Points))]
 [RequireComponent(typeof (CheckSpecialState))]
-[RequireComponent(typeof (CreateNewState))]
+[RequireComponent(typeof (CreateNewChuzzlesState))]
 [RequireComponent(typeof (GameOverState))]
 [RequireComponent(typeof (WinState))]
 [RequireComponent(typeof (FieldState))]
@@ -26,7 +26,7 @@ public class Gamefield : MonoBehaviour
 
     [HideInInspector] public CheckSpecialState CheckSpecialState = null;
 
-    [HideInInspector] public CreateNewState CreateNewState = null;
+    [HideInInspector] public CreateNewChuzzlesState CreateNewChuzzlesState = null;
 
     [HideInInspector] public GameOverState GameOverState = null;
     
@@ -96,7 +96,7 @@ public class Gamefield : MonoBehaviour
     {
         InitState = GetComponent<InitState>();
         CheckSpecialState = GetComponent<CheckSpecialState>();
-        CreateNewState = GetComponent<CreateNewState>();
+        CreateNewChuzzlesState = GetComponent<CreateNewChuzzlesState>();
         RemoveState = GetComponent<RemoveCombinationState>();
         GameOverState = GetComponent<GameOverState>();
         WinState = GetComponent<WinState>();
@@ -106,7 +106,6 @@ public class Gamefield : MonoBehaviour
         StageManager = GetComponent<StageManager>();
         PointSystem = GetComponent<Points>();
     }
-
 
     private void LateUpdate()
     {

@@ -19,23 +19,29 @@ public class FieldState : GamefieldState
 
     public enum Direction
     {
-        ToLeft,
-        ToRight,
-        ToTop,
-        ToBottom
+        Right,
+        Left,
+        Top,
+        Bottom
     };
 
     #endregion
 
     private Vector3 _delta;
     private Vector3 _deltaTouch;
-    private bool _directionChozen;
+    private bool _axisChozen;
     private Vector3 _dragOrigin;
     private Chuzzle _draggable;
     private bool _isVerticalDrag;
     public List<Chuzzle> SelectedChuzzles = new List<Chuzzle>();
     public Chuzzle CurrentChuzzle;
+    public Vector3 CurrentChuzzlePrevPosition;
     public Direction CurrentDirection;
+
+    private float _minX;
+    private float _minY;
+    private float _maxY;
+    private float _maxX;
 
     // Update is called once per frame
     public void UpdateState(IEnumerable<Chuzzle> draggableChuzzles)
@@ -80,12 +86,35 @@ public class FieldState : GamefieldState
 
             var ray = Camera.main.ScreenPointToRay(_dragOrigin);
 
-            Debug.Log("Ray: " + ray);
+            //Debug.Log("Ray: " + ray);
             var hit = Physics2D.Raycast(ray.origin, ray.direction, Single.MaxValue, Gamefield.ChuzzleMask);
             if (hit.transform != null)
             {
-                Debug.Log("hit: " + hit.transform.gameObject);
+                //Debug.Log("hit: " + hit.transform.gameObject);
+                bool wasNull = CurrentChuzzle == null;
                 CurrentChuzzle = hit.transform.gameObject.transform.parent.GetComponent<Chuzzle>();
+                if (wasNull)
+                {
+                    _minY = GamefieldUtility.CellPositionInWorldCoordinate(
+                            GamefieldUtility.MinColumnAvailiablePosition(CurrentChuzzle.Current.x, Gamefield.Level.ActiveCells),
+                            CurrentChuzzle.Scale).y;
+
+                    _maxY =
+                        GamefieldUtility.CellPositionInWorldCoordinate(
+                            GamefieldUtility.MaxColumnAvailiablePosition(CurrentChuzzle.Current.x,
+                                Gamefield.Level.ActiveCells), CurrentChuzzle.Scale).y;
+
+                    _minX =
+                        GamefieldUtility.CellPositionInWorldCoordinate(
+                            GamefieldUtility.MinRowAvailiablePosition(CurrentChuzzle.Current.y, Gamefield.Level.ActiveCells),
+                            CurrentChuzzle.Scale).x;
+
+                    _maxX =
+                        GamefieldUtility.CellPositionInWorldCoordinate(
+                            GamefieldUtility.MaxRowAvailiablePosition(CurrentChuzzle.Current.y, Gamefield.Level.ActiveCells),
+                            CurrentChuzzle.Scale).x;
+
+                }
             }
 
             return;
@@ -121,43 +150,53 @@ public class FieldState : GamefieldState
             }
         }
 
-        Debug.Log("Delta: " + _delta);
+        //Debug.Log("Delta: " + _delta);
         _delta = Vector3.ClampMagnitude(_delta, CurrentChuzzle.Scale.x);
+        
+        if (_delta.x > _maxdelta.x)
+        {
+            _maxdelta.x = _delta.x;
+        }
+
+        if (_delta.y > _maxdelta.y)
+        {
+            _maxdelta.y = _delta.y;
+        }
 
 
-        if (!_directionChozen)
+        if (!_axisChozen)
         {
             //chooze drag direction
             if (Mathf.Abs(_delta.x) < 1.5*Mathf.Abs(_delta.y) || Mathf.Abs(_delta.x) > 1.5*Mathf.Abs(_delta.y))
             {
                 if (Mathf.Abs(_delta.x) < Mathf.Abs(_delta.y))
                 {
-                    //TODO: choose row
                     SelectedChuzzles = draggableChuzzles.Where(x => x.Current.x == CurrentChuzzle.Current.x).ToList();
                     _isVerticalDrag = true;
                 }
                 else
                 {
-                    //TODO: choose column
                     SelectedChuzzles = draggableChuzzles.Where(x => x.Current.y == CurrentChuzzle.Current.y).ToList();
                     _isVerticalDrag = false;
                 }
 
-                _directionChozen = true;
+                _axisChozen = true;
                 //Debug.Log("Direction chozen. Vertical: " + _isVerticalDrag);
             }
         }
 
-        if (_directionChozen)
+        if (_axisChozen)
         {
             if (_isVerticalDrag)
             {
-                CurrentDirection = _delta.y > 0 ? Direction.ToTop : Direction.ToBottom;
+                CurrentDirection = _delta.y > 0 ? Direction.Top : Direction.Bottom;
+                _delta.z = _delta.x = 0;
             }
             else
             {
-                CurrentDirection = _delta.x > 0 ? Direction.ToLeft : Direction.ToRight;
-            }
+                CurrentDirection = _delta.x > 0 ? Direction.Right : Direction.Left;
+                _delta.y = _delta.z = 0;
+            }  
         }
 
         // RESET START POINT
@@ -180,81 +219,124 @@ public class FieldState : GamefieldState
 
     public void LateUpdateState(List<Cell> activeCells)
     {
-        if (SelectedChuzzles.Any() && _directionChozen)
+        if (SelectedChuzzles.Any() && _axisChozen)
         {
+
+            var pos = CurrentChuzzle.transform.position;        
+
+            if (_isVerticalDrag)
+            {
+
+                if (CurrentDirection == Direction.Top && Math.Abs(pos.y - _maxY) < 0.01f)
+                {
+                    return;
+                }
+
+                if (CurrentDirection == Direction.Bottom && Math.Abs(pos.y - _minY) < 0.01f)
+                {
+                    return;
+                }
+
+
+                var maybePosition = CurrentChuzzle.transform.position.y + _delta.y;
+                var clampPosition = Mathf.Clamp(maybePosition,_minY,_maxY);
+
+                if (Math.Abs(maybePosition - clampPosition) > 0.001f)
+                {
+                    _delta.y = clampPosition - maybePosition;
+                }
+            }
+            else
+            {
+                if (CurrentDirection == Direction.Right && Math.Abs(pos.x - _maxX) < 0.01f)
+                {
+                    return;
+                }
+
+                if (CurrentDirection == Direction.Left && Math.Abs(pos.x - _minX) < 0.01f)
+                {
+                    return;
+                }
+
+                var maybePosition = CurrentChuzzle.transform.position.x + _delta.x;
+                var clampPosition = Mathf.Clamp(maybePosition,_minX,_maxX);
+
+                if (Math.Abs(maybePosition - clampPosition) > 0.001f)
+                {
+                    _delta.x = clampPosition - maybePosition;
+                }
+            }
+
+
             foreach (var c in SelectedChuzzles)
             {
-                c.transform.localPosition += _isVerticalDrag ? new Vector3(0, _delta.y, 0) : new Vector3(_delta.x, 0, 0);
-
-
+                c.transform.position += _delta;
 
                 var copyPosition = c.transform.position;
+
                 var real = GamefieldUtility.ToRealCoordinates(c);
                 var targetCell = GamefieldUtility.CellAt(activeCells, real.x, real.y);
 
                 var difference = c.transform.localPosition -
-                                     GamefieldUtility.ConvertXYToPosition(real.x, real.y, c.Scale);
+                                 GamefieldUtility.ConvertXYToPosition(real.x, real.y, c.Scale);
 
-                bool isNeedCopy = false;
+                var isNeedCopy = false;
 
                 if (targetCell != null && !targetCell.IsTemporary)
                 {
-                    switch (CurrentDirection)
+                    if (!_isVerticalDrag)
                     {
-                        case Direction.ToLeft:
-                        case Direction.ToRight:
-
-                            if (c.transform.position.x > targetCell.Sprite.transform.position.x)
+                        if (difference.x > 0)
+                        {
+                            isNeedCopy = targetCell.Right == null ||
+                                         (targetCell.Right != null && targetCell.Right.Type != CellTypes.Usual);
+                            if (isNeedCopy)
                             {
-                                isNeedCopy = targetCell.Right == null || (targetCell.Right != null && targetCell.Right.Type != CellTypes.Usual);
-                                if (isNeedCopy)
-                                {
-                                    var rightCell = GetRightCell(activeCells, targetCell.Right, c);
-                                    copyPosition = GamefieldUtility.ConvertXYToPosition(rightCell.x, rightCell.y, c.Scale) + difference - new Vector3(c.Scale.x, 0, 0);
-                                }
+                                var rightCell = GetRightCell(activeCells, targetCell.Right, c);
+                                copyPosition =
+                                    GamefieldUtility.ConvertXYToPosition(rightCell.x, rightCell.y, c.Scale) +
+                                    difference - new Vector3(c.Scale.x, 0, 0);
                             }
-                            else
+                        }
+                        else
+                        {
+                            isNeedCopy = targetCell.Left == null ||
+                                         (targetCell.Left != null && targetCell.Left.Type != CellTypes.Usual);
+                            if (isNeedCopy)
                             {
-                                isNeedCopy = targetCell.Left == null || (targetCell.Left != null && targetCell.Left.Type != CellTypes.Usual);
-                                if (isNeedCopy)
-                                {
-                                    var leftCell = GetLeftCell(activeCells, targetCell.Left, c);
-                                    copyPosition = GamefieldUtility.ConvertXYToPosition(leftCell.x, leftCell.y, c.Scale) + difference + new Vector3(c.Scale.x, 0, 0);
-                                }
-                            }    
-                            break;
-                        case Direction.ToTop:
-                        case Direction.ToBottom:
-                            Debug.Log("TargetCell: "+targetCell);
-                            Debug.Log("Sprite: "+targetCell.Sprite);
-                            if (c.transform.position.y > targetCell.Sprite.transform.position.y)
+                                var leftCell = GetLeftCell(activeCells, targetCell.Left, c);
+                                copyPosition =
+                                    GamefieldUtility.ConvertXYToPosition(leftCell.x, leftCell.y, c.Scale) +
+                                    difference + new Vector3(c.Scale.x, 0, 0);
+                            }
+                        }
+                    }
+                    else
+                    {
+                        if (difference.y > 0)
+                        {
+                            isNeedCopy = targetCell.Top == null ||
+                                         (targetCell.Top != null &&
+                                          (targetCell.Top.Type == CellTypes.Block || targetCell.Top.IsTemporary));
+                            if (isNeedCopy)
                             {
-
-                                isNeedCopy = targetCell.Top == null ||
-                                             (targetCell.Top != null &&
-                                              (targetCell.Top.Type == CellTypes.Block || targetCell.Top.IsTemporary));
-                                if (isNeedCopy)
-                                {
-                                    var topCell = GetTopCell(activeCells, targetCell.Top, c);
-                                    copyPosition = GamefieldUtility.ConvertXYToPosition(topCell.x, topCell.y, c.Scale) +
-                                                   difference - new Vector3(0, c.Scale.y, 0);
-                                }
+                                var topCell = GetTopCell(activeCells, targetCell.Top, c);
+                                copyPosition = GamefieldUtility.ConvertXYToPosition(topCell.x, topCell.y, c.Scale) +
+                                               difference - new Vector3(0, c.Scale.y, 0);
                             }
-                            else
-                            {                
-                                isNeedCopy = targetCell.Bottom == null ||
-                                             (targetCell.Bottom != null && targetCell.Bottom.Type == CellTypes.Block);
-                                if (isNeedCopy)
-                                {
-                                    var bottomCell = GetBottomCell(activeCells, targetCell.Bottom, c);
-                                    copyPosition =
-                                        GamefieldUtility.ConvertXYToPosition(bottomCell.x, bottomCell.y, c.Scale) +
-                                        difference + new Vector3(0, c.Scale.y, 0);
-                                }
+                        }
+                        else
+                        {
+                            isNeedCopy = targetCell.Bottom == null ||
+                                         (targetCell.Bottom != null && targetCell.Bottom.Type == CellTypes.Block);
+                            if (isNeedCopy)
+                            {
+                                var bottomCell = GetBottomCell(activeCells, targetCell.Bottom, c);
+                                copyPosition =
+                                    GamefieldUtility.ConvertXYToPosition(bottomCell.x, bottomCell.y, c.Scale) +
+                                    difference + new Vector3(0, c.Scale.y, 0);
                             }
-                            break;
-                        default:
-                            throw new ArgumentOutOfRangeException();
+                        }
                     }
                 }
                 else
@@ -262,32 +344,11 @@ public class FieldState : GamefieldState
                     isNeedCopy = true;
                 }
 
-
-                if (targetCell == null || targetCell.Type == CellTypes.Block || targetCell.IsTemporary)
+                if (difference.magnitude < (CurrentChuzzle.Scale.x/25))
                 {
-                    switch (CurrentDirection)
-                    {
-                        case Direction.ToRight:
-                            //if border
-                            targetCell = GetLeftCell(activeCells, targetCell, c);    
-                            break;
-                        case Direction.ToLeft:
-                            targetCell = GetRightCell(activeCells, targetCell, c);   
-                            break;
-                        case Direction.ToTop:
-                            //if border
-                            targetCell = GetTopCell(activeCells, targetCell, c);
-                            break;
-                        case Direction.ToBottom:
-                            targetCell = GetBottomCell(activeCells, targetCell, c);
-                            break;
-                        default:
-                            throw new ArgumentOutOfRangeException("Current direction can not be shit");
-                    }
-
-                    c.transform.localPosition = GamefieldUtility.ConvertXYToPosition(targetCell.x, targetCell.y, c.Scale) + difference;
+                    isNeedCopy = false;
                 }
-              
+
                 if (isNeedCopy)
                 {
                     var teleportable = c.GetComponent<TeleportableEntity>();
@@ -297,9 +358,46 @@ public class FieldState : GamefieldState
                         {
                             teleportable.CreateCopy();
                         }
-                        Debug.Log("Copyied: "+teleportable);
+                        Debug.Log("Copyied: " + teleportable);
                         teleportable.Copy.transform.position = copyPosition;
                     }
+                }
+                else
+                {
+                    var teleportable = c.GetComponent<TeleportableEntity>();
+                    if (teleportable != null)
+                    {
+                        if (teleportable.HasCopy)
+                        {
+                            teleportable.DestroyCopy();
+                        } 
+                    }         
+                    continue;
+                }
+
+                if (targetCell == null || targetCell.Type == CellTypes.Block || targetCell.IsTemporary)
+                {
+                    switch (CurrentDirection)
+                    {
+                        case Direction.Left:
+                            //if border
+                            targetCell = GetLeftCell(activeCells, targetCell, c);
+                            break;
+                        case Direction.Right:
+                            targetCell = GetRightCell(activeCells, targetCell, c);
+                            break;
+                        case Direction.Top:
+                            //if border
+                            targetCell = GetTopCell(activeCells, targetCell, c);
+                            break;
+                        case Direction.Bottom:
+                            targetCell = GetBottomCell(activeCells, targetCell, c);
+                            break;
+                        default:
+                            throw new ArgumentOutOfRangeException("Current direction can not be shit");
+                    }
+
+                    c.transform.position = GamefieldUtility.CellPositionInWorldCoordinate(targetCell, c.Scale) + difference;
                 }
             }
         }
@@ -439,7 +537,7 @@ public class FieldState : GamefieldState
                 c.MoveTo = c.Real;
             }
 
-            var anyMove = MoveToTargetPosition(Gamefield.Level.Chuzzles);
+            var anyMove = MoveAllChuzzlesToMoveToPosition(Gamefield.Level.Chuzzles);
             if (!anyMove)
             {
                 OnChuzzleCompletedTweens();
@@ -453,7 +551,7 @@ public class FieldState : GamefieldState
     {
         SelectedChuzzles.Clear();
         CurrentChuzzle = null;
-        _directionChozen = false;
+        _axisChozen = false;
         _isVerticalDrag = false;
     }
 
@@ -482,6 +580,8 @@ public class FieldState : GamefieldState
     }
 
     public List<Chuzzle> AnimatedChuzzles = new List<Chuzzle>();
+    private Vector3 _maxdelta;
+    
 
     public void OnChuzzleCompletedTweens()
     {
@@ -498,35 +598,58 @@ public class FieldState : GamefieldState
         }
         else
         {
-            foreach (var c in Gamefield.Level.Chuzzles)
+            foreach (var c in SelectedChuzzles)
             {
-                c.MoveTo = c.Real = c.Current;
+                c.MoveTo =c.Real = c.Current;
+               /* switch (CurrentDirection)
+                {
+                    case Direction.Right:
+                        if (c.Current.x < c.Real.x)
+                        {
+                            MoveChuzzleToMoveToPosition(c);
+                        }
+                        else
+                        {
+                            
+                        }
+                        break;
+                    case Direction.Left:
+                        break;
+                    case Direction.Top:
+                        break;
+                    case Direction.Bottom:
+                        break;
+                    default:
+                        throw new ArgumentOutOfRangeException();
+                }*/
             }
-            MoveToTargetPosition(Gamefield.Level.Chuzzles);
+            MoveAllChuzzlesToMoveToPosition(Gamefield.Level.Chuzzles);
         }
+
+        Reset();
     }
 
-    public bool MoveToTargetPosition(List<Chuzzle> targetChuzzles)
+    public bool MoveAllChuzzlesToMoveToPosition(List<Chuzzle> targetChuzzles)
     {
-        var isAnyTween = false;
-        foreach (var c in targetChuzzles)
-        {
-            var targetPosition = new Vector3(c.MoveTo.x*c.Scale.x, c.MoveTo.y*c.Scale.y, 0);
-            if (Vector3.Distance(c.transform.localPosition, targetPosition) > 0.1f)
-            {
-                isAnyTween = true;
-                AnimatedChuzzles.Add(c);
-                iTween.MoveTo(c.gameObject,
-                    iTween.Hash("x", targetPosition.x, "y", targetPosition.y, "z", targetPosition.z, "time", 0.3f,
-                        "oncomplete", new Action<object>(OnTweenMoveAfterDrag), "oncompletetarget", Gamefield.gameObject,
-                        "oncompleteparams", c));
-            }
-            else
-            {
-                c.transform.localPosition = targetPosition;
-            }
-        }
+        return targetChuzzles.Aggregate(false, (current, chuzzle) => MoveChuzzleToMoveToPosition(chuzzle, current));
+    }
 
+    private bool MoveChuzzleToMoveToPosition(Chuzzle c, bool isAnyTween = false)
+    {
+        var targetPosition = new Vector3(c.MoveTo.x*c.Scale.x, c.MoveTo.y*c.Scale.y, 0);
+        if (Vector3.Distance(c.transform.localPosition, targetPosition) > 0.1f)
+        {
+            isAnyTween = true;
+            AnimatedChuzzles.Add(c);
+            iTween.MoveTo(c.gameObject,
+                iTween.Hash("x", targetPosition.x, "y", targetPosition.y, "z", targetPosition.z, "time", 0.3f,
+                    "oncomplete", new Action<object>(OnTweenMoveAfterDrag), "oncompletetarget", Gamefield.gameObject,
+                    "oncompleteparams", c));
+        }
+        else
+        {
+            c.transform.localPosition = targetPosition;
+        }
         return isAnyTween;
     }
 

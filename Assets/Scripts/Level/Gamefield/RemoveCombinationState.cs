@@ -41,7 +41,7 @@ public class RemoveCombinationState : GamefieldState
 
         if (DeathAnimationChuzzles.Count == 0)
         {
-            Gamefield.SwitchStateTo(Gamefield.CreateNewState);
+            Gamefield.SwitchStateTo(Gamefield.CreateNewChuzzlesState);
         }
     }
 
@@ -109,7 +109,7 @@ public class RemoveCombinationState : GamefieldState
 
         if (!DeathAnimationChuzzles.Any())
         {
-            Gamefield.SwitchStateTo(Gamefield.CreateNewState);
+            Gamefield.SwitchStateTo(Gamefield.CreateNewChuzzlesState);
         }
     }
 }

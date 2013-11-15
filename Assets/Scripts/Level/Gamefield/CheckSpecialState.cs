@@ -40,7 +40,7 @@ public class CheckSpecialState : GamefieldState
 
         if (SpecialTilesAnimated.Count == 0)
         {
-            Gamefield.SwitchStateTo(Gamefield.CreateNewState);
+            Gamefield.SwitchStateTo(Gamefield.CreateNewChuzzlesState);
         }
     }
 

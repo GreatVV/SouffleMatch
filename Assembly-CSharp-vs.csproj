@@ -180,7 +180,7 @@
      <Compile Include="Assets\Scripts\Level\GameMode\TargetPlaceGameMode.cs" />
      <Compile Include="Assets\Scripts\Level\GameMode\TargetScoreGameMode.cs" />
      <Compile Include="Assets\Scripts\Level\Gamefield\CheckSpecialState.cs" />
-     <Compile Include="Assets\Scripts\Level\Gamefield\CreateNewState.cs" />
+     <Compile Include="Assets\Scripts\Level\Gamefield\CreateNewChuzzlesState.cs" />
      <Compile Include="Assets\Scripts\Level\Gamefield\FieldState.cs" />
      <Compile Include="Assets\Scripts\Level\Gamefield\GameOverState.cs" />
      <Compile Include="Assets\Scripts\Level\Gamefield\GamefieldState.cs" />

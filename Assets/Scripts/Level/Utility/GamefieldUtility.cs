@@ -485,6 +485,11 @@ public class GamefieldUtility
         return cells.FirstOrDefault(c => c.x == x && c.y == y);
     }
 
+    public static Vector3 CellPositionInWorldCoordinate(Cell c, Vector3 scale)
+    {
+        return ConvertXYToPosition(c.x, c.y, scale);
+    }
+
     public static Vector3 ConvertXYToPosition(int x, int y, Vector3 scale)
     {
         return new Vector3(x*scale.x, y*scale.y, 0);
@@ -546,4 +551,53 @@ public class GamefieldUtility
                 size.x/sprite.CurrentSprite.GetUntrimmedBounds().max.x, 1);
         }*/
     }
+
+
+    public static Cell MaxColumnAvailiablePosition(int column, IEnumerable<Cell> cells)
+    {
+        var enumerable = cells as Cell[] ?? cells.ToArray();
+        var maxCell =  enumerable.First(cell => cell.x == column && !cell.IsTemporary && cell.y == enumerable.Where(c=>!c.IsTemporary).Max(y => y.y));
+        if (maxCell.Type != CellTypes.Usual)
+        {
+            maxCell = maxCell.GetBottomWithType();
+        }
+        return maxCell;
+    }
+
+    public static Cell MinColumnAvailiablePosition(int column, IEnumerable<Cell> cells)
+    {
+        var enumerable = cells as Cell[] ?? cells.ToArray();
+
+        var minCell =
+            enumerable.First(
+                x => x.x == column && !x.IsTemporary && x.y == enumerable.Where(c => !c.IsTemporary).Min(y => y.y));
+        if (minCell.Type != CellTypes.Usual)
+        {
+            minCell = minCell.GetTopWithType();
+        }
+        return minCell;
+    }
+
+    public static Cell MinRowAvailiablePosition(int row, IEnumerable<Cell> cells)
+    {
+        var enumerable = cells as Cell[] ?? cells.ToArray();
+        var minCell = enumerable.First(x => x.y == row && !x.IsTemporary && x.x == enumerable.Where(c => !c.IsTemporary).Min(y => y.x));
+        if (minCell.Type != CellTypes.Usual)
+        {
+            minCell = minCell.GetRightWithType();
+        }
+        return minCell;
+    }
+
+    public static Cell MaxRowAvailiablePosition(int row, IEnumerable<Cell> cells)
+    {
+        var enumerable = cells as Cell[] ?? cells.ToArray();
+        var maxCell = enumerable.First(x => x.y == row && !x.IsTemporary && x.x == enumerable.Where(c => !c.IsTemporary).Max(y => y.x));
+        if (maxCell.Type != CellTypes.Usual)
+        {
+            maxCell = maxCell.GetLeftWithType();
+        }
+        return maxCell;
+    }
+    
 }
