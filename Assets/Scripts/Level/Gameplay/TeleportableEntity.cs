@@ -1,28 +1,28 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+[RequireComponent(typeof(Chuzzle))]
 public class TeleportableEntity : MonoBehaviour
-{                                 
-    public bool teleported;
-    public GameObject teleportedBy;
-    
-    public bool isCopy;
-    public TeleportableEntity duplicate;
+{   
+    public GameObject Copy;   
 
-    public Vector3 prevPosition;
+    public bool HasCopy;
 
-    public void CreateDuplicate(Vector3 position)
+    public void CreateCopy()
+    {   
+        Copy = Instantiate(gameObject) as GameObject;
+        Copy.transform.parent = gameObject.transform;
+        HasCopy = true;
+        Debug.Log("Create copy "+gameObject);
+    }
+
+    public void DestroyCopy()
     {
-        if (duplicate != null)
+        if (HasCopy)
         {
-            return;
+            Destroy(Copy);
+            HasCopy = false;
+            Debug.Log("Destroy copy " + Copy);
         }
-
-        var gameObject = GameObject.Instantiate(this.gameObject) as GameObject;
-        duplicate = gameObject.GetComponent<TeleportableEntity>();
-        duplicate.transform.position = position;
-        duplicate.isCopy = true;        
-    }             
-    
-
+    }
 }

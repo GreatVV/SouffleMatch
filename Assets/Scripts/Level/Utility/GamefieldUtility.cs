@@ -527,8 +527,8 @@ public class GamefieldUtility
             }
         }
 
-        down.transform.parent = from.transform;
-
+        down.transform.parent = from.transform;  
+      
         from.Arrow = down;
     }
 

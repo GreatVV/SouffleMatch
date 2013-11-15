@@ -32,7 +32,7 @@ public class TargetPlaceGameMode : GameMode
                 x => x.x == destroyedChuzzle.Current.x && x.y == destroyedChuzzle.Current.y);
         if (place != null)
         {
-            NGUITools.ClearChildren(destroyedChuzzle.Current.GameObject);
+            NGUITools.ClearChildren(destroyedChuzzle.Current.Sprite);
             CurrentPlaceCoordinates.Remove(place);
         }
 

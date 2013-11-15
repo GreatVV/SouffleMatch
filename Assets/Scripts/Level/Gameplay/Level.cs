@@ -77,16 +77,13 @@ public class Level : MonoBehaviour
         var cellSprite = NGUITools.AddChild(Gamefield.gameObject, prefab);
         CellSprites.Add(cellSprite);
         cellSprite.transform.localPosition = GamefieldUtility.ConvertXYToPosition(cell.x, cell.y, Vector3.one);
-       /* var sprite = cellSprite as Sprite;
-        ScaleSprite(sprite);*/
-        cell.GameObject = cellSprite;
+     
+        cell.Sprite = cellSprite;
+
         if (cell.HasPlace)
         {
             var place = NGUITools.AddChild(cellSprite, PlacePrefab);
-            place.transform.localPosition = Vector3.zero;
-
-     /*       var placesprite = place.GetComponent<Sprite>();
-            ScaleSprite(placesprite);*/
+            place.transform.localPosition = Vector3.zero;    
         }
     }
 

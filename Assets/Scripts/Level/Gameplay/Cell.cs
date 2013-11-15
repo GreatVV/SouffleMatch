@@ -6,7 +6,7 @@ public class Cell
 {   
     public CellTypes Type;
 
-    public GameObject GameObject;
+    public GameObject Sprite;
 
     public bool HasPlace;
     public bool HasCounter;

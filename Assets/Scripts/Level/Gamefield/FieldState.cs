@@ -70,21 +70,21 @@ public class FieldState : GamefieldState
         if (Input.GetMouseButtonDown(0) || (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began))
         {
             _dragOrigin = Input.mousePosition;
-            Debug.Log("Position: "+_dragOrigin);
+            Debug.Log("Position: " + _dragOrigin);
 
             if (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began)
             {
                 //   Debug.Log("is touch drag started");
                 _dragOrigin = new Vector3(Input.GetTouch(0).position.x, Input.GetTouch(0).position.y);
-            }                                                           
+            }
 
             var ray = Camera.main.ScreenPointToRay(_dragOrigin);
-            
-            Debug.Log("Ray: "+ray);
-            RaycastHit2D hit = Physics2D.Raycast(ray.origin, ray.direction, Single.MaxValue, Gamefield.ChuzzleMask);
+
+            Debug.Log("Ray: " + ray);
+            var hit = Physics2D.Raycast(ray.origin, ray.direction, Single.MaxValue, Gamefield.ChuzzleMask);
             if (hit.transform != null)
-            {   
-                Debug.Log("hit: "+hit.transform.gameObject);
+            {
+                Debug.Log("hit: " + hit.transform.gameObject);
                 CurrentChuzzle = hit.transform.gameObject.transform.parent.GetComponent<Chuzzle>();
             }
 
@@ -121,7 +121,7 @@ public class FieldState : GamefieldState
             }
         }
 
-        Debug.Log("Delta: "+_delta);
+        Debug.Log("Delta: " + _delta);
         _delta = Vector3.ClampMagnitude(_delta, CurrentChuzzle.Scale.x);
 
 
@@ -184,133 +184,237 @@ public class FieldState : GamefieldState
         {
             foreach (var c in SelectedChuzzles)
             {
-                c.GetComponent<TeleportableEntity>().prevPosition = c.transform.localPosition;
                 c.transform.localPosition += _isVerticalDrag ? new Vector3(0, _delta.y, 0) : new Vector3(_delta.x, 0, 0);
 
+
+
+                var copyPosition = c.transform.position;
                 var real = GamefieldUtility.ToRealCoordinates(c);
                 var targetCell = GamefieldUtility.CellAt(activeCells, real.x, real.y);
-                if (targetCell == null || targetCell.Type == CellTypes.Block || targetCell.IsTemporary)
-                {
-                    //TODO create a copy of sprite at current position
 
-                    // Debug.Log("Teleport from " + currentCell);
+                var difference = c.transform.localPosition -
+                                     GamefieldUtility.ConvertXYToPosition(real.x, real.y, c.Scale);
+
+                bool isNeedCopy = false;
+
+                if (targetCell != null && !targetCell.IsTemporary)
+                {
                     switch (CurrentDirection)
                     {
-                        case FieldState.Direction.ToRight:
-                            //if border
-                            if (targetCell == null)
-                            {
-                                targetCell = GamefieldUtility.CellAt(activeCells, activeCells.Max(x => x.x), c.Current.y);
-                                if (targetCell.Type == CellTypes.Block)
-                                {
-                                    targetCell = targetCell.GetLeftWithType();
-                                }
-                            }
-                            else
-                            {
-                                //if block
-                                targetCell = targetCell.GetLeftWithType();
+                        case Direction.ToLeft:
+                        case Direction.ToRight:
 
-                                if (targetCell == null)
-                                {
-                                    targetCell = GamefieldUtility.CellAt(activeCells, activeCells.Max(x => x.x),
-                                        c.Current.y);
-                                    if (targetCell.Type == CellTypes.Block)
-                                    {
-                                        targetCell = targetCell.GetLeftWithType();
-                                    }
-                                }
-                            }
-                            break;
-                        case FieldState.Direction.ToLeft:
-                            //if border
-                            if (targetCell == null)
+                            if (c.transform.position.x > targetCell.Sprite.transform.position.x)
                             {
-                                targetCell = GamefieldUtility.CellAt(activeCells, activeCells.Min(x => x.x), c.Current.y);
-                                if (targetCell.Type == CellTypes.Block)
+                                isNeedCopy = targetCell.Right == null || (targetCell.Right != null && targetCell.Right.Type != CellTypes.Usual);
+                                if (isNeedCopy)
                                 {
-                                    targetCell = targetCell.GetRightWithType();
+                                    var rightCell = GetRightCell(activeCells, targetCell.Right, c);
+                                    copyPosition = GamefieldUtility.ConvertXYToPosition(rightCell.x, rightCell.y, c.Scale) + difference - new Vector3(c.Scale.x, 0, 0);
                                 }
                             }
                             else
                             {
-                                targetCell = targetCell.GetRightWithType();
-                                if (targetCell == null)
+                                isNeedCopy = targetCell.Left == null || (targetCell.Left != null && targetCell.Left.Type != CellTypes.Usual);
+                                if (isNeedCopy)
                                 {
-                                    targetCell = GamefieldUtility.CellAt(activeCells, activeCells.Min(x => x.x),
-                                        c.Current.y);
-                                    if (targetCell.Type == CellTypes.Block)
-                                    {
-                                        targetCell = targetCell.GetRightWithType();
-                                    }
+                                    var leftCell = GetLeftCell(activeCells, targetCell.Left, c);
+                                    copyPosition = GamefieldUtility.ConvertXYToPosition(leftCell.x, leftCell.y, c.Scale) + difference + new Vector3(c.Scale.x, 0, 0);
                                 }
-                            }
+                            }    
                             break;
-                        case FieldState.Direction.ToTop:
-                            //if border
-                            if (targetCell == null || targetCell.IsTemporary)
+                        case Direction.ToTop:
+                        case Direction.ToBottom:
+                            Debug.Log("TargetCell: "+targetCell);
+                            Debug.Log("Sprite: "+targetCell.Sprite);
+                            if (c.transform.position.y > targetCell.Sprite.transform.position.y)
                             {
-                                targetCell = GamefieldUtility.CellAt(activeCells, c.Current.x,
-                                    activeCells.Where(x => !x.IsTemporary).Min(x => x.y));
-                                if (targetCell.Type == CellTypes.Block)
-                                {
-                                    targetCell = targetCell.GetTopWithType();
-                                }
-                            }
-                            else
-                            {
-                                targetCell = targetCell.GetTopWithType();
 
-                                if (targetCell == null)
+                                isNeedCopy = targetCell.Top == null ||
+                                             (targetCell.Top != null &&
+                                              (targetCell.Top.Type == CellTypes.Block || targetCell.Top.IsTemporary));
+                                if (isNeedCopy)
                                 {
-                                    targetCell = GamefieldUtility.CellAt(activeCells, c.Current.x,
-                                        activeCells.Where(x => !x.IsTemporary).Min(x => x.y));
-                                    if (targetCell.Type == CellTypes.Block)
-                                    {
-                                        targetCell = targetCell.GetTopWithType();
-                                    }
-                                }
-                            }
-                            break;
-                        case FieldState.Direction.ToBottom:
-                            //if border
-                            if (targetCell == null)
-                            {
-                                targetCell = GamefieldUtility.CellAt(activeCells, c.Current.x,
-                                    activeCells.Where(x => !x.IsTemporary).Max(x => x.y));
-                                if (targetCell.Type == CellTypes.Block)
-                                {
-                                    targetCell = targetCell.GetBottomWithType();
+                                    var topCell = GetTopCell(activeCells, targetCell.Top, c);
+                                    copyPosition = GamefieldUtility.ConvertXYToPosition(topCell.x, topCell.y, c.Scale) +
+                                                   difference - new Vector3(0, c.Scale.y, 0);
                                 }
                             }
                             else
-                            {
-                                targetCell = targetCell.GetBottomWithType();
-
-                                if (targetCell == null)
+                            {                
+                                isNeedCopy = targetCell.Bottom == null ||
+                                             (targetCell.Bottom != null && targetCell.Bottom.Type == CellTypes.Block);
+                                if (isNeedCopy)
                                 {
-                                    targetCell = GamefieldUtility.CellAt(activeCells, c.Current.x,
-                                        activeCells.Where(x => !x.IsTemporary).Max(x => x.y));
-                                    if (targetCell.Type == CellTypes.Block)
-                                    {
-                                        targetCell = targetCell.GetBottomWithType();
-                                    }
+                                    var bottomCell = GetBottomCell(activeCells, targetCell.Bottom, c);
+                                    copyPosition =
+                                        GamefieldUtility.ConvertXYToPosition(bottomCell.x, bottomCell.y, c.Scale) +
+                                        difference + new Vector3(0, c.Scale.y, 0);
                                 }
                             }
                             break;
                         default:
+                            throw new ArgumentOutOfRangeException();
+                    }
+                }
+                else
+                {
+                    isNeedCopy = true;
+                }
+
+
+                if (targetCell == null || targetCell.Type == CellTypes.Block || targetCell.IsTemporary)
+                {
+                    switch (CurrentDirection)
+                    {
+                        case Direction.ToRight:
+                            //if border
+                            targetCell = GetLeftCell(activeCells, targetCell, c);    
+                            break;
+                        case Direction.ToLeft:
+                            targetCell = GetRightCell(activeCells, targetCell, c);   
+                            break;
+                        case Direction.ToTop:
+                            //if border
+                            targetCell = GetTopCell(activeCells, targetCell, c);
+                            break;
+                        case Direction.ToBottom:
+                            targetCell = GetBottomCell(activeCells, targetCell, c);
+                            break;
+                        default:
                             throw new ArgumentOutOfRangeException("Current direction can not be shit");
                     }
-                    //  Debug.Log("Teleport to " + targetCell);
 
-                    var difference = c.transform.localPosition -
-                                     GamefieldUtility.ConvertXYToPosition(real.x, real.y, c.Scale);
-                    c.transform.localPosition =
-                        GamefieldUtility.ConvertXYToPosition(targetCell.x, targetCell.y, c.Scale) +
-                        difference;
+                    c.transform.localPosition = GamefieldUtility.ConvertXYToPosition(targetCell.x, targetCell.y, c.Scale) + difference;
+                }
+              
+                if (isNeedCopy)
+                {
+                    var teleportable = c.GetComponent<TeleportableEntity>();
+                    if (teleportable != null)
+                    {
+                        if (!teleportable.HasCopy)
+                        {
+                            teleportable.CreateCopy();
+                        }
+                        Debug.Log("Copyied: "+teleportable);
+                        teleportable.Copy.transform.position = copyPosition;
+                    }
                 }
             }
         }
+    }
+
+    private static Cell GetBottomCell(List<Cell> activeCells, Cell targetCell, Chuzzle c)
+    {
+//if border
+        if (targetCell == null)
+        {
+            targetCell = GamefieldUtility.CellAt(activeCells, c.Current.x,
+                activeCells.Where(x => !x.IsTemporary).Max(x => x.y));
+            if (targetCell.Type == CellTypes.Block)
+            {
+                targetCell = targetCell.GetBottomWithType();
+            }
+        }
+        else
+        {
+            targetCell = targetCell.GetBottomWithType();
+
+            if (targetCell == null)
+            {
+                targetCell = GamefieldUtility.CellAt(activeCells, c.Current.x,
+                    activeCells.Where(x => !x.IsTemporary).Max(x => x.y));
+                if (targetCell.Type == CellTypes.Block)
+                {
+                    targetCell = targetCell.GetBottomWithType();
+                }
+            }
+        }
+        return targetCell;
+    }
+
+    private static Cell GetTopCell(List<Cell> activeCells, Cell targetCell, Chuzzle c)
+    {
+        if (targetCell == null || targetCell.IsTemporary)
+        {
+            targetCell = GamefieldUtility.CellAt(activeCells, c.Current.x,
+                activeCells.Where(x => !x.IsTemporary).Min(x => x.y));
+            if (targetCell.Type == CellTypes.Block)
+            {
+                targetCell = targetCell.GetTopWithType();
+            }
+        }
+        else
+        {
+            targetCell = targetCell.GetTopWithType();
+
+            if (targetCell == null)
+            {
+                targetCell = GamefieldUtility.CellAt(activeCells, c.Current.x,
+                    activeCells.Where(x => !x.IsTemporary).Min(x => x.y));
+                if (targetCell.Type == CellTypes.Block)
+                {
+                    targetCell = targetCell.GetTopWithType();
+                }
+            }
+        }
+        return targetCell;
+    }
+
+    private static Cell GetRightCell(List<Cell> activeCells, Cell targetCell, Chuzzle c)
+    {
+//if border
+        if (targetCell == null)
+        {
+            targetCell = GamefieldUtility.CellAt(activeCells, activeCells.Min(x => x.x), c.Current.y);
+            if (targetCell.Type == CellTypes.Block)
+            {
+                targetCell = targetCell.GetRightWithType();
+            }
+        }
+        else
+        {
+            targetCell = targetCell.GetRightWithType();
+            if (targetCell == null)
+            {
+                targetCell = GamefieldUtility.CellAt(activeCells, activeCells.Min(x => x.x),
+                    c.Current.y);
+                if (targetCell.Type == CellTypes.Block)
+                {
+                    targetCell = targetCell.GetRightWithType();
+                }
+            }
+        }
+        return targetCell;
+    }
+
+    private static Cell GetLeftCell(List<Cell> activeCells, Cell targetCell, Chuzzle c)
+    {
+        if (targetCell == null)
+        {
+            targetCell = GamefieldUtility.CellAt(activeCells, activeCells.Max(x => x.x), c.Current.y);
+            if (targetCell.Type == CellTypes.Block)
+            {
+                targetCell = targetCell.GetLeftWithType();
+            }
+        }
+        else
+        {
+            //if block
+            targetCell = targetCell.GetLeftWithType();
+
+            if (targetCell == null)
+            {
+                targetCell = GamefieldUtility.CellAt(activeCells, activeCells.Max(x => x.x),
+                    c.Current.y);
+                if (targetCell.Type == CellTypes.Block)
+                {
+                    targetCell = targetCell.GetLeftWithType();
+                }
+            }
+        }
+        return targetCell;
     }
 
     private void DropDrag()
@@ -327,6 +431,7 @@ public class FieldState : GamefieldState
             foreach (var c in SelectedChuzzles)
             {
                 CalculateRealCoordinatesFor(c);
+                c.GetComponent<TeleportableEntity>().DestroyCopy();
             }
 
             foreach (var c in Gamefield.Level.Chuzzles)

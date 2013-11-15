@@ -28,7 +28,6 @@ public class Chuzzle : MonoBehaviour
     private bool _frozen;
 
     public GameObject Arrow;
-
     public bool Shine
     {
         get { return _shine; }

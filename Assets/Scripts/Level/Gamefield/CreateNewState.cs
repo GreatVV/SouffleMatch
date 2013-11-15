@@ -27,8 +27,7 @@ public class CreateNewState : GamefieldState
         chuzzle.Real = chuzzle.Current = chuzzle.MoveTo;
 
         if (NewTilesAnimationChuzzles.Contains(chuzzle))
-        {
-            chuzzle.GetComponent<TeleportableEntity>().prevPosition = chuzzle.transform.localPosition;
+        {      
             NewTilesAnimationChuzzles.Remove(chuzzle);
         }
 
