@@ -20,7 +20,7 @@ public class GuiPausePopup : Window
     {
         TaskLabel.text = GameModeToString.GetString(UI.Instance.Gamefield.GameMode);
             
-        transform.localPosition = new Vector3(0, -800, 0);
+        transform.localPosition = new Vector3(0, -800, -5);
         iTween.MoveTo(gameObject, new Vector3(0, 0, 0), 0.5f);
         UI.Instance.Gamefield.IsPause = true;
     }

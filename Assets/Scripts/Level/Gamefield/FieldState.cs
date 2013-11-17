@@ -151,7 +151,7 @@ public class FieldState : GamefieldState
         }
 
         //Debug.Log("Delta: " + _delta);
-        _delta = Vector3.ClampMagnitude(_delta, CurrentChuzzle.Scale.x);
+        _delta = Vector3.ClampMagnitude(_delta, 0.45f * CurrentChuzzle.Scale.x);
         
         if (_delta.x > _maxdelta.x)
         {
@@ -269,16 +269,15 @@ public class FieldState : GamefieldState
 
 
             foreach (var c in SelectedChuzzles)
-            {
-                c.transform.position += _delta;
+            {      
+                c.transform.position += _delta;      
 
                 var copyPosition = c.transform.position;
 
                 var real = GamefieldUtility.ToRealCoordinates(c);
                 var targetCell = GamefieldUtility.CellAt(activeCells, real.x, real.y);
 
-                var difference = c.transform.localPosition -
-                                 GamefieldUtility.ConvertXYToPosition(real.x, real.y, c.Scale);
+                var difference = c.transform.position - GamefieldUtility.ConvertXYToPosition(real.x, real.y, c.Scale);
 
                 var isNeedCopy = false;
 
@@ -293,9 +292,7 @@ public class FieldState : GamefieldState
                             if (isNeedCopy)
                             {
                                 var rightCell = GetRightCell(activeCells, targetCell.Right, c);
-                                copyPosition =
-                                    GamefieldUtility.ConvertXYToPosition(rightCell.x, rightCell.y, c.Scale) +
-                                    difference - new Vector3(c.Scale.x, 0, 0);
+                                copyPosition = GamefieldUtility.CellPositionInWorldCoordinate(rightCell, c.Scale) + difference - new Vector3(c.Scale.x, 0, 0);
                             }
                         }
                         else
@@ -344,37 +341,6 @@ public class FieldState : GamefieldState
                     isNeedCopy = true;
                 }
 
-                if (difference.magnitude < (CurrentChuzzle.Scale.x/25))
-                {
-                    isNeedCopy = false;
-                }
-
-                if (isNeedCopy)
-                {
-                    var teleportable = c.GetComponent<TeleportableEntity>();
-                    if (teleportable != null)
-                    {
-                        if (!teleportable.HasCopy)
-                        {
-                            teleportable.CreateCopy();
-                        }
-                        Debug.Log("Copyied: " + teleportable);
-                        teleportable.Copy.transform.position = copyPosition;
-                    }
-                }
-                else
-                {
-                    var teleportable = c.GetComponent<TeleportableEntity>();
-                    if (teleportable != null)
-                    {
-                        if (teleportable.HasCopy)
-                        {
-                            teleportable.DestroyCopy();
-                        } 
-                    }         
-                    continue;
-                }
-
                 if (targetCell == null || targetCell.Type == CellTypes.Block || targetCell.IsTemporary)
                 {
                     switch (CurrentDirection)
@@ -398,6 +364,38 @@ public class FieldState : GamefieldState
                     }
 
                     c.transform.position = GamefieldUtility.CellPositionInWorldCoordinate(targetCell, c.Scale) + difference;
+
+                   // Debug.Log("New coord: "+GamefieldUtility.ToRealCoordinates(c)+" for "+c.gameObject.name + " pos: "+c.transform.position);
+                }
+
+                if (difference.magnitude < (CurrentChuzzle.Scale.x / 25))
+                {
+                    isNeedCopy = false;
+                }
+
+                if (isNeedCopy)
+                {
+                    var teleportable = c.GetComponent<TeleportableEntity>();
+                    if (teleportable != null)
+                    {
+                        if (!teleportable.HasCopy)
+                        {
+                            teleportable.CreateCopy();
+                        }
+                        //Debug.Log("Copyied: " + teleportable);
+                        teleportable.Copy.transform.position = copyPosition;
+                    }
+                }
+                else
+                {
+                    var teleportable = c.GetComponent<TeleportableEntity>();
+                    if (teleportable != null)
+                    {
+                        if (teleportable.HasCopy)
+                        {
+                            teleportable.DestroyCopy();
+                        }
+                    }
                 }
             }
         }
@@ -526,10 +524,13 @@ public class FieldState : GamefieldState
             }
 
             //move all tiles to new real coordinates
-            foreach (var c in SelectedChuzzles)
+            foreach (var chuzzle in SelectedChuzzles)
             {
-                CalculateRealCoordinatesFor(c);
-                c.GetComponent<TeleportableEntity>().DestroyCopy();
+                chuzzle.Real = Gamefield.Level.GetCellAt(
+                    Mathf.RoundToInt(chuzzle.transform.position.x / chuzzle.Scale.x),
+                    Mathf.RoundToInt(chuzzle.transform.position.y / chuzzle.Scale.y), 
+                    false);
+                chuzzle.GetComponent<TeleportableEntity>().DestroyCopy();
             }
 
             foreach (var c in Gamefield.Level.Chuzzles)
@@ -637,7 +638,7 @@ public class FieldState : GamefieldState
     private bool MoveChuzzleToMoveToPosition(Chuzzle c, bool isAnyTween = false)
     {
         var targetPosition = new Vector3(c.MoveTo.x*c.Scale.x, c.MoveTo.y*c.Scale.y, 0);
-        if (Vector3.Distance(c.transform.localPosition, targetPosition) > 0.1f)
+        if (Vector3.Distance(c.transform.position, targetPosition) > 0.1f)
         {
             isAnyTween = true;
             AnimatedChuzzles.Add(c);
@@ -648,15 +649,9 @@ public class FieldState : GamefieldState
         }
         else
         {
-            c.transform.localPosition = targetPosition;
+            c.transform.position = targetPosition;
         }
         return isAnyTween;
-    }
-
-    public void CalculateRealCoordinatesFor(Chuzzle chuzzle)
-    {
-        chuzzle.Real = Gamefield.Level.GetCellAt(Mathf.RoundToInt(chuzzle.transform.localPosition.x/chuzzle.Scale.x),
-            Mathf.RoundToInt(chuzzle.transform.localPosition.y/chuzzle.Scale.y), false);
     }
 
     private void OnTweenMoveAfterDrag(object chuzzleObject)

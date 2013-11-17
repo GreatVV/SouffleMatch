@@ -12,8 +12,9 @@ public class TeleportableEntity : MonoBehaviour
     {   
         Copy = Instantiate(gameObject) as GameObject;
         Copy.transform.parent = gameObject.transform;
+        Copy.gameObject.name += " is copy";
         HasCopy = true;
-        Debug.Log("Create copy "+gameObject);
+        //Debug.Log("Create copy "+gameObject);
     }
 
     public void DestroyCopy()
@@ -22,7 +23,7 @@ public class TeleportableEntity : MonoBehaviour
         {
             Destroy(Copy);
             HasCopy = false;
-            Debug.Log("Destroy copy " + Copy);
+            //Debug.Log("Destroy copy " + Copy);
         }
     }
 }

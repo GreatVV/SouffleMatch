@@ -76,14 +76,14 @@ public class Level : MonoBehaviour
         var prefab = CellPrefabs.First(x => x.Type == cell.Type).CellPrefab;
         var cellSprite = NGUITools.AddChild(Gamefield.gameObject, prefab);
         CellSprites.Add(cellSprite);
-        cellSprite.transform.localPosition = GamefieldUtility.ConvertXYToPosition(cell.x, cell.y, Vector3.one);
+        cellSprite.transform.position = GamefieldUtility.ConvertXYToPosition(cell.x, cell.y, Vector3.one);
      
         cell.Sprite = cellSprite;
 
         if (cell.HasPlace)
         {
             var place = NGUITools.AddChild(cellSprite, PlacePrefab);
-            place.transform.localPosition = Vector3.zero;    
+            place.transform.position = Vector3.zero;    
         }
     }
 
@@ -130,8 +130,10 @@ public class Level : MonoBehaviour
         chuzzle.Real = chuzzle.MoveTo = chuzzle.Current = GetCellAt(x, y);
 
         gameObject.transform.parent = Gamefield.transform;
-        gameObject.transform.localPosition = new Vector3(x*gameObject.GetComponent<Chuzzle>().Scale.x,
-            y*gameObject.GetComponent<Chuzzle>().Scale.y, 0);
+        gameObject.transform.position = new Vector3(
+            x*chuzzle.Scale.x,
+            y*chuzzle.Scale.y, 
+            0);
 
         if (chuzzle.Current.HasCounter)
         {
