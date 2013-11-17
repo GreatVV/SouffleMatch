@@ -73,7 +73,7 @@ public class FieldState : GamefieldState
 
         #region Drag
 
-        if (Input.GetMouseButtonDown(0) || (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began))
+        if (CurrentChuzzle == null && (Input.GetMouseButtonDown(0) || (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began)))
         {
             _dragOrigin = Input.mousePosition;
             Debug.Log("Position: " + _dragOrigin);
@@ -543,8 +543,6 @@ public class FieldState : GamefieldState
             {
                 OnChuzzleCompletedTweens();
             }
-
-            Reset();
         }
     }
 
