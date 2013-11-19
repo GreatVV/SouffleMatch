@@ -53,14 +53,36 @@ public class Level : MonoBehaviour
     }
 
     public void InitRandom()
-    {
-        for (var y = 0; y < Height; y++)
-        {
-            for (var x = 0; x < Width; x++)
+    {   
+        var yStart = 0;
+        var yEnd = Height;
+        var xStart = 0;
+        var xEnd = Width;
+
+        var wDiff = 8 - Width;
+        var hDiff = 16 - Height;
+        yStart -= hDiff/2;
+        yEnd += hDiff/2;
+        xStart -= wDiff/2;
+        xEnd += wDiff/2;  
+
+        for (var y = yStart; y < yEnd; y++)
+        {              
+            for (var x = xStart; x < xEnd; x++)
             {
-                if (GetCellAt(x, y).Type == CellTypes.Usual)
+                if (x >= 0 && x < Width && y >= 0 && y < Height)
                 {
-                    CreateRandomChuzzle(x, y);
+                    if (GetCellAt(x, y).Type == CellTypes.Usual)
+                    {
+                        CreateRandomChuzzle(x, y);
+                    }
+                }
+                else
+                {
+                    var cellPrefab = GetCellSpritePrefab(x, y, CellTypes.Block);
+                    var cellSprite = NGUITools.AddChild(Gamefield.gameObject, cellPrefab);
+                    CellSprites.Add(cellSprite);
+                    cellSprite.transform.position = GamefieldUtility.ConvertXYToPosition(x, y, Vector3.one);
                 }
             }
         }
@@ -71,9 +93,21 @@ public class Level : MonoBehaviour
         return Chuzzles.FirstOrDefault(c => c.Current.x == x && c.Current.y == y);
     }
 
+    private GameObject GetCellSpritePrefab(int x, int y, CellTypes cellType)
+    {
+        var prefabs = CellPrefabs.Where(c => c.Type == cellType).ToArray();
+        if (cellType == CellTypes.Block)
+        {
+            
+            return prefabs[Math.Abs(x)%2].CellPrefab;
+        }
+
+        return prefabs.First().CellPrefab;
+    }
+
     private void CreateTileSprite(Cell cell)
     {
-        var prefab = CellPrefabs.First(x => x.Type == cell.Type).CellPrefab;
+        var prefab = GetCellSpritePrefab(cell.x, cell.y, cell.Type);
         var cellSprite = NGUITools.AddChild(Gamefield.gameObject, prefab);
         CellSprites.Add(cellSprite);
         cellSprite.transform.position = GamefieldUtility.ConvertXYToPosition(cell.x, cell.y, Vector3.one);

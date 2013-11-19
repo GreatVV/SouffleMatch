@@ -55,7 +55,7 @@ public class StageManager : MonoBehaviour
 
     public void Init(List<Stage> stages)
     {   
-        if (stages == null || stages.Count == 0)
+        if (stages == null || stages.Count < 2)
         {
             if (CurrentStage != null)
             {
@@ -65,7 +65,7 @@ public class StageManager : MonoBehaviour
             }
             Stages.Clear();
             Gamefield.Level.UpdateActive();
-            CenterCameraOnField.Instance.CenterCameraOnChuzzles(Gamefield.Level.ActiveChuzzles);
+            CenterCameraOnField.Instance.CenterCameraOnChuzzles(Gamefield.Level.ActiveChuzzles, true);
             return;
         }
 
@@ -100,7 +100,7 @@ public class StageManager : MonoBehaviour
 
         Gamefield.Level.ChoseFor(CurrentStage.MinY, CurrentStage.MaxY);
         
-        CenterCameraOnField.Instance.CenterCameraOnChuzzles(Gamefield.Level.ActiveChuzzles);
+        CenterCameraOnField.Instance.CenterCameraOnChuzzles(Gamefield.Level.ActiveChuzzles, false);
 
     }
 }

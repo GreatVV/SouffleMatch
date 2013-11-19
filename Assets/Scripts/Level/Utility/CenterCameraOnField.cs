@@ -17,7 +17,7 @@ public class CenterCameraOnField : MonoBehaviour
 
     #region Event Handlers
 
-    public void CenterCameraOnChuzzles(List<Chuzzle> targetChuzzles)
+    public void CenterCameraOnChuzzles(List<Chuzzle> targetChuzzles, bool instantly)
     {
         var minX = targetChuzzles.Min(x => x.transform.position.x);
         var minY = targetChuzzles.Min(x => x.transform.position.y);
@@ -26,6 +26,12 @@ public class CenterCameraOnField : MonoBehaviour
 
         var centerPosition = new Vector3((minX + maxX)/2,
             (minY + maxY)/2, DefaultPosition.z);
+
+        if (instantly)
+        {
+            Camera.transform.position = centerPosition;
+            return;
+        }
 
         if (Vector3.Distance(Camera.transform.position, centerPosition) > 0.1f)
         {
