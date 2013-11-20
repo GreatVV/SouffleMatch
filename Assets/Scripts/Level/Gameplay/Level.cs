@@ -99,7 +99,7 @@ public class Level : MonoBehaviour
         if (cellType == CellTypes.Block)
         {
             
-            return prefabs[Math.Abs(x)%2].CellPrefab;
+            return prefabs[(Math.Abs(x) + Math.Abs(y))%2].CellPrefab;
         }
 
         return prefabs.First().CellPrefab;
