@@ -37,7 +37,7 @@ public class RemoveCombinationState : GamefieldState
         var chuzzle = chuzzleObject as Chuzzle;
 
         DeathAnimationChuzzles.Remove(chuzzle);
-        Object.Destroy(chuzzle.gameObject);
+        Destroy(chuzzle.gameObject);
 
         if (DeathAnimationChuzzles.Count == 0)
         {
@@ -100,7 +100,7 @@ public class RemoveCombinationState : GamefieldState
                             "x", 0,
                             "y", 0,
                             "z", 0,
-                            "time", 0.3f,
+                            "time", 0.5f,
                             "oncomplete", new Action<object>(OnCompleteDeath),
                             "oncompleteparams", chuzzle));
                 }

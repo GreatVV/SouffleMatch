@@ -117,7 +117,7 @@ public class Level : MonoBehaviour
         if (cell.HasPlace)
         {
             var place = NGUITools.AddChild(cellSprite, PlacePrefab);
-            place.transform.position = Vector3.zero;    
+            place.transform.localPosition = Vector3.zero;    
         }
     }
 

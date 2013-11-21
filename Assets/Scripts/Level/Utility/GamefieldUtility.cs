@@ -537,22 +537,6 @@ public class GamefieldUtility
         from.Arrow = down;
     }
 
-    public static void ScaleSprite(Sprite sprite, Vector3 size)
-    {
-      /*  if (sprite.CurrentSprite.regionW != 0)
-        {
-            sprite.scale = new Vector3(size.x/sprite.CurrentSprite.regionW,
-                size.x/sprite.CurrentSprite.regionW, 1);
-        }
-        else
-        {
-            //BUG can contain bug when sprite is single texture and there is no box collider attached to it
-            sprite.scale = new Vector3(size.x/sprite.CurrentSprite.GetUntrimmedBounds().max.x,
-                size.x/sprite.CurrentSprite.GetUntrimmedBounds().max.x, 1);
-        }*/
-    }
-
-
     public static Cell MaxColumnAvailiablePosition(int column, IEnumerable<Cell> cells)
     {
         var enumerable = cells as Cell[] ?? cells.ToArray();
