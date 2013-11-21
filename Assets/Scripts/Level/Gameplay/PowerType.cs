@@ -3,5 +3,6 @@
     Usual,
     VerticalLine,
     HorizontalLine,
-    Bomb
+    Bomb,
+    Lock
 }

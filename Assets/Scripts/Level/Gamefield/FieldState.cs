@@ -243,6 +243,12 @@ public class FieldState : GamefieldState
                     _isVerticalDrag = false;
                 }
 
+                if (HasLockChuzzles())
+                {
+                    Debug.Log("Locked Chuzzle");
+                    return;
+                }
+
                 _axisChozen = true;
                 //Debug.Log("Direction chozen. Vertical: " + _isVerticalDrag);
             }
@@ -717,5 +723,19 @@ public class FieldState : GamefieldState
             }
         }
         return anyMove;
+    }
+
+    public bool HasLockChuzzles()
+    {
+        bool HasLocked = false;
+        foreach (Chuzzle c in SelectedChuzzles)
+        {
+            if (c.PowerType == PowerType.Lock)
+            {
+                HasLocked = true;
+                break;
+            }
+        }
+        return HasLocked;
     }
 }

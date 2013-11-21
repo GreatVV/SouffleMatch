@@ -25,6 +25,7 @@ public class Level : MonoBehaviour
     public CellSprite[] CellPrefabs;
 
     public GameObject[] ChuzzlePrefabs;
+    public GameObject[] ChuzzleLockPrefabs;
     public GameObject CounterPrefab;
   
     public GameObject PlacePrefab;
@@ -74,7 +75,14 @@ public class Level : MonoBehaviour
                 {
                     if (GetCellAt(x, y).Type == CellTypes.Usual)
                     {
-                        CreateRandomChuzzle(x, y);
+                        if (x == 2 && y == 2)// coordinates of lock chuzzle
+                        {
+                            CreateLockChuzzle(x, y);
+                        }
+                        else
+                        {
+                            CreateRandomChuzzle(x, y);
+                        }
                     }
                 }
                 else
@@ -153,6 +161,14 @@ public class Level : MonoBehaviour
         var colorsNumber = NumberOfColors == -1 ? ChuzzlePrefabs.Length : NumberOfColors;
         var prefab = ChuzzlePrefabs[Random.Range(0, colorsNumber)];
         return CreateChuzzle(x, y, prefab, toActive);
+    }
+
+    public Chuzzle CreateLockChuzzle(int x, int y, bool toActive = false)
+    {
+        var colorsNumber = NumberOfColors == -1 ? ChuzzlePrefabs.Length : NumberOfColors;
+        var prefab = ChuzzleLockPrefabs[Random.Range(0, colorsNumber)];
+        Chuzzle c = CreateChuzzle(x, y, prefab, toActive);
+        return c;
     }
 
     public Chuzzle CreateChuzzle(int x, int y, GameObject prefab, bool toActive = false)
