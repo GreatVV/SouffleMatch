@@ -42,6 +42,8 @@ public class MapId : MonoBehaviour
             return;
 
         var level = UI.Instance.GuiLevelList.LoadedLevels[Index];
+        Debug.Log("PL: "+Player.Instance);
+        Debug.Log("Level name: "+level.Name);
         var levelInfo = Player.Instance.GetLevelInfo(level.Name);
         if (levelInfo != null && levelInfo.IsCompleted)
         {   

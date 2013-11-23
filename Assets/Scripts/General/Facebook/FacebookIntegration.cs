@@ -1,11 +1,14 @@
-﻿using System;
+﻿#region
+
 using System.Collections.Generic;
 using Facebook;
 using UnityEngine;
 
+#endregion
+
 public class FacebookIntegration : MonoBehaviour
 {
-    #if UNITY_ANDROID || UNITY_EDITOR
+#if UNITY_ANDROID || UNITY_EDITOR
     public string AccessToken;
     public bool FbInited;
 
@@ -18,41 +21,43 @@ public class FacebookIntegration : MonoBehaviour
 
     private void OnHideUnity(bool isUnityShown)
     {
+        FbDebug.Log("OnHideUnity");
+        Time.timeScale = !isUnityShown ? 0 : 1;
     }
 
     private void OnInit()
     {
         Debug.Log("Fb inited");
         FbInited = true;
-        //FB.GetAuthResponse(OnLogin);
     }
 
     private void OnLogin(FBResult result)
     {
         AccessToken = FB.AccessToken;
         Debug.Log("Login: " + result.Text + result.Error);
-        Debug.Log("call login: " + FB.UserId);
+        Debug.Log("Сall login: " + FB.UserId);
 
         if (result.Error != null)
-        {   
+        {
             Debug.LogError(result.Error);
             return;
-        }                    
-                 
+        }
+
         RequestProfile();
     }
 
     private void RequestProfile()
     {
         AccessToken = FB.AccessToken;
-        FB.API("/me?fields=id,first_name", HttpMethod.GET, OnPlayerInfo, new Dictionary<string, string> {{"access_token", AccessToken}});
+        FB.API("/me?fields=id,first_name", HttpMethod.GET, OnPlayerInfo,
+            new Dictionary<string, string> {{"access_token", AccessToken}});
         //FB.API("/me/picture?width=128&height=128&access_token=" + AccessToken, Facebook.HttpMethod.GET, OnPicture);
     }
 
     private void OnPlayerInfo(FBResult result) // handle user profile info
     {
         if (result.Error != null)
-        {   
+        {
             Debug.LogError(result.Error);
             return;
         }
@@ -83,7 +88,7 @@ public class FacebookIntegration : MonoBehaviour
         }
         else
         {
-            if(!FbInited)
+            if (!FbInited)
             {
                 FB.Init(OnInit, OnHideUnity);
                 Debug.Log("fb not inited");
@@ -93,13 +98,12 @@ public class FacebookIntegration : MonoBehaviour
                 FB.Login("email,publish_actions", OnLogin);
             }
         }
-       
     }
 
     public void OnFBLoginClick()
     {
         Debug.Log("Fb connect clicked");
-   
+
         if (!FB.IsLoggedIn)
         {
             Debug.Log("Try login");
@@ -110,7 +114,11 @@ public class FacebookIntegration : MonoBehaviour
             Debug.Log("Logged! " + FB.UserId);
             RequestProfile();
         }
-    }    
-    #endif   
+    }
+
+    void OnAskLifeClicked()
+    {
+        //TODO Ask life
+    }
+#endif
 }
-      

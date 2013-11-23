@@ -34,13 +34,18 @@ public class GuiLevelList : Window
     private void OnEnable()
     {
         IsLevelsLoaded = false;
-#if UNITY_ANDROID
-       LoadDefaultLevels();
-#else
+#if !UNITY_ANDROID
         Loading.text = "Loading";
         NGUITools.ClearChildren(Grid);
         StartCoroutine(DownloadLevel(LevelUrl, levels));
 #endif
+    }
+
+    public void Start()
+    {
+        #if UNITY_ANDROID
+            LoadDefaultLevels();
+        #endif
     }
 
     public void LoadDefaultLevels()
