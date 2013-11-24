@@ -95,7 +95,7 @@ public class FacebookIntegration : MonoBehaviour
             }
             else
             {
-                FB.Login("email,publish_actions", OnLogin);
+                FB.Login("publish_actions", OnLogin);
             }
         }
     }
@@ -107,7 +107,7 @@ public class FacebookIntegration : MonoBehaviour
         if (!FB.IsLoggedIn)
         {
             Debug.Log("Try login");
-            FB.Login("email,publish_actions", OnLogin);
+            FB.Login("publish_actions", OnLogin);
         }
         else
         {
