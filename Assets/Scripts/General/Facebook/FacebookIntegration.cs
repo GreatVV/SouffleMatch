@@ -17,6 +17,8 @@ public class FacebookIntegration : MonoBehaviour
     public Texture ProfilePicture;
     public string Username;
 
+    public static FacebookIntegration Instance;
+
     #region Event Handlers
 
     private void OnHideUnity(bool isUnityShown)
@@ -82,6 +84,7 @@ public class FacebookIntegration : MonoBehaviour
 
     private void Start()
     {
+        Instance = this;
         if (FB.IsLoggedIn && !string.IsNullOrEmpty(FB.AccessToken))
         {
             OnLogin(new FBResult("0"));
@@ -107,7 +110,7 @@ public class FacebookIntegration : MonoBehaviour
         if (!FB.IsLoggedIn)
         {
             Debug.Log("Try login");
-            FB.Login("publish_actions", OnLogin);
+            FB.Login("publish_stream,publish_actions,user_games_activity,friends_games_activity", OnLogin);
         }
         else
         {
@@ -119,6 +122,11 @@ public class FacebookIntegration : MonoBehaviour
     void OnAskLifeClicked()
     {
         //TODO Ask life
+    }
+
+    public void SendLevelResult(int levelNumber, int points)
+    {
+        
     }
 #endif
 }

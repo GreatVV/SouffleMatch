@@ -44,11 +44,7 @@ public class FieldState : GamefieldState
     private float _minX;
     private float _minY;
     private bool _isReturning;
-
-    public FieldState(bool isReturning)
-    {
-        this._isReturning = isReturning;
-    }
+    private bool _hasLockedChuzzles;
 
     #region Event Handlers
 
@@ -243,10 +239,22 @@ public class FieldState : GamefieldState
                     _isVerticalDrag = false;
                 }
 
-                if (HasLockChuzzles())
+                _hasLockedChuzzles = HasLockChuzzles;
+                if (_hasLockedChuzzles)
                 {
-                    Debug.Log("Locked Chuzzle");
-                    return;
+                    _minX =
+                        GamefieldUtility.CellPositionInWorldCoordinate(CurrentChuzzle.Current, CurrentChuzzle.Scale).x -
+                        CurrentChuzzle.Scale.x*0.4f;
+                    _maxX =
+                        GamefieldUtility.CellPositionInWorldCoordinate(CurrentChuzzle.Current, CurrentChuzzle.Scale).x +
+                        CurrentChuzzle.Scale.x * 0.4f;
+
+                    _minY =
+                        GamefieldUtility.CellPositionInWorldCoordinate(CurrentChuzzle.Current, CurrentChuzzle.Scale).y -
+                        CurrentChuzzle.Scale.y * 0.4f;
+                    _maxY =
+                        GamefieldUtility.CellPositionInWorldCoordinate(CurrentChuzzle.Current, CurrentChuzzle.Scale).y +
+                        CurrentChuzzle.Scale.y * 0.4f;
                 }
 
                 _axisChozen = true;
@@ -725,17 +733,11 @@ public class FieldState : GamefieldState
         return anyMove;
     }
 
-    public bool HasLockChuzzles()
+    public bool HasLockChuzzles
     {
-        bool HasLocked = false;
-        foreach (Chuzzle c in SelectedChuzzles)
+        get
         {
-            if (c.PowerType == PowerType.Lock)
-            {
-                HasLocked = true;
-                break;
-            }
+            return SelectedChuzzles.Any(c => c.PowerType == PowerType.Lock);
         }
-        return HasLocked;
     }
 }
