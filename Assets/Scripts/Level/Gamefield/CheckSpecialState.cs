@@ -86,8 +86,7 @@ public class CheckSpecialState : GamefieldState
     private bool CreateBomb(List<Chuzzle> comb)
     {
         return CreateSpecialWithType(comb, PowerType.Bomb);
-    }
-
+    }             
 
     public bool CreateSpecialWithType(List<Chuzzle> comb, PowerType powerType)
     {
@@ -107,14 +106,12 @@ public class CheckSpecialState : GamefieldState
         var powerUpChuzzle = Gamefield.Level.CreateChuzzle(targetTile.Current, powerUp);
         powerUpChuzzle.Type = targetTile.Type;
         powerUpChuzzle.PowerType = powerType;
-
-        Debug.Log("Child number: " + powerUpChuzzle.transform.childCount);
+        
         var child = powerUpChuzzle.transform.GetChild(0).gameObject;
-        Object.Destroy(child.GetComponent<BoxCollider>());
-    //    Gamefield.Level.ScaleSprite(child.GetComponent<Sprite>());
+        Destroy(child.GetComponent<BoxCollider>());
 
-
-        Object.Destroy(targetTile.gameObject);
+        Gamefield.InvokeTileDestroyed(targetTile);
+        Destroy(targetTile.gameObject);
         Gamefield.Level.ActiveChuzzles.Remove(targetTile);
         Gamefield.Level.Chuzzles.Remove(targetTile);
         ordered.Remove(targetTile);
@@ -137,6 +134,8 @@ public class CheckSpecialState : GamefieldState
                     "oncomplete", new Action<object>(OnCreateLineTweenComplete),
                     "oncompleteparams", c
                     ));
+            var ps = Instantiate(c.Explosion) as GameObject;
+            ps.transform.position = c.transform.position;
         }
 
         return true;
@@ -145,6 +144,6 @@ public class CheckSpecialState : GamefieldState
     private bool CreateLine(List<Chuzzle> comb)
     {
         return CreateSpecialWithType(comb,
-            UnityEngine.Random.Range(0, 100) > 50 ? PowerType.HorizontalLine : PowerType.VerticalLine);
+            Random.Range(0, 100) > 50 ? PowerType.HorizontalLine : PowerType.VerticalLine);
     }
 }

@@ -11,7 +11,7 @@ using Object = UnityEngine.Object;
 [Serializable]
 public class RemoveCombinationState : GamefieldState
 {
-    public List<Chuzzle> DeathAnimationChuzzles = new List<Chuzzle>();          
+    public List<Chuzzle> AnimatedChuzzles = new List<Chuzzle>();          
 
     #region Event Handlers
 
@@ -32,17 +32,11 @@ public class RemoveCombinationState : GamefieldState
     {
     }
 
-    public void OnCompleteDeath(Chuzzle chuzzle)
+    public void OnAnimationFinished(Chuzzle chuzzle)
     {
-        //remove chuzzle from game logic
-        Gamefield.RemoveChuzzle(chuzzle);
-
-        chuzzle.Died -= OnCompleteDeath;
-
-        DeathAnimationChuzzles.Remove(chuzzle);
-        Destroy(chuzzle.gameObject);
-
-        if (DeathAnimationChuzzles.Count == 0)
+        chuzzle.AnimationFinished -= OnAnimationFinished;
+        AnimatedChuzzles.Remove(chuzzle);
+        if (AnimatedChuzzles.Count == 0)
         {
             Gamefield.SwitchStateTo(Gamefield.CreateNewChuzzlesState);
         }
@@ -80,37 +74,15 @@ public class RemoveCombinationState : GamefieldState
             //count points
             Gamefield.PointSystem.CountForCombinations(combination);
         }
+
         foreach (var chuzzle in combination)
         {
-            chuzzle.TimesDestroyed++;
-            if (chuzzle.PowerType == PowerType.TwoTimes)
-            {
-                if (chuzzle.TimesDestroyed < 2)
-                {
-                    continue;
-                }
+            if (!AnimatedChuzzles.Contains(chuzzle))
+            {   
+                AnimatedChuzzles.Add(chuzzle);
+                chuzzle.AnimationFinished += OnAnimationFinished;
+                chuzzle.Destroy(combination);
             }
-
-            chuzzle.Counter -= combination.Count;
-            if (chuzzle.Counter > 0)
-            {                                    
-                continue;
-            }               
-
-            if (chuzzle.gameObject.transform.localScale != Vector3.zero)
-            {
-                if (!DeathAnimationChuzzles.Contains(chuzzle))
-                {
-                    DeathAnimationChuzzles.Add(chuzzle);
-                    chuzzle.Died += OnCompleteDeath;
-                    chuzzle.Die();
-                }
-            }
-        }
-
-        if (!DeathAnimationChuzzles.Any())
-        {
-            Gamefield.SwitchStateTo(Gamefield.CreateNewChuzzlesState);
-        }
+        }        
     }
 }

@@ -40,8 +40,7 @@ public class TargetChuzzleGameMode : GameMode
                 return;
             }
         }
-
-       // Debug.Log("destroy");
+       
         if (destroyedChuzzles.Contains(TargetChuzzle))
         {
             Amount -= destroyedChuzzles.Count-1;
@@ -49,7 +48,7 @@ public class TargetChuzzleGameMode : GameMode
             {
                 Amount = 0;
             }
-            //TargetChuzzle.GetComponentInChildren<tk2dTextMesh>().text = Amount.ToString(CultureInfo.InvariantCulture);
+            TargetChuzzle.GetComponentInChildren<TextMesh>().text = Amount.ToString(CultureInfo.InvariantCulture);
         }
 
 
@@ -68,6 +67,7 @@ public class TargetChuzzleGameMode : GameMode
     {
         Amount = TargetAmount;
         //TODO find target chuzzle
+        TargetChuzzle = null;
     }
 
     public override string ToString()

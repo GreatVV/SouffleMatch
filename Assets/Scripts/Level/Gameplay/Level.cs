@@ -48,6 +48,8 @@ public class Level : MonoBehaviour
     public SerializedLevel Serialized;
     public int Width = 6;
 
+
+    public GameObject Explosion;
     void Awake()
     {
         Gamefield = GetComponent<Gamefield>();
@@ -130,7 +132,8 @@ public class Level : MonoBehaviour
         if (cell.NeedPlace)
         {
             var place = NGUITools.AddChild(cellSprite, PlacePrefab);
-            place.transform.localPosition = Vector3.zero;    
+            place.transform.localPosition = Vector3.zero;
+            cell.PlaceSprite = place;
         }
     }
 
@@ -184,6 +187,8 @@ public class Level : MonoBehaviour
         var chuzzle = gameObject.GetComponent<Chuzzle>();
         chuzzle.Real = chuzzle.MoveTo = chuzzle.Current = cell;
 
+        chuzzle.Explosion = Explosion;
+
         gameObject.transform.parent = Gamefield.transform;
         gameObject.transform.position = GamefieldUtility.ConvertXYToPosition(cell.x, cell.y, chuzzle.Scale);
 
@@ -191,7 +196,7 @@ public class Level : MonoBehaviour
         {
             chuzzle.Counter = ((TargetChuzzleGameMode) Gamefield.GetComponent<Gamefield>().GameMode).Amount;
 
-            var counterObject = (Instantiate(CounterPrefab) as GameObject).GetComponentInChildren<TextMesh>();
+            var counterObject = ((GameObject) Instantiate(CounterPrefab)).GetComponentInChildren<TextMesh>();
             counterObject.transform.parent = chuzzle.transform;
             counterObject.transform.localPosition = Vector3.zero;
 
@@ -205,9 +210,19 @@ public class Level : MonoBehaviour
         {
             ActiveChuzzles.Add(chuzzle);
         }
+        chuzzle.Died += OnChuzzleDeath;
+        
         return chuzzle;
-    }                            
-         
+    }
+
+    private void OnChuzzleDeath(Chuzzle chuzzle)
+    {
+        //remove chuzzle from game logic
+        Gamefield.RemoveChuzzle(chuzzle);
+
+        chuzzle.Died -= OnChuzzleDeath;
+    }
+
     public Cell GetCellAt(int x, int y, bool createIfNotFound = true)
     {
         var cell = GamefieldUtility.CellAt(Cells, x, y);

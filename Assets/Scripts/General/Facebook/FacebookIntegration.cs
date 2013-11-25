@@ -9,6 +9,7 @@ using UnityEngine;
 public class FacebookIntegration : MonoBehaviour
 {
 #if UNITY_ANDROID || UNITY_EDITOR
+    public static FacebookIntegration Instance;
     public string AccessToken;
     public bool FbInited;
 
@@ -16,8 +17,6 @@ public class FacebookIntegration : MonoBehaviour
     public Dictionary<string, string> Profile;
     public Texture ProfilePicture;
     public string Username;
-
-    public static FacebookIntegration Instance;
 
     #region Event Handlers
 
@@ -48,14 +47,6 @@ public class FacebookIntegration : MonoBehaviour
         RequestProfile();
     }
 
-    private void RequestProfile()
-    {
-        AccessToken = FB.AccessToken;
-        FB.API("/me?fields=id,first_name", HttpMethod.GET, OnPlayerInfo,
-            new Dictionary<string, string> {{"access_token", AccessToken}});
-        //FB.API("/me/picture?width=128&height=128&access_token=" + AccessToken, Facebook.HttpMethod.GET, OnPicture);
-    }
-
     private void OnPlayerInfo(FBResult result) // handle user profile info
     {
         if (result.Error != null)
@@ -80,7 +71,36 @@ public class FacebookIntegration : MonoBehaviour
         ProfilePicture = result.Texture;
     }
 
+    public void OnFBLoginClick()
+    {
+        Debug.Log("Fb connect clicked");
+
+        if (!FB.IsLoggedIn)
+        {
+            Debug.Log("Try login");
+            FB.Login("publish_stream,publish_actions,user_games_activity,friends_games_activity", OnLogin);
+        }
+        else
+        {
+            Debug.Log("Logged! " + FB.UserId);
+            RequestProfile();
+        }
+    }
+
+    private void OnAskLifeClicked()
+    {
+        //TODO Ask life
+    }
+
     #endregion
+
+    private void RequestProfile()
+    {
+        AccessToken = FB.AccessToken;
+        FB.API("/me?fields=id,first_name", HttpMethod.GET, OnPlayerInfo,
+            new Dictionary<string, string> {{"access_token", AccessToken}});
+        //FB.API("/me/picture?width=128&height=128&access_token=" + AccessToken, Facebook.HttpMethod.GET, OnPicture);
+    }
 
     private void Start()
     {
@@ -103,30 +123,33 @@ public class FacebookIntegration : MonoBehaviour
         }
     }
 
-    public void OnFBLoginClick()
+    public static void SendLevelResult(string levelName, int points)
     {
-        Debug.Log("Fb connect clicked");
+    }
 
-        if (!FB.IsLoggedIn)
+    public static List<ResultDescription> FriendTopForLevel(string levelName, int maxAmount)
+    {
+        return new List<ResultDescription>
         {
-            Debug.Log("Try login");
-            FB.Login("publish_stream,publish_actions,user_games_activity,friends_games_activity", OnLogin);
-        }
-        else
-        {
-            Debug.Log("Logged! " + FB.UserId);
-            RequestProfile();
-        }
+            new ResultDescription
+            {
+                Id = "0",
+                Place = 1,
+                Name = "Vova Pupkin",
+                Score = 10000
+            }
+        };
     }
 
-    void OnAskLifeClicked()
-    {
-        //TODO Ask life
-    }
-
-    public void SendLevelResult(int levelNumber, int points)
-    {
-        
-    }
 #endif
+}
+
+public class ResultDescription
+{
+    public Texture AvatarTexture;
+    public string Id;
+    public string Name;
+    public int Place;
+
+    public int Score;
 }

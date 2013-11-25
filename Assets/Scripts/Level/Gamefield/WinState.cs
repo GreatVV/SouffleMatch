@@ -14,10 +14,11 @@ public class WinState : GamefieldState
         if (currentPoints > levelInfo.BestScore)
         {
             levelInfo.BestScore = currentPoints;
+            FacebookIntegration.SendLevelResult(levelInfo.Name, currentPoints);
         }
 
         levelInfo.IsCompleted = true;
-        levelInfo.NumberOfAttempts++;
+        levelInfo.NumberOfAttempts++; 
     }
 
     public override void OnExit()

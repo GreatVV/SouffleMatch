@@ -83,7 +83,7 @@ public class Gamefield : MonoBehaviour
         if (handler != null) handler(this);
     }
 
-    private void InvokeTileDestroyed(Chuzzle destroyedChuzzle)
+    public void InvokeTileDestroyed(Chuzzle destroyedChuzzle)
     {
         if (TileDestroyed != null)
         {

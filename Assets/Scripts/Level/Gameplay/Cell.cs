@@ -7,6 +7,7 @@ public class Cell
     public CellTypes Type;
 
     public GameObject Sprite;
+    public GameObject PlaceSprite;
 
     public int x;
     public int y;
@@ -34,6 +35,8 @@ public class Cell
             };
         }
     }
+
+    
 
     public Cell(int x, int y, CellTypes type = CellTypes.Usual)
     {

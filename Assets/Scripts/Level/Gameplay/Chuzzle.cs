@@ -1,50 +1,76 @@
 ﻿#region
 
 using System;
-using System.Globalization;
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 #endregion
 
-[RequireComponent(typeof(TeleportableEntity))]
+[RequireComponent(typeof (TeleportableEntity))]
 public class Chuzzle : MonoBehaviour
 {
-    public Cell Current;
-
-    public Cell MoveTo;
-
-    public Cell Real;
-
-    public ChuzzleType Type;
-
-    public bool IsCheckedForSearch;
-
-    public PowerType PowerType;
-
-    public int Counter
-    {
-        get { return _counter; }
-        set
-        {
-            _counter = value;
-            var counter = GetComponentInChildren<TextMesh>();
-            if (counter != null)
-            {
-                counter.text = Counter.ToString(CultureInfo.InvariantCulture);
-            }
-        }
-    }
-
-    public SpriteRenderer Sprite;
-
-    public bool _shine;
-
     public float Alpha;
-    private bool _frozen;
 
     public GameObject Arrow;
+    public int Counter;
+    public Cell Current;
+
+    public bool IsCheckedForSearch;
+    public Cell MoveTo;
+
+    public PowerType PowerType;
+    public Cell Real;
+
+    public SpriteRenderer Sprite;
+    public int TimesDestroyed;
+    public ChuzzleType Type;
+
     public Vector3 Velocity;
     private int _counter;
+    public bool _shine;
+
+    public GameObject Explosion;
+
+    #region Events
+
+    public event Action<Chuzzle> Died;
+    public event Action<Chuzzle> AnimationFinished;
+
+    #endregion
+
+    #region Event Handlers
+
+    private void OnDisable()
+    {
+        //drop all event handlers
+        Died = null;
+    }
+
+    private void OnDeathAnimationEnd(object chuzzle)
+    {
+        InvokeDied();
+        InvokeAnimationFinished();
+        Destroy(gameObject);
+    }
+
+    #endregion
+
+    #region Event Invokators
+
+    protected virtual void InvokeAnimationFinished()
+    {
+        var handler = AnimationFinished;
+        if (handler != null) handler(this);
+    }
+
+    protected virtual void InvokeDied()
+    {
+        var handler = Died;
+        if (handler != null) handler(this);
+    }
+
+    #endregion
 
     public bool Shine
     {
@@ -58,7 +84,7 @@ public class Chuzzle : MonoBehaviour
                 Destroy(Arrow);
             }
         }
-    }   
+    }
 
     public Vector3 Scale
     {
@@ -68,7 +94,7 @@ public class Chuzzle : MonoBehaviour
     public override string ToString()
     {
         return "" + Type + " (" + Current.x + "," + Current.y + ")";
-    }                       
+    }
 
     private void Update()
     {
@@ -80,38 +106,23 @@ public class Chuzzle : MonoBehaviour
         }                           */
     }
 
-    public bool Frozen
+    public bool Frozen { get; set; }
+
+    private void Die()
     {
-        get { return _frozen; }
-        set
-        {
-            _frozen = value;
-            //todo
-            //Sprite.color = new Color(Sprite.color.r, Sprite.color.g, Sprite.color.b, _frozen ? 0.1f : 1f);
-        }
-    }
-
-    public int TimesDestroyed;
-
-    void OnDisable()
-    {
-        //drop all event handlers
-        Died = null;
-    }
-
-    public void Die()
-    {   
         //TODO Do Explosion
-        if (transform.localScale != Vector3.zero)
+        if (Math.Abs(transform.localScale.x) > 0.01f)
         {
             iTween.ScaleTo(gameObject,
                 iTween.Hash(
                     "x", 0,
                     "y", 0,
                     "z", 0,
-                    "time", 0.5f,
-                    "oncomplete", new Action<object>(OnDeathAnimationEnd),
-                    "oncompleteparams", this));
+                    "time", 0.4f));
+            var ps = Instantiate(Explosion) as GameObject;
+          //  Debug.Log("Ps: "+ps);
+            ps.transform.position = transform.position;
+            StartCoroutine("CheckIfAlive");
         }
         else
         {
@@ -119,16 +130,42 @@ public class Chuzzle : MonoBehaviour
         }
     }
 
-    private void OnDeathAnimationEnd(object chuzzle)
+    public void Destroy(List<Chuzzle> combination)
     {
-        InvokeDied();
+        TimesDestroyed++;
+        if (PowerType == PowerType.TwoTimes)
+        {
+            if (TimesDestroyed == 2)
+            {
+                Die();
+            }
+            else
+            {
+                InvokeAnimationFinished();
+            }
+            return;
+        }
+
+
+        if (Counter > 0)
+        {
+            InvokeAnimationFinished();
+        }
+        else
+        {
+            Die();
+        }
     }
 
-    public event Action<Chuzzle> Died;
-
-    protected virtual void InvokeDied()
+    IEnumerator CheckIfAlive()
     {
-        var handler = Died;
-        if (handler != null) handler(this);
+        while (true)
+        {
+            yield return new WaitForSeconds(0.5f);
+            if (!Explosion.particleSystem.IsAlive(true))       
+            {
+                OnDeathAnimationEnd(this);
+            }
+        }
     }
 }
