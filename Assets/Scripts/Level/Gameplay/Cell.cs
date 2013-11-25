@@ -8,9 +8,6 @@ public class Cell
 
     public GameObject Sprite;
 
-    public bool HasPlace;
-    public bool HasCounter;
-
     public int x;
     public int y;
 
@@ -21,11 +18,20 @@ public class Cell
 
     public bool IsTemporary;
 
+    public bool NeedPlace;
+    public bool NeedCounter;
+    public bool NeedLock;
+
     public Cell Copy
     {
         get
         {
-            return new Cell(x,y,Type) {HasCounter = HasCounter, HasPlace = HasPlace};
+            return new Cell(x,y,Type)
+            {
+                NeedCounter = NeedCounter, 
+                NeedPlace = NeedPlace,
+                NeedLock = NeedLock
+            };
         }
     }
 

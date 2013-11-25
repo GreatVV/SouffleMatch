@@ -60,7 +60,7 @@ public class Level : MonoBehaviour
         var xStart = 0;
         var xEnd = Width;
 
-        var wDiff = 8 - Width;
+        var wDiff = 10 - Width;
         var hDiff = 16 - Height;
         yStart -= hDiff/2;
         yEnd += hDiff/2;
@@ -73,17 +73,7 @@ public class Level : MonoBehaviour
             {
                 if (x >= 0 && x < Width && y >= 0 && y < Height)
                 {
-                    if (GetCellAt(x, y).Type == CellTypes.Usual)
-                    {
-                        if (x == 2 && y == 2)// coordinates of lock chuzzle
-                        {
-                            CreateLockChuzzle(x, y);
-                        }
-                        else
-                        {
-                            CreateRandomChuzzle(x, y);
-                        }
-                    }
+                    CreateChuzzle(GetCellAt(x, y));
                 }
                 else
                 {
@@ -92,6 +82,21 @@ public class Level : MonoBehaviour
                     CellSprites.Add(cellSprite);
                     cellSprite.transform.position = GamefieldUtility.ConvertXYToPosition(x, y, Vector3.one);
                 }
+            }
+        }
+    }
+
+    private void CreateChuzzle(Cell cell)
+    {
+        if (cell.Type == CellTypes.Usual)
+        {
+            if (cell.NeedLock)
+            {
+                CreateLockChuzzle(cell);
+            }
+            else
+            {
+                CreateRandomChuzzle(cell);
             }
         }
     }
@@ -122,7 +127,7 @@ public class Level : MonoBehaviour
      
         cell.Sprite = cellSprite;
 
-        if (cell.HasPlace)
+        if (cell.NeedPlace)
         {
             var place = NGUITools.AddChild(cellSprite, PlacePrefab);
             place.transform.localPosition = Vector3.zero;    
@@ -156,43 +161,44 @@ public class Level : MonoBehaviour
         InitRandom();
     }
 
-    public Chuzzle CreateRandomChuzzle(int x, int y, bool toActive = false)
+    public Chuzzle CreateRandomChuzzle(Cell cell, bool toActive = false)
     {
         var colorsNumber = NumberOfColors == -1 ? ChuzzlePrefabs.Length : NumberOfColors;
         var prefab = ChuzzlePrefabs[Random.Range(0, colorsNumber)];
-        return CreateChuzzle(x, y, prefab, toActive);
+        return CreateChuzzle(cell, prefab, toActive);
     }
 
-    public Chuzzle CreateLockChuzzle(int x, int y, bool toActive = false)
+    public Chuzzle CreateLockChuzzle(Cell cell, bool toActive = false)
     {
         var colorsNumber = NumberOfColors == -1 ? ChuzzlePrefabs.Length : NumberOfColors;
         var prefab = ChuzzleLockPrefabs[Random.Range(0, colorsNumber)];
-        Chuzzle c = CreateChuzzle(x, y, prefab, toActive);
+        Chuzzle c = CreateChuzzle(cell, prefab, toActive);
         return c;
     }
 
-    public Chuzzle CreateChuzzle(int x, int y, GameObject prefab, bool toActive = false)
+    public Chuzzle CreateChuzzle(Cell cell, GameObject prefab, bool toActive = false)
     {
         var gameObject = NGUITools.AddChild(Gamefield.gameObject, prefab);
         gameObject.layer = prefab.layer;                                  
     
         var chuzzle = gameObject.GetComponent<Chuzzle>();
-        chuzzle.Real = chuzzle.MoveTo = chuzzle.Current = GetCellAt(x, y);
+        chuzzle.Real = chuzzle.MoveTo = chuzzle.Current = cell;
 
         gameObject.transform.parent = Gamefield.transform;
-        gameObject.transform.position = new Vector3(
-            x*chuzzle.Scale.x,
-            y*chuzzle.Scale.y, 
-            0);
+        gameObject.transform.position = GamefieldUtility.ConvertXYToPosition(cell.x, cell.y, chuzzle.Scale);
 
-        if (chuzzle.Current.HasCounter)
+        if (cell.NeedCounter)
         {
             chuzzle.Counter = ((TargetChuzzleGameMode) Gamefield.GetComponent<Gamefield>().GameMode).Amount;
 
-       /*     var counter = NGUITools.AddChild(gameObject, CounterPrefab).GetComponent<tk2dTextMesh>();
-            counter.text = chuzzle.Counter.ToString(CultureInfo.InvariantCulture);*/
+            var counterObject = (Instantiate(CounterPrefab) as GameObject).GetComponentInChildren<TextMesh>();
+            counterObject.transform.parent = chuzzle.transform;
+            counterObject.transform.localPosition = Vector3.zero;
 
-            chuzzle.Current.HasCounter = false;
+            var counter = counterObject.GetComponent<TextMesh>();
+            counter.text = chuzzle.Counter.ToString(CultureInfo.InvariantCulture);
+
+            chuzzle.Current.NeedCounter = false;
         }
         Chuzzles.Add(chuzzle);
         if (toActive)
@@ -201,8 +207,7 @@ public class Level : MonoBehaviour
         }
         return chuzzle;
     }                            
-   
-
+         
     public Cell GetCellAt(int x, int y, bool createIfNotFound = true)
     {
         var cell = GamefieldUtility.CellAt(Cells, x, y);

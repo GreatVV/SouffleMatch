@@ -104,7 +104,7 @@ public class CheckSpecialState : GamefieldState
         }
 
         var powerUp = PowerTypePrefabs.First(x => x.Type == powerType && x.ChuzzleType == targetTile.Type).Prefab;
-        var powerUpChuzzle = Gamefield.Level.CreateChuzzle(targetTile.Current.x, targetTile.Current.y, powerUp);
+        var powerUpChuzzle = Gamefield.Level.CreateChuzzle(targetTile.Current, powerUp);
         powerUpChuzzle.Type = targetTile.Type;
         powerUpChuzzle.PowerType = powerType;
 

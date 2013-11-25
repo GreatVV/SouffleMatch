@@ -79,7 +79,7 @@ public class CreateNewChuzzlesState : GamefieldState
                 for (var j = 0; j < newInColumn; j++)
                 {
                     //create new tiles
-                    var chuzzle = Gamefield.Level.CreateRandomChuzzle(x, Gamefield.Level.Height + j, true);
+                    var chuzzle = Gamefield.Level.CreateRandomChuzzle(Gamefield.Level.GetCellAt(x, Gamefield.Level.Height + j), true);
                     chuzzle.Current.IsTemporary = true;
                 }
             }

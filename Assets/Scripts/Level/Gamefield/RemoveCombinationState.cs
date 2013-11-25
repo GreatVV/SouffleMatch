@@ -32,9 +32,12 @@ public class RemoveCombinationState : GamefieldState
     {
     }
 
-    public void OnCompleteDeath(object chuzzleObject)
+    public void OnCompleteDeath(Chuzzle chuzzle)
     {
-        var chuzzle = chuzzleObject as Chuzzle;
+        //remove chuzzle from game logic
+        Gamefield.RemoveChuzzle(chuzzle);
+
+        chuzzle.Died -= OnCompleteDeath;
 
         DeathAnimationChuzzles.Remove(chuzzle);
         Destroy(chuzzle.gameObject);
@@ -79,30 +82,28 @@ public class RemoveCombinationState : GamefieldState
         }
         foreach (var chuzzle in combination)
         {
-            if (chuzzle.Counter > 0)
+            chuzzle.TimesDestroyed++;
+            if (chuzzle.PowerType == PowerType.TwoTimes)
             {
-                continue;
+                if (chuzzle.TimesDestroyed < 2)
+                {
+                    continue;
+                }
             }
-            //remove chuzzle from game logic
-            Gamefield.RemoveChuzzle(chuzzle);
 
-            chuzzle.Die();
-         
+            chuzzle.Counter -= combination.Count;
+            if (chuzzle.Counter > 0)
+            {                                    
+                continue;
+            }               
 
             if (chuzzle.gameObject.transform.localScale != Vector3.zero)
             {
                 if (!DeathAnimationChuzzles.Contains(chuzzle))
                 {
                     DeathAnimationChuzzles.Add(chuzzle);
-
-                    iTween.ScaleTo(chuzzle.gameObject,
-                        iTween.Hash(
-                            "x", 0,
-                            "y", 0,
-                            "z", 0,
-                            "time", 0.5f,
-                            "oncomplete", new Action<object>(OnCompleteDeath),
-                            "oncompleteparams", chuzzle));
+                    chuzzle.Died += OnCompleteDeath;
+                    chuzzle.Die();
                 }
             }
         }

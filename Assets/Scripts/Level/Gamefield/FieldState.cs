@@ -287,7 +287,7 @@ public class FieldState : GamefieldState
         Debug.Log("Random repaint");
         var randomChuzzle = Gamefield.Level.Chuzzles[Random.Range(0, Gamefield.Level.Chuzzles.Count)];
 
-        Gamefield.Level.CreateRandomChuzzle(randomChuzzle.Current.x, randomChuzzle.Current.y, true);
+        Gamefield.Level.CreateRandomChuzzle(Gamefield.Level.GetCellAt(randomChuzzle.Current.x, randomChuzzle.Current.y), true);
 
         Object.Destroy(randomChuzzle.gameObject);
         Gamefield.Level.ActiveChuzzles.Remove(randomChuzzle);

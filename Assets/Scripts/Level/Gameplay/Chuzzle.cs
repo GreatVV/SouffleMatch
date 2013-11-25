@@ -1,5 +1,7 @@
 ﻿#region
 
+using System;
+using System.Globalization;
 using UnityEngine;
 
 #endregion
@@ -19,7 +21,20 @@ public class Chuzzle : MonoBehaviour
 
     public PowerType PowerType;
 
-    public int Counter;         
+    public int Counter
+    {
+        get { return _counter; }
+        set
+        {
+            _counter = value;
+            var counter = GetComponentInChildren<TextMesh>();
+            if (counter != null)
+            {
+                counter.text = Counter.ToString(CultureInfo.InvariantCulture);
+            }
+        }
+    }
+
     public SpriteRenderer Sprite;
 
     public bool _shine;
@@ -28,7 +43,8 @@ public class Chuzzle : MonoBehaviour
     private bool _frozen;
 
     public GameObject Arrow;
-    public Vector3 Velocity;    
+    public Vector3 Velocity;
+    private int _counter;
 
     public bool Shine
     {
@@ -42,8 +58,7 @@ public class Chuzzle : MonoBehaviour
                 Destroy(Arrow);
             }
         }
-    }
-
+    }   
 
     public Vector3 Scale
     {
@@ -76,8 +91,44 @@ public class Chuzzle : MonoBehaviour
         }
     }
 
-    public void Die()
+    public int TimesDestroyed;
+
+    void OnDisable()
     {
+        //drop all event handlers
+        Died = null;
+    }
+
+    public void Die()
+    {   
         //TODO Do Explosion
+        if (transform.localScale != Vector3.zero)
+        {
+            iTween.ScaleTo(gameObject,
+                iTween.Hash(
+                    "x", 0,
+                    "y", 0,
+                    "z", 0,
+                    "time", 0.5f,
+                    "oncomplete", new Action<object>(OnDeathAnimationEnd),
+                    "oncompleteparams", this));
+        }
+        else
+        {
+            OnDeathAnimationEnd(this);
+        }
+    }
+
+    private void OnDeathAnimationEnd(object chuzzle)
+    {
+        InvokeDied();
+    }
+
+    public event Action<Chuzzle> Died;
+
+    protected virtual void InvokeDied()
+    {
+        var handler = Died;
+        if (handler != null) handler(this);
     }
 }

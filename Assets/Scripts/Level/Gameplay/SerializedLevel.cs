@@ -89,10 +89,13 @@ public class SerializedLevel
                 case (0): //empty
                     break;
                 case (2): // place
-                    serializedLevel.SpecialCells.Add(new Cell(x, y) {HasPlace = true});
+                    serializedLevel.SpecialCells.Add(new Cell(x, y) {NeedPlace = true});
                     break;
                 case (3): //counter
-                    serializedLevel.SpecialCells.Add(new Cell(x, y) {HasCounter = true});
+                    serializedLevel.SpecialCells.Add(new Cell(x, y) {NeedCounter = true});
+                    break;
+                case (4): //lock
+                    serializedLevel.SpecialCells.Add(new Cell(x,y) {NeedLock = true});
                     break;
                 default: // block
                     serializedLevel.SpecialCells.Add(new Cell(x, y, CellTypes.Block));

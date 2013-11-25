@@ -4,5 +4,6 @@
     VerticalLine,
     HorizontalLine,
     Bomb,
-    Lock
+    Lock,
+    TwoTimes
 }
