@@ -23,11 +23,10 @@ public class Level : MonoBehaviour
     #region Set in editor
 
     public CellSprite[] CellPrefabs;
-
     public GameObject[] ChuzzlePrefabs;
     public GameObject[] ChuzzleLockPrefabs;
+    public GameObject[] ChuzzleTwoTimesPrefabs;
     public GameObject CounterPrefab;
-  
     public GameObject PlacePrefab;
 
     [HideInInspector]
@@ -73,6 +72,12 @@ public class Level : MonoBehaviour
         {              
             for (var x = xStart; x < xEnd; x++)
             {
+                if (x == 4)//for Two Times chuzzle testing
+                {
+                    Cell cell = GetCellAt(x, y);
+                    cell.NeedTwoTimes = true;
+                }
+                
                 if (x >= 0 && x < Width && y >= 0 && y < Height)
                 {
                     CreateChuzzle(GetCellAt(x, y));
@@ -95,6 +100,10 @@ public class Level : MonoBehaviour
             if (cell.NeedLock)
             {
                 CreateLockChuzzle(cell);
+            }
+            if (cell.NeedTwoTimes)
+            {
+                CreateTwoTimeChuzzle(cell);
             }
             else
             {
@@ -175,6 +184,14 @@ public class Level : MonoBehaviour
     {
         var colorsNumber = NumberOfColors == -1 ? ChuzzlePrefabs.Length : NumberOfColors;
         var prefab = ChuzzleLockPrefabs[Random.Range(0, colorsNumber)];
+        Chuzzle c = CreateChuzzle(cell, prefab, toActive);
+        return c;
+    }
+
+    public Chuzzle CreateTwoTimeChuzzle(Cell cell, bool toActive = false)
+    {
+        var colorsNumber = NumberOfColors == -1 ? ChuzzlePrefabs.Length : NumberOfColors;
+        var prefab = ChuzzleTwoTimesPrefabs[Random.Range(0, colorsNumber)];
         Chuzzle c = CreateChuzzle(cell, prefab, toActive);
         return c;
     }

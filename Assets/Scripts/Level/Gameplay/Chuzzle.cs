@@ -135,17 +135,18 @@ public class Chuzzle : MonoBehaviour
         TimesDestroyed++;
         if (PowerType == PowerType.TwoTimes)
         {
-            if (TimesDestroyed == 2)
+            if (TimesDestroyed >= 2)
             {
                 Die();
             }
             else
             {
+                SpriteRenderer TwoTimesSprite = GetComponentInChildren<SpriteRenderer>();
+                TwoTimesSprite.enabled = false;
                 InvokeAnimationFinished();
             }
             return;
         }
-
 
         if (Counter > 0)
         {

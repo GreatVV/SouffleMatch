@@ -22,6 +22,7 @@ public class Cell
     public bool NeedPlace;
     public bool NeedCounter;
     public bool NeedLock;
+    public bool NeedTwoTimes;
 
     public Cell Copy
     {
@@ -31,7 +32,8 @@ public class Cell
             {
                 NeedCounter = NeedCounter, 
                 NeedPlace = NeedPlace,
-                NeedLock = NeedLock
+                NeedLock = NeedLock,
+                NeedTwoTimes = NeedTwoTimes
             };
         }
     }

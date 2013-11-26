@@ -97,6 +97,9 @@ public class SerializedLevel
                 case (4): //lock
                     serializedLevel.SpecialCells.Add(new Cell(x,y) {NeedLock = true});
                     break;
+                case (5): //two time
+                    serializedLevel.SpecialCells.Add(new Cell(x, y) { NeedTwoTimes = true });
+                    break;
                 default: // block
                     serializedLevel.SpecialCells.Add(new Cell(x, y, CellTypes.Block));
                     break;
