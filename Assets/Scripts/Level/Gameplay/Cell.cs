@@ -1,6 +1,15 @@
 ﻿using System;
 using UnityEngine;
 
+public enum CreationType
+{
+    Usual,
+    Place,
+    Counter,
+    Lock,
+    TwoTimes
+}
+
 [Serializable]
 public class Cell
 {   
@@ -19,10 +28,7 @@ public class Cell
 
     public bool IsTemporary;
 
-    public bool NeedPlace;
-    public bool NeedCounter;
-    public bool NeedLock;
-    public bool NeedTwoTimes;
+    public CreationType CreationType;
 
     public Cell Copy
     {
@@ -30,10 +36,7 @@ public class Cell
         {
             return new Cell(x,y,Type)
             {
-                NeedCounter = NeedCounter, 
-                NeedPlace = NeedPlace,
-                NeedLock = NeedLock,
-                NeedTwoTimes = NeedTwoTimes
+                CreationType = CreationType
             };
         }
     }

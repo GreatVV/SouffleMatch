@@ -540,6 +540,8 @@ public class GamefieldUtility
     public static Cell MaxColumnAvailiablePosition(int column, IEnumerable<Cell> cells)
     {
         var enumerable = cells as Cell[] ?? cells.ToArray();
+        Debug.Log("Column: "+column);
+        Debug.Log("Cells NUmber: "+cells.Count());
         var maxCell =  enumerable.First(cell => cell.x == column && !cell.IsTemporary && cell.y == enumerable.Where(c=>!c.IsTemporary).Max(y => y.y));
         if (maxCell.Type != CellTypes.Usual)
         {

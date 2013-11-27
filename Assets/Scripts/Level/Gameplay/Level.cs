@@ -71,13 +71,7 @@ public class Level : MonoBehaviour
         for (var y = yStart; y < yEnd; y++)
         {              
             for (var x = xStart; x < xEnd; x++)
-            {
-                if (x == 4)//for Two Times chuzzle testing
-                {
-                    Cell cell = GetCellAt(x, y);
-                    cell.NeedTwoTimes = true;
-                }
-                
+            {    
                 if (x >= 0 && x < Width && y >= 0 && y < Height)
                 {
                     CreateChuzzle(GetCellAt(x, y));
@@ -97,17 +91,21 @@ public class Level : MonoBehaviour
     {
         if (cell.Type == CellTypes.Usual)
         {
-            if (cell.NeedLock)
+            switch (cell.CreationType)
             {
-                CreateLockChuzzle(cell);
-            }
-            if (cell.NeedTwoTimes)
-            {
-                CreateTwoTimeChuzzle(cell);
-            }
-            else
-            {
-                CreateRandomChuzzle(cell);
+                case CreationType.Usual:
+                case CreationType.Place:
+                case CreationType.Counter:
+                    CreateRandomChuzzle(cell);
+                    break;
+                case CreationType.Lock:
+                    CreateLockChuzzle(cell);
+                    break;
+                case CreationType.TwoTimes:
+                    CreateTwoTimeChuzzle(cell);
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
             }
         }
     }
@@ -138,7 +136,7 @@ public class Level : MonoBehaviour
      
         cell.Sprite = cellSprite;
 
-        if (cell.NeedPlace)
+        if (cell.CreationType == CreationType.Place)
         {
             var place = NGUITools.AddChild(cellSprite, PlacePrefab);
             place.transform.localPosition = Vector3.zero;
@@ -209,7 +207,7 @@ public class Level : MonoBehaviour
         gameObject.transform.parent = Gamefield.transform;
         gameObject.transform.position = GamefieldUtility.ConvertXYToPosition(cell.x, cell.y, chuzzle.Scale);
 
-        if (cell.NeedCounter)
+        if (cell.CreationType == CreationType.Counter && Gamefield.GameMode is TargetChuzzleGameMode)
         {
             chuzzle.Counter = ((TargetChuzzleGameMode) Gamefield.GetComponent<Gamefield>().GameMode).Amount;
 
@@ -220,7 +218,7 @@ public class Level : MonoBehaviour
             var counter = counterObject.GetComponent<TextMesh>();
             counter.text = chuzzle.Counter.ToString(CultureInfo.InvariantCulture);
 
-            chuzzle.Current.NeedCounter = false;
+            chuzzle.Current.CreationType = CreationType.Usual;
         }
         Chuzzles.Add(chuzzle);
         if (toActive)

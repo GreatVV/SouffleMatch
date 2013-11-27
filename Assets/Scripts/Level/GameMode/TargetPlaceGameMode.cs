@@ -53,7 +53,7 @@ public class TargetPlaceGameMode : GameMode
         Gamefield.TileDestroyed += OnTileDestroyed;
 
         PlaceCoordinates.Clear();
-        var placeCell = Gamefield.Level.Cells.Where(x => x.NeedPlace);
+        var placeCell = Gamefield.Level.Cells.Where(x => x.CreationType == CreationType.Place);
         var enumerable = placeCell as Cell[] ?? placeCell.ToArray();
         Debug.Log("Now of cells: "+enumerable.Count());
         foreach (var cell in enumerable)

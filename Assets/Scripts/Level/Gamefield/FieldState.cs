@@ -338,7 +338,7 @@ public class FieldState : GamefieldState
             return;
         }
 
-        if (SelectedChuzzles.Any() && _axisChozen)
+        if (SelectedChuzzles.Any() && _axisChozen && _delta.magnitude >= 0.05f)
         {
             var pos = CurrentChuzzle.transform.position;
 
