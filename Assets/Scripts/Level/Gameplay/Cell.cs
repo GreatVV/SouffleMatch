@@ -7,7 +7,8 @@ public enum CreationType
     Place,
     Counter,
     Lock,
-    TwoTimes
+    TwoTimes,
+    Invader
 }
 
 [Serializable]

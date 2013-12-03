@@ -27,7 +27,10 @@ public class Level : MonoBehaviour
     public GameObject[] ChuzzleLockPrefabs;
     public GameObject[] ChuzzleTwoTimesPrefabs;
     public GameObject[] ChuzzleCounterPrefabs;
+    public GameObject InvaderPrefab;
+
     public GameObject PlacePrefab;
+    
 
     [HideInInspector]
     public Gamefield Gamefield;
@@ -49,6 +52,8 @@ public class Level : MonoBehaviour
 
 
     public GameObject Explosion;
+    
+
     void Awake()
     {
         Gamefield = GetComponent<Gamefield>();
@@ -113,12 +118,14 @@ public class Level : MonoBehaviour
                 case CreationType.TwoTimes:
                     CreateTwoTimeChuzzle(cell);
                     break;
+                case CreationType.Invader:
+                    CreateInvader(cell);
+                    break;
                 default:
                     throw new ArgumentOutOfRangeException();
             }
         }
-    }
-
+    }  
     public Chuzzle At(int x, int y)
     {
         return Chuzzles.FirstOrDefault(c => c.Current.x == x && c.Current.y == y);
@@ -202,6 +209,12 @@ public class Level : MonoBehaviour
         Chuzzle c = CreateChuzzle(cell, prefab, toActive);
         return c;
     }
+
+    public Chuzzle CreateInvader(Cell cell, bool toActive = false)
+    {
+        return CreateChuzzle(cell, InvaderPrefab, toActive);
+    }
+
 
     public Chuzzle CreateCounterChuzzle(Cell cell, bool toActive = false)
     {

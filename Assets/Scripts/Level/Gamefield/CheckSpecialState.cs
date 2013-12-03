@@ -14,7 +14,9 @@ public class CheckSpecialState : GamefieldState
 {
     public List<Chuzzle> SpecialTilesAnimated = new List<Chuzzle>();
 
-    public List<Pair> PowerTypePrefabs = new List<Pair>();
+    public GameObject[] HorizontalLineChuzzlePrefabs;
+    public GameObject[] VerticalLineChuzzlePrefabs;
+    public GameObject[] BombChuzzlePrefabs;
 
     #region Event Handlers
 
@@ -85,10 +87,10 @@ public class CheckSpecialState : GamefieldState
 
     private bool CreateBomb(List<Chuzzle> comb)
     {
-        return CreateSpecialWithType(comb, PowerType.Bomb);
+        return CreateSpecialWithType(comb, BombChuzzlePrefabs);
     }             
 
-    public bool CreateSpecialWithType(List<Chuzzle> comb, PowerType powerType)
+    public bool CreateSpecialWithType(List<Chuzzle> comb, GameObject[] prefabs)
     {
         var ordered = comb;
 
@@ -102,7 +104,7 @@ public class CheckSpecialState : GamefieldState
             }
         }
 
-        var powerUp = PowerTypePrefabs.First(x => x.Type == powerType && x.ChuzzleColor == targetTile.Color).Prefab;
+        var powerUp = prefabs.First(x => x.GetComponent<Chuzzle>().Color == targetTile.Color);
         var powerUpChuzzle = Gamefield.Level.CreateChuzzle(targetTile.Current, powerUp);
         powerUpChuzzle.Color = targetTile.Color;
         
@@ -143,6 +145,6 @@ public class CheckSpecialState : GamefieldState
     private bool CreateLine(List<Chuzzle> comb)
     {
         return CreateSpecialWithType(comb,
-            Random.Range(0, 100) > 50 ? PowerType.HorizontalLine : PowerType.VerticalLine);
+            Random.Range(0, 100) > 50 ? HorizontalLineChuzzlePrefabs : VerticalLineChuzzlePrefabs);
     }
 }

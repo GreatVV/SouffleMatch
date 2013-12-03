@@ -11,7 +11,7 @@ public class CounterChuzzle : Chuzzle
     {     
     }
 
-    public override void Destroy(List<Chuzzle> combination)
+    public override void Destroy()
     {
         if (Counter > 0)
         {

@@ -68,6 +68,7 @@ public class FieldState : GamefieldState
             Gamefield.SwitchStateTo(Gamefield.CheckSpecialState);
 
             Gamefield.GameMode.HumanTurn();
+            InvaderChuzzle.Populate(Gamefield);
 
             Reset();
         }

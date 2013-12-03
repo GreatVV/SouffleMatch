@@ -53,7 +53,7 @@ public class GamefieldUtility
         chuzzle.IsCheckedForSearch = true;
 
         var left = GetLeftFor(chuzzle, chuzzles);
-        if (left != null && left.Color == chuzzle.Color)
+        if (left != null && IsSameColor(chuzzle, left))
         {
             var answer = RecursiveFind(left, combination, chuzzles);
             foreach (var a in answer)
@@ -66,7 +66,7 @@ public class GamefieldUtility
         }
 
         var right = GetRightFor(chuzzle, chuzzles);
-        if (right != null && chuzzle.Color == right.Color)
+        if (right != null && IsSameColor(chuzzle, right))
         {
             var answer = RecursiveFind(right, combination, chuzzles);
             foreach (var a in answer)
@@ -79,7 +79,7 @@ public class GamefieldUtility
         }
 
         var top = GetTopFor(chuzzle, chuzzles);
-        if (top != null && chuzzle.Color == top.Color)
+        if (top != null && IsSameColor(chuzzle,top))
         {
             var answer = RecursiveFind(top, combination, chuzzles);
             foreach (var a in answer)
@@ -92,7 +92,7 @@ public class GamefieldUtility
         }
 
         var bottom = GetBottomFor(chuzzle, chuzzles);
-        if (bottom != null && chuzzle.Color == bottom.Color)
+        if (bottom != null && IsSameColor(chuzzle, bottom))
         {
             var answer = RecursiveFind(bottom, combination, chuzzles);
             foreach (var a in answer)
@@ -105,6 +105,22 @@ public class GamefieldUtility
         }
 
         return combination;
+    }
+
+    public static bool IsSameColor(Chuzzle a, Chuzzle b)
+    {
+        if (a == null || b == null)
+        {
+            Debug.Log("A or b is NULL. a:"+a+"b:"+b);
+            return false;
+        }
+
+        if (a is InvaderChuzzle || b is InvaderChuzzle)
+        {
+            return false;
+        }
+
+        return a.Color == b.Color;
     }
 
     public static Chuzzle GetLeftFor(Chuzzle c, IEnumerable<Chuzzle> chuzzles)
@@ -359,13 +375,12 @@ public class GamefieldUtility
         var secondChuzzle =
             allChuzzles.FirstOrDefault(
                 ch =>
-                    ch.Current.x == firstChuzzle.Current.x && ch.Current.y == firstChuzzle.Current.y + 2 &&
-                    ch.Color == firstChuzzle.Color);
+                    ch.Current.x == firstChuzzle.Current.x && ch.Current.y == firstChuzzle.Current.y + 2 && IsSameColor(ch, firstChuzzle));
 
         if (secondChuzzle == null)
             return false;
 
-        return allChuzzles.Any(x => x.Current.y == firstChuzzle.Current.y + 1 && x.Color == firstChuzzle.Color);
+        return allChuzzles.Any(x => x.Current.y == firstChuzzle.Current.y + 1 && IsSameColor(x, firstChuzzle));
     }
 
     public static bool BetweenXCheck(Chuzzle chuzzle, List<Chuzzle> allChuzzles)
@@ -375,12 +390,12 @@ public class GamefieldUtility
             allChuzzles.FirstOrDefault(
                 ch =>
                     ch.Current.y == firstChuzzle.Current.y && ch.Current.x == firstChuzzle.Current.x + 2 &&
-                    ch.Color == firstChuzzle.Color);
+                    IsSameColor(ch, firstChuzzle));
 
         if (secondChuzzle == null)
             return false;
 
-        return allChuzzles.Any(x => x.Current.x == firstChuzzle.Current.x + 1 && x.Color == firstChuzzle.Color);
+        return allChuzzles.Any(x => x.Current.x == firstChuzzle.Current.x + 1 && IsSameColor(x, firstChuzzle));
     }
 
     // вертикальная и горизонтальная проверка для второго случая
@@ -391,7 +406,7 @@ public class GamefieldUtility
             allChuzzles.FirstOrDefault(
                 ch =>
                     ch.Current.x == firstChuzzle.Current.x && ch.Current.y == firstChuzzle.Current.y + 1 &&
-                    ch.Color == firstChuzzle.Color);
+                    IsSameColor(ch, firstChuzzle));
 
         if (secondChuzzle == null) return false;
 
@@ -399,7 +414,7 @@ public class GamefieldUtility
             allChuzzles.Where(
                 ch =>
                     Math.Abs(ch.Current.x - firstChuzzle.Current.x) == 1 || ch.Current.y == firstChuzzle.Current.y - 1 ||
-                    ch.Current.y == firstChuzzle.Current.y + 2).Any(ch => ch.Color == firstChuzzle.Color);
+                    ch.Current.y == firstChuzzle.Current.y + 2).Any(ch => IsSameColor(ch, firstChuzzle));
     }
 
     public static bool AnotherHorizontalCheck(Chuzzle chuzzle, List<Chuzzle> allChuzzles)
@@ -408,8 +423,7 @@ public class GamefieldUtility
         var secondChuzzle =
             allChuzzles.FirstOrDefault(
                 ch =>
-                    ch.Current.y == firstChuzzle.Current.y && ch.Current.x == firstChuzzle.Current.x + 1 &&
-                    ch.Color == firstChuzzle.Color);
+                    ch.Current.y == firstChuzzle.Current.y && ch.Current.x == firstChuzzle.Current.x + 1 && IsSameColor(ch, firstChuzzle));
 
         if (secondChuzzle == null) return false;
 
@@ -417,7 +431,7 @@ public class GamefieldUtility
             allChuzzles.Where(
                 ch =>
                     Math.Abs(ch.Current.y - firstChuzzle.Current.y) == 1 || ch.Current.x == firstChuzzle.Current.x - 1 ||
-                    ch.Current.x == firstChuzzle.Current.x + 2).Any(ch => ch.Color == firstChuzzle.Color);
+                    ch.Current.x == firstChuzzle.Current.x + 2).Any(ch => IsSameColor(ch, firstChuzzle));
 
         //return false;
     }
@@ -435,8 +449,7 @@ public class GamefieldUtility
         {
             var secondChuzzle =
                 enumerable.FirstOrDefault(
-                    c =>
-                        c.Color == firstChuzzle.Color &&
+                    c => IsSameColor(c, firstChuzzle) &&
                         (c.Current == firstChuzzle.Current.Left || c.Current == firstChuzzle.Current.Right));
             if (secondChuzzle != null)
             {
@@ -456,8 +469,7 @@ public class GamefieldUtility
         {
             var secondChuzzle =
                 enumerable.FirstOrDefault(
-                    c =>
-                        c.Color == firstChuzzle.Color &&
+                    c => IsSameColor(c, firstChuzzle) &&
                         (c.Current == firstChuzzle.Current.Top || c.Current == firstChuzzle.Current.Bottom));
             if (secondChuzzle != null)
             {
@@ -594,6 +606,16 @@ public class GamefieldUtility
 
     public static bool IsUsual(Chuzzle chuzzle)
     {
-        return chuzzle is TwoTimeChuzzle || chuzzle is ColorChuzzle || chuzzle is LockChuzzle;
+        return chuzzle is TwoTimeChuzzle || chuzzle is ColorChuzzle;
+    }
+
+    public static bool IsLock(Chuzzle chuzzle)
+    {
+        return chuzzle is LockChuzzle;
+    }
+
+    public static bool IsCounter(Chuzzle chuzzle)
+    {
+        return chuzzle is CounterChuzzle;
     }
 }

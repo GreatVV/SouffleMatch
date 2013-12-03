@@ -8,8 +8,11 @@ public class InitState : GamefieldState
     public override void OnEnter()
     {
         Gamefield.PointSystem.Reset();
-        Gamefield.Level.Reset();            
-        
+        Gamefield.Level.Reset();
+
+        Gamefield.CombinationDestroyed -= InvaderChuzzle.OnCombinationDestroyed;
+        Gamefield.CombinationDestroyed += InvaderChuzzle.OnCombinationDestroyed;
+
         Gamefield.Level.InitFromFile(Player.Instance.LastPlayedLevel);
         Gamefield.StageManager.Init(Player.Instance.LastPlayedLevel.Stages);  
 

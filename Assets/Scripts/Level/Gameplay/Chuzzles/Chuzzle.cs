@@ -116,7 +116,7 @@ public abstract class Chuzzle : MonoBehaviour
         }
     }
 
-    public virtual void Destroy(List<Chuzzle> combination)
+    public virtual void Destroy()
     {
         Die();
     }

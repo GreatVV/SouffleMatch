@@ -11,7 +11,7 @@ public class TwoTimeChuzzle : Chuzzle
     {   
     }
 
-    public override void Destroy(List<Chuzzle> combination)
+    public override void Destroy()
     {
         TimesDestroyed++;
 

@@ -79,17 +79,22 @@ public class RemoveCombinationState : GamefieldState
 
         foreach (var chuzzle in combination)
         {
-            if (chuzzle is CounterChuzzle)
-            {
-                continue;
-            }
+            RemoveChuzzle(chuzzle);
+        }
+    }
 
-            if (!AnimatedChuzzles.Contains(chuzzle))
-            {   
-                AnimatedChuzzles.Add(chuzzle);
-                chuzzle.AnimationFinished += OnAnimationFinished;
-                chuzzle.Destroy(combination);
-            }
-        }        
+    public void RemoveChuzzle(Chuzzle chuzzle)
+    {
+        if (chuzzle is CounterChuzzle)
+        {
+            return;
+        }
+
+        if (!AnimatedChuzzles.Contains(chuzzle))
+        {
+            AnimatedChuzzles.Add(chuzzle);
+            chuzzle.AnimationFinished += OnAnimationFinished;
+            chuzzle.Destroy();
+        }
     }
 }

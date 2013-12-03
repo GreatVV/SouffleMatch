@@ -20,38 +20,33 @@ public class Gamefield : MonoBehaviour
 {
     public LayerMask ChuzzleMask;
 
-    #region State
-
-    private GamefieldState _currentState;
-
-    [HideInInspector] public CheckSpecialState CheckSpecialState = null;
-
-    [HideInInspector] public CreateNewChuzzlesState CreateNewChuzzlesState = null;
-
-    [HideInInspector] public GameOverState GameOverState = null;
-    
-    [HideInInspector] public WinState WinState = null;
-
-    [HideInInspector] public FieldState FieldState = null;
-
-    [HideInInspector] public RemoveCombinationState RemoveState = null;
-
-    [HideInInspector] public InitState InitState = null;
-
-    #endregion
-
-    public int[] NewTilesInColumns;
-
     public GameMode GameMode;
+    public bool IsPause;
 
     [HideInInspector] public Level Level;
+    public int[] NewTilesInColumns;
 
     [HideInInspector] public Points PointSystem;
 
     [HideInInspector] public StageManager StageManager;
 
-    public bool IsPause;
+    #region State
 
+    [HideInInspector] public CheckSpecialState CheckSpecialState = null;
+
+    [HideInInspector] public CreateNewChuzzlesState CreateNewChuzzlesState = null;
+
+    [HideInInspector] public FieldState FieldState = null;
+    [HideInInspector] public GameOverState GameOverState = null;
+
+    [HideInInspector] public InitState InitState = null;
+    [HideInInspector] public RemoveCombinationState RemoveState = null;
+    [HideInInspector] public WinState WinState = null;
+    private GamefieldState _currentState;
+
+    #endregion
+
+    #region Events
 
     public event Action<List<Chuzzle>> CombinationDestroyed;
 
@@ -59,6 +54,9 @@ public class Gamefield : MonoBehaviour
 
     public event Action<Chuzzle> TileDestroyed;
 
+    #endregion
+
+    #region Event Handlers
 
     private void OnGameOver()
     {
@@ -70,6 +68,10 @@ public class Gamefield : MonoBehaviour
     {
         SwitchStateTo(WinState);
     }
+
+    #endregion
+
+    #region Event Invokators
 
     public virtual void InvokeCombinationDestroyed(List<Chuzzle> combination)
     {
@@ -91,6 +93,7 @@ public class Gamefield : MonoBehaviour
         }
     }
 
+    #endregion
 
     public void Awake()
     {
@@ -147,6 +150,11 @@ public class Gamefield : MonoBehaviour
         RemoveEventHandlers();
         GameMode.Win += OnWin;
         GameMode.GameOver += OnGameOver;
+    }
+
+    void OnDestroy()
+    {
+        RemoveEventHandlers();
     }
 
     private void RemoveEventHandlers()

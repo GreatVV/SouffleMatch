@@ -100,6 +100,9 @@ public class SerializedLevel
                 case (5): //two time
                     serializedLevel.SpecialCells.Add(new Cell(x, y) { CreationType = CreationType.TwoTimes });
                     break;
+                case (6): //invader
+                    serializedLevel.SpecialCells.Add(new Cell(x, y) { CreationType = CreationType.Invader });
+                    break;
                 default: // block
                     serializedLevel.SpecialCells.Add(new Cell(x, y, CellTypes.Block));
                     break;

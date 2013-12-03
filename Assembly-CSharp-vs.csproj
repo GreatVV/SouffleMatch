@@ -205,6 +205,7 @@
      <Compile Include="Assets\Scripts\Level\Gameplay\Chuzzles\ColorChuzzle.cs" />
      <Compile Include="Assets\Scripts\Level\Gameplay\Chuzzles\CounterChuzzle.cs" />
      <Compile Include="Assets\Scripts\Level\Gameplay\Chuzzles\HorizontalLineChuzzle.cs" />
+     <Compile Include="Assets\Scripts\Level\Gameplay\Chuzzles\InvaderChuzzle.cs" />
      <Compile Include="Assets\Scripts\Level\Gameplay\Chuzzles\LockChuzzle.cs" />
      <Compile Include="Assets\Scripts\Level\Gameplay\Chuzzles\PowerType.cs" />
      <Compile Include="Assets\Scripts\Level\Gameplay\Chuzzles\PowerUpBehaviour.cs" />
@@ -223,7 +224,6 @@
      <Compile Include="Assets\Scripts\Level\Utility\Extensions.cs" />
      <Compile Include="Assets\Scripts\Level\Utility\GamefieldUtility.cs" />
      <Compile Include="Assets\Scripts\Level\Utility\IntVector2.cs" />
-     <Compile Include="Assets\Scripts\Level\Utility\Pair.cs" />
      <Compile Include="Assets\iTween\Plugins\iTween.cs" />
      <None Include="Assets\NGUI\Resources\Shaders\Unlit - Depth Cutout.shader" />
      <None Include="Assets\Plugins\Android\facebook\res\values\attrs.xml" />
