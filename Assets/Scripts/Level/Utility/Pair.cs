@@ -8,7 +8,7 @@ using UnityEngine;
 [Serializable]
 public class Pair
 {
-    [SerializeField] public ChuzzleType ChuzzleType;
+    [SerializeField] public ChuzzleColor ChuzzleColor;
     [SerializeField] public GameObject Prefab;
     [SerializeField] public PowerType Type;
 }

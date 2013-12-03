@@ -26,7 +26,7 @@ public class Level : MonoBehaviour
     public GameObject[] ChuzzlePrefabs;
     public GameObject[] ChuzzleLockPrefabs;
     public GameObject[] ChuzzleTwoTimesPrefabs;
-    public GameObject CounterPrefab;
+    public GameObject[] ChuzzleCounterPrefabs;
     public GameObject PlacePrefab;
 
     [HideInInspector]
@@ -95,8 +95,17 @@ public class Level : MonoBehaviour
             {
                 case CreationType.Usual:
                 case CreationType.Place:
-                case CreationType.Counter:
                     CreateRandomChuzzle(cell);
+                    break;
+                case CreationType.Counter:
+                    if (Gamefield.GameMode is TargetChuzzleGameMode)
+                    {
+                        CreateCounterChuzzle(cell);
+                    }
+                    else
+                    {
+                        CreateRandomChuzzle(cell);
+                    }
                     break;
                 case CreationType.Lock:
                     CreateLockChuzzle(cell);
@@ -194,6 +203,25 @@ public class Level : MonoBehaviour
         return c;
     }
 
+    public Chuzzle CreateCounterChuzzle(Cell cell, bool toActive = false)
+    {
+        var colorsNumber = NumberOfColors == -1 ? ChuzzlePrefabs.Length : NumberOfColors;
+        var prefab = ChuzzleCounterPrefabs[Random.Range(0, colorsNumber)];
+        var c = CreateChuzzle(cell, prefab, toActive);
+
+        var chuzzle = c as CounterChuzzle;
+        if (chuzzle == null)
+        {
+            Debug.LogError("Incorrect prefabs for counters");
+        }
+        chuzzle.Counter = ((TargetChuzzleGameMode)Gamefield.GameMode).Amount;
+        chuzzle.TextMesh.text = chuzzle.Counter.ToString(CultureInfo.InvariantCulture);
+
+        cell.CreationType = CreationType.Usual;
+
+        return c;
+    }
+
     public Chuzzle CreateChuzzle(Cell cell, GameObject prefab, bool toActive = false)
     {
         var gameObject = NGUITools.AddChild(Gamefield.gameObject, prefab);
@@ -207,19 +235,7 @@ public class Level : MonoBehaviour
         gameObject.transform.parent = Gamefield.transform;
         gameObject.transform.position = GamefieldUtility.ConvertXYToPosition(cell.x, cell.y, chuzzle.Scale);
 
-        if (cell.CreationType == CreationType.Counter && Gamefield.GameMode is TargetChuzzleGameMode)
-        {
-            chuzzle.Counter = ((TargetChuzzleGameMode) Gamefield.GetComponent<Gamefield>().GameMode).Amount;
-
-            var counterObject = ((GameObject) Instantiate(CounterPrefab)).GetComponentInChildren<TextMesh>();
-            counterObject.transform.parent = chuzzle.transform;
-            counterObject.transform.localPosition = Vector3.zero;
-
-            var counter = counterObject.GetComponent<TextMesh>();
-            counter.text = chuzzle.Counter.ToString(CultureInfo.InvariantCulture);
-
-            chuzzle.Current.CreationType = CreationType.Usual;
-        }
+        
         Chuzzles.Add(chuzzle);
         if (toActive)
         {

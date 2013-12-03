@@ -62,7 +62,7 @@ public class CheckSpecialState : GamefieldState
         {
             //if any tile is powerup - then don't check for new bonuses
             //or any tile has counter
-            if (comb.Any(x => x.PowerType != PowerType.Usual) || comb.Any(x => x.Counter != 0))
+            if (comb.Any(x => !(GamefieldUtility.IsUsual(x))))
             {
                 continue;
             }
@@ -102,10 +102,9 @@ public class CheckSpecialState : GamefieldState
             }
         }
 
-        var powerUp = PowerTypePrefabs.First(x => x.Type == powerType && x.ChuzzleType == targetTile.Type).Prefab;
+        var powerUp = PowerTypePrefabs.First(x => x.Type == powerType && x.ChuzzleColor == targetTile.Color).Prefab;
         var powerUpChuzzle = Gamefield.Level.CreateChuzzle(targetTile.Current, powerUp);
-        powerUpChuzzle.Type = targetTile.Type;
-        powerUpChuzzle.PowerType = powerType;
+        powerUpChuzzle.Color = targetTile.Color;
         
         var child = powerUpChuzzle.transform.GetChild(0).gameObject;
         Destroy(child.GetComponent<BoxCollider>());

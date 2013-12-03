@@ -1,4 +1,4 @@
-﻿public enum ChuzzleType
+﻿public enum ChuzzleColor
 {
     Blue,
     Green,

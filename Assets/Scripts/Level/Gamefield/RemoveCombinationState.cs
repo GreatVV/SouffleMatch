@@ -19,7 +19,7 @@ public class RemoveCombinationState : GamefieldState
     {
         var combinations = GamefieldUtility.FindCombinations(Gamefield.Level.ActiveChuzzles);
         if (combinations.Any())
-        {
+        {   
             RemoveCombinations(combinations);
         }
         else
@@ -57,7 +57,7 @@ public class RemoveCombinationState : GamefieldState
         //remove combinations
         foreach (var combination in combinations)
         {
-            var powerUp = combination.FirstOrDefault(x => x.PowerType != PowerType.Usual);
+            var powerUp = combination.FirstOrDefault(GamefieldUtility.IsPowerUp);
             if (powerUp != null)
             {
                 Gamefield.ApplyPowerUp(combination, powerUp);
@@ -65,6 +65,8 @@ public class RemoveCombinationState : GamefieldState
             RemoveTiles(combination, true);
         }
     }
+
+    
 
     public void RemoveTiles(List<Chuzzle> combination, bool needCountPoints)
     {
@@ -77,6 +79,11 @@ public class RemoveCombinationState : GamefieldState
 
         foreach (var chuzzle in combination)
         {
+            if (chuzzle is CounterChuzzle)
+            {
+                continue;
+            }
+
             if (!AnimatedChuzzles.Contains(chuzzle))
             {   
                 AnimatedChuzzles.Add(chuzzle);

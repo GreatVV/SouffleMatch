@@ -9,7 +9,7 @@ public class TargetChuzzleGameMode : GameMode
 {
     public int TargetAmount;
     public int Amount;
-    public Chuzzle TargetChuzzle;
+    public CounterChuzzle TargetChuzzle;
 
     public TargetChuzzleGameMode(GameModeDescription description) : base(description)
     {
@@ -33,7 +33,7 @@ public class TargetChuzzleGameMode : GameMode
         //TODO find chuzzle (it's special type)
         if (TargetChuzzle == null)
         {
-            TargetChuzzle = Gamefield.Level.ActiveChuzzles.FirstOrDefault(x => x.Counter > 0);
+            TargetChuzzle = Gamefield.Level.ActiveChuzzles.FirstOrDefault(x => x is CounterChuzzle) as CounterChuzzle;
             if (TargetChuzzle == null)
             {
                 Debug.Log("No target chuzzle");
@@ -48,7 +48,7 @@ public class TargetChuzzleGameMode : GameMode
             {
                 Amount = 0;
             }
-            TargetChuzzle.GetComponentInChildren<TextMesh>().text = Amount.ToString(CultureInfo.InvariantCulture);
+            TargetChuzzle.TextMesh.text = Amount.ToString(CultureInfo.InvariantCulture);
         }
 
 

@@ -737,7 +737,7 @@ public class FieldState : GamefieldState
     {
         get
         {
-            return SelectedChuzzles.Any(c => c.PowerType == PowerType.Lock);
+            return SelectedChuzzles.Any(c => c is LockChuzzle);
         }
     }
 }

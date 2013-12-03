@@ -8,26 +8,22 @@ using UnityEngine;
 #endregion
 
 [RequireComponent(typeof (TeleportableEntity))]
-public class Chuzzle : MonoBehaviour
+public abstract class Chuzzle : MonoBehaviour
 {
     public float Alpha;
 
     public GameObject Arrow;
-    public int Counter;
-    public Cell Current;
 
     public bool IsCheckedForSearch;
-    public Cell MoveTo;
 
-    public PowerType PowerType;
+    public Cell Current;
+    public Cell MoveTo;
     public Cell Real;
 
-    public SpriteRenderer Sprite;
-    public int TimesDestroyed;
-    public ChuzzleType Type;
+    public ChuzzleColor Color;
 
     public Vector3 Velocity;
-    private int _counter;
+    
     public bool _shine;
 
     public GameObject Explosion;
@@ -93,22 +89,12 @@ public class Chuzzle : MonoBehaviour
 
     public override string ToString()
     {
-        return "" + Type + " (" + Current.x + "," + Current.y + ")";
-    }
-
-    private void Update()
-    {
-        /*
-        if (Shine && !Frozen)
-        {
-            Alpha = Alpha + Time.deltaTime*3;
-            Sprite.color = new Color(Sprite.color.r, Sprite.color.g, Sprite.color.b, Mathf.Sin(Alpha)/2f + 0.5f);
-        }                           */
+        return string.Format("{0} ({1},{2}) - {3}", Color, Current.x, Current.y, GetType());
     }
 
     public bool Frozen { get; set; }
 
-    private void Die()
+    protected virtual void Die()
     {
         //TODO Do Explosion
         if (Math.Abs(transform.localScale.x) > 0.01f)
@@ -130,32 +116,9 @@ public class Chuzzle : MonoBehaviour
         }
     }
 
-    public void Destroy(List<Chuzzle> combination)
+    public virtual void Destroy(List<Chuzzle> combination)
     {
-        TimesDestroyed++;
-        if (PowerType == PowerType.TwoTimes)
-        {
-            if (TimesDestroyed >= 2)
-            {
-                Die();
-            }
-            else
-            {
-                SpriteRenderer TwoTimesSprite = GetComponentInChildren<SpriteRenderer>();
-                TwoTimesSprite.enabled = false;
-                InvokeAnimationFinished();
-            }
-            return;
-        }
-
-        if (Counter > 0)
-        {
-            InvokeAnimationFinished();
-        }
-        else
-        {
-            Die();
-        }
+        Die();
     }
 
     IEnumerator CheckIfAlive()
