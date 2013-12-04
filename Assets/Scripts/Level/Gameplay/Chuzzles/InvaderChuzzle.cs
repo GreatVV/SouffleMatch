@@ -29,7 +29,7 @@ public class InvaderChuzzle : Chuzzle
     }
 
 
-    public static void OnCombinationDestroyed(List<Chuzzle> chuzzles)
+    public static void OnCombinationDestroyed(IEnumerable<Chuzzle> chuzzles)
     {
         var invadersNear = new List<Chuzzle>();
           
@@ -47,8 +47,8 @@ public class InvaderChuzzle : Chuzzle
         }
 
         while (invadersNear.Any())
-        {
-            UI.Instance.Gamefield.RemoveState.RemoveChuzzle(invadersNear.First());
+        {   
+            invadersNear.First().Destroy();
             invadersNear.RemoveAt(0);
         }
     }
@@ -153,7 +153,7 @@ internal class PrimeSearch
     {   
         maxElements = elements;
 
-        int a = (Random.Range(0,13))+1;
+        int a = (Random.Range(0,Random.Range(12,15)))+1;
         int b = (Random.Range(0,7))+1;
         int c = (Random.Range(0,5))+1;
 

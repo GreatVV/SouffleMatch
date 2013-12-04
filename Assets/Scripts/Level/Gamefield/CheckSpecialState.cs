@@ -22,6 +22,8 @@ public class CheckSpecialState : GamefieldState
 
     public override void OnEnter()
     {
+        SpecialTilesAnimated.Clear();
+
         var combinations = GamefieldUtility.FindCombinations(Gamefield.Level.ActiveChuzzles);
         if (!CheckForSpecial(combinations))
         {

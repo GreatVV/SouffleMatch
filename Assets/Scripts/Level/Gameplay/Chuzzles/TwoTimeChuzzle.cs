@@ -22,7 +22,6 @@ public class TwoTimeChuzzle : Chuzzle
         else
         {   
             TwoTimeSprite.enabled = false;
-            InvokeAnimationFinished();
         }
     }
 }

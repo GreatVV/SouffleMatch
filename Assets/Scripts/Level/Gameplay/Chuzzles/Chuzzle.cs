@@ -93,9 +93,19 @@ public abstract class Chuzzle : MonoBehaviour
     }
 
     public bool Frozen { get; set; }
+    public bool IsDiying;
+    public static event Action<Chuzzle> AnimationStarted;
+
+    protected void InvokeAnimationStarted()
+    {
+        var handler = AnimationStarted;
+        if (handler != null) handler(this);
+    }
 
     protected virtual void Die()
     {
+        InvokeAnimationStarted();
+        IsDiying = true;
         //TODO Do Explosion
         if (Math.Abs(transform.localScale.x) > 0.01f)
         {

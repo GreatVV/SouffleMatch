@@ -48,7 +48,7 @@ public class Gamefield : MonoBehaviour
 
     #region Events
 
-    public event Action<List<Chuzzle>> CombinationDestroyed;
+    public event Action<IEnumerable<Chuzzle>> CombinationDestroyed;
 
     public event Action<Gamefield> GameStarted;
 
@@ -73,7 +73,7 @@ public class Gamefield : MonoBehaviour
 
     #region Event Invokators
 
-    public virtual void InvokeCombinationDestroyed(List<Chuzzle> combination)
+    public virtual void InvokeCombinationDestroyed(IEnumerable<Chuzzle> combination)
     {
         var handler = CombinationDestroyed;
         if (handler != null) handler(combination);
@@ -95,8 +95,10 @@ public class Gamefield : MonoBehaviour
 
     #endregion
 
+    private static Gamefield Instance;
     public void Awake()
     {
+        Instance = this;
         InitState = GetComponent<InitState>();
         CheckSpecialState = GetComponent<CheckSpecialState>();
         CreateNewChuzzlesState = GetComponent<CreateNewChuzzlesState>();
@@ -177,5 +179,13 @@ public class Gamefield : MonoBehaviour
         _currentState = newState;
         Debug.Log("Switch to: " + _currentState);
         _currentState.OnEnter();
+    }
+
+    public static List<Chuzzle> Chuzzles
+    {
+        get
+        {
+            return Instance.Level.ActiveChuzzles;
+        }
     }
 }

@@ -50,6 +50,7 @@ public class FieldState : GamefieldState
 
     public override void OnEnter()
     {
+        AnimatedChuzzles.Clear();
     }
 
     public override void OnExit()
@@ -75,7 +76,7 @@ public class FieldState : GamefieldState
         else
         {
             //Debug.Log("Current chuzzle:"+CurrentChuzzle);
-            var velocity = -3f*(
+            var velocity = -5f*(
                 GamefieldUtility.CellPositionInWorldCoordinate(CurrentChuzzle.Real, CurrentChuzzle.Scale) -
                 GamefieldUtility.CellPositionInWorldCoordinate(CurrentChuzzle.Current, CurrentChuzzle.Scale));
             //Debug.Log("V:"+velocity);
@@ -164,7 +165,7 @@ public class FieldState : GamefieldState
                 CurrentChuzzle = hit.transform.gameObject.transform.parent.GetComponent<Chuzzle>();
                 if (wasNull)
                 {
-                    _minY = GamefieldUtility.CellPositionInWorldCoordinate(
+                   /* _minY = GamefieldUtility.CellPositionInWorldCoordinate(
                         GamefieldUtility.MinColumnAvailiablePosition(CurrentChuzzle.Current.x,
                             Gamefield.Level.ActiveCells),
                         CurrentChuzzle.Scale).y;
@@ -184,7 +185,10 @@ public class FieldState : GamefieldState
                         GamefieldUtility.CellPositionInWorldCoordinate(
                             GamefieldUtility.MaxRowAvailiablePosition(CurrentChuzzle.Current.y,
                                 Gamefield.Level.ActiveCells),
-                            CurrentChuzzle.Scale).x;
+                            CurrentChuzzle.Scale).x;*/
+
+                    _minY = _minX = float.MinValue;
+                    _maxX = _maxY = float.MaxValue;
                 }
             }
 
@@ -286,7 +290,7 @@ public class FieldState : GamefieldState
     private void RepaintRandom()
     {
         Debug.Log("Random repaint");
-        var randomChuzzle = Gamefield.Level.Chuzzles[Random.Range(0, Gamefield.Level.Chuzzles.Count)];
+        var randomChuzzle = Gamefield.Level.ActiveChuzzles.Where(GamefieldUtility.IsUsual).ToArray()[Random.Range(0, Gamefield.Level.Chuzzles.Count)];
 
         Gamefield.Level.CreateRandomChuzzle(Gamefield.Level.GetCellAt(randomChuzzle.Current.x, randomChuzzle.Current.y), true);
 
