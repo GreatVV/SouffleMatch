@@ -28,7 +28,7 @@ public class TargetChuzzleGameMode : GameMode
         Gamefield.CombinationDestroyed -= OnCombinationDestroyed;
     }
 
-    private void OnCombinationDestroyed(List<Chuzzle> destroyedChuzzles)
+    private void OnCombinationDestroyed(IEnumerable<Chuzzle> destroyedChuzzles)
     {
         //TODO find chuzzle (it's special type)
         if (TargetChuzzle == null)
@@ -43,7 +43,7 @@ public class TargetChuzzleGameMode : GameMode
        
         if (destroyedChuzzles.Contains(TargetChuzzle))
         {
-            Amount -= destroyedChuzzles.Count-1;
+            Amount -= destroyedChuzzles.Count()-1;
             if (Amount < 0)
             {
                 Amount = 0;

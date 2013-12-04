@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class Points : MonoBehaviour
@@ -28,9 +29,9 @@ public class Points : MonoBehaviour
         }
     }
 
-    public void CountForCombinations(List<Chuzzle> combination)
+    public void CountForCombinations(IEnumerable<Chuzzle> combination)
     {
-        var newPoints = combination.Count*10;
+        var newPoints = combination.Count()*10;
         AddPoints(newPoints);
     }
 }

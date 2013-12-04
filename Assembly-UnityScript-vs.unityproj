@@ -46,9 +46,13 @@
 	</Reference>
   </ItemGroup>
   <ItemGroup>
-     <Compile Include="Assets\FX Mega Pack\Scripts\ParticleSpawner.js" />
-     <Compile Include="Assets\FX Mega Pack\Scripts\RandomRotate.js" />
-     <Compile Include="Assets\FX Mega Pack\Scripts\RotateY.js" />
+     <Compile Include="Assets\LeanTween\LeanTweenExamples\Scripts\ExampleJS.js" />
+     <Compile Include="Assets\LeanTween\LeanTweenExamples\Scripts\ExamplePunchJS.js" />
+     <Compile Include="Assets\LeanTween\LeanTweenExamples\Scripts\MenuExampleJS.js" />
+     <Compile Include="Assets\LeanTween\LeanTweenExamples\Scripts\MenuSimpleJS.js" />
+     <Compile Include="Assets\LeanTween\LeanTweenExamples\Scripts\MoveLocalCurveJS.js" />
+     <Compile Include="Assets\LeanTween\LeanTweenExamples\Scripts\SlideImageIn.js" />
+     <Compile Include="Assets\LeanTween\Plugins\LeanTween.js" />
      <None Include="Assets\NGUI\Resources\Shaders\Unlit - Depth Cutout.shader" />
      <None Include="Assets\Plugins\Android\facebook\res\values\attrs.xml" />
      <None Include="Assets\Plugins\Android\facebook\res\layout\com_facebook_picker_activity_circle_row.xml" />
@@ -63,6 +67,7 @@
      <None Include="Assets\Plugins\Android\facebook\res\layout\com_facebook_friendpickerfragment.xml" />
      <None Include="Assets\NGUI\Resources\Shaders\Unlit - Dynamic Font (AlphaClip).shader" />
      <None Include="Assets\NGUI\Resources\Shaders\Unlit - Masked Colored.shader" />
+     <None Include="Assets\LeanTween\LeanTweenExamples\Shader\2dUnlitWithFade.shader" />
      <None Include="Assets\Scripts\loadzerbalance.txt" />
      <None Include="Assets\Plugins\Android\facebook\bin\proguard.txt" />
      <None Include="Assets\JMO Assets\Cartoon FX\CartoonFX3 Readme.txt" />
@@ -70,6 +75,7 @@
      <None Include="Assets\NGUI\Resources\Shaders\Unlit - Transparent Colored (Packed) (AlphaClip) .shader" />
      <None Include="Assets\Plugins\Android\facebook\res\layout\com_facebook_usersettingsfragment.xml" />
      <None Include="Assets\NGUI\Resources\Shaders\Unlit - Premultiplied Colored (AlphaClip).shader" />
+     <None Include="Assets\LeanTween\LeanTween-ReadMe.txt" />
      <None Include="Assets\Plugins\Android\facebook\res\layout\com_facebook_picker_checkbox.xml" />
      <None Include="Assets\Plugins\Android\facebook\bin\R.txt" />
      <None Include="Assets\Plugins\Android\facebook\res\layout\com_facebook_picker_title_bar_stub.xml" />
@@ -96,7 +102,6 @@
      <None Include="Assets\NGUI\Resources\Shaders\Unlit - Dynamic Font.shader" />
      <None Include="Assets\NGUI\ReadMe - 2.6.1e.txt" />
      <None Include="Assets\NGUI\Resources\Shaders\Unlit - Transparent Colored.shader" />
-     <None Include="Assets\FX Mega Pack\FX Mega Pack - Readme.txt" />
      <None Include="Assets\NGUI\Resources\Shaders\Unlit - Transparent Colored Overlay.shader" />
      <None Include="Assets\Plugins\Android\facebook\res\layout\com_facebook_login_activity_layout.xml" />
      <None Include="Assets\Plugins\Android\facebook\res\values-mdpi\dimens.xml" />

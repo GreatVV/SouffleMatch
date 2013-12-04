@@ -17,6 +17,9 @@ public class RemoveCombinationState : GamefieldState
 
     public override void OnEnter()
     {
+        AnimatedChuzzles.Clear();
+        Chuzzle.AnimationStarted += OnAnimationStarted;
+
         var combinations = GamefieldUtility.FindCombinations(Gamefield.Level.ActiveChuzzles);
         if (combinations.Any())
         {   
@@ -30,6 +33,7 @@ public class RemoveCombinationState : GamefieldState
 
     public override void OnExit()
     {
+        Chuzzle.AnimationStarted -= OnAnimationStarted;
     }
 
     public void OnAnimationFinished(Chuzzle chuzzle)
@@ -52,49 +56,42 @@ public class RemoveCombinationState : GamefieldState
     {
     }
 
-    public void RemoveCombinations(List<List<Chuzzle>> combinations)
+    private void RemoveCombinations(IEnumerable<List<Chuzzle>> combinations)
     {
         //remove combinations
         foreach (var combination in combinations)
-        {
-            var powerUp = combination.FirstOrDefault(GamefieldUtility.IsPowerUp);
-            if (powerUp != null)
-            {
-                Gamefield.ApplyPowerUp(combination, powerUp);
-            }
-            RemoveTiles(combination, true);
+        {   
+            RemoveTiles(combination);
         }
     }
 
-    
-
-    public void RemoveTiles(List<Chuzzle> combination, bool needCountPoints)
+    private void RemoveTiles(IEnumerable<Chuzzle> combination)
     {
-        Gamefield.InvokeCombinationDestroyed(combination);
-        if (needCountPoints)
-        {
-            //count points
-            Gamefield.PointSystem.CountForCombinations(combination);
-        }
+        var enumerable = combination as Chuzzle[] ?? combination.ToArray();
+        Gamefield.InvokeCombinationDestroyed(enumerable);
 
-        foreach (var chuzzle in combination)
+        //count points
+        Gamefield.PointSystem.CountForCombinations(enumerable);
+
+
+        foreach (var chuzzle in enumerable)
         {
             RemoveChuzzle(chuzzle);
         }
     }
 
-    public void RemoveChuzzle(Chuzzle chuzzle)
+    private void RemoveChuzzle(Chuzzle chuzzle)
     {
-        if (chuzzle is CounterChuzzle)
-        {
-            return;
-        }
+        chuzzle.Destroy();
+    }
 
+    private void OnAnimationStarted(Chuzzle chuzzle)
+    {
         if (!AnimatedChuzzles.Contains(chuzzle))
         {
             AnimatedChuzzles.Add(chuzzle);
             chuzzle.AnimationFinished += OnAnimationFinished;
-            chuzzle.Destroy();
         }
     }
+
 }

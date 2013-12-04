@@ -207,8 +207,6 @@
      <Compile Include="Assets\Scripts\Level\Gameplay\Chuzzles\HorizontalLineChuzzle.cs" />
      <Compile Include="Assets\Scripts\Level\Gameplay\Chuzzles\InvaderChuzzle.cs" />
      <Compile Include="Assets\Scripts\Level\Gameplay\Chuzzles\LockChuzzle.cs" />
-     <Compile Include="Assets\Scripts\Level\Gameplay\Chuzzles\PowerType.cs" />
-     <Compile Include="Assets\Scripts\Level\Gameplay\Chuzzles\PowerUpBehaviour.cs" />
      <Compile Include="Assets\Scripts\Level\Gameplay\Chuzzles\TwoTimeChuzzle.cs" />
      <Compile Include="Assets\Scripts\Level\Gameplay\Chuzzles\VerticalLineChuzzle.cs" />
      <Compile Include="Assets\Scripts\Level\Gameplay\Conditions\Condition.cs" />
@@ -226,6 +224,12 @@
      <Compile Include="Assets\Scripts\Level\Utility\GamefieldUtility.cs" />
      <Compile Include="Assets\Scripts\Level\Utility\IntVector2.cs" />
      <Compile Include="Assets\iTween\Plugins\iTween.cs" />
+     <Compile Include="Assets\iTweenEditor\Examples\StartAndStopTween.cs" />
+     <Compile Include="Assets\iTweenEditor\Helper Classes\EventParamMappings.cs" />
+     <Compile Include="Assets\iTweenEditor\Helper Classes\Vector3OrTransform.cs" />
+     <Compile Include="Assets\iTweenEditor\Helper Classes\Vector3OrTransformArray.cs" />
+     <Compile Include="Assets\iTweenEditor\iTweenEvent.cs" />
+     <Compile Include="Assets\iTweenEditor\iTweenPath.cs" />
      <None Include="Assets\NGUI\Resources\Shaders\Unlit - Depth Cutout.shader" />
      <None Include="Assets\Plugins\Android\facebook\res\values\attrs.xml" />
      <None Include="Assets\Plugins\Android\facebook\res\layout\com_facebook_picker_activity_circle_row.xml" />
@@ -256,6 +260,7 @@
      <None Include="Assets\NGUI\Resources\Shaders\Unlit - Transparent Colored (AlphaClip).shader" />
      <None Include="Assets\NGUI\Resources\Shaders\GUI - Text Shader (AlphaClip).shader" />
      <None Include="Assets\Plugins\Android\facebook\res\drawable\com_facebook_top_background.xml" />
+     <None Include="Assets\iTweenEditor\README.txt" />
      <None Include="Assets\Plugins\Android\facebook\res\values-hdpi\dimens.xml" />
      <None Include="Assets\Plugins\Android\facebook\build.xml" />
      <None Include="Assets\JMO Assets\Cartoon FX\Shaders\CFX3 Invert.shader" />

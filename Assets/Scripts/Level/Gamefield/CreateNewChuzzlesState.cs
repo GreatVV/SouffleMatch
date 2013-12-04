@@ -14,6 +14,7 @@ public class CreateNewChuzzlesState : GamefieldState
 
     public override void OnEnter()
     {
+        NewTilesAnimationChuzzles.Clear();
         CreateNew();
     }
 
