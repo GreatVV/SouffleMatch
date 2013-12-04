@@ -508,7 +508,6 @@ public class GamefieldUtility
         return new Vector3(x*scale.x, y*scale.y, 0);
     }
 
-
     public static void ShowArrow(Chuzzle from, IntVector2 to, GameObject downArrowPrefab)
     {
         var down = Object.Instantiate(downArrowPrefab) as GameObject;
@@ -526,7 +525,7 @@ public class GamefieldUtility
             {
                 //to up
                 //mirror vertical
-                //down.GetComponent<Sprite>().FlipY = true;
+                down.transform.rotation = Quaternion.Euler(0, 0, 180);
             }
         }
         else
@@ -546,7 +545,6 @@ public class GamefieldUtility
         }
 
         down.transform.parent = from.transform;  
-      
         from.Arrow = down;
     }
 

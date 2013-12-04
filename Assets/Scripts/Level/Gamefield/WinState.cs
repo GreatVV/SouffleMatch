@@ -23,15 +23,19 @@ public class WinState : GamefieldState
 
     public override void OnExit()
     {
+
     }
 
     #endregion
 
     public override void UpdateState()
     {
+
     }
 
     public override void LateUpdateState()
     {
+
     }
+ 
 }

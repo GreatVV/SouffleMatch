@@ -7,7 +7,8 @@ using Object = UnityEngine.Object;
 [Serializable]
 public class CreateNewChuzzlesState : GamefieldState
 {
-    public List<Chuzzle> NewTilesAnimationChuzzles = new List<Chuzzle>();    
+    public List<Chuzzle> NewTilesAnimationChuzzles = new List<Chuzzle>();
+    public GameObject WinBonusTitle;
 
     #region Event Handlers
 
@@ -45,7 +46,11 @@ public class CreateNewChuzzlesState : GamefieldState
                 //check gameover or win
                 if (!Gamefield.GameMode.Check())
                 {
-                     Gamefield.SwitchStateTo(Gamefield.FieldState);
+                    Gamefield.SwitchStateTo(Gamefield.FieldState);
+                }
+                else
+                {
+                    CreateBonusPowerUps();
                 }
             }
         }
@@ -129,5 +134,26 @@ public class CreateNewChuzzlesState : GamefieldState
             Gamefield.SwitchStateTo(Gamefield.CheckSpecialState);
         }
         return true;
+    }
+
+    public void CreateBonusPowerUps()
+    {
+        GameObject SuffleTime = Instantiate(WinBonusTitle) as GameObject;
+        SuffleTime.GetComponent<CreateBonusTitle>().WinTitleDestroyed += OnWinTitleDestroyed;
+    }
+
+    public void OnWinTitleDestroyed()
+    {
+        Debug.Log("OnWinTitleDestroyed");
+        for (int i = 0; i < Gamefield.GameMode.Turns; i++)
+        {
+            var usualChuzzles =
+                from ch in Gamefield.Level.Chuzzles
+                where !GamefieldUtility.IsPowerUp(ch)
+                select ch;
+
+            Chuzzle newPowerUp = usualChuzzles.ToArray()[UnityEngine.Random.Range(0, usualChuzzles.Count())];
+
+        }
     }
 }

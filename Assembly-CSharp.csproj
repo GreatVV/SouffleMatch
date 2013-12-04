@@ -219,6 +219,7 @@
      <Compile Include="Assets\Scripts\Level\Gameplay\SerializedLevel.cs" />
      <Compile Include="Assets\Scripts\Level\Gameplay\TeleportableEntity.cs" />
      <Compile Include="Assets\Scripts\Level\UI\AutoBackgroundChanger.cs" />
+     <Compile Include="Assets\Scripts\Level\UI\CreateBonusTitle.cs" />
      <Compile Include="Assets\Scripts\Level\UI\UI.cs" />
      <Compile Include="Assets\Scripts\Level\Utility\CenterCameraOnField.cs" />
      <Compile Include="Assets\Scripts\Level\Utility\Extensions.cs" />

@@ -215,6 +215,14 @@ public class Level : MonoBehaviour
         return CreateChuzzle(cell, InvaderPrefab, toActive);
     }
 
+    public Chuzzle CreateBomb(Cell cell, bool toActive = false)
+    {
+        var colorsNumber = NumberOfColors == -1 ? ChuzzlePrefabs.Length : NumberOfColors;
+        var prefab = Gamefield.CheckSpecialState.BombChuzzlePrefabs[Random.Range(0, colorsNumber)];
+        Chuzzle ch = CreateChuzzle(cell, prefab, toActive);
+        return ch;
+    }
+
 
     public Chuzzle CreateCounterChuzzle(Cell cell, bool toActive = false)
     {
