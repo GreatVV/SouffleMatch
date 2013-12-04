@@ -26,4 +26,9 @@ public class TeleportableEntity : MonoBehaviour
             //Debug.Log("Destroy copy " + Copy);
         }
     }
+
+    public void OnDestroy()
+    {
+        DestroyCopy();
+    }
 }

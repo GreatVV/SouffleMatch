@@ -10,9 +10,7 @@ using Object = UnityEngine.Object;
 
 [Serializable]
 public class RemoveCombinationState : GamefieldState
-{
-    public List<Chuzzle> AnimatedChuzzles = new List<Chuzzle>();          
-
+{   
     #region Event Handlers
 
     public override void OnEnter()
@@ -33,6 +31,10 @@ public class RemoveCombinationState : GamefieldState
 
     public override void OnExit()
     {
+        if (AnimatedChuzzles.Any())
+        {
+            Debug.LogError("FUCK YOU: "+AnimatedChuzzles.Count);
+        }
         Chuzzle.AnimationStarted -= OnAnimationStarted;
     }
 
@@ -40,7 +42,7 @@ public class RemoveCombinationState : GamefieldState
     {
         chuzzle.AnimationFinished -= OnAnimationFinished;
         AnimatedChuzzles.Remove(chuzzle);
-        if (AnimatedChuzzles.Count == 0)
+        if (!AnimatedChuzzles.Any())
         {
             Gamefield.SwitchStateTo(Gamefield.CreateNewChuzzlesState);
         }
@@ -60,30 +62,19 @@ public class RemoveCombinationState : GamefieldState
     {
         //remove combinations
         foreach (var combination in combinations)
-        {   
-            RemoveTiles(combination);
-        }
-    }
-
-    private void RemoveTiles(IEnumerable<Chuzzle> combination)
-    {
-        var enumerable = combination as Chuzzle[] ?? combination.ToArray();
-        Gamefield.InvokeCombinationDestroyed(enumerable);
-
-        //count points
-        Gamefield.PointSystem.CountForCombinations(enumerable);
-
-
-        foreach (var chuzzle in enumerable)
         {
-            RemoveChuzzle(chuzzle);
-        }
-    }
+            Gamefield.InvokeCombinationDestroyed(combination);
 
-    private void RemoveChuzzle(Chuzzle chuzzle)
-    {
-        chuzzle.Destroy();
-    }
+            //count points
+            Gamefield.PointSystem.CountForCombinations(combination);
+
+
+            foreach (var chuzzle in combination)
+            {
+                chuzzle.Destroy();
+            }
+        }
+    }               
 
     private void OnAnimationStarted(Chuzzle chuzzle)
     {

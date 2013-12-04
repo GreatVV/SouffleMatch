@@ -16,7 +16,7 @@ public class CounterChuzzle : Chuzzle
 
     protected override void Die()
     {
-        Debug.LogError("Counter is dead");
+        Debug.LogWarning("Counter is dead");
         base.Die();
     }
 }

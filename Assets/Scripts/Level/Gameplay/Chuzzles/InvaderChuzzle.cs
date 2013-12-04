@@ -74,7 +74,7 @@ public class InvaderChuzzle : Chuzzle
 
             if (targetTile != null)
             {
-                gamefield.Level.CreateInvader(targetTile.Current);
+                TilesFactory.Instance.CreateInvader(targetTile.Current);
                 gamefield.InvokeTileDestroyed(targetTile);
                 Destroy(targetTile.gameObject);
                 gamefield.Level.ActiveChuzzles.Remove(targetTile);

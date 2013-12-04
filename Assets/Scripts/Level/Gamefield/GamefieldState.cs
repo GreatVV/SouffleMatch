@@ -1,6 +1,7 @@
 ﻿#region
 
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 #endregion
@@ -8,10 +9,12 @@ using UnityEngine;
 [RequireComponent(typeof(Gamefield))]
 public abstract class GamefieldState : MonoBehaviour
 {
+    public List<Chuzzle> AnimatedChuzzles = new List<Chuzzle>();  
     void Awake()
     {
-        Gamefield = GetComponent<Gamefield>();
-    }
+        Gamefield = GetComponent<Gamefield>();   
+    }                
+  
     public Gamefield Gamefield { get; private set; }
 
     #region Event Handlers

@@ -2,7 +2,6 @@
 
 using System;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 #endregion
@@ -13,41 +12,39 @@ public abstract class Chuzzle : MonoBehaviour
     public float Alpha;
 
     public GameObject Arrow;
-
-    public bool IsCheckedForSearch;
+    public ChuzzleColor Color;
 
     public Cell Current;
+    public GameObject Explosion;
+    public bool IsCheckedForSearch;
+    public bool IsDiying;
     public Cell MoveTo;
     public Cell Real;
 
-    public ChuzzleColor Color;
-
     public Vector3 Velocity;
-    
-    public bool _shine;
 
-    public GameObject Explosion;
+    public bool _shine;
 
     #region Events
 
     public event Action<Chuzzle> Died;
     public event Action<Chuzzle> AnimationFinished;
+    public static event Action<Chuzzle> AnimationStarted;
 
     #endregion
 
     #region Event Handlers
 
-    private void OnDisable()
-    {
-        //drop all event handlers
-        Died = null;
-    }
-
-    private void OnDeathAnimationEnd(object chuzzle)
-    {
+    private void OnDeathAnimationEnd()
+    {   
         InvokeDied();
         InvokeAnimationFinished();
         Destroy(gameObject);
+    }
+
+    private void OnAnimateMoveEnd(object obj)
+    {
+        InvokeAnimationFinished();
     }
 
     #endregion
@@ -63,6 +60,12 @@ public abstract class Chuzzle : MonoBehaviour
     protected virtual void InvokeDied()
     {
         var handler = Died;
+        if (handler != null) handler(this);
+    }
+
+    protected void InvokeAnimationStarted()
+    {
+        var handler = AnimationStarted;
         if (handler != null) handler(this);
     }
 
@@ -82,9 +85,9 @@ public abstract class Chuzzle : MonoBehaviour
         }
     }
 
-    public Vector3 Scale
+    public static Vector3 Scale
     {
-        get { return transform.localScale; }
+        get { return Vector3.one; }
     }
 
     public override string ToString()
@@ -93,14 +96,6 @@ public abstract class Chuzzle : MonoBehaviour
     }
 
     public bool Frozen { get; set; }
-    public bool IsDiying;
-    public static event Action<Chuzzle> AnimationStarted;
-
-    protected void InvokeAnimationStarted()
-    {
-        var handler = AnimationStarted;
-        if (handler != null) handler(this);
-    }
 
     protected virtual void Die()
     {
@@ -114,16 +109,31 @@ public abstract class Chuzzle : MonoBehaviour
                     "x", 0,
                     "y", 0,
                     "z", 0,
-                    "time", 0.4f));
+                    "time", 0.2f));
             var ps = Instantiate(Explosion) as GameObject;
-          //  Debug.Log("Ps: "+ps);
+            //  Debug.Log("Ps: "+ps);
             ps.transform.position = transform.position;
             StartCoroutine("CheckIfAlive");
         }
         else
         {
-            OnDeathAnimationEnd(this);
+            OnDeathAnimationEnd();
         }
+    }
+
+    public void AnimateMoveTo(Vector3 targetPosition)
+    {
+        InvokeAnimationStarted();
+        iTween.MoveTo(gameObject,
+            iTween.Hash(
+                "x", targetPosition.x,
+                "y", targetPosition.y,
+                "z", targetPosition.z,
+                "time", 0.3f,
+                "easetype", iTween.EaseType.easeInOutQuad,
+                "oncomplete", new Action<object>(OnAnimateMoveEnd),
+                "oncompleteparams", gameObject
+                ));
     }
 
     public virtual void Destroy()
@@ -131,14 +141,14 @@ public abstract class Chuzzle : MonoBehaviour
         Die();
     }
 
-    IEnumerator CheckIfAlive()
+    private IEnumerator CheckIfAlive()
     {
         while (true)
         {
             yield return new WaitForSeconds(0.5f);
-            if (!Explosion.particleSystem.IsAlive(true))       
+            if (!Explosion.particleSystem.IsAlive(true))
             {
-                OnDeathAnimationEnd(this);
+                OnDeathAnimationEnd();
             }
         }
     }

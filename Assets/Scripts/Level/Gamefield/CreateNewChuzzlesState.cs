@@ -1,39 +1,52 @@
-﻿using System;
-using System.Collections.Generic;
+﻿#region
+
+using System;
 using System.Linq;
 using UnityEngine;
-using Object = UnityEngine.Object;
+
+#endregion
 
 [Serializable]
 public class CreateNewChuzzlesState : GamefieldState
 {
-    public List<Chuzzle> NewTilesAnimationChuzzles = new List<Chuzzle>();
     public GameObject WinBonusTitle;
 
     #region Event Handlers
 
     public override void OnEnter()
     {
-        NewTilesAnimationChuzzles.Clear();
+        AnimatedChuzzles.Clear();
+        Chuzzle.AnimationStarted += OnAnimationStarted;
         CreateNew();
+    }
+
+    private void OnAnimationStarted(Chuzzle chuzzle)
+    {
+        if (!AnimatedChuzzles.Contains(chuzzle))
+        {
+            AnimatedChuzzles.Add(chuzzle);
+            chuzzle.AnimationFinished += OnAnimationFinished;
+        }
     }
 
     public override void OnExit()
     {
+        if (AnimatedChuzzles.Any())
+        {
+            Debug.LogError("FUCK YOU: " + AnimatedChuzzles.Count);
+        }
         Gamefield.NewTilesInColumns = new int[Gamefield.Level.Width];
+        Chuzzle.AnimationStarted -= OnAnimationStarted;
     }
 
-    public void OnCompleteNewChuzzleTween(object chuzzleObject)
+    public void OnAnimationFinished(Chuzzle chuzzle)
     {
-        var chuzzle = chuzzleObject as Chuzzle;
         chuzzle.Real = chuzzle.Current = chuzzle.MoveTo;
 
-        if (NewTilesAnimationChuzzles.Contains(chuzzle))
-        {      
-            NewTilesAnimationChuzzles.Remove(chuzzle);
-        }
-
-        if (!NewTilesAnimationChuzzles.Any())
+        chuzzle.AnimationFinished -= OnAnimationFinished;   
+        AnimatedChuzzles.Remove(chuzzle);
+        
+        if (!AnimatedChuzzles.Any())
         {
             Gamefield.Level.UpdateActive();
 
@@ -54,6 +67,20 @@ public class CreateNewChuzzlesState : GamefieldState
                     CreateBonusPowerUps();
                 }
             }
+        }
+    }
+
+    public void OnWinTitleDestroyed()
+    {
+        Debug.Log("OnWinTitleDestroyed");
+        for (var i = 0; i < Gamefield.GameMode.Turns; i++)
+        {
+            var usualChuzzles =
+                from ch in Gamefield.Level.Chuzzles
+                where !GamefieldUtility.IsPowerUp(ch)
+                select ch;
+
+            var newPowerUp = usualChuzzles.ToArray()[UnityEngine.Random.Range(0, usualChuzzles.Count())];
         }
     }
 
@@ -85,7 +112,7 @@ public class CreateNewChuzzlesState : GamefieldState
                 for (var j = 0; j < newInColumn; j++)
                 {
                     //create new tiles
-                    var chuzzle = Gamefield.Level.CreateRandomChuzzle(Gamefield.Level.GetCellAt(x, Gamefield.Level.Height + j), true);
+                    var chuzzle = TilesFactory.Instance.CreateChuzzle(Gamefield.Level.GetCellAt(x, Gamefield.Level.Height + j));
                     chuzzle.Current.IsTemporary = true;
                 }
             }
@@ -121,40 +148,16 @@ public class CreateNewChuzzlesState : GamefieldState
         {
             if (c.MoveTo.y != c.Current.y)
             {
-                NewTilesAnimationChuzzles.Add(c);
-                var targetPosition = new Vector3(c.Current.x*c.Scale.x, c.MoveTo.y*c.Scale.y, 0);
-                iTween.MoveTo(c.gameObject,
-                    iTween.Hash("x", targetPosition.x, "y", targetPosition.y, "z", targetPosition.z, "time", 0.3f,
-                        "oncomplete", new Action<object>(OnCompleteNewChuzzleTween), "oncompletetarget", Gamefield.gameObject,
-                        "oncompleteparams", c));
+                var targetPosition = new Vector3(c.Current.x*Chuzzle.Scale.x, c.MoveTo.y*Chuzzle.Scale.y, 0);
+                c.AnimateMoveTo(targetPosition);
             }
-        }
-
-        if (!NewTilesAnimationChuzzles.Any())
-        {
-            Gamefield.SwitchStateTo(Gamefield.CheckSpecialState);
         }
         return true;
     }
 
     public void CreateBonusPowerUps()
     {
-        GameObject SuffleTime = Instantiate(WinBonusTitle) as GameObject;
+        var SuffleTime = Instantiate(WinBonusTitle) as GameObject;
         SuffleTime.GetComponent<CreateBonusTitle>().WinTitleDestroyed += OnWinTitleDestroyed;
-    }
-
-    public void OnWinTitleDestroyed()
-    {
-        Debug.Log("OnWinTitleDestroyed");
-        for (int i = 0; i < Gamefield.GameMode.Turns; i++)
-        {
-            var usualChuzzles =
-                from ch in Gamefield.Level.Chuzzles
-                where !GamefieldUtility.IsPowerUp(ch)
-                select ch;
-
-            Chuzzle newPowerUp = usualChuzzles.ToArray()[UnityEngine.Random.Range(0, usualChuzzles.Count())];
-
-        }
     }
 }

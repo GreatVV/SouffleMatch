@@ -97,7 +97,7 @@ public class Gamefield : MonoBehaviour
 
     private static Gamefield Instance;
     public void Awake()
-    {
+    {   
         Instance = this;
         InitState = GetComponent<InitState>();
         CheckSpecialState = GetComponent<CheckSpecialState>();
@@ -187,5 +187,5 @@ public class Gamefield : MonoBehaviour
         {
             return Instance.Level.ActiveChuzzles;
         }
-    }
+    }      
 }

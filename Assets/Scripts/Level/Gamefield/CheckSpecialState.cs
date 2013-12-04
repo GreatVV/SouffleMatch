@@ -11,18 +11,15 @@ using Random = UnityEngine.Random;
 
 [Serializable]
 public class CheckSpecialState : GamefieldState
-{
-    public List<Chuzzle> SpecialTilesAnimated = new List<Chuzzle>();
-
-    public GameObject[] HorizontalLineChuzzlePrefabs;
-    public GameObject[] VerticalLineChuzzlePrefabs;
-    public GameObject[] BombChuzzlePrefabs;
+{   
+  
 
     #region Event Handlers
 
     public override void OnEnter()
     {
-        SpecialTilesAnimated.Clear();
+        AnimatedChuzzles.Clear();
+        Chuzzle.AnimationStarted += OnAnimationStarted;
 
         var combinations = GamefieldUtility.FindCombinations(Gamefield.Level.ActiveChuzzles);
         if (!CheckForSpecial(combinations))
@@ -33,16 +30,31 @@ public class CheckSpecialState : GamefieldState
 
     public override void OnExit()
     {
+        if (AnimatedChuzzles.Any())
+        {
+            Debug.LogError("FUCK YOU: " + AnimatedChuzzles.Count);
+        }
+        Chuzzle.AnimationStarted -= OnAnimationStarted;
     }
 
-    private void OnCreateLineTweenComplete(object chuzzleObject)
+    private void OnAnimationStarted(Chuzzle chuzzle)
     {
-        var chuzzle = chuzzleObject as Chuzzle;
+        if (!AnimatedChuzzles.Contains(chuzzle))
+        {
+            AnimatedChuzzles.Add(chuzzle);
+            chuzzle.AnimationFinished += OnAnimationFinished;
+        }
+    }
 
-        SpecialTilesAnimated.Remove(chuzzle);
-        Object.Destroy(chuzzle.gameObject);
+    private void OnAnimationFinished(Chuzzle chuzzle)
+    {
+        chuzzle.AnimationFinished -= OnAnimationFinished;
+        AnimatedChuzzles.Remove(chuzzle);
 
-        if (SpecialTilesAnimated.Count == 0)
+        Gamefield.RemoveChuzzle(chuzzle);
+        Destroy(chuzzle.gameObject);
+
+        if (!AnimatedChuzzles.Any())
         {
             Gamefield.SwitchStateTo(Gamefield.CreateNewChuzzlesState);
         }
@@ -89,7 +101,7 @@ public class CheckSpecialState : GamefieldState
 
     private bool CreateBomb(List<Chuzzle> comb)
     {
-        return CreateSpecialWithType(comb, BombChuzzlePrefabs);
+        return CreateSpecialWithType(comb, TilesFactory.Instance.BombChuzzlePrefabs);
     }             
 
     public bool CreateSpecialWithType(List<Chuzzle> comb, GameObject[] prefabs)
@@ -107,7 +119,7 @@ public class CheckSpecialState : GamefieldState
         }
 
         var powerUp = prefabs.First(x => x.GetComponent<Chuzzle>().Color == targetTile.Color);
-        var powerUpChuzzle = Gamefield.Level.CreateChuzzle(targetTile.Current, powerUp);
+        var powerUpChuzzle = TilesFactory.Instance.CreateChuzzle(targetTile.Current, powerUp);
         powerUpChuzzle.Color = targetTile.Color;
         
         var child = powerUpChuzzle.transform.GetChild(0).gameObject;
@@ -120,25 +132,9 @@ public class CheckSpecialState : GamefieldState
         ordered.Remove(targetTile);
 
         foreach (var c in ordered)
-        {
-            Gamefield.RemoveChuzzle(c);
-
-            var targetPosition = new Vector3(c.MoveTo.x*c.Scale.x, c.MoveTo.y*c.Scale.y, 0);
-
-            SpecialTilesAnimated.Add(c);
-
-            iTween.MoveTo(c.gameObject,
-                iTween.Hash(
-                    "x", targetPosition.x,
-                    "y", targetPosition.y,
-                    "z", targetPosition.z,
-                    "time", 0.3f,
-                    "easetype", iTween.EaseType.easeInOutQuad,
-                    "oncomplete", new Action<object>(OnCreateLineTweenComplete),
-                    "oncompleteparams", c
-                    ));
-            var ps = Instantiate(c.Explosion) as GameObject;
-            ps.transform.position = c.transform.position;
+        {   
+            var targetPosition = new Vector3(c.MoveTo.x*Chuzzle.Scale.x, c.MoveTo.y*Chuzzle.Scale.y, 0);
+            c.AnimateMoveTo(targetPosition); 
         }
 
         return true;
@@ -147,6 +143,6 @@ public class CheckSpecialState : GamefieldState
     private bool CreateLine(List<Chuzzle> comb)
     {
         return CreateSpecialWithType(comb,
-            Random.Range(0, 100) > 50 ? HorizontalLineChuzzlePrefabs : VerticalLineChuzzlePrefabs);
+            Random.Range(0, 100) > 50 ? TilesFactory.Instance.HorizontalLineChuzzlePrefabs : TilesFactory.Instance.VerticalLineChuzzlePrefabs);
     }
 }

@@ -24,7 +24,6 @@ public class FieldState : GamefieldState
 
     #endregion
 
-    public List<Chuzzle> AnimatedChuzzles = new List<Chuzzle>();
     public Chuzzle CurrentChuzzle;
     public Vector3 CurrentChuzzlePrevPosition;
     public Direction CurrentDirection;
@@ -77,8 +76,8 @@ public class FieldState : GamefieldState
         {
             //Debug.Log("Current chuzzle:"+CurrentChuzzle);
             var velocity = -5f*(
-                GamefieldUtility.CellPositionInWorldCoordinate(CurrentChuzzle.Real, CurrentChuzzle.Scale) -
-                GamefieldUtility.CellPositionInWorldCoordinate(CurrentChuzzle.Current, CurrentChuzzle.Scale));
+                GamefieldUtility.CellPositionInWorldCoordinate(CurrentChuzzle.Real, Chuzzle.Scale) -
+                GamefieldUtility.CellPositionInWorldCoordinate(CurrentChuzzle.Current, Chuzzle.Scale));
             //Debug.Log("V:"+velocity);
             foreach (var c in SelectedChuzzles)
             {
@@ -226,7 +225,7 @@ public class FieldState : GamefieldState
         }
 
         //Debug.Log("Delta: " + _delta);
-        _delta = Vector3.ClampMagnitude(_delta, 0.45f*CurrentChuzzle.Scale.x);
+        _delta = Vector3.ClampMagnitude(_delta, 0.45f*Chuzzle.Scale.x);
 
         if (!_axisChozen)
         {
@@ -248,18 +247,18 @@ public class FieldState : GamefieldState
                 if (_hasLockedChuzzles)
                 {
                     _minX =
-                        GamefieldUtility.CellPositionInWorldCoordinate(CurrentChuzzle.Current, CurrentChuzzle.Scale).x -
-                        CurrentChuzzle.Scale.x*0.4f;
+                        GamefieldUtility.CellPositionInWorldCoordinate(CurrentChuzzle.Current, Chuzzle.Scale).x -
+                        Chuzzle.Scale.x*0.4f;
                     _maxX =
-                        GamefieldUtility.CellPositionInWorldCoordinate(CurrentChuzzle.Current, CurrentChuzzle.Scale).x +
-                        CurrentChuzzle.Scale.x * 0.4f;
+                        GamefieldUtility.CellPositionInWorldCoordinate(CurrentChuzzle.Current, Chuzzle.Scale).x +
+                        Chuzzle.Scale.x * 0.4f;
 
                     _minY =
-                        GamefieldUtility.CellPositionInWorldCoordinate(CurrentChuzzle.Current, CurrentChuzzle.Scale).y -
-                        CurrentChuzzle.Scale.y * 0.4f;
+                        GamefieldUtility.CellPositionInWorldCoordinate(CurrentChuzzle.Current, Chuzzle.Scale).y -
+                        Chuzzle.Scale.y * 0.4f;
                     _maxY =
-                        GamefieldUtility.CellPositionInWorldCoordinate(CurrentChuzzle.Current, CurrentChuzzle.Scale).y +
-                        CurrentChuzzle.Scale.y * 0.4f;
+                        GamefieldUtility.CellPositionInWorldCoordinate(CurrentChuzzle.Current, Chuzzle.Scale).y +
+                        Chuzzle.Scale.y * 0.4f;
                 }
 
                 _axisChozen = true;
@@ -292,9 +291,9 @@ public class FieldState : GamefieldState
         Debug.Log("Random repaint");
         var randomChuzzle = Gamefield.Level.ActiveChuzzles.Where(GamefieldUtility.IsUsual).ToArray()[Random.Range(0, Gamefield.Level.Chuzzles.Count)];
 
-        Gamefield.Level.CreateRandomChuzzle(Gamefield.Level.GetCellAt(randomChuzzle.Current.x, randomChuzzle.Current.y), true);
+        TilesFactory.Instance.CreateChuzzle(Gamefield.Level.GetCellAt(randomChuzzle.Current.x, randomChuzzle.Current.y));
 
-        Object.Destroy(randomChuzzle.gameObject);
+        Destroy(randomChuzzle.gameObject);
         Gamefield.Level.ActiveChuzzles.Remove(randomChuzzle);
         Gamefield.Level.Chuzzles.Remove(randomChuzzle);
     }
@@ -324,12 +323,12 @@ public class FieldState : GamefieldState
             {
                 if (Vector3.Distance(
                     selectedChuzzle.transform.position,
-                    GamefieldUtility.CellPositionInWorldCoordinate(selectedChuzzle.MoveTo, selectedChuzzle.Scale)
+                    GamefieldUtility.CellPositionInWorldCoordinate(selectedChuzzle.MoveTo, Chuzzle.Scale)
                     ) < 0.05f)
                 {
                     selectedChuzzle.Velocity = Vector3.zero;
                     selectedChuzzle.transform.position =
-                        GamefieldUtility.CellPositionInWorldCoordinate(selectedChuzzle.MoveTo, selectedChuzzle.Scale);
+                        GamefieldUtility.CellPositionInWorldCoordinate(selectedChuzzle.MoveTo, Chuzzle.Scale);
                 }
                 else
                 {
@@ -408,7 +407,7 @@ public class FieldState : GamefieldState
             var real = GamefieldUtility.ToRealCoordinates(c);
             var targetCell = GamefieldUtility.CellAt(activeCells, real.x, real.y);
 
-            var difference = c.transform.position - GamefieldUtility.ConvertXYToPosition(real.x, real.y, c.Scale);
+            var difference = c.transform.position - GamefieldUtility.ConvertXYToPosition(real.x, real.y, Chuzzle.Scale);
 
             var isNeedCopy = false;
 
@@ -423,8 +422,8 @@ public class FieldState : GamefieldState
                         if (isNeedCopy)
                         {
                             var rightCell = GetRightCell(activeCells, targetCell.Right, c);
-                            copyPosition = GamefieldUtility.CellPositionInWorldCoordinate(rightCell, c.Scale) +
-                                           difference - new Vector3(c.Scale.x, 0, 0);
+                            copyPosition = GamefieldUtility.CellPositionInWorldCoordinate(rightCell, Chuzzle.Scale) +
+                                           difference - new Vector3(Chuzzle.Scale.x, 0, 0);
                         }
                     }
                     else
@@ -435,8 +434,8 @@ public class FieldState : GamefieldState
                         {
                             var leftCell = GetLeftCell(activeCells, targetCell.Left, c);
                             copyPosition =
-                                GamefieldUtility.ConvertXYToPosition(leftCell.x, leftCell.y, c.Scale) +
-                                difference + new Vector3(c.Scale.x, 0, 0);
+                                GamefieldUtility.ConvertXYToPosition(leftCell.x, leftCell.y, Chuzzle.Scale) +
+                                difference + new Vector3(Chuzzle.Scale.x, 0, 0);
                         }
                     }
                 }
@@ -450,8 +449,8 @@ public class FieldState : GamefieldState
                         if (isNeedCopy)
                         {
                             var topCell = GetTopCell(activeCells, targetCell.Top, c);
-                            copyPosition = GamefieldUtility.ConvertXYToPosition(topCell.x, topCell.y, c.Scale) +
-                                           difference - new Vector3(0, c.Scale.y, 0);
+                            copyPosition = GamefieldUtility.ConvertXYToPosition(topCell.x, topCell.y, Chuzzle.Scale) +
+                                           difference - new Vector3(0, Chuzzle.Scale.y, 0);
                         }
                     }
                     else
@@ -462,8 +461,8 @@ public class FieldState : GamefieldState
                         {
                             var bottomCell = GetBottomCell(activeCells, targetCell.Bottom, c);
                             copyPosition =
-                                GamefieldUtility.ConvertXYToPosition(bottomCell.x, bottomCell.y, c.Scale) +
-                                difference + new Vector3(0, c.Scale.y, 0);
+                                GamefieldUtility.ConvertXYToPosition(bottomCell.x, bottomCell.y, Chuzzle.Scale) +
+                                difference + new Vector3(0, Chuzzle.Scale.y, 0);
                         }
                     }
                 }
@@ -495,13 +494,13 @@ public class FieldState : GamefieldState
                         throw new ArgumentOutOfRangeException("Current direction can not be shit");
                 }
 
-                c.transform.position = GamefieldUtility.CellPositionInWorldCoordinate(targetCell, c.Scale) +
+                c.transform.position = GamefieldUtility.CellPositionInWorldCoordinate(targetCell, Chuzzle.Scale) +
                                        difference;
 
                 // Debug.Log("New coord: "+GamefieldUtility.ToRealCoordinates(c)+" for "+c.gameObject.name + " pos: "+c.transform.position);
             }
 
-            if (difference.magnitude < (CurrentChuzzle.Scale.x/25))
+            if (difference.magnitude < (Chuzzle.Scale.x/25))
             {
                 isNeedCopy = false;
             }
@@ -659,8 +658,8 @@ public class FieldState : GamefieldState
             foreach (var chuzzle in SelectedChuzzles)
             {
                 chuzzle.Real = Gamefield.Level.GetCellAt(
-                    Mathf.RoundToInt(chuzzle.transform.position.x/chuzzle.Scale.x),
-                    Mathf.RoundToInt(chuzzle.transform.position.y/chuzzle.Scale.y),
+                    Mathf.RoundToInt(chuzzle.transform.position.x/Chuzzle.Scale.x),
+                    Mathf.RoundToInt(chuzzle.transform.position.y/Chuzzle.Scale.y),
                     false);
                 chuzzle.GetComponent<TeleportableEntity>().DestroyCopy();
             }
@@ -707,7 +706,7 @@ public class FieldState : GamefieldState
     {
         var isMove = false;
         var cell = c.MoveTo;
-        var targetPosition = GamefieldUtility.CellPositionInWorldCoordinate(cell, c.Scale);
+        var targetPosition = GamefieldUtility.CellPositionInWorldCoordinate(cell, Chuzzle.Scale);
         if (Vector3.Distance(c.transform.position, targetPosition) > 0.1f)
         {
             isMove = true;

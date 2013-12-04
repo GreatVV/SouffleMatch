@@ -489,8 +489,8 @@ public class GamefieldUtility
 
     public static IntVector2 ToRealCoordinates(Chuzzle chuzzle)
     {
-        return new IntVector2(Mathf.RoundToInt(chuzzle.transform.position.x/chuzzle.Scale.x),
-            Mathf.RoundToInt(chuzzle.transform.position.y/chuzzle.Scale.y));
+        return new IntVector2(Mathf.RoundToInt(chuzzle.transform.position.x/Chuzzle.Scale.x),
+            Mathf.RoundToInt(chuzzle.transform.position.y/Chuzzle.Scale.y));
     }
 
     public static Cell CellAt(List<Cell> cells, int x, int y)
