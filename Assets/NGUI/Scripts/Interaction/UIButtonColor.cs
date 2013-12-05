@@ -9,8 +9,9 @@ using UnityEngine;
 /// Simple example script of how a button can be colored when the mouse hovers over it or it gets pressed.
 /// </summary>
 
+[ExecuteInEditMode]
 [AddComponentMenu("NGUI/Interaction/Button Color")]
-public class UIButtonColor : MonoBehaviour
+public class UIButtonColor : UIWidgetContainer
 {
 	/// <summary>
 	/// Target with a widget, renderer, or light that will have its color tweened.
@@ -22,13 +23,13 @@ public class UIButtonColor : MonoBehaviour
 	/// Color to apply on hover event (mouse only).
 	/// </summary>
 
-	public Color hover = new Color(0.6f, 1f, 0.2f, 1f);
+	public Color hover = new Color(225f / 255f, 200f / 255f, 150f / 255f, 1f);
 
 	/// <summary>
 	/// Color to apply on the pressed event.
 	/// </summary>
 
-	public Color pressed = Color.grey;
+	public Color pressed = new Color(183f / 255f, 163f / 255f, 123f / 255f, 1f);
 
 	/// <summary>
 	/// Duration of the tween process.
@@ -48,10 +49,20 @@ public class UIButtonColor : MonoBehaviour
 	{
 		get
 		{
-			if (!mStarted) Init();
+#if UNITY_EDITOR
+			if (!Application.isPlaying) return Color.white;
+#endif
+			Start();
 			return mColor;
 		}
-		set { mColor = value; }
+		set
+		{
+#if UNITY_EDITOR
+			if (!Application.isPlaying) return;
+#endif
+			Start();
+			mColor = value;
+		}
 	}
 
 	void Start ()
@@ -63,10 +74,20 @@ public class UIButtonColor : MonoBehaviour
 		}
 	}
 
-	protected virtual void OnEnable () { if (mStarted && mHighlighted) OnHover(UICamera.IsHighlighted(gameObject)); }
-
-	void OnDisable ()
+	protected virtual void OnEnable ()
 	{
+#if UNITY_EDITOR
+		if (!Application.isPlaying) return;
+#endif
+		if (mStarted && mHighlighted)
+			OnHover(UICamera.IsHighlighted(gameObject));
+	}
+
+	protected virtual void OnDisable ()
+	{
+#if UNITY_EDITOR
+		if (!Application.isPlaying) return;
+#endif
 		if (mStarted && tweenTarget != null)
 		{
 			TweenColor tc = tweenTarget.GetComponent<TweenColor>();
@@ -106,8 +127,13 @@ public class UIButtonColor : MonoBehaviour
 				}
 				else
 				{
-					Debug.LogWarning(NGUITools.GetHierarchy(gameObject) + " has nothing for UIButtonColor to color", this);
-					enabled = false;
+					tweenTarget = null;
+
+					if (Application.isPlaying)
+					{
+						Debug.LogWarning(NGUITools.GetHierarchy(gameObject) + " has nothing for UIButtonColor to color", this);
+						enabled = false;
+					}
 				}
 			}
 		}

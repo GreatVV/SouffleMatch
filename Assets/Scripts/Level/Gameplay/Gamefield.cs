@@ -168,8 +168,11 @@ public class Gamefield : MonoBehaviour
 
     private void RemoveEventHandlers()
     {
-        GameMode.Win -= OnWin;
-        GameMode.GameOver -= OnGameOver;
+        if (GameMode != null)
+        {
+            GameMode.Win -= OnWin;
+            GameMode.GameOver -= OnGameOver;
+        }
     }
 
     private void Update()
@@ -182,6 +185,7 @@ public class Gamefield : MonoBehaviour
 
     public void SwitchStateTo(GamefieldState newState)
     {
+        Debug.Log("Old state: "+_currentState);
         _currentState.OnExit();
         _currentState = newState;
         Debug.Log("Switch to: " + _currentState);

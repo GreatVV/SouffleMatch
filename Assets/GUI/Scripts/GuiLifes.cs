@@ -1,16 +1,17 @@
 ﻿using System;
+using System.Globalization;
 using UnityEngine;
 
 public class GuiLifes : MonoBehaviour
 {
     public LifeSystem LifeSystem;
 
-    public UISprite[] LifeSprites;
-    public UILabel TimerLabel;
+    public UILabel Amount;
+    public UILabel Timer;
 
     #region Event Handlers
 
-    private void OnAddButtonClick()
+    public void OnAddButtonClick()
     {
         UI.Instance.BuyLivesPopup.Show();
     }
@@ -22,12 +23,8 @@ public class GuiLifes : MonoBehaviour
 
     private void OnLifeChanged(int liveNumber)
     {
-        for (var i = 0; i < LifeSprites.Length; i++)
-        {
-            LifeSprites[i].color = i < liveNumber ? new Color(1, 1, 1, 1) : new Color(1, 1, 1, 0.3f);
-        }
-
-        TimerLabel.gameObject.SetActive(liveNumber < LifeSystem.MaxLifes);
+        Amount.text = liveNumber.ToString(CultureInfo.InvariantCulture);
+        Timer.gameObject.SetActive(liveNumber < LifeSystem.MaxLifes);
     }
 
     #endregion
@@ -45,7 +42,7 @@ public class GuiLifes : MonoBehaviour
                            DateTime.UtcNow;
             if (timespan.TotalSeconds > 0)
             {
-                TimerLabel.text = string.Format("{0:D2}:{1:D2}", timespan.Minutes, timespan.Seconds);
+                Timer.text = string.Format("{0:D2}:{1:D2}", timespan.Minutes, timespan.Seconds);
             }
         }
     }

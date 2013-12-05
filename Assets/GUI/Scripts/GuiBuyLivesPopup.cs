@@ -31,7 +31,7 @@ public class GuiBuyLivesPopup : Window
         }
     }
 
-    private void OnCloseButton()
+    public void OnCloseButton()
     {
         Close();
     }
