@@ -1,6 +1,6 @@
 ﻿public class ColorChuzzle : Chuzzle
 {
-    void Awake()
+    protected override void OnAwake()
     {   
     }
 }

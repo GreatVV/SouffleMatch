@@ -36,7 +36,7 @@ public abstract class Chuzzle : MonoBehaviour
     #region Event Handlers
 
     private void OnDeathAnimationEnd()
-    {   
+    {
         InvokeDied();
         InvokeAnimationFinished();
         Destroy(gameObject);
@@ -124,16 +124,23 @@ public abstract class Chuzzle : MonoBehaviour
     public void AnimateMoveTo(Vector3 targetPosition)
     {
         InvokeAnimationStarted();
-        iTween.MoveTo(gameObject,
-            iTween.Hash(
-                "x", targetPosition.x,
-                "y", targetPosition.y,
-                "z", targetPosition.z,
-                "time", 0.3f,
-                "easetype", iTween.EaseType.easeInOutQuad,
-                "oncomplete", new Action<object>(OnAnimateMoveEnd),
-                "oncompleteparams", gameObject
-                ));
+        if (Vector3.Distance(targetPosition, transform.position) > 0.01f)
+        {
+            iTween.MoveTo(gameObject,
+                iTween.Hash(
+                    "x", targetPosition.x,
+                    "y", targetPosition.y,
+                    "z", targetPosition.z,
+                    "time", 0.3f,
+                    "easetype", iTween.EaseType.easeInOutQuad,
+                    "oncomplete", new Action<object>(OnAnimateMoveEnd),
+                    "oncompleteparams", gameObject
+                    ));
+        }
+        else
+        {
+            InvokeAnimationFinished();
+        }
     }
 
     public virtual void Destroy()
@@ -152,4 +159,11 @@ public abstract class Chuzzle : MonoBehaviour
             }
         }
     }
+
+    void Awake()
+    {
+        OnAwake();
+    }
+
+    protected abstract void OnAwake();
 }

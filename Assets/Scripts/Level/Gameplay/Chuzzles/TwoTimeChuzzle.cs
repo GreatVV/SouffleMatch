@@ -7,10 +7,6 @@ public class TwoTimeChuzzle : Chuzzle
 
     public SpriteRenderer TwoTimeSprite;
 
-    private void Awake()
-    {   
-    }
-
     public override void Destroy()
     {
         TimesDestroyed++;
@@ -23,5 +19,10 @@ public class TwoTimeChuzzle : Chuzzle
         {   
             TwoTimeSprite.enabled = false;
         }
+    }
+
+    protected override void OnAwake()
+    {
+        
     }
 }

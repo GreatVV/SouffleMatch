@@ -157,7 +157,7 @@ public class TilesFactory : MonoBehaviour {
                     throw new ArgumentOutOfRangeException();
             }
         }
-        throw new NotImplementedException();
+        return null;
     }  
 
 

@@ -14,6 +14,11 @@ public class CounterChuzzle : Chuzzle
         }
     }
 
+    protected override void OnAwake()
+    {
+        
+    }
+
     protected override void Die()
     {
         Debug.LogWarning("Counter is dead");

@@ -8,7 +8,11 @@ public class HorizontalLineChuzzle : Chuzzle, IPowerUp
         Bang();
     }
 
-   
+    protected override void OnAwake()
+    {
+        
+    }
+
 
     public void Bang(PreviousBang previous = PreviousBang.No, IPowerUp prevPowerUp = null)
     {

@@ -5,11 +5,14 @@ using UnityEngine;
 public class InvaderChuzzle : Chuzzle
 {
     public static List<InvaderChuzzle> AllInvaderChuzzles = new List<InvaderChuzzle>();
-    
 
-    void Awake()
+
+    protected override void OnAwake()
     {
-        AllInvaderChuzzles.Add(this);
+        if (!AllInvaderChuzzles.Contains(this))
+        {
+            AllInvaderChuzzles.Add(this);
+        }
     }         
     public override void Destroy()
     {
