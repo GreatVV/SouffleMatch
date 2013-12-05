@@ -1,4 +1,7 @@
-﻿#region
+﻿using System;
+using System.Xml.Schema;
+
+#region
 
 using System.Collections.Generic;
 using System.Linq;
@@ -51,5 +54,36 @@ public class LocalizationStrings : MonoBehaviour
             var first = LoadedStings.FirstOrDefault(x => x.Id == phrase.Key);
             if (first != null) first.Str = phrase.Value;
         }
+    }
+
+    public static void PrintStrings()
+    {
+        var answer = LoadedStings.Aggregate("", (current, loadedSting) => current + (loadedSting.Id + "|" + loadedSting.Str + "&&"));
+        Debug.Log(answer);
+    }
+
+    public static LocalizationStrings Instance;
+    public void Awake()
+    {
+        Instance = this;
+        PrintStrings();
+        LoadLocalization(DefaultLocalization);
+    }
+
+    public TextAsset English;
+    public TextAsset Russian;
+
+    public TextAsset DefaultLocalization;
+
+    public void LoadLocalization(TextAsset language)
+    {
+        var lines = language.text.Split(new[] { "&&" }, StringSplitOptions.RemoveEmptyEntries);
+        var dict = new Dictionary<string, string>();
+        foreach (var line in lines)
+        {
+            var split = line.Split('|');
+            dict[split[0]] = split[1];
+        }
+        LoadLanguage("En", dict);
     }
 }
