@@ -11,7 +11,7 @@ public class GuiLifes : MonoBehaviour
 
     #region Event Handlers
 
-    private void OnAddButtonClick()
+    public void OnAddButtonClick()
     {
         UI.Instance.BuyLivesPopup.Show();
     }

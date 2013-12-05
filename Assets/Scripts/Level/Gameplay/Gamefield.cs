@@ -161,8 +161,11 @@ public class Gamefield : MonoBehaviour
 
     private void RemoveEventHandlers()
     {
-        GameMode.Win -= OnWin;
-        GameMode.GameOver -= OnGameOver;
+        if (GameMode != null)
+        {
+            GameMode.Win -= OnWin;
+            GameMode.GameOver -= OnGameOver;
+        }
     }
 
     private void Update()

@@ -6,7 +6,7 @@ public class GuiMoneyOnLevelList : MonoBehaviour
 
     #region Event Handlers
 
-    private void OnAddButtonClick()
+    public void OnAddButtonClick()
     {
         UI.Instance.InAppPopup.Show();
     }
