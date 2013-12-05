@@ -1,5 +1,8 @@
-﻿using UnityEngine;
+﻿using System;
+using System.Globalization;
+using UnityEngine;
 
+[ExecuteInEditMode]
 public class MapId : MonoBehaviour
 {
     public int Index;
@@ -7,7 +10,7 @@ public class MapId : MonoBehaviour
     public GameObject FirstStar;
     public GameObject SecondStar;
     public GameObject ThirdStar;
-
+    
     public void Start()
     {
         GuiLevelList.LevelsLoaded += OnLevelsLoaded;
@@ -35,6 +38,18 @@ public class MapId : MonoBehaviour
             RefreshNumberOfStars();
         }
     }
+
+    public void Update()
+    {
+#if UNITY_EDITOR
+        Index = Convert.ToInt32(name);
+        FirstStar = transform.Search("1", gameObject).gameObject;
+        SecondStar = transform.Search("2", gameObject).gameObject;
+        ThirdStar = transform.Search("3", gameObject).gameObject;
+        transform.Search("Label", gameObject).GetComponent<UILabel>().text = (Index + 1).ToString(CultureInfo.InvariantCulture);
+#endif
+    }
+
 
     public void RefreshNumberOfStars()
     {

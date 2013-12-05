@@ -289,7 +289,7 @@ public class FieldState : GamefieldState
     private void RepaintRandom()
     {
         Debug.Log("Random repaint");
-        var randomChuzzle = Gamefield.Level.ActiveChuzzles.Where(GamefieldUtility.IsUsual).ToArray()[Random.Range(0, Gamefield.Level.Chuzzles.Count)];
+        var randomChuzzle = Gamefield.Level.ActiveChuzzles.Where(GamefieldUtility.IsUsual).ToArray()[Random.Range(0, Gamefield.Level.ActiveChuzzles.Count)];
 
         TilesFactory.Instance.CreateChuzzle(Gamefield.Level.GetCellAt(randomChuzzle.Current.x, randomChuzzle.Current.y));
 

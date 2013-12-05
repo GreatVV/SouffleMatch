@@ -48,7 +48,8 @@ public class TargetChuzzleGameMode : GameMode
             {
                 Amount = 0;
             }
-            TargetChuzzle.TextMesh.text = Amount.ToString(CultureInfo.InvariantCulture);
+            TargetChuzzle.Counter = Amount;
+            TargetChuzzle.TextMesh.text = TargetChuzzle.Counter.ToString(CultureInfo.InvariantCulture);
         }
 
 

@@ -18,7 +18,7 @@ public class GuiMoneyOnLevelList : MonoBehaviour
 
     private void OnMoneyChanged(int money)
     {
-        MoneyLabel.text = string.Format("{0}$", money);
+        MoneyLabel.text = string.Format("{0}", money);
     }
 
     #endregion
