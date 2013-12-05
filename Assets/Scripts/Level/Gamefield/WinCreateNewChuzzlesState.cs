@@ -9,7 +9,7 @@ using System.Collections;
 #endregion
 
 [Serializable]
-public class CreateNewChuzzlesState : GamefieldState
+public class WinCreateNewChuzzlesState : GamefieldState
 {
     public GameObject WinBonusTitle;
 
@@ -45,9 +45,9 @@ public class CreateNewChuzzlesState : GamefieldState
     {
         chuzzle.Real = chuzzle.Current = chuzzle.MoveTo;
 
-        chuzzle.AnimationFinished -= OnAnimationFinished;   
+        chuzzle.AnimationFinished -= OnAnimationFinished;
         AnimatedChuzzles.Remove(chuzzle);
-        
+
         if (!AnimatedChuzzles.Any())
         {
             Gamefield.Level.UpdateActive();
@@ -97,7 +97,7 @@ public class CreateNewChuzzlesState : GamefieldState
 
         Gamefield.SwitchStateTo(Gamefield.RemoveState);
 
-        var powerUpChuzzles = 
+        var powerUpChuzzles =
             from ch in Gamefield.Level.Chuzzles
             where GamefieldUtility.IsPowerUp(ch)
             select ch;
@@ -180,7 +180,7 @@ public class CreateNewChuzzlesState : GamefieldState
         {
             if (c.MoveTo.y != c.Current.y)
             {
-                var targetPosition = new Vector3(c.Current.x*Chuzzle.Scale.x, c.MoveTo.y*Chuzzle.Scale.y, 0);
+                var targetPosition = new Vector3(c.Current.x * Chuzzle.Scale.x, c.MoveTo.y * Chuzzle.Scale.y, 0);
                 c.AnimateMoveTo(targetPosition);
             }
         }

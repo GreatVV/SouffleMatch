@@ -9,8 +9,8 @@ using Object = UnityEngine.Object;
 #endregion
 
 [Serializable]
-public class RemoveCombinationState : GamefieldState
-{   
+public class WinRemoveCombinationState : GamefieldState
+{
     #region Event Handlers
 
     public override void OnEnter()
@@ -20,7 +20,7 @@ public class RemoveCombinationState : GamefieldState
 
         var combinations = GamefieldUtility.FindCombinations(Gamefield.Level.ActiveChuzzles);
         if (combinations.Any())
-        {   
+        {
             RemoveCombinations(combinations);
         }
         else
@@ -33,7 +33,7 @@ public class RemoveCombinationState : GamefieldState
     {
         if (AnimatedChuzzles.Any())
         {
-            Debug.LogError("FUCK YOU: "+AnimatedChuzzles.Count);
+            Debug.LogError("FUCK YOU: " + AnimatedChuzzles.Count);
         }
         Chuzzle.AnimationStarted -= OnAnimationStarted;
     }
@@ -74,7 +74,7 @@ public class RemoveCombinationState : GamefieldState
                 chuzzle.Destroy();
             }
         }
-    }      
+    }
 
     private void OnAnimationStarted(Chuzzle chuzzle)
     {

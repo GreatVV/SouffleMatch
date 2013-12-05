@@ -42,6 +42,9 @@ public class Gamefield : MonoBehaviour
     [HideInInspector] public InitState InitState = null;
     [HideInInspector] public RemoveCombinationState RemoveState = null;
     [HideInInspector] public WinState WinState = null;
+    [HideInInspector] public WinRemoveCombinationState WinRemoveCombinationState = null;
+    [HideInInspector] public WinCreateNewChuzzlesState WinCreateNewChuzzlesState = null;
+    [HideInInspector] public WinCheckSpecialState WinCheckSpecialState = null;
     private GamefieldState _currentState;
 
     #endregion
@@ -106,6 +109,10 @@ public class Gamefield : MonoBehaviour
         GameOverState = GetComponent<GameOverState>();
         WinState = GetComponent<WinState>();
         FieldState = GetComponent<FieldState>();
+        WinCheckSpecialState = GetComponent<WinCheckSpecialState>();
+        WinCreateNewChuzzlesState = GetComponent<WinCreateNewChuzzlesState>();
+        WinRemoveCombinationState = GetComponent<WinRemoveCombinationState>();
+
 
         Level = GetComponent<Level>();
         StageManager = GetComponent<StageManager>();

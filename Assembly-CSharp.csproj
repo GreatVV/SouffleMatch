@@ -196,6 +196,9 @@
      <Compile Include="Assets\Scripts\Level\Gamefield\GamefieldState.cs" />
      <Compile Include="Assets\Scripts\Level\Gamefield\InitState.cs" />
      <Compile Include="Assets\Scripts\Level\Gamefield\RemoveCombinationState.cs" />
+     <Compile Include="Assets\Scripts\Level\Gamefield\WinCheckSpecialState.cs" />
+     <Compile Include="Assets\Scripts\Level\Gamefield\WinCreateNewChuzzlesState.cs" />
+     <Compile Include="Assets\Scripts\Level\Gamefield\WinRemoveCombinationState.cs" />
      <Compile Include="Assets\Scripts\Level\Gamefield\WinState.cs" />
      <Compile Include="Assets\Scripts\Level\Gameplay\Cell.cs" />
      <Compile Include="Assets\Scripts\Level\Gameplay\CellTypes.cs" />
