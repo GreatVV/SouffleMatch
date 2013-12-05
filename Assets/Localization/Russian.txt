@@ -1,0 +1,2 @@
+StartLevelPopup_Attempts|Попыток: {0}&&StartLevelPopup_Task|Задача: {0}&&StartLevelPopup_BestScore|Лучший: {0}&&StartLevelPopup_1StarTarget|1 звезда: {0}&&StartLevelPopup_2StarTarget|2 звезды: {0}&&StartLevelPopup_3StarTarget|3 звезды: {0}&&GameOverPopup_Money|У вас {0} монет&&Gameplay_Points|Очки: {0}&&Gameplay_Target|Цель: {0}&&Gameplay_Turns|Ходов: {0}&&WinPopup_TurnsLeft|Ходов осталось: {0}&&WinPopup_Score|Счет: {0}&&WinPopup_BestScore|Лучший: {0}&&BuyLivePopup_MaxLifes|У вас {0} жизней.
+ И это максимум&&BuyLivePopup_Lifes|У вас {0} жизней.&&

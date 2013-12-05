@@ -8,8 +8,7 @@ using UnityEngine;
 public class GameModeToString : MonoBehaviour
 {
     public static Phrase PlaceString = new Phrase("Вам нужно очистить грязь за {0} ходов", "GameMode_Place");
-    public static Phrase ScoreString = new Phrase("Вам нужно набрать {0} очков за {1} ходов", "GameMode_Score");
-
+    public static Phrase ScoreString = new Phrase("Вам нужно набрать {0} очков за {1} ходов", "GameMode_Score"); 
     public static Phrase ChuzzleString = new Phrase("Вам нужно уничтожить конфетку {0} раз за {1} ходов",
         "GameMode_Chuzzle");
 
