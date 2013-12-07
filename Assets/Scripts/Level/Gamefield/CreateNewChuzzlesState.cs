@@ -12,6 +12,7 @@ using System.Collections;
 public class CreateNewChuzzlesState : GamefieldState
 {
     public GameObject WinBonusTitle;
+    public GameObject TileReplaceEffect;
 
     #region Event Handlers
 
@@ -81,16 +82,19 @@ public class CreateNewChuzzlesState : GamefieldState
     public void OnWinTitleDestroyed()
     {
         List<Chuzzle> NewPowerUps = new List<Chuzzle>();
-        var usualChuzzles =
+        List<Chuzzle> usualChuzzles = new List<Chuzzle>();
+        var usualChuzzlesCollection =
                 from ch in Gamefield.Level.Chuzzles
                 where !GamefieldUtility.IsPowerUp(ch)
                 select ch;
-
+        usualChuzzles = usualChuzzlesCollection.ToList();
         for (var i = 0; i < Gamefield.GameMode.Turns; i++)
         {
-            var newPowerUp = usualChuzzles.ToArray()[UnityEngine.Random.Range(0, usualChuzzles.Count())];
+            var newPowerUp = usualChuzzles[UnityEngine.Random.Range(0, usualChuzzles.Count())];
             NewPowerUps.Add(newPowerUp);
-            usualChuzzles.ToList().Remove(newPowerUp);
+            usualChuzzles.Remove(newPowerUp);
+            if (!usualChuzzles.Any())
+                break;
         }
         StartCoroutine(NewCoroutine(NewPowerUps.ToList()));
     }
@@ -100,9 +104,11 @@ public class CreateNewChuzzlesState : GamefieldState
         yield return new WaitForSeconds(1f);
         foreach(Chuzzle ch in NewPowerUps)
         {
-            TilesFactory.Instance.CreateBomb(ch.Current);
             ch.Destroy(false, false);
+            var ps = Instantiate(TileReplaceEffect) as GameObject;
+            ps.transform.position = ch.transform.position;
             yield return new WaitForSeconds(0.5f);
+            TilesFactory.Instance.CreateBomb(ch.Current);
         }
         Gamefield.SwitchStateTo(Gamefield.WinRemoveCombinationState);
     }

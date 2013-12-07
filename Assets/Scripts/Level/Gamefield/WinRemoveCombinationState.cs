@@ -1,6 +1,7 @@
 ﻿#region
 
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -22,7 +23,7 @@ public class WinRemoveCombinationState : GamefieldState
             from ch in Gamefield.Level.Chuzzles
             where GamefieldUtility.IsPowerUp(ch)
             select ch;
-        Debug.Log("WinremoveCombinationState!");
+
         foreach (Chuzzle ch in powerUpChuzzles)
         {
             ch.Destroy(true, true);
@@ -33,10 +34,16 @@ public class WinRemoveCombinationState : GamefieldState
         {
             RemoveCombinations(combinations);
         }
-        else
+        else if(!powerUpChuzzles.Any())
         {
-            Gamefield.SwitchStateTo(Gamefield.WinCreateNewChuzzlesState);
+            StartCoroutine(GameModeCheck());
         }
+    }
+
+    IEnumerator GameModeCheck()
+    {
+        yield return new WaitForSeconds(1.5f);
+        Gamefield.GameMode.Check();
     }
 
     public override void OnExit()

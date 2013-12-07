@@ -56,7 +56,7 @@ public class WinCheckSpecialState : GamefieldState
 
         if (!AnimatedChuzzles.Any())
         {
-            Gamefield.SwitchStateTo(Gamefield.CreateNewChuzzlesState);
+            Gamefield.SwitchStateTo(Gamefield.WinCreateNewChuzzlesState);
         }
     }
 

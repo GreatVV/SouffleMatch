@@ -59,7 +59,7 @@ public class WinCreateNewChuzzlesState : GamefieldState
             }
             else
             {
-                Gamefield.GameMode.Check();
+                Gamefield.SwitchStateTo(Gamefield.WinRemoveCombinationState);
             }
         }
     }
