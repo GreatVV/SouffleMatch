@@ -116,7 +116,7 @@ public abstract class Chuzzle : MonoBehaviour
     protected virtual void Die(bool withAnimation)
     {
         IsDiying = true;
-        Debug.Log("Die: " + name + " " + GetInstanceID());
+       // Debug.Log("Die: " + name + " " + GetInstanceID());
         
         //TODO Do Explosion
         if (Math.Abs(transform.localScale.x) > 0.01f && withAnimation)
@@ -141,7 +141,7 @@ public abstract class Chuzzle : MonoBehaviour
 
     public void AnimateMoveTo(Vector3 targetPosition, float time = 0.3f)
     {
-        Debug.Log("Move: "+name+" "+GetInstanceID());
+        //Debug.Log("Move: "+name+" "+GetInstanceID());
         
         if (Vector3.Distance(targetPosition, transform.position) > 0.01f)
         {

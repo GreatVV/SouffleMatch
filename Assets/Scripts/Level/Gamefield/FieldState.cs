@@ -620,6 +620,7 @@ public class FieldState : GamefieldState
             foreach (var chuzzle in Gamefield.Level.ActiveChuzzles)
             {
                 chuzzle.Shine = false;
+                chuzzle.GetComponent<TeleportableEntity>().DestroyCopy();
             }
 
             //move all tiles to new real coordinates
@@ -629,7 +630,6 @@ public class FieldState : GamefieldState
                     Mathf.RoundToInt(chuzzle.transform.position.x/Chuzzle.Scale.x),
                     Mathf.RoundToInt(chuzzle.transform.position.y/Chuzzle.Scale.y),
                     false);
-                chuzzle.GetComponent<TeleportableEntity>().DestroyCopy();
             }
 
             foreach (var c in Gamefield.Level.Chuzzles)

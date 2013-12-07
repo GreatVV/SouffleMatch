@@ -1,34 +1,47 @@
-﻿using UnityEngine;
-using System.Collections;
+﻿#region
 
-[RequireComponent(typeof(Chuzzle))]
+using UnityEngine;
+
+#endregion
+
+[RequireComponent(typeof (Chuzzle))]
 public class TeleportableEntity : MonoBehaviour
-{   
-    public GameObject Copy;   
+{
+    public GameObject Copy;
 
-    public bool HasCopy;
+    #region Event Handlers
+
+    public void OnDestroy()
+    {
+        Destroy(Copy);
+    }
+
+    #endregion
+
+    public bool HasCopy
+    {
+        get { return Copy && Copy.activeSelf; }
+    }
 
     public void CreateCopy()
-    {   
-        Copy = Instantiate(gameObject) as GameObject;
+    {
+        if (!HasCopy)
+        {
+            Copy = Instantiate(gameObject) as GameObject;
+            Copy.gameObject.name += " is copy";
+        }
+        else
+        {
+            Copy.SetActive(true);
+        }
         Copy.transform.parent = gameObject.transform;
-        Copy.gameObject.name += " is copy";
-        HasCopy = true;
-        //Debug.Log("Create copy "+gameObject);
     }
 
     public void DestroyCopy()
     {
         if (HasCopy)
         {
-            Destroy(Copy);
-            HasCopy = false;
-            //Debug.Log("Destroy copy " + Copy);
+            Copy.SetActive(false);
         }
-    }
-
-    public void OnDestroy()
-    {
-        DestroyCopy();
     }
 }

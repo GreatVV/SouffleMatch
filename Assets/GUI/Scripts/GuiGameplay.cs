@@ -1,4 +1,6 @@
-﻿public class GuiGameplay : Window
+﻿using UnityEngine;
+
+public class GuiGameplay : Window
 {
     public static Phrase PointsString = new Phrase("Очки: {0}", "Gameplay_Points");
     public static Phrase TargetString = new Phrase("Цель: {0}", "Gameplay_Target");
@@ -28,6 +30,7 @@
         UI.Instance.TaskPopup.Show(gamefield.GameMode);
         OnTurnsChanged(gamefield.GameMode.Turns);
         OnPointsChanged(gamefield.PointSystem.CurrentPoints);
+        Camera.main.orthographicSize = gamefield.Level.Width;
     }
 
     private void OnPointsChanged(int points)

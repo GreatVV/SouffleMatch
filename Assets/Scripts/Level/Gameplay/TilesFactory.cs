@@ -112,6 +112,11 @@ public class TilesFactory : MonoBehaviour {
         return c;
     }
 
+    public Chuzzle CreateChuzzle(Cell cell, ChuzzleColor color)
+    {
+        return CreateChuzzle(cell, PrefabOfColor(color));
+    }
+
     public Chuzzle CreateChuzzle(Cell cell, GameObject prefab)
     {
         var chuzzleObject = Instantiate(prefab) as GameObject;
@@ -162,7 +167,11 @@ public class TilesFactory : MonoBehaviour {
             }
         }
         return null;
-    }  
+    }
 
+    public GameObject PrefabOfColor(ChuzzleColor color)
+    {
+        return ChuzzlePrefabs.FirstOrDefault(x => x.GetComponent<Chuzzle>().Color == color);
+    }
 
 }

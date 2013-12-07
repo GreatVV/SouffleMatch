@@ -63,9 +63,8 @@ public class RemoveCombinationState : GamefieldState
     private void RemoveCombinations()
     {
         //remove combinations
-        for (int index = 0; index < Combinations.Count; index++)
+        foreach (var combination in Combinations)
         {
-            var combination = Combinations[index];
             Gamefield.InvokeCombinationDestroyed(combination);
 
             //count points
@@ -78,6 +77,11 @@ public class RemoveCombinationState : GamefieldState
                 {
                     chuzzle.Destroy(true);
                 }
+            }
+
+            if (!AnimatedChuzzles.Any())
+            {
+                Gamefield.SwitchStateTo(Gamefield.CreateNewChuzzlesState);
             }
         }
     }

@@ -14,14 +14,14 @@ public class GamefieldUtility
     #region Find Combination
 
     public static List<List<Chuzzle>> FindCombinations(List<Chuzzle> chuzzles, int combinationSize = 3)
-    {
+    {            
         var combinations = new List<List<Chuzzle>>();
 
         foreach (var c in chuzzles)
         {
             c.IsCheckedForSearch = false;
         }
-
+        
         //find combination
         foreach (var c in chuzzles)
         {
@@ -38,6 +38,7 @@ public class GamefieldUtility
         foreach (var c in chuzzles)
         {
             c.IsCheckedForSearch = false;
+            c.IsDiying = false;
         }
 
         return combinations;
@@ -599,7 +600,7 @@ public class GamefieldUtility
 
     public static bool IsUsual(Chuzzle chuzzle)
     {
-        return chuzzle is TwoTimeChuzzle || chuzzle is ColorChuzzle;
+        return chuzzle is ColorChuzzle;
     }
 
     public static bool IsLock(Chuzzle chuzzle)
