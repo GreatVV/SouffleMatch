@@ -102,7 +102,11 @@ public class TilesFactory : MonoBehaviour {
         if (chuzzle == null)
         {
             Debug.LogError("Incorrect prefabs for counters");
-        }                            
+        }
+        else
+        {
+            ((TargetChuzzleGameMode) Gamefield.GameMode).UpdateCounter();
+        }
         cell.CreationType = CreationType.Usual;
 
         return c;

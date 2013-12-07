@@ -28,31 +28,25 @@ public class TargetChuzzleGameMode : GameMode
         Gamefield.CombinationDestroyed -= OnCombinationDestroyed;
     }
 
-    private void OnCombinationDestroyed(IEnumerable<Chuzzle> destroyedChuzzles)
-    {
-        //TODO find chuzzle (it's special type)
-        if (TargetChuzzle == null)
-        {
-            TargetChuzzle = Gamefield.Level.ActiveChuzzles.FirstOrDefault(x => x is CounterChuzzle) as CounterChuzzle;
-            if (TargetChuzzle == null)
-            {
-                Debug.LogError("No target chuzzle");
-                return;
-            }
-            SetTargetAmount(Amount);
-        }
-       
+    private void OnCombinationDestroyed(List<Chuzzle> destroyedChuzzles)
+    {   
         if (destroyedChuzzles.Contains(TargetChuzzle))
         {
             Amount -= destroyedChuzzles.Count()-1;
             SetTargetAmount(Amount);                                                               
         }
+    }
 
+    public void UpdateCounter()
+    {
+        TargetChuzzle = Gamefield.Level.ActiveChuzzles.FirstOrDefault(x => x is CounterChuzzle) as CounterChuzzle;
+        TargetChuzzle.Died += OnTargetChuzzleDeath;
+        SetTargetAmount(Amount);
+    }
 
-        if (Amount <= 0)
-        {
-            IsWin = true;
-        }
+    private void OnTargetChuzzleDeath(Chuzzle obj)
+    {
+        IsWin = true;
     }
 
     private void SetTargetAmount(int amount)

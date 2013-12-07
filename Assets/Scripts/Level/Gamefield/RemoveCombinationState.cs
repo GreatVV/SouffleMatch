@@ -10,7 +10,9 @@ using Object = UnityEngine.Object;
 
 [Serializable]
 public class RemoveCombinationState : GamefieldState
-{   
+{
+    public List<List<Chuzzle>> Combinations;
+
     #region Event Handlers
 
     public override void OnEnter()
@@ -18,10 +20,10 @@ public class RemoveCombinationState : GamefieldState
         AnimatedChuzzles.Clear();
         Chuzzle.AnimationStarted += OnAnimationStarted;
 
-        var combinations = GamefieldUtility.FindCombinations(Gamefield.Level.ActiveChuzzles);
-        if (combinations.Any())
+        Combinations = GamefieldUtility.FindCombinations(Gamefield.Level.ActiveChuzzles);
+        if (Combinations.Any())
         {   
-            RemoveCombinations(combinations);
+            RemoveCombinations();
         }
         else
         {
@@ -58,11 +60,12 @@ public class RemoveCombinationState : GamefieldState
     {
     }
 
-    private void RemoveCombinations(IEnumerable<List<Chuzzle>> combinations)
+    private void RemoveCombinations()
     {
         //remove combinations
-        foreach (var combination in combinations)
+        for (int index = 0; index < Combinations.Count; index++)
         {
+            var combination = Combinations[index];
             Gamefield.InvokeCombinationDestroyed(combination);
 
             //count points
@@ -77,7 +80,7 @@ public class RemoveCombinationState : GamefieldState
                 }
             }
         }
-    }      
+    }
 
     private void OnAnimationStarted(Chuzzle chuzzle)
     {

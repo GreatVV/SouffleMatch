@@ -51,7 +51,7 @@ public class Gamefield : MonoBehaviour
 
     #region Events
 
-    public event Action<IEnumerable<Chuzzle>> CombinationDestroyed;
+    public event Action<List<Chuzzle>> CombinationDestroyed;
 
     public event Action<Gamefield> GameStarted;
 
@@ -76,7 +76,7 @@ public class Gamefield : MonoBehaviour
 
     #region Event Invokators
 
-    public virtual void InvokeCombinationDestroyed(IEnumerable<Chuzzle> combination)
+    public virtual void InvokeCombinationDestroyed(List<Chuzzle> combination)
     {
         var handler = CombinationDestroyed;
         if (handler != null) handler(combination);
