@@ -71,7 +71,10 @@ public class RemoveCombinationState : GamefieldState
 
             foreach (var chuzzle in combination)
             {
-                chuzzle.Destroy(true);
+                if (!chuzzle.IsDiying)
+                {
+                    chuzzle.Destroy(true);
+                }
             }
         }
     }      

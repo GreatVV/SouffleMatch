@@ -25,5 +25,9 @@ public class SpriteScale : MonoBehaviour
     {
         var spriteRenderer = GetComponent<SpriteRenderer>();
         transform.localScale = new Vector3(Scale.x/spriteRenderer.sprite.bounds.size.x, Scale.y/spriteRenderer.sprite.bounds.size.y, 1);
+        if (GetComponent<BoxCollider2D>())
+        {
+            GetComponent<BoxCollider2D>().size = new Vector2(Scale.x/transform.localScale.x, Scale.y/transform.localScale.y);
+        }
     }
 }

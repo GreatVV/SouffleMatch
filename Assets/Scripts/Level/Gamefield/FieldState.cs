@@ -84,16 +84,17 @@ public class FieldState : GamefieldState
         }
         else
         {
-            //Debug.Log("Current chuzzle:"+CurrentChuzzle);
-            var velocity = -5f*(CurrentChuzzle.Real.Position - CurrentChuzzle.Current.Position);
-            //Debug.Log("V:"+velocity);
-            foreach (var c in SelectedChuzzles)
+            if (CurrentChuzzle != null)
             {
-                c.MoveTo = c.Real = c.Current;
-                c.Velocity = velocity;
-            }
+                var velocity = -5f*(CurrentChuzzle.Real.Position - CurrentChuzzle.Current.Position);
+                foreach (var c in SelectedChuzzles)
+                {
+                    c.MoveTo = c.Real = c.Current;
+                    c.Velocity = velocity;
+                }
 
-            _isReturning = true;
+                _isReturning = true;
+            }
         }
     }
 

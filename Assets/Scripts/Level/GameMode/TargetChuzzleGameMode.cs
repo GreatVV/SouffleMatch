@@ -36,20 +36,16 @@ public class TargetChuzzleGameMode : GameMode
             TargetChuzzle = Gamefield.Level.ActiveChuzzles.FirstOrDefault(x => x is CounterChuzzle) as CounterChuzzle;
             if (TargetChuzzle == null)
             {
-                Debug.Log("No target chuzzle");
+                Debug.LogError("No target chuzzle");
                 return;
             }
+            SetTargetAmount(Amount);
         }
        
         if (destroyedChuzzles.Contains(TargetChuzzle))
         {
             Amount -= destroyedChuzzles.Count()-1;
-            if (Amount < 0)
-            {
-                Amount = 0;
-            }
-            TargetChuzzle.Counter = Amount;
-            TargetChuzzle.TextMesh.text = TargetChuzzle.Counter.ToString(CultureInfo.InvariantCulture);
+            SetTargetAmount(Amount);                                                               
         }
 
 
@@ -57,6 +53,16 @@ public class TargetChuzzleGameMode : GameMode
         {
             IsWin = true;
         }
+    }
+
+    private void SetTargetAmount(int amount)
+    {
+        if (amount < 0)
+        {
+            amount = 0;
+        }
+        TargetChuzzle.Counter = amount;
+        TargetChuzzle.TextMesh.text = TargetChuzzle.Counter.ToString(CultureInfo.InvariantCulture);
     }
 
     public override void HumanTurn()
