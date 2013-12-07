@@ -24,7 +24,7 @@ public class WinCheckSpecialState : GamefieldState
         var combinations = GamefieldUtility.FindCombinations(Gamefield.Level.ActiveChuzzles);
         if (!CheckForSpecial(combinations))
         {
-            Gamefield.SwitchStateTo(Gamefield.RemoveState);
+            Gamefield.SwitchStateTo(Gamefield.WinRemoveCombinationState);
         }
     }
 

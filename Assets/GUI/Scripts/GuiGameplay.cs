@@ -55,7 +55,7 @@ public class GuiGameplay : Window
 
     public void OnWin()
     {
-        //UI.Instance.ShowWinPopup();
+        UI.Instance.ShowWinPopup();
     }
 
     #endregion

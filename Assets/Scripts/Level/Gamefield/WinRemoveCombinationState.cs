@@ -18,6 +18,16 @@ public class WinRemoveCombinationState : GamefieldState
         AnimatedChuzzles.Clear();
         Chuzzle.AnimationStarted += OnAnimationStarted;
 
+        var powerUpChuzzles =
+            from ch in Gamefield.Level.Chuzzles
+            where GamefieldUtility.IsPowerUp(ch)
+            select ch;
+        Debug.Log("WinremoveCombinationState!");
+        foreach (Chuzzle ch in powerUpChuzzles)
+        {
+            ch.Destroy(true, true);
+        }
+
         var combinations = GamefieldUtility.FindCombinations(Gamefield.Level.ActiveChuzzles);
         if (combinations.Any())
         {
@@ -25,7 +35,7 @@ public class WinRemoveCombinationState : GamefieldState
         }
         else
         {
-            Gamefield.SwitchStateTo(Gamefield.FieldState);
+            Gamefield.SwitchStateTo(Gamefield.WinCreateNewChuzzlesState);
         }
     }
 
@@ -44,7 +54,7 @@ public class WinRemoveCombinationState : GamefieldState
         AnimatedChuzzles.Remove(chuzzle);
         if (!AnimatedChuzzles.Any())
         {
-            Gamefield.SwitchStateTo(Gamefield.CreateNewChuzzlesState);
+            Gamefield.SwitchStateTo(Gamefield.WinCreateNewChuzzlesState);
         }
     }
 
@@ -68,7 +78,6 @@ public class WinRemoveCombinationState : GamefieldState
             //count points
             Gamefield.PointSystem.CountForCombinations(combination);
 
-
             foreach (var chuzzle in combination)
             {
                 chuzzle.Destroy(true);
@@ -84,5 +93,4 @@ public class WinRemoveCombinationState : GamefieldState
             chuzzle.AnimationFinished += OnAnimationFinished;
         }
     }
-
 }

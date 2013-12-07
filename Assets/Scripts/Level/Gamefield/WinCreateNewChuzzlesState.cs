@@ -55,62 +55,12 @@ public class WinCreateNewChuzzlesState : GamefieldState
             var combinations = GamefieldUtility.FindCombinations(Gamefield.Level.ActiveChuzzles);
             if (combinations.Count > 0)
             {
-                Gamefield.SwitchStateTo(Gamefield.CheckSpecialState);
+                Gamefield.SwitchStateTo(Gamefield.WinCheckSpecialState);
             }
             else
             {
-                //check gameover or win
-                if (!Gamefield.GameMode.Check())
-                {
-                    Gamefield.SwitchStateTo(Gamefield.FieldState);
-                }
-                else if (Gamefield.GameMode.Turns > 0)
-                {
-                    CreateBonusPowerUps();
-                }
+                Gamefield.GameMode.Check();
             }
-        }
-    }
-
-    public void OnWinTitleDestroyed()
-    {
-        List<Chuzzle> NewPowerUps = new List<Chuzzle>();
-        var usualChuzzles =
-                from ch in Gamefield.Level.Chuzzles
-                where !GamefieldUtility.IsPowerUp(ch)
-                select ch;
-
-        for (var i = 0; i < 2; i++)
-        {
-            var newPowerUp = usualChuzzles.ToArray()[UnityEngine.Random.Range(0, usualChuzzles.Count())];
-            NewPowerUps.Add(newPowerUp);
-            usualChuzzles.ToList().Remove(newPowerUp);
-        }
-
-        foreach (Chuzzle ch in NewPowerUps)
-        {
-           TilesFactory.Instance.CreateBomb(ch.Current);
-           ch.Destroy(false, false);
-        }
-
-        Gamefield.SwitchStateTo(Gamefield.RemoveState);
-
-        var powerUpChuzzles =
-            from ch in Gamefield.Level.Chuzzles
-            where GamefieldUtility.IsPowerUp(ch)
-            select ch;
-
-        StartCoroutine(NewCoroutine(powerUpChuzzles.ToList()));
-    }
-
-    IEnumerator NewCoroutine(List<Chuzzle> powerUpChuzzles)
-    {
-        yield return new WaitForSeconds(1f);
-        foreach (Chuzzle ch in powerUpChuzzles)
-        {
-            ch.Destroy(true);
-            CreateNew();
-            yield return new WaitForSeconds(3f);
         }
     }
 
@@ -129,7 +79,7 @@ public class WinCreateNewChuzzlesState : GamefieldState
         var hasNew = Gamefield.NewTilesInColumns.Any(x => x > 0);
         if (!hasNew)
         {
-            Gamefield.SwitchStateTo(Gamefield.CheckSpecialState);
+            Gamefield.SwitchStateTo(Gamefield.WinCheckSpecialState);
             return false;
         }
 
@@ -183,11 +133,5 @@ public class WinCreateNewChuzzlesState : GamefieldState
             }
         }
         return true;
-    }
-
-    public void CreateBonusPowerUps()
-    {
-        var SuffleTime = Instantiate(WinBonusTitle) as GameObject;
-        SuffleTime.GetComponent<CreateBonusTitle>().WinTitleDestroyed += OnWinTitleDestroyed;
     }
 }

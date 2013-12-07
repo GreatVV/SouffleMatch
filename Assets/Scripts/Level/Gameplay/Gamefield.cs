@@ -16,6 +16,10 @@ using UnityEngine;
 [RequireComponent(typeof (FieldState))]
 [RequireComponent(typeof (RemoveCombinationState))]
 [RequireComponent(typeof (InitState))]
+[RequireComponent(typeof (WinCheckSpecialState))]
+[RequireComponent(typeof (WinCreateNewChuzzlesState))]
+[RequireComponent(typeof (WinRemoveCombinationState))]
+
 public class Gamefield : MonoBehaviour
 {
     public LayerMask ChuzzleMask;

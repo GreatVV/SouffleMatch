@@ -53,20 +53,26 @@ public class CreateNewChuzzlesState : GamefieldState
             Gamefield.Level.UpdateActive();
 
             var combinations = GamefieldUtility.FindCombinations(Gamefield.Level.ActiveChuzzles);
-            if (combinations.Count > 0)
+            if (combinations.Count > 0) 
             {
                 Gamefield.SwitchStateTo(Gamefield.CheckSpecialState);
             }
             else
             {
-                //check gameover or win
-                if (!Gamefield.GameMode.Check())
+                if (!Gamefield.GameMode.IsWin && !Gamefield.GameMode.IsGameOver)
                 {
                     Gamefield.SwitchStateTo(Gamefield.FieldState);
                 }
-                else if (Gamefield.GameMode.Turns > 0)
+                else 
                 {
-                    CreateBonusPowerUps();
+                    if (Gamefield.GameMode.Turns > 0 && Gamefield.GameMode.IsWin)
+                    {
+                        CreateBonusPowerUps();
+                    }
+                    else
+                    {
+                        Gamefield.GameMode.Check();
+                    }
                 }
             }
         }
@@ -80,38 +86,25 @@ public class CreateNewChuzzlesState : GamefieldState
                 where !GamefieldUtility.IsPowerUp(ch)
                 select ch;
 
-        for (var i = 0; i < 2; i++)
+        for (var i = 0; i < Gamefield.GameMode.Turns; i++)
         {
             var newPowerUp = usualChuzzles.ToArray()[UnityEngine.Random.Range(0, usualChuzzles.Count())];
             NewPowerUps.Add(newPowerUp);
             usualChuzzles.ToList().Remove(newPowerUp);
         }
+        StartCoroutine(NewCoroutine(NewPowerUps.ToList()));
+    }
 
-        foreach (Chuzzle ch in NewPowerUps)
+    IEnumerator NewCoroutine(List<Chuzzle> NewPowerUps)
+    {
+        yield return new WaitForSeconds(1f);
+        foreach(Chuzzle ch in NewPowerUps)
         {
             TilesFactory.Instance.CreateBomb(ch.Current);
             ch.Destroy(false, false);
+            yield return new WaitForSeconds(0.5f);
         }
-
-        Gamefield.SwitchStateTo(Gamefield.RemoveState);
-
-        var powerUpChuzzles = 
-            from ch in Gamefield.Level.Chuzzles
-            where GamefieldUtility.IsPowerUp(ch)
-            select ch;
-
-        StartCoroutine(NewCoroutine(powerUpChuzzles.ToList()));
-    }
-
-    IEnumerator NewCoroutine(List<Chuzzle> powerUpChuzzles)
-    {
-        yield return new WaitForSeconds(1f);
-        foreach (Chuzzle ch in powerUpChuzzles)
-        {
-            ch.Destroy(true);
-            CreateNew();
-            yield return new WaitForSeconds(3f);
-        }
+        Gamefield.SwitchStateTo(Gamefield.WinRemoveCombinationState);
     }
 
     #endregion

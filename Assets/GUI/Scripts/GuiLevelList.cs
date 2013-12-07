@@ -36,7 +36,7 @@ public class GuiLevelList : Window
         IsLevelsLoaded = false;
 #if !UNITY_ANDROID
         Loading.text = "Loading";
-        NGUITools.ClearChildren(Grid);
+        //NGUITools.ClearChildren(Grid);
         StartCoroutine(DownloadLevel(LevelUrl, levels));
 #endif
     }
