@@ -31,6 +31,8 @@ public class Cell
 
     public CreationType CreationType;
 
+    public Vector3 Position;
+
     public Cell Copy
     {
         get
@@ -48,7 +50,8 @@ public class Cell
     {
         this.x = x;
         this.y = y;
-        this.Type = type;             
+        this.Type = type;
+        Position = GamefieldUtility.ConvertXYToPosition(x, y, Chuzzle.Scale);
     }
 
     public Cell GetBottomWithType(CellTypes type = CellTypes.Usual)

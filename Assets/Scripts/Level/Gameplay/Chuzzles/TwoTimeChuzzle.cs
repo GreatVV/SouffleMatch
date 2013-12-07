@@ -7,13 +7,14 @@ public class TwoTimeChuzzle : Chuzzle
 
     public SpriteRenderer TwoTimeSprite;
 
-    public override void Destroy()
+    public override void Destroy(bool needCreateNew, bool withAnimation = true)
     {
+        NeedCreateNew = needCreateNew;
         TimesDestroyed++;
 
         if (TimesDestroyed >= 2)
         {
-            Die();
+            Die(withAnimation);
         }
         else
         {   

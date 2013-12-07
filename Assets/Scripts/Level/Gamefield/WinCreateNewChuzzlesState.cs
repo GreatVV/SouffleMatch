@@ -89,10 +89,8 @@ public class WinCreateNewChuzzlesState : GamefieldState
 
         foreach (Chuzzle ch in NewPowerUps)
         {
-            TilesFactory.Instance.CreateBomb(ch.Current);
-            Destroy(ch.gameObject);
-            Gamefield.Level.Chuzzles.Remove(ch);
-            Gamefield.Level.ActiveChuzzles.Remove(ch);
+           TilesFactory.Instance.CreateBomb(ch.Current);
+           ch.Destroy(false, false);
         }
 
         Gamefield.SwitchStateTo(Gamefield.RemoveState);
@@ -110,7 +108,7 @@ public class WinCreateNewChuzzlesState : GamefieldState
         yield return new WaitForSeconds(1f);
         foreach (Chuzzle ch in powerUpChuzzles)
         {
-            ch.Destroy();
+            ch.Destroy(true);
             CreateNew();
             yield return new WaitForSeconds(3f);
         }

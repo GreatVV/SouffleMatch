@@ -71,7 +71,7 @@ public class WinRemoveCombinationState : GamefieldState
 
             foreach (var chuzzle in combination)
             {
-                chuzzle.Destroy();
+                chuzzle.Destroy(true);
             }
         }
     }

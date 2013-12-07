@@ -498,11 +498,6 @@ public class GamefieldUtility
         return cells.FirstOrDefault(c => c.x == x && c.y == y);
     }
 
-    public static Vector3 CellPositionInWorldCoordinate(Cell c, Vector3 scale)
-    {
-        return ConvertXYToPosition(c.x, c.y, scale);
-    }
-
     public static Vector3 ConvertXYToPosition(int x, int y, Vector3 scale)
     {
         return new Vector3(x*scale.x, y*scale.y, 0);

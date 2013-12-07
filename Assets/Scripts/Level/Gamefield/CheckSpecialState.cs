@@ -11,8 +11,8 @@ using Random = UnityEngine.Random;
 
 [Serializable]
 public class CheckSpecialState : GamefieldState
-{   
-  
+{
+    public bool IsNeedToChangeState;
 
     #region Event Handlers
 
@@ -51,8 +51,10 @@ public class CheckSpecialState : GamefieldState
         chuzzle.AnimationFinished -= OnAnimationFinished;
         AnimatedChuzzles.Remove(chuzzle);
 
-        Gamefield.RemoveChuzzle(chuzzle);
-        Destroy(chuzzle.gameObject);
+        if (chuzzle.IsDiying == false)
+        {
+            chuzzle.Destroy(true, false);
+        }
 
         if (!AnimatedChuzzles.Any())
         {
@@ -102,40 +104,26 @@ public class CheckSpecialState : GamefieldState
     private bool CreateBomb(List<Chuzzle> comb)
     {
         return CreateSpecialWithType(comb, TilesFactory.Instance.BombChuzzlePrefabs);
-    }             
+    }
 
-    public bool CreateSpecialWithType(List<Chuzzle> comb, GameObject[] prefabs)
+    public bool CreateSpecialWithType(List<Chuzzle> ordered, GameObject[] prefabs)
     {
-        var ordered = comb;
 
-        var targetTile = comb[Random.Range(0, ordered.Count)];
-        var cellForNew = targetTile.Current;
+        var targetTile = ordered[Random.Range(0, ordered.Count)];
         foreach (var chuzzle in ordered)
         {
             if (chuzzle != targetTile)
             {
-                chuzzle.MoveTo = cellForNew;
+                chuzzle.AnimateMoveTo(targetTile.Current.Position); 
             }
-        }
+        }                               
 
         var powerUp = prefabs.First(x => x.GetComponent<Chuzzle>().Color == targetTile.Color);
-        var powerUpChuzzle = TilesFactory.Instance.CreateChuzzle(targetTile.Current, powerUp);
-        powerUpChuzzle.Color = targetTile.Color;
-        
-        var child = powerUpChuzzle.transform.GetChild(0).gameObject;
-        Destroy(child.GetComponent<BoxCollider>());
-
-        Gamefield.InvokeTileDestroyed(targetTile);
-        Destroy(targetTile.gameObject);
-        Gamefield.Level.ActiveChuzzles.Remove(targetTile);
-        Gamefield.Level.Chuzzles.Remove(targetTile);
+        TilesFactory.Instance.CreateChuzzle(targetTile.Current, powerUp);
+        targetTile.Destroy(false, false);
         ordered.Remove(targetTile);
 
-        foreach (var c in ordered)
-        {   
-            var targetPosition = new Vector3(c.MoveTo.x*Chuzzle.Scale.x, c.MoveTo.y*Chuzzle.Scale.y, 0);
-            c.AnimateMoveTo(targetPosition); 
-        }
+        IsNeedToChangeState = true;
 
         return true;
     }

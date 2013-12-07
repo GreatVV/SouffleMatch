@@ -120,7 +120,7 @@ public class TilesFactory : MonoBehaviour {
         }
 
         chuzzle.gameObject.transform.parent = Gamefield.transform;
-        chuzzle.gameObject.transform.position = GamefieldUtility.ConvertXYToPosition(cell.x, cell.y, Chuzzle.Scale);
+        chuzzle.gameObject.transform.position = cell.Position;
 
         chuzzle.GetComponentInChildren<BoxCollider2D>().size = Vector3.one;
 

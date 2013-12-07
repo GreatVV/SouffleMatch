@@ -6,27 +6,24 @@ public class GuiInAppPopup : Window
 
     #region Event Handlers
 
-    public void OnAdd100()
+    public void OnAdd140()
     {
-        Economy.Instance.Add(100);
-        if (ShowAfter != null)
-        {
-            Close();
-        }
+        AddMoney(140);
     }
 
-    public void OnAdd1000()
+    public void OnAdd800()
     {
-        Economy.Instance.Add(1000);
-        if (ShowAfter != null)
-        {
-            Close();
-        }
+        AddMoney(800);
     }
 
-    public void OnAdd10000()
+    public void OnAdd1700()
     {
-        Economy.Instance.Add(10000);
+        AddMoney(1400);
+    }
+
+    private void AddMoney(int amount)
+    {
+        Economy.Instance.Add(amount);
         if (ShowAfter != null)
         {
             Close();
@@ -68,7 +65,7 @@ public class GuiInAppPopup : Window
 
     private void OnMoneyChanged(int money)
     {
-        MoneyLabel.text = string.Format("Money: {0}", money);
+        MoneyLabel.text = string.Format("{0}", money);
     }
 
     #endregion

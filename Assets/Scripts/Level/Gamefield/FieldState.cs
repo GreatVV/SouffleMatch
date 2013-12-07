@@ -45,18 +45,32 @@ public class FieldState : GamefieldState
     private bool _isReturning;
     private bool _hasLockedChuzzles;
 
+    public bool IsTurn = false;
+
     #region Event Handlers
 
     public override void OnEnter()
     {
         AnimatedChuzzles.Clear();
+        Chuzzle.AnimationStarted += OnAnimationStarted;
+        if (IsTurn)
+        {
+            InvaderChuzzle.Populate(Gamefield);
+        }
+        IsTurn = true;
     }
 
     public override void OnExit()
     {
+        if (AnimatedChuzzles.Any())
+        {
+            Debug.LogError("FUCK you in field state: " + AnimatedChuzzles.Count);
+        }
+        Chuzzle.AnimationStarted -= OnAnimationStarted;
+        Gamefield.GameMode.HumanTurn();
     }
 
-    public void OnChuzzleCompletedTweens()
+    public void CheckCombinations()
     {
         var combinations = GamefieldUtility.FindCombinations(Gamefield.Level.ActiveChuzzles);
         if (combinations.Any())
@@ -65,19 +79,13 @@ public class FieldState : GamefieldState
             {
                 c.MoveTo = c.Current = c.Real;
             }
-            Gamefield.SwitchStateTo(Gamefield.CheckSpecialState);
-
-            Gamefield.GameMode.HumanTurn();
-            InvaderChuzzle.Populate(Gamefield);
-
+            Gamefield.SwitchStateTo(Gamefield.CheckSpecialState);         
             Reset();
         }
         else
         {
             //Debug.Log("Current chuzzle:"+CurrentChuzzle);
-            var velocity = -5f*(
-                GamefieldUtility.CellPositionInWorldCoordinate(CurrentChuzzle.Real, Chuzzle.Scale) -
-                GamefieldUtility.CellPositionInWorldCoordinate(CurrentChuzzle.Current, Chuzzle.Scale));
+            var velocity = -5f*(CurrentChuzzle.Real.Position - CurrentChuzzle.Current.Position);
             //Debug.Log("V:"+velocity);
             foreach (var c in SelectedChuzzles)
             {
@@ -89,18 +97,20 @@ public class FieldState : GamefieldState
         }
     }
 
-    private void OnTweenMoveAfterDrag(object chuzzleObject)
+    private void OnAnimationFinished(Chuzzle chuzzle)
     {
-        var chuzzle = chuzzleObject as Chuzzle;
+        chuzzle.AnimationFinished -= OnAnimationFinished;
+        AnimatedChuzzles.Remove(chuzzle);
 
-        if (AnimatedChuzzles.Contains(chuzzle))
-        {
-            AnimatedChuzzles.Remove(chuzzle);
-        }
+        CheckAnimationCompleted();
+    }
 
-        if (!AnimatedChuzzles.Any())
+    private void OnAnimationStarted(Chuzzle chuzzle)
+    {
+        if (!AnimatedChuzzles.Contains(chuzzle))
         {
-            OnChuzzleCompletedTweens();
+            AnimatedChuzzles.Add(chuzzle);
+            chuzzle.AnimationFinished += OnAnimationFinished;
         }
     }
 
@@ -163,29 +173,7 @@ public class FieldState : GamefieldState
                 var wasNull = CurrentChuzzle == null;
                 CurrentChuzzle = hit.transform.gameObject.transform.parent.GetComponent<Chuzzle>();
                 if (wasNull)
-                {
-                   /* _minY = GamefieldUtility.CellPositionInWorldCoordinate(
-                        GamefieldUtility.MinColumnAvailiablePosition(CurrentChuzzle.Current.x,
-                            Gamefield.Level.ActiveCells),
-                        CurrentChuzzle.Scale).y;
-
-                    _maxY =
-                        GamefieldUtility.CellPositionInWorldCoordinate(
-                            GamefieldUtility.MaxColumnAvailiablePosition(CurrentChuzzle.Current.x,
-                                Gamefield.Level.ActiveCells), CurrentChuzzle.Scale).y;
-
-                    _minX =
-                        GamefieldUtility.CellPositionInWorldCoordinate(
-                            GamefieldUtility.MinRowAvailiablePosition(CurrentChuzzle.Current.y,
-                                Gamefield.Level.ActiveCells),
-                            CurrentChuzzle.Scale).x;
-
-                    _maxX =
-                        GamefieldUtility.CellPositionInWorldCoordinate(
-                            GamefieldUtility.MaxRowAvailiablePosition(CurrentChuzzle.Current.y,
-                                Gamefield.Level.ActiveCells),
-                            CurrentChuzzle.Scale).x;*/
-
+                { 
                     _minY = _minX = float.MinValue;
                     _maxX = _maxY = float.MaxValue;
                 }
@@ -246,19 +234,10 @@ public class FieldState : GamefieldState
                 _hasLockedChuzzles = HasLockChuzzles;
                 if (_hasLockedChuzzles)
                 {
-                    _minX =
-                        GamefieldUtility.CellPositionInWorldCoordinate(CurrentChuzzle.Current, Chuzzle.Scale).x -
-                        Chuzzle.Scale.x*0.4f;
-                    _maxX =
-                        GamefieldUtility.CellPositionInWorldCoordinate(CurrentChuzzle.Current, Chuzzle.Scale).x +
-                        Chuzzle.Scale.x * 0.4f;
-
-                    _minY =
-                        GamefieldUtility.CellPositionInWorldCoordinate(CurrentChuzzle.Current, Chuzzle.Scale).y -
-                        Chuzzle.Scale.y * 0.4f;
-                    _maxY =
-                        GamefieldUtility.CellPositionInWorldCoordinate(CurrentChuzzle.Current, Chuzzle.Scale).y +
-                        Chuzzle.Scale.y * 0.4f;
+                    _minX = CurrentChuzzle.Current.Position.x - Chuzzle.Scale.x*0.4f;
+                    _maxX = CurrentChuzzle.Current.Position.x + Chuzzle.Scale.x * 0.4f;
+                    _minY = CurrentChuzzle.Current.Position.y - Chuzzle.Scale.y * 0.4f;
+                    _maxY = CurrentChuzzle.Current.Position.y + Chuzzle.Scale.y * 0.4f;
                 }
 
                 _axisChozen = true;
@@ -291,11 +270,8 @@ public class FieldState : GamefieldState
         Debug.Log("Random repaint");
         var randomChuzzle = Gamefield.Level.ActiveChuzzles.Where(GamefieldUtility.IsUsual).ToArray()[Random.Range(0, Gamefield.Level.ActiveChuzzles.Count)];
 
-        TilesFactory.Instance.CreateChuzzle(Gamefield.Level.GetCellAt(randomChuzzle.Current.x, randomChuzzle.Current.y));
-
-        Destroy(randomChuzzle.gameObject);
-        Gamefield.Level.ActiveChuzzles.Remove(randomChuzzle);
-        Gamefield.Level.Chuzzles.Remove(randomChuzzle);
+        TilesFactory.Instance.CreateChuzzle(randomChuzzle.Current);
+        randomChuzzle.Destroy(false, false);
     }
 
     public void LateUpdateState(List<Cell> activeCells)
@@ -321,14 +297,10 @@ public class FieldState : GamefieldState
             var isAllOnPosition = true;
             foreach (var selectedChuzzle in SelectedChuzzles)
             {
-                if (Vector3.Distance(
-                    selectedChuzzle.transform.position,
-                    GamefieldUtility.CellPositionInWorldCoordinate(selectedChuzzle.MoveTo, Chuzzle.Scale)
-                    ) < 0.05f)
+                if (Vector3.Distance(selectedChuzzle.transform.position, selectedChuzzle.MoveTo.Position) < 0.1f)
                 {
                     selectedChuzzle.Velocity = Vector3.zero;
-                    selectedChuzzle.transform.position =
-                        GamefieldUtility.CellPositionInWorldCoordinate(selectedChuzzle.MoveTo, Chuzzle.Scale);
+                    selectedChuzzle.transform.position = selectedChuzzle.MoveTo.Position;
                 }
                 else
                 {
@@ -342,7 +314,7 @@ public class FieldState : GamefieldState
             return;
         }
 
-        if (SelectedChuzzles.Any() && _axisChozen && _delta.magnitude >= 0.05f)
+        if (SelectedChuzzles.Any() && _axisChozen && _delta.magnitude >= 0.01f)
         {
             var pos = CurrentChuzzle.transform.position;
 
@@ -407,7 +379,7 @@ public class FieldState : GamefieldState
             var real = GamefieldUtility.ToRealCoordinates(c);
             var targetCell = GamefieldUtility.CellAt(activeCells, real.x, real.y);
 
-            var difference = c.transform.position - GamefieldUtility.ConvertXYToPosition(real.x, real.y, Chuzzle.Scale);
+            var difference = c.transform.position - GamefieldUtility.ConvertXYToPosition(real.x, real.y, Chuzzle.Scale); 
 
             var isNeedCopy = false;
 
@@ -422,8 +394,7 @@ public class FieldState : GamefieldState
                         if (isNeedCopy)
                         {
                             var rightCell = GetRightCell(activeCells, targetCell.Right, c);
-                            copyPosition = GamefieldUtility.CellPositionInWorldCoordinate(rightCell, Chuzzle.Scale) +
-                                           difference - new Vector3(Chuzzle.Scale.x, 0, 0);
+                            copyPosition = rightCell.Position + difference - new Vector3(Chuzzle.Scale.x, 0, 0);
                         }
                     }
                     else
@@ -433,9 +404,7 @@ public class FieldState : GamefieldState
                         if (isNeedCopy)
                         {
                             var leftCell = GetLeftCell(activeCells, targetCell.Left, c);
-                            copyPosition =
-                                GamefieldUtility.ConvertXYToPosition(leftCell.x, leftCell.y, Chuzzle.Scale) +
-                                difference + new Vector3(Chuzzle.Scale.x, 0, 0);
+                            copyPosition = leftCell.Position + difference + new Vector3(Chuzzle.Scale.x, 0, 0);
                         }
                     }
                 }
@@ -449,8 +418,7 @@ public class FieldState : GamefieldState
                         if (isNeedCopy)
                         {
                             var topCell = GetTopCell(activeCells, targetCell.Top, c);
-                            copyPosition = GamefieldUtility.ConvertXYToPosition(topCell.x, topCell.y, Chuzzle.Scale) +
-                                           difference - new Vector3(0, Chuzzle.Scale.y, 0);
+                            copyPosition = topCell.Position + difference - new Vector3(0, Chuzzle.Scale.y, 0);
                         }
                     }
                     else
@@ -460,9 +428,7 @@ public class FieldState : GamefieldState
                         if (isNeedCopy)
                         {
                             var bottomCell = GetBottomCell(activeCells, targetCell.Bottom, c);
-                            copyPosition =
-                                GamefieldUtility.ConvertXYToPosition(bottomCell.x, bottomCell.y, Chuzzle.Scale) +
-                                difference + new Vector3(0, Chuzzle.Scale.y, 0);
+                            copyPosition = bottomCell.Position + difference + new Vector3(0, Chuzzle.Scale.y, 0);
                         }
                     }
                 }
@@ -494,8 +460,7 @@ public class FieldState : GamefieldState
                         throw new ArgumentOutOfRangeException("Current direction can not be shit");
                 }
 
-                c.transform.position = GamefieldUtility.CellPositionInWorldCoordinate(targetCell, Chuzzle.Scale) +
-                                       difference;
+                c.transform.position = targetCell.Position + difference;
 
                 // Debug.Log("New coord: "+GamefieldUtility.ToRealCoordinates(c)+" for "+c.gameObject.name + " pos: "+c.transform.position);
             }
@@ -531,7 +496,8 @@ public class FieldState : GamefieldState
             }
         }
     }
-
+   
+    #region Get Cells
     private static Cell GetBottomCell(List<Cell> activeCells, Cell targetCell, Chuzzle c)
     {
 //if border
@@ -643,7 +609,8 @@ public class FieldState : GamefieldState
         }
         return targetCell;
     }
-
+    #endregion
+    
     private void DropDrag()
     {
         if (SelectedChuzzles.Any())
@@ -669,13 +636,16 @@ public class FieldState : GamefieldState
                 c.MoveTo = c.Real;
             }
 
-            var anyMove = MoveAllChuzzlesToMoveToPosition(Gamefield.Level.Chuzzles);
-            if (!anyMove)
-            {
-                OnChuzzleCompletedTweens();
+            foreach (var chuzzle in Gamefield.Level.Chuzzles)
+            {   
+                chuzzle.AnimateMoveTo(chuzzle.MoveTo.Position, 0.1f);
             }
+
+            CheckAnimationCompleted();
         }
     }
+
+    
 
     public void Reset()
     {
@@ -694,6 +664,15 @@ public class FieldState : GamefieldState
         }
     }
 
+    public void CheckAnimationCompleted()
+    {
+        if (!AnimatedChuzzles.Any()) 
+        {
+            CheckCombinations();
+        }
+    }
+
+
     public override void LateUpdateState()
     {
         if (!AnimatedChuzzles.Any())
@@ -701,42 +680,7 @@ public class FieldState : GamefieldState
             LateUpdateState(Gamefield.Level.ActiveCells);
         }
     }
-
-    private bool Move(Chuzzle c, Action<object> callback)
-    {
-        var isMove = false;
-        var cell = c.MoveTo;
-        var targetPosition = GamefieldUtility.CellPositionInWorldCoordinate(cell, Chuzzle.Scale);
-        if (Vector3.Distance(c.transform.position, targetPosition) > 0.1f)
-        {
-            isMove = true;
-            AnimatedChuzzles.Add(c);
-            iTween.MoveTo(c.gameObject,
-                iTween.Hash("x", targetPosition.x, "y", targetPosition.y, "z", targetPosition.z, "time", 0.3f,
-                    "oncomplete", callback, "oncompletetarget", Gamefield.gameObject,
-                    "oncompleteparams", c));
-        }
-        else
-        {
-            c.transform.position = targetPosition;
-        }
-        return isMove;
-    }
-
-    public bool MoveAllChuzzlesToMoveToPosition(List<Chuzzle> targetChuzzles)
-    {
-        var anyMove = false;
-        foreach (var chuzzle in targetChuzzles)
-        {
-            var isMove = Move(chuzzle, OnTweenMoveAfterDrag);
-            if (isMove)
-            {
-                anyMove = true;
-            }
-        }
-        return anyMove;
-    }
-
+    
     public bool HasLockChuzzles
     {
         get

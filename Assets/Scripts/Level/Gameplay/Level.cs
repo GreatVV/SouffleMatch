@@ -64,7 +64,7 @@ public class Level : MonoBehaviour
         var cellSprite = TilesFactory.Instance.CellSprite(cell);                                          
         
         cellSprite.transform.parent = gameObject.transform;
-        cellSprite.transform.position = GamefieldUtility.ConvertXYToPosition(cell.x, cell.y, Vector3.one);
+        cellSprite.transform.position = cell.Position;
 
         cell.Sprite = cellSprite;
         CellSprites.Add(cellSprite);
@@ -173,7 +173,7 @@ public class Level : MonoBehaviour
 
         foreach (var cellSprite in CellSprites)
         {
-            Object.Destroy(cellSprite.gameObject);
+            Destroy(cellSprite.gameObject);
         }
         CellSprites.Clear();
     }

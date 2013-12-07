@@ -140,7 +140,10 @@ public class Gamefield : MonoBehaviour
         {
             Level.ActiveChuzzles.Remove(chuzzle);
         }
-        NewTilesInColumns[chuzzle.Current.x]++;
+        if (chuzzle.NeedCreateNew)
+        {
+            NewTilesInColumns[chuzzle.Current.x]++;
+        }
         if (invokeEvent)
         {
             InvokeTileDestroyed(chuzzle);

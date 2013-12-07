@@ -14,13 +14,13 @@ public class InvaderChuzzle : Chuzzle
             AllInvaderChuzzles.Add(this);
         }
     }         
-    public override void Destroy()
+    public override void Destroy(bool needCreateNew , bool withAnimation = true)
     {
         if (AllInvaderChuzzles.Contains(this))
         {
             AllInvaderChuzzles.Remove(this);
         }
-        base.Destroy();
+        base.Destroy(needCreateNew, withAnimation);
     }
 
     void OnDestroy()
@@ -41,8 +41,8 @@ public class InvaderChuzzle : Chuzzle
         {
             foreach (var x in AllInvaderChuzzles)
             {
-                if (x.Current.Left == chuzzle.Real || x.Current.Right == chuzzle.Real || x.Current.Top == chuzzle.Real ||
-                    x.Current.Bottom == chuzzle.Real)
+                if ((x.Current.Left == chuzzle.Real || x.Current.Right == chuzzle.Real || x.Current.Top == chuzzle.Real ||
+                    x.Current.Bottom == chuzzle.Real)&& x.IsDiying == false)
                 {
                     invadersNear.Add(x);
                 }
@@ -51,7 +51,7 @@ public class InvaderChuzzle : Chuzzle
 
         while (invadersNear.Any())
         {   
-            invadersNear.First().Destroy();
+            invadersNear.First().Destroy(true);
             invadersNear.RemoveAt(0);
         }
     }
@@ -70,18 +70,15 @@ public class InvaderChuzzle : Chuzzle
             var currentInvader = AllInvaderChuzzles[p];
 
             var targetTile =
-                gamefield.Level.ActiveChuzzles.FirstOrDefault(
+                gamefield.Level.ActiveChuzzles.Where(x=>x is ColorChuzzle).FirstOrDefault(
                     x =>
-                        x.Current == currentInvader.Current.Left || x.Current == currentInvader.Current.Right ||
-                        x.Current == currentInvader.Current.Top || x.Current == currentInvader.Current.Bottom);
+                        (x.Current == currentInvader.Current.Left || x.Current == currentInvader.Current.Right ||
+                        x.Current == currentInvader.Current.Top || x.Current == currentInvader.Current.Bottom));
 
             if (targetTile != null)
             {
                 TilesFactory.Instance.CreateInvader(targetTile.Current);
-                gamefield.InvokeTileDestroyed(targetTile);
-                Destroy(targetTile.gameObject);
-                gamefield.Level.ActiveChuzzles.Remove(targetTile);
-                gamefield.Level.Chuzzles.Remove(targetTile);
+                targetTile.Destroy(false);
                 break;
             }
         }

@@ -10,6 +10,7 @@ public class Player : MonoBehaviour
     public LifeSystem Lifes;
 
     public SerializedLevel LastPlayedLevel;
+    public int LifePrice = 100;
 
     private void Awake()
     {
