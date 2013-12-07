@@ -473,27 +473,12 @@ public class FieldState : GamefieldState
 
             if (isNeedCopy)
             {
-                var teleportable = c.GetComponent<TeleportableEntity>();
-                if (teleportable != null)
-                {
-                    if (!teleportable.HasCopy)
-                    {
-                        teleportable.CreateCopy();
-                    }
-                    //Debug.Log("Copyied: " + teleportable);
-                    teleportable.Copy.transform.position = copyPosition;
-                }
+                c.Teleportable.Show();
+                c.Teleportable.Copy.transform.position = copyPosition;
             }
             else
             {
-                var teleportable = c.GetComponent<TeleportableEntity>();
-                if (teleportable != null)
-                {
-                    if (teleportable.HasCopy)
-                    {
-                        teleportable.DestroyCopy();
-                    }
-                }
+                c.Teleportable.Hide();
             }
         }
     }
@@ -620,16 +605,13 @@ public class FieldState : GamefieldState
             foreach (var chuzzle in Gamefield.Level.ActiveChuzzles)
             {
                 chuzzle.Shine = false;
-                chuzzle.GetComponent<TeleportableEntity>().DestroyCopy();
+                chuzzle.Teleportable.Hide();
             }
 
             //move all tiles to new real coordinates
             foreach (var chuzzle in SelectedChuzzles)
             {
-                chuzzle.Real = Gamefield.Level.GetCellAt(
-                    Mathf.RoundToInt(chuzzle.transform.position.x/Chuzzle.Scale.x),
-                    Mathf.RoundToInt(chuzzle.transform.position.y/Chuzzle.Scale.y),
-                    false);
+                chuzzle.Real = Gamefield.Level.GetCellAt(GamefieldUtility.ToRealCoordinates(chuzzle),false);
             }
 
             foreach (var c in Gamefield.Level.Chuzzles)

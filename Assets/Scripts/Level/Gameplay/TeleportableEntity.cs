@@ -1,5 +1,6 @@
 ﻿#region
 
+using System.Runtime.InteropServices;
 using UnityEngine;
 
 #endregion
@@ -20,24 +21,27 @@ public class TeleportableEntity : MonoBehaviour
 
     public bool HasCopy
     {
-        get { return Copy && Copy.activeSelf; }
+        get { return Copy != null && Copy.activeSelf; }
     }
 
-    public void CreateCopy()
+    public void Show()
     {
-        if (!HasCopy)
-        {
+        if (Copy == null)
+        {   
             Copy = Instantiate(gameObject) as GameObject;
             Copy.gameObject.name += " is copy";
+            Copy.transform.parent = gameObject.transform;
         }
-        else
+        
+
+        if (!Copy.activeSelf)
         {
             Copy.SetActive(true);
         }
-        Copy.transform.parent = gameObject.transform;
+        
     }
 
-    public void DestroyCopy()
+    public void Hide()
     {
         if (HasCopy)
         {

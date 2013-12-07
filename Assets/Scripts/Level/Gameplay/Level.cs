@@ -106,6 +106,10 @@ public class Level : MonoBehaviour
         Gamefield.RemoveChuzzle(chuzzle);
     }
 
+    public Cell GetCellAt(IntVector2 pos, bool createIfNotFound = true)
+    {
+        return GetCellAt(pos.x, pos.y, createIfNotFound);
+    }
     public Cell GetCellAt(int x, int y, bool createIfNotFound = true)
     {
         var cell = GamefieldUtility.CellAt(Cells, x, y);

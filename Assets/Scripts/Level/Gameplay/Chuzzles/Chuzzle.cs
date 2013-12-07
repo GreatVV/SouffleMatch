@@ -27,13 +27,15 @@ public abstract class Chuzzle : MonoBehaviour
     public bool _shine;
     public bool IsAnimationStarted;
 
+    public bool NeedCreateNew = true;
+    public TeleportableEntity Teleportable;
+
     #region Events
 
     public event Action<Chuzzle> Died;
     public event Action<Chuzzle> AnimationFinished;
     public static event Action<Chuzzle> AnimationStarted;
-
-    public bool NeedCreateNew = true;
+    
     #endregion
 
     #region Event Handlers
@@ -183,6 +185,7 @@ public abstract class Chuzzle : MonoBehaviour
 
     void Awake()
     {
+        Teleportable = GetComponent<TeleportableEntity>();
         OnAwake();
     }
 
