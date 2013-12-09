@@ -11,7 +11,6 @@ public class GuiWinPanel : Window
     public static Phrase BestScoreString = new Phrase("Лучший: {0}", "WinPopup_BestScore");
     public UILabel BestScore;
     public UILabel Score;
-    public UILabel TurnsLeft;
 
     public PopupStar FirstStar;
     public PopupStar SecondStar;
@@ -60,8 +59,7 @@ public class GuiWinPanel : Window
 
         LevelInfo = levelInfo;
         Level = level;
-
-        TurnsLeft.text = LocalizationStrings.GetString(TurnsLeftString, numberOfTurnsLeft);
+        
         Score.text = LocalizationStrings.GetString(ScoreString, 0);
         BestScore.text = LocalizationStrings.GetString(BestScoreString, bestScore);
 

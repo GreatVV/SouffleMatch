@@ -42,7 +42,7 @@ public class InvaderChuzzle : Chuzzle
             foreach (var x in AllInvaderChuzzles)
             {
                 if ((x.Current.Left == chuzzle.Real || x.Current.Right == chuzzle.Real || x.Current.Top == chuzzle.Real ||
-                    x.Current.Bottom == chuzzle.Real) && x.IsDiying == false && !invadersNear.Contains(x))
+                    x.Current.Bottom == chuzzle.Real) && !invadersNear.Contains(x))
                 {
                     invadersNear.Add(x);
                 }

@@ -11,20 +11,26 @@ using System.Collections;
 [Serializable]
 public class CreateNewChuzzlesState : GamefieldState
 {
-    public GameObject WinBonusTitle;
-    public GameObject TileReplaceEffect;
-
+    public bool isAlreadyChangedState;
     #region Event Handlers
 
     public override void OnEnter()
     {
+        isAlreadyChangedState = false;
         AnimatedChuzzles.Clear();
+        Chuzzle.DropEventHandlers();
         Chuzzle.AnimationStarted += OnAnimationStarted;
         CreateNew();
     }
 
     private void OnAnimationStarted(Chuzzle chuzzle)
     {
+        if (isAlreadyChangedState)
+        {
+            Debug.LogWarning("Already changed state create new chuzzle");
+            return;
+        }
+
         if (!AnimatedChuzzles.Contains(chuzzle))
         {
             AnimatedChuzzles.Add(chuzzle);
@@ -36,10 +42,9 @@ public class CreateNewChuzzlesState : GamefieldState
     {
         if (AnimatedChuzzles.Any())
         {
-            Debug.LogError("FUCK YOU: " + AnimatedChuzzles.Count);
+            Debug.LogError("FUCK YOU FROM CREATE NEW STATE: " + AnimatedChuzzles.Count);
         }
         Gamefield.NewTilesInColumns = new int[Gamefield.Level.Width];
-        Chuzzle.AnimationStarted -= OnAnimationStarted;
     }
 
     public void OnAnimationFinished(Chuzzle chuzzle)
@@ -48,8 +53,13 @@ public class CreateNewChuzzlesState : GamefieldState
 
         chuzzle.AnimationFinished -= OnAnimationFinished;   
         AnimatedChuzzles.Remove(chuzzle);
-        
-        if (!AnimatedChuzzles.Any())
+
+        if (isAlreadyChangedState)
+        {
+            Debug.LogWarning("Finished in CRNC state ");
+        }
+
+        if (!AnimatedChuzzles.Any() && !isAlreadyChangedState)
         {
             Gamefield.Level.UpdateActive();
 
@@ -66,52 +76,14 @@ public class CreateNewChuzzlesState : GamefieldState
                 }
                 else 
                 {
-                    if (Gamefield.GameMode.Turns > 0 && Gamefield.GameMode.IsWin)
-                    {
-                        CreateBonusPowerUps();
-                    }
-                    else
-                    {
-                        Gamefield.GameMode.Check();
-                    }
+                    Gamefield.GameMode.Check();
                 }
             }
+            isAlreadyChangedState = true;
         }
     }
 
-    public void OnWinTitleDestroyed()
-    {
-        List<Chuzzle> NewPowerUps = new List<Chuzzle>();
-        List<Chuzzle> usualChuzzles = new List<Chuzzle>();
-        var usualChuzzlesCollection =
-                from ch in Gamefield.Level.Chuzzles
-                where !GamefieldUtility.IsPowerUp(ch)
-                select ch;
-        usualChuzzles = usualChuzzlesCollection.ToList();
-        for (var i = 0; i < Gamefield.GameMode.Turns; i++)
-        {
-            var newPowerUp = usualChuzzles[UnityEngine.Random.Range(0, usualChuzzles.Count())];
-            NewPowerUps.Add(newPowerUp);
-            usualChuzzles.Remove(newPowerUp);
-            if (!usualChuzzles.Any())
-                break;
-        }
-        StartCoroutine(NewCoroutine(NewPowerUps.ToList()));
-    }
-
-    IEnumerator NewCoroutine(List<Chuzzle> NewPowerUps)
-    {
-        yield return new WaitForSeconds(1f);
-        foreach(Chuzzle ch in NewPowerUps)
-        {
-            ch.Destroy(false, false);
-            var ps = Instantiate(TileReplaceEffect) as GameObject;
-            ps.transform.position = ch.transform.position;
-            yield return new WaitForSeconds(0.5f);
-            TilesFactory.Instance.CreateBomb(ch.Current);
-        }
-        Gamefield.SwitchStateTo(Gamefield.WinRemoveCombinationState);
-    }
+    
 
     #endregion
 
@@ -176,17 +148,12 @@ public class CreateNewChuzzlesState : GamefieldState
         foreach (var c in Gamefield.Level.Chuzzles)
         {
             if (c.MoveTo.y != c.Current.y)
-            {
-                var targetPosition = new Vector3(c.Current.x*Chuzzle.Scale.x, c.MoveTo.y*Chuzzle.Scale.y, 0);
-                c.AnimateMoveTo(targetPosition);
+            {   
+                c.AnimateMoveTo(c.MoveTo.Position);
             }
         }
         return true;
     }
 
-    public void CreateBonusPowerUps()
-    {
-        var SuffleTime = Instantiate(WinBonusTitle) as GameObject;
-        SuffleTime.GetComponent<CreateBonusTitle>().WinTitleDestroyed += OnWinTitleDestroyed;
-    }
+  
 }

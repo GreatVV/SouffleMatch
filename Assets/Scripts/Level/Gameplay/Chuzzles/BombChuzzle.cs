@@ -17,8 +17,7 @@ public class BombChuzzle : Chuzzle
             (x.Current.x == Current.x - 1 || x.Current.x == Current.x + 1 ||
              x.Current.x == Current.x) &&
             (x.Current.y == Current.y - 1 || x.Current.y == Current.y ||
-             x.Current.y == Current.y + 1) &&
-            x.IsDiying == false && !GamefieldUtility.IsPowerUp(x));
+             x.Current.y == Current.y + 1) && !GamefieldUtility.IsPowerUp(x)).ToArray();
         foreach (var chuzzle in square)
         {
             chuzzle.Destroy(true);

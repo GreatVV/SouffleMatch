@@ -7,8 +7,9 @@ using UnityEngine;
 public class GuiStartLevelPopup : Window
 {
     public static Phrase AttemptsString = new Phrase("Попыток: {0}", "StartLevelPopup_Attempts");
-    public static Phrase TaskString = new Phrase("Задача: {0}", "StartLevelPopup_Task");
+    public static Phrase TaskString = new Phrase("{0}", "StartLevelPopup_Task");
     public static Phrase BestScoreString = new Phrase("Лучший: {0}", "StartLevelPopup_BestScore");
+    public static Phrase LevelNumberString = new Phrase("Level {0}", "StartLevelPopup_LevelNumber");
     public static Phrase Star1TargetString = new Phrase("1 звезда: {0}", "StartLevelPopup_1StarTarget");
     public static Phrase Star2TargetString = new Phrase("2 звезды: {0}", "StartLevelPopup_2StarTarget");
     public static Phrase Star3TargetString = new Phrase("3 звезды: {0}", "StartLevelPopup_3StarTarget");
@@ -16,20 +17,20 @@ public class GuiStartLevelPopup : Window
     public UILabel BestScoreLabel;
     public SerializedLevel CurrentLevel;
     public LevelInfo CurrentLevelInfo;
-    public UILabel NumberOfAttemptsLabel;
+    
     public UILabel TaskLabel;
 
     public PopupStar FirstStar;
     public PopupStar SecondStar;
     public PopupStar ThirdStar;
     public UILabel StarTarget;
-
+    public UILabel TitleLabel;
 
     #region Event Handlers
 
     private void OnEnable()
     {
-        NumberOfAttemptsLabel.text = LocalizationStrings.GetString(AttemptsString, CurrentLevelInfo.NumberOfAttempts);
+        TitleLabel.text = LocalizationStrings.GetString(LevelNumberString, CurrentLevelInfo.Number);
         BestScoreLabel.text = LocalizationStrings.GetString(BestScoreString, CurrentLevelInfo.BestScore);
         TaskLabel.text = LocalizationStrings.GetString(TaskString, GameModeToString.GetString(GameModeFactory.CreateGameMode(CurrentLevel.GameMode)));
         transform.localPosition = new Vector3(0, -800, -5);
@@ -51,7 +52,7 @@ public class GuiStartLevelPopup : Window
         Disable();
     }
 
-    private void OnCloseButton()
+    public void OnCloseButton()
     {
         Close();
     }
@@ -98,6 +99,7 @@ public class GuiStartLevelPopup : Window
                     StarTarget.text = string.Empty;
                 }
             }
+            BestScoreLabel.gameObject.SetActive(true);
         }
         else
         {
@@ -106,6 +108,7 @@ public class GuiStartLevelPopup : Window
             ThirdStar.Show(false);
 
             StarTarget.text = LocalizationStrings.GetString(Star1TargetString, CurrentLevel.Star1Score);
+            BestScoreLabel.gameObject.SetActive(false);
         }
 
         Show();

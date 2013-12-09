@@ -72,7 +72,7 @@ public class Gamefield : MonoBehaviour
     }
 
     private void OnWin()
-    {
+    {   
         SwitchStateTo(WinState);
     }
 
@@ -140,12 +140,14 @@ public class Gamefield : MonoBehaviour
     public void RemoveChuzzle(Chuzzle chuzzle, bool invokeEvent = true)
     {
         Level.Chuzzles.Remove(chuzzle);
-        if (Level.ActiveChuzzles.Contains(chuzzle))
-        {
-            Level.ActiveChuzzles.Remove(chuzzle);
-        }
+        Level.ActiveChuzzles.Remove(chuzzle);
+        
         if (chuzzle.NeedCreateNew)
         {
+            if (chuzzle is TwoTimeChuzzle)
+            {
+                Debug.LogError("Error: Two time chuzzle creation!!");
+            }
             NewTilesInColumns[chuzzle.Current.x]++;
         }
         if (invokeEvent)

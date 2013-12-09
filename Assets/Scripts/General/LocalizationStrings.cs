@@ -58,7 +58,12 @@ public class LocalizationStrings : MonoBehaviour
 
     public static void PrintStrings()
     {
-        var answer = LoadedStings.Aggregate("", (current, loadedSting) => current + (loadedSting.Id + "|" + loadedSting.Str + "&&"));
+        var answer = String.Empty;
+        foreach (Phrase sting in LoadedStings)
+        {   
+            var replaced = sting.Str.Replace(Environment.NewLine, "&n");
+            answer = answer + (sting.Id + "|" + replaced + Environment.NewLine);
+        }
         Debug.Log(answer);
     }
 
@@ -77,11 +82,12 @@ public class LocalizationStrings : MonoBehaviour
 
     public void LoadLocalization(TextAsset language)
     {
-        var lines = language.text.Split(new[] { "&&" }, StringSplitOptions.RemoveEmptyEntries);
+        var lines = language.text.Split(new[] {Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries);
         var dict = new Dictionary<string, string>();
         foreach (var line in lines)
         {
             var split = line.Split('|');
+            split[1] = split[1].Replace("&n", Environment.NewLine);
             dict[split[0]] = split[1];
         }
         LoadLanguage("En", dict);

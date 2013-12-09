@@ -11,14 +11,13 @@ using Random = UnityEngine.Random;
 
 [Serializable]
 public class CheckSpecialState : GamefieldState
-{
-    public bool IsNeedToChangeState;
-
+{   
     #region Event Handlers
 
     public override void OnEnter()
     {
         AnimatedChuzzles.Clear();
+        Chuzzle.DropEventHandlers();
         Chuzzle.AnimationStarted += OnAnimationStarted;
 
         var combinations = GamefieldUtility.FindCombinations(Gamefield.Level.ActiveChuzzles);
@@ -34,7 +33,6 @@ public class CheckSpecialState : GamefieldState
         {
             Debug.LogError("FUCK YOU: " + AnimatedChuzzles.Count);
         }
-        Chuzzle.AnimationStarted -= OnAnimationStarted;
     }
 
     private void OnAnimationStarted(Chuzzle chuzzle)
@@ -50,11 +48,8 @@ public class CheckSpecialState : GamefieldState
     {
         chuzzle.AnimationFinished -= OnAnimationFinished;
         AnimatedChuzzles.Remove(chuzzle);
-
-        if (chuzzle.IsDiying == false)
-        {
-            chuzzle.Destroy(true, false);
-        }
+        
+        chuzzle.Destroy(true, false);    
 
         if (!AnimatedChuzzles.Any())
         {
@@ -122,9 +117,6 @@ public class CheckSpecialState : GamefieldState
         TilesFactory.Instance.CreateChuzzle(targetTile.Current, powerUp);
         targetTile.Destroy(false, false);
         ordered.Remove(targetTile);
-
-        IsNeedToChangeState = true;
-
         return true;
     }
 

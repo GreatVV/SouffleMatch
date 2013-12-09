@@ -17,16 +17,14 @@ public class WinRemoveCombinationState : GamefieldState
     public override void OnEnter()
     {
         AnimatedChuzzles.Clear();
+        Chuzzle.DropEventHandlers();
         Chuzzle.AnimationStarted += OnAnimationStarted;
 
-        var powerUpChuzzles =
-            from ch in Gamefield.Level.Chuzzles
-            where GamefieldUtility.IsPowerUp(ch)
-            select ch;
+        var powerUpChuzzles = Gamefield.Level.Chuzzles.Where(GamefieldUtility.IsPowerUp).ToArray();
 
-        foreach (Chuzzle ch in powerUpChuzzles)
+        foreach (var ch in powerUpChuzzles)
         {
-            ch.Destroy(true, true);
+            ch.Destroy(true);
         }
 
         var combinations = GamefieldUtility.FindCombinations(Gamefield.Level.ActiveChuzzles);
@@ -36,7 +34,7 @@ public class WinRemoveCombinationState : GamefieldState
         }
         else if(!powerUpChuzzles.Any())
         {
-            StartCoroutine(GameModeCheck());
+            StartCoroutine(GameModeCheck());    
         }
     }
 
@@ -50,9 +48,8 @@ public class WinRemoveCombinationState : GamefieldState
     {
         if (AnimatedChuzzles.Any())
         {
-            Debug.LogError("FUCK YOU: " + AnimatedChuzzles.Count);
+            Debug.LogError("FUCK YOU FROM WIN REMOVE: " + AnimatedChuzzles.Count);
         }
-        Chuzzle.AnimationStarted -= OnAnimationStarted;
     }
 
     public void OnAnimationFinished(Chuzzle chuzzle)

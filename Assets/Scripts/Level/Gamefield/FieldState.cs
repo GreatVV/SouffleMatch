@@ -52,6 +52,7 @@ public class FieldState : GamefieldState
     public override void OnEnter()
     {
         AnimatedChuzzles.Clear();
+        Chuzzle.DropEventHandlers();
         Chuzzle.AnimationStarted += OnAnimationStarted;
         if (IsTurn)
         {
@@ -66,7 +67,6 @@ public class FieldState : GamefieldState
         {
             Debug.LogError("FUCK you in field state: " + AnimatedChuzzles.Count);
         }
-        Chuzzle.AnimationStarted -= OnAnimationStarted;
         Gamefield.GameMode.HumanTurn();
     }
 
@@ -633,6 +633,10 @@ public class FieldState : GamefieldState
     public void Reset()
     {
         SelectedChuzzles.Clear();
+        foreach (var selectedChuzzle in SelectedChuzzles)
+        {
+            selectedChuzzle.Teleportable.Hide();
+        }
         CurrentChuzzle = null;
         _axisChozen = false;
         _isVerticalDrag = false;

@@ -24,6 +24,7 @@ public class Player : MonoBehaviour
         {
             levelInfo = new LevelInfo {Name = levelName};
             Levels.Add(levelInfo);
+            levelInfo.Number = Levels.IndexOf(levelInfo)+1;
         }
         return levelInfo;
     }

@@ -18,6 +18,7 @@ public class RemoveCombinationState : GamefieldState
     public override void OnEnter()
     {
         AnimatedChuzzles.Clear();
+        Chuzzle.DropEventHandlers();
         Chuzzle.AnimationStarted += OnAnimationStarted;
 
         Combinations = GamefieldUtility.FindCombinations(Gamefield.Level.ActiveChuzzles);
@@ -35,9 +36,8 @@ public class RemoveCombinationState : GamefieldState
     {
         if (AnimatedChuzzles.Any())
         {
-            Debug.LogError("FUCK YOU: "+AnimatedChuzzles.Count);
+            Debug.LogError("FUCK YOU FROM REMOVE COMBINATION: "+AnimatedChuzzles.Count);
         }
-        Chuzzle.AnimationStarted -= OnAnimationStarted;
     }
 
     public void OnAnimationFinished(Chuzzle chuzzle)
@@ -72,11 +72,8 @@ public class RemoveCombinationState : GamefieldState
 
 
             foreach (var chuzzle in combination)
-            {
-                if (!chuzzle.IsDiying)
-                {
-                    chuzzle.Destroy(true);
-                }
+            {   
+                chuzzle.Destroy(true);
             }
 
             if (!AnimatedChuzzles.Any())

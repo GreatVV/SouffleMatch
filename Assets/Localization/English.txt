@@ -1,2 +1,20 @@
-GameMode_Place|Free balls for {0} turns&&GameMode_Score|Score {0} points for {1} turns&&GameMode_Chuzzle|Destroy ball {0} times for {1} turns&&StartLevelPopup_Attempts|Attempts: {0}&&StartLevelPopup_Task|Task: {0}&&StartLevelPopup_BestScore|Best: {0}&&StartLevelPopup_1StarTarget|1 star: {0}&&StartLevelPopup_2StarTarget|2 stars: {0}&&StartLevelPopup_3StarTarget|3 stars: {0}&&GameOverPopup_Money|You have {0} coins&&Gameplay_Points|Score: {0}&&Gameplay_Target|Target: {0}&&Gameplay_Turns|Turns: {0}&&WinPopup_TurnsLeft|Turns left: {0}&&WinPopup_Score|Score: {0}&&WinPopup_BestScore|Best: {0}&&BuyLivePopup_MaxLifes|You have {0} lives.
- It's a limit&&BuyLivePopup_Lifes|You have {0} lives.&&
+StartLevelPopup_Attempts|Attemps: {0}
+StartLevelPopup_Task|{0}
+StartLevelPopup_BestScore|Best: {0}
+StartLevelPopup_LevelNumber|Level {0}
+StartLevelPopup_1StarTarget|1 star: {0}
+StartLevelPopup_2StarTarget|2 star: {0}
+StartLevelPopup_3StarTarget|3 star: {0}
+GameOverPopup_Money|You have {0} pearls
+GameMode_Place|Destroy glass for {0} turns
+GameMode_Score|Reach {0} points
+GameMode_Chuzzle|Collect gem {0} for {1} turns
+Gameplay_Points|Score: {0}
+Gameplay_Target|Task: {0}
+Gameplay_Turns|Turns: {0}
+WinPopup_TurnsLeft|Turns left: {0}
+WinPopup_Score|Score: {0}
+WinPopup_BestScore|Best: {0}
+BuyLivePopup_MaxLifes|Maximum
+BuyLivePopup_Lifes|You have {0} lives.
+BuyLivePopup_PlusOne|+1       in {0}

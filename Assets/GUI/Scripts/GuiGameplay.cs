@@ -43,7 +43,7 @@ public class GuiGameplay : Window
         UI.Instance.Restart();
     }
 
-    private void OnPauseClick()
+    public void OnPauseClick()
     {
         UI.Instance.ShowPausePopup();
     }
@@ -65,7 +65,7 @@ public class GuiGameplay : Window
         RemoveEventHandlers(gamefield);
         gamefield.PointSystem.PointChanged += OnPointsChanged;
         gamefield.GameMode.GameOver += OnGameOver;
-        gamefield.GameMode.Win += OnWin;
+        //gamefield.GameMode.Win += OnWin;
         gamefield.GameMode.TurnsChanged += OnTurnsChanged;
     }
 
@@ -73,7 +73,7 @@ public class GuiGameplay : Window
     {
         gamefield.PointSystem.PointChanged -= OnPointsChanged;
         gamefield.GameMode.GameOver -= OnGameOver;
-        gamefield.GameMode.Win -= OnWin;
+      //  gamefield.GameMode.Win -= OnWin;
         gamefield.GameMode.TurnsChanged -= OnTurnsChanged;
     }
 }

@@ -7,6 +7,7 @@ public class LevelInfo
     public string Name;
     public int BestScore;
     public int NumberOfAttempts;
+    public int Number;
 
     public JSONObject Serialize()
     {

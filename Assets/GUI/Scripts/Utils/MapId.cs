@@ -28,12 +28,8 @@ public class MapId : MonoBehaviour
 
     public void OnEnable()
     {
-        if (UI.Instance == null)
-        {
-            return;
-        }
-
-        if (UI.Instance.GuiLevelList.IsLevelsLoaded)
+        SetStars(0);
+        if (UI.Instance && UI.Instance.GuiLevelList.IsLevelsLoaded)
         {
             RefreshNumberOfStars();
         }
@@ -61,28 +57,37 @@ public class MapId : MonoBehaviour
         Debug.Log("Level name: "+level.Name);
         var levelInfo = Player.Instance.GetLevelInfo(level.Name);
         if (levelInfo != null && levelInfo.IsCompleted)
-        {   
+        {
             var numberOfStars = level.NumberOfStarForScore(levelInfo.BestScore);
-            if (numberOfStars >= 1)
-            {
-                FirstStar.SetActive(true);
-            }
-
-            if (numberOfStars >= 2)
-            {
-                SecondStar.SetActive(true);
-            }
-
-            if (numberOfStars >= 3)
-            {
-                ThirdStar.SetActive(true);
-            }
+            SetStars(numberOfStars);
         }
         else
         {
             FirstStar.SetActive(false);
             SecondStar.SetActive(false);
             ThirdStar.SetActive(false);
+        }
+    }
+
+    private void SetStars(int numberOfStars)
+    {
+        FirstStar.SetActive(false);
+        SecondStar.SetActive(false);
+        ThirdStar.SetActive(false);
+
+        if (numberOfStars >= 1)
+        {
+            FirstStar.SetActive(true);
+        }
+
+        if (numberOfStars >= 2)
+        {
+            SecondStar.SetActive(true);
+        }
+
+        if (numberOfStars >= 3)
+        {
+            ThirdStar.SetActive(true);
         }
     }
 }

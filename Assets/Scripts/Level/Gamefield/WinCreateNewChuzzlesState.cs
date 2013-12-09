@@ -18,6 +18,7 @@ public class WinCreateNewChuzzlesState : GamefieldState
     public override void OnEnter()
     {
         AnimatedChuzzles.Clear();
+        Chuzzle.DropEventHandlers();
         Chuzzle.AnimationStarted += OnAnimationStarted;
         CreateNew();
     }
@@ -38,7 +39,6 @@ public class WinCreateNewChuzzlesState : GamefieldState
             Debug.LogError("FUCK YOU: " + AnimatedChuzzles.Count);
         }
         Gamefield.NewTilesInColumns = new int[Gamefield.Level.Width];
-        Chuzzle.AnimationStarted -= OnAnimationStarted;
     }
 
     public void OnAnimationFinished(Chuzzle chuzzle)

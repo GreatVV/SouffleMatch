@@ -38,7 +38,6 @@ public class GamefieldUtility
         foreach (var c in chuzzles)
         {
             c.IsCheckedForSearch = false;
-            c.IsDiying = false;
         }
 
         return combinations;

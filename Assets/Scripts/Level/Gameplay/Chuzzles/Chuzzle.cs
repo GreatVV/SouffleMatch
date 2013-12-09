@@ -18,7 +18,6 @@ public abstract class Chuzzle : MonoBehaviour
     public Cell Current;
     public GameObject Explosion;
     public bool IsCheckedForSearch;
-    public bool IsDiying;
     public Cell MoveTo;
     public Cell Real;
 
@@ -29,6 +28,8 @@ public abstract class Chuzzle : MonoBehaviour
 
     public bool NeedCreateNew = true;
     public TeleportableEntity Teleportable;
+
+    public bool IsDead;
 
     #region Events
 
@@ -41,8 +42,7 @@ public abstract class Chuzzle : MonoBehaviour
     #region Event Handlers
 
     private void OnDeathAnimationEnd()
-    {
-        InvokeDied();
+    {   
         if (IsAnimationStarted)
         {
             InvokeAnimationFinished();
@@ -71,7 +71,7 @@ public abstract class Chuzzle : MonoBehaviour
     }
 
     protected virtual void InvokeDied()
-    {
+    {   
         var handler = Died;
         if (handler != null) handler(this);
     }
@@ -117,9 +117,14 @@ public abstract class Chuzzle : MonoBehaviour
 
     protected virtual void Die(bool withAnimation)
     {
-        IsDiying = true;
+        if (IsDead)
+        {
+            return;
+        }
+
+        IsDead = true;
        // Debug.Log("Die: " + name + " " + GetInstanceID());
-        
+        InvokeDied();
         //TODO Do Explosion
         if (Math.Abs(transform.localScale.x) > 0.01f && withAnimation)
         {
@@ -133,7 +138,10 @@ public abstract class Chuzzle : MonoBehaviour
             var ps = Instantiate(Explosion) as GameObject;
             //  Debug.Log("Ps: "+ps);
             ps.transform.position = transform.position;
-            StartCoroutine("CheckIfAlive");
+            if (gameObject.activeSelf)
+            {
+                StartCoroutine("CheckIfAlive");
+            }
         }
         else
         {
@@ -190,4 +198,9 @@ public abstract class Chuzzle : MonoBehaviour
     }
 
     protected abstract void OnAwake();
+
+    public static void DropEventHandlers()
+    {
+        AnimationStarted = null;
+    }
 }
