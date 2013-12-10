@@ -15,6 +15,7 @@ public class UI : MonoBehaviour
     public GuiPausePopup PausePopup;
     public GuiStartLevelPopup StartLevelPopup;
     public GuiTaskPopup TaskPopup;
+    public GuiBomBomTimePopup BomBomPopup;
 
     #region Event Handlers
 
@@ -123,12 +124,13 @@ public class UI : MonoBehaviour
     public void AddTurns()
     {
         DisableAllPanels();
-        if (Economy.Instance.Spent(60))
+        if (Economy.Instance.Spent(Player.Instance.AddTurnsPrice))
         {
             Gamefield.GameMode.AddTurns(5);
             Gamefield.GameMode.IsGameOver = false;
             GuiGameplay.Show();
             Gamefield.gameObject.SetActive(true);
+            Gamefield.SwitchStateTo(Gamefield.CheckSpecialState);
         }
         else
         {
@@ -161,5 +163,10 @@ public class UI : MonoBehaviour
     public void ShowStartLevelPopup(SerializedLevel levelToLoad)
     {
         StartLevelPopup.Show(levelToLoad);
+    }
+
+    public void ShowBomBomTime()
+    {
+        BomBomPopup.gameObject.SetActive(true);
     }
 }

@@ -18,7 +18,7 @@ public class GuiWinPanel : Window
 
     #region Event Handlers
 
-    private void OnMapClick()
+    public void OnMapClick()
     {
         UI.Instance.ShowMap();
     }

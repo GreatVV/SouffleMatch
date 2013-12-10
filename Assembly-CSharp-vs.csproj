@@ -58,6 +58,7 @@
      <Compile Include="Assets\Facebook\Scripts\IOSFacebook.cs" />
      <Compile Include="Assets\Facebook\Scripts\IOSFacebookLoader.cs" />
      <Compile Include="Assets\Facebook\Scripts\NativeDialogModes.cs" />
+     <Compile Include="Assets\GUI\Scripts\GuiBomBomTimePopup.cs" />
      <Compile Include="Assets\GUI\Scripts\GuiBuyLivesPopup.cs" />
      <Compile Include="Assets\GUI\Scripts\GuiGameOverPopup.cs" />
      <Compile Include="Assets\GUI\Scripts\GuiGameplay.cs" />
@@ -222,7 +223,6 @@
      <Compile Include="Assets\Scripts\Level\Gameplay\TeleportableEntity.cs" />
      <Compile Include="Assets\Scripts\Level\Gameplay\TilesFactory.cs" />
      <Compile Include="Assets\Scripts\Level\UI\AutoBackgroundChanger.cs" />
-     <Compile Include="Assets\Scripts\Level\UI\CreateBonusTitle.cs" />
      <Compile Include="Assets\Scripts\Level\UI\UI.cs" />
      <Compile Include="Assets\Scripts\Level\Utility\CenterCameraOnField.cs" />
      <Compile Include="Assets\Scripts\Level\Utility\Extensions.cs" />
@@ -254,7 +254,6 @@
      <None Include="Assets\JMO Assets\Cartoon FX\CartoonFX3 Readme.txt" />
      <None Include="Assets\Plugins\Android\facebook\res\drawable\com_facebook_top_button.xml" />
      <None Include="Assets\NGUI\Resources\Shaders\Unlit - Transparent Colored (Packed) (AlphaClip) .shader" />
-     <None Include="Assets\GUI\Fonts\pusab.fnt" />
      <None Include="Assets\Plugins\Android\facebook\res\layout\com_facebook_usersettingsfragment.xml" />
      <None Include="Assets\NGUI\Resources\Shaders\Unlit - Text (SoftClip).shader" />
      <None Include="Assets\NGUI\Resources\Shaders\Unlit - Premultiplied Colored (AlphaClip).shader" />
@@ -275,7 +274,6 @@
      <None Include="Assets\NGUI\Resources\Shaders\Unlit - Dynamic Font (SoftClip).shader" />
      <None Include="Assets\Localization\Russian.txt" />
      <None Include="Assets\Plugins\Android\facebook\res\drawable\com_facebook_button_blue.xml" />
-     <None Include="Assets\GUI\Fonts\impact.fnt" />
      <None Include="Assets\JMO Assets\Cartoon FX Easy Editor\CartoonFX Easy Editor Readme.txt" />
      <None Include="Assets\NGUI\Resources\Shaders\Unlit - Transparent Colored (Packed) (SoftClip).shader" />
      <None Include="Assets\NGUI\Resources\Shaders\Unlit - Premultiplied Colored (SoftClip).shader" />
@@ -295,7 +293,6 @@
      <None Include="Assets\Plugins\Android\facebook\res\drawable\com_facebook_usersettingsfragment_background_gradient.xml" />
      <None Include="Assets\NGUI\Resources\Shaders\Unlit - Transparent Colored (Packed).shader" />
      <None Include="Assets\Plugins\Android\facebook\res\layout\com_facebook_placepickerfragment.xml" />
-     <None Include="Assets\GUI\Fonts\batang.fnt" />
      <None Include="Assets\Plugins\Android\facebook\res\layout\com_facebook_placepickerfragment_list_row.xml" />
      <None Include="Assets\Plugins\Android\AndroidManifest.xml" />
      <None Include="Assets\Plugins\Android\facebook\res\values\drawables.xml" />

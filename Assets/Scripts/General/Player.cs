@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.InteropServices;
 using UnityEngine;
@@ -11,6 +12,7 @@ public class Player : MonoBehaviour
 
     public SerializedLevel LastPlayedLevel;
     public int LifePrice = 100;
+    public int AddTurnsPrice = 70;
 
     private void Awake()
     {
@@ -24,7 +26,7 @@ public class Player : MonoBehaviour
         {
             levelInfo = new LevelInfo {Name = levelName};
             Levels.Add(levelInfo);
-            levelInfo.Number = Levels.IndexOf(levelInfo)+1;
+            levelInfo.Number = Convert.ToInt32(levelName);
         }
         return levelInfo;
     }
@@ -50,7 +52,6 @@ public class Player : MonoBehaviour
         {
             Levels.Add(LevelInfo.Unserialize(o));
         }
-
         Lifes = LifeSystem.Unserialize(jsonObject.GetField("Lifes"));
     }
 }

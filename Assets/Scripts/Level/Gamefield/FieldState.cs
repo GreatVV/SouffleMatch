@@ -269,7 +269,8 @@ public class FieldState : GamefieldState
     private void RepaintRandom()
     {
         Debug.Log("Random repaint");
-        var randomChuzzle = Gamefield.Level.ActiveChuzzles.Where(GamefieldUtility.IsUsual).ToArray()[Random.Range(0, Gamefield.Level.ActiveChuzzles.Count)];
+        var possibleChuzzles = Gamefield.Level.ActiveChuzzles.Where(GamefieldUtility.IsUsual).ToArray();
+        var randomChuzzle = possibleChuzzles[Random.Range(0, possibleChuzzles.Length)];
 
         TilesFactory.Instance.CreateChuzzle(randomChuzzle.Current);
         randomChuzzle.Destroy(false, false);
@@ -632,11 +633,11 @@ public class FieldState : GamefieldState
 
     public void Reset()
     {
-        SelectedChuzzles.Clear();
         foreach (var selectedChuzzle in SelectedChuzzles)
         {
             selectedChuzzle.Teleportable.Hide();
         }
+        SelectedChuzzles.Clear();
         CurrentChuzzle = null;
         _axisChozen = false;
         _isVerticalDrag = false;

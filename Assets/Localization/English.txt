@@ -6,15 +6,15 @@ StartLevelPopup_1StarTarget|1 star: {0}
 StartLevelPopup_2StarTarget|2 star: {0}
 StartLevelPopup_3StarTarget|3 star: {0}
 GameOverPopup_Money|You have {0} pearls
-GameMode_Place|Destroy glass for {0} turns
+GameMode_Place|Destroy glass for {0} moves
 GameMode_Score|Reach {0} points
-GameMode_Chuzzle|Collect gem {0} for {1} turns
+GameMode_Chuzzle|Collect the crystal {0} times for {1} moves
 Gameplay_Points|Score: {0}
 Gameplay_Target|Task: {0}
-Gameplay_Turns|Turns: {0}
+Gameplay_Turns|Moves: {0}
 WinPopup_TurnsLeft|Turns left: {0}
 WinPopup_Score|Score: {0}
 WinPopup_BestScore|Best: {0}
 BuyLivePopup_MaxLifes|Maximum
 BuyLivePopup_Lifes|You have {0} lives.
-BuyLivePopup_PlusOne|+1       in {0}
+BuyLivePopup_PlusOne|+1       in {0}

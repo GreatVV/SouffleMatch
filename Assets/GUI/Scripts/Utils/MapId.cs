@@ -75,19 +75,23 @@ public class MapId : MonoBehaviour
         SecondStar.SetActive(false);
         ThirdStar.SetActive(false);
 
-        if (numberOfStars >= 1)
+        switch (numberOfStars)
         {
-            FirstStar.SetActive(true);
-        }
-
-        if (numberOfStars >= 2)
-        {
-            SecondStar.SetActive(true);
-        }
-
-        if (numberOfStars >= 3)
-        {
-            ThirdStar.SetActive(true);
+            case(1):
+            {
+                FirstStar.SetActive(true);
+                break;
+            }
+            case(2):
+            {
+                SecondStar.SetActive(true);
+                break;
+            }
+            case(3):
+            {
+                ThirdStar.SetActive(true);
+                break;
+            }
         }
     }
 }

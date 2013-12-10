@@ -7,7 +7,7 @@ using UnityEngine;
 [Serializable]
 public class WinState : GamefieldState
 {
-    public GameObject WinBonusTitle;
+    
     public GameObject TileReplaceEffect;
 
     #region Event Handlers
@@ -55,11 +55,11 @@ public class WinState : GamefieldState
 
     public void CreateBonusPowerUps()
     {
-        var suffleTime = Instantiate(WinBonusTitle) as GameObject;
-        suffleTime.GetComponent<CreateBonusTitle>().WinTitleDestroyed += OnWinTitleDestroyed;
+        UI.Instance.BomBomPopup.BomBomHided += OnBomBomHided;
+        UI.Instance.ShowBomBomTime();
     }
 
-    public void OnWinTitleDestroyed()
+    public void OnBomBomHided()
     {
         var newPowerUps = new List<Chuzzle>();
         var usualChuzzles = Gamefield.Level.Chuzzles.Where(ch => !GamefieldUtility.IsPowerUp(ch)).ToList();

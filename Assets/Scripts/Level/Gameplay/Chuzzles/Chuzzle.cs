@@ -128,6 +128,10 @@ public abstract class Chuzzle : MonoBehaviour
         //TODO Do Explosion
         if (Math.Abs(transform.localScale.x) > 0.01f && withAnimation)
         {
+            if (IsAnimationStarted)
+            {
+                return;
+            }
             InvokeAnimationStarted();
             iTween.ScaleTo(gameObject,
                 iTween.Hash(
@@ -155,6 +159,10 @@ public abstract class Chuzzle : MonoBehaviour
         
         if (Vector3.Distance(targetPosition, transform.position) > 0.01f)
         {
+            if (IsAnimationStarted)
+            {
+                return;
+            }
             InvokeAnimationStarted();
             iTween.MoveTo(gameObject,
                 iTween.Hash(

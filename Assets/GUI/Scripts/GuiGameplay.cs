@@ -7,7 +7,7 @@ public class GuiGameplay : Window
     public static Phrase TurnsString = new Phrase("Ходов: {0}", "Gameplay_Turns");
 
     public UILabel PointsLabel;
-    public UILabel TargetScoreLabel;
+   // public UILabel TargetScoreLabel;
     public UILabel TurnsLabel;
 
     #region Event Handlers
@@ -26,7 +26,7 @@ public class GuiGameplay : Window
     {
         AddEventHandlers(gamefield);
 
-        TargetScoreLabel.text = LocalizationStrings.GetString(TargetString, GameModeToString.GetString(gamefield.GameMode));
+        //TargetScoreLabel.text = LocalizationStrings.GetString(TargetString, GameModeToString.GetString(gamefield.GameMode));
         UI.Instance.TaskPopup.Show(gamefield.GameMode);
         OnTurnsChanged(gamefield.GameMode.Turns);
         OnPointsChanged(gamefield.PointSystem.CurrentPoints);
