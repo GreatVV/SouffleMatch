@@ -131,8 +131,6 @@ public class TilesFactory : MonoBehaviour {
         chuzzle.gameObject.transform.parent = Gamefield.transform;
         chuzzle.gameObject.transform.position = cell.Position;
 
-        chuzzle.GetComponentInChildren<BoxCollider2D>().size = Vector3.one;
-
         Gamefield.Level.Chuzzles.Add(chuzzle);
         Gamefield.Level.ActiveChuzzles.Add(chuzzle);
 

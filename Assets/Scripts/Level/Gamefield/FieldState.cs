@@ -124,7 +124,7 @@ public class FieldState : GamefieldState
             return;
         }
 
-
+        /*
         TimeFromTip += Time.deltaTime;
         if (TimeFromTip > 1 && !Gamefield.Level.ActiveChuzzles.Any(x => x.Shine))
         {
@@ -148,8 +148,8 @@ public class FieldState : GamefieldState
 
 
             TimeFromTip = 0;
-        }
-
+        }       
+         */
         #region Drag
 
         if (CurrentChuzzle == null &&
