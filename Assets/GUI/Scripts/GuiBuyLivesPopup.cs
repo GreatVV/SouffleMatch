@@ -43,7 +43,7 @@ public class GuiBuyLivesPopup : Window
         }
     }
 
-    public void OnCloseButton()
+    public override void OnCloseButton()
     {
         Close();
     }
@@ -91,7 +91,7 @@ public class GuiBuyLivesPopup : Window
 
     #endregion
 
-    private void Update()
+    protected override void OnUpdate()
     {
         if (Player.Instance.Lifes.IsRegenerating && Player.Instance.Lifes.LifeSpentDate.HasValue)
         {

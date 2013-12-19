@@ -52,7 +52,7 @@ public class GuiStartLevelPopup : Window
         Disable();
     }
 
-    public void OnCloseButton()
+    public override void OnCloseButton()
     {
         Close();
     }

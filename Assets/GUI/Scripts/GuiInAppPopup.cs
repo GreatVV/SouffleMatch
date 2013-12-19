@@ -81,7 +81,7 @@ public class GuiInAppPopup : Window
         Economy.Instance.MoneyChanged -= OnMoneyChanged;
     }
 
-    public void OnCloseButton()
+    public override void OnCloseButton()
     {
         Close();
     }

@@ -70,7 +70,7 @@ public class GuiWinPanel : Window
         Show();
     }
 
-    private void Update()
+    protected override void OnUpdate()
     {
         if (TempScore < TargetScore)
         {

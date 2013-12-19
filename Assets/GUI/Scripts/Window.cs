@@ -38,4 +38,24 @@ public class Window : MonoBehaviour
     {
         return true;
     }
+
+    public void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            OnCloseButton();
+        }
+        OnUpdate();
+    }
+
+    public virtual void OnCloseButton()
+    {
+        
+    }
+    
+
+    protected virtual void OnUpdate()
+    {
+        
+    }
 }

@@ -24,7 +24,7 @@ public class GuiSendLivesPopup : Window {
         Disable();
     }
 
-    private void OnCloseButton()
+    public override void OnCloseButton()
     {
         Close();
     }
