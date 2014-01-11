@@ -1,8 +1,8 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace />
-  <MonoDevelop.Ide.Workbench ActiveDocument="..\egg-punch2\Assets\Scripts\Ball\BallControlNewSlingShot.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\GUI\Scripts\GuiGameOverPopup.cs">
     <Files>
-      <File FileName="..\egg-punch2\Assets\Scripts\Ball\BallControlNewSlingShot.cs" Line="1" Column="1" />
+      <File FileName="Assets\GUI\Scripts\GuiGameOverPopup.cs" Line="1" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

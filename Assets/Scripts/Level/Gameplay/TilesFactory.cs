@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using UnityEngine;
@@ -55,25 +56,55 @@ public class TilesFactory : MonoBehaviour {
 
     public int NumberOfColors;
 
-    public Chuzzle CreateRandomChuzzle(Cell cell)
+    public Chuzzle CreateRandomChuzzle(Cell cell, bool isUniq)
     {
         var colorsNumber = NumberOfColors == -1 ? ChuzzlePrefabs.Length : NumberOfColors;
-        var prefab = ChuzzlePrefabs[Random.Range(0, colorsNumber)];
+        var prefab = isUniq ? GetUniqRandomPrefabForCell(cell, new List<GameObject>(ChuzzlePrefabs)) : ChuzzlePrefabs[Random.Range(0, colorsNumber)];
         return CreateChuzzle(cell, prefab);
     }
 
-    public Chuzzle CreateLockChuzzle(Cell cell)
+    private GameObject GetUniqRandomPrefabForCell(Cell cell, List<GameObject> possiblePrefabs)
+    {
+        GameObject prefab;
+        var leftCell = cell.Left;
+        var rightCell = cell.Right;
+        var topCell = cell.Top;
+        var bottomCell = cell.Bottom;
+
+        RemoveColorFromPossible(leftCell, possiblePrefabs);
+        RemoveColorFromPossible(rightCell, possiblePrefabs);
+        RemoveColorFromPossible(topCell, possiblePrefabs);
+        RemoveColorFromPossible(bottomCell, possiblePrefabs);
+
+        return possiblePrefabs[Random.Range(0, possiblePrefabs.Count)];
+    }
+
+    private void RemoveColorFromPossible(Cell cell, List<GameObject> possiblePrefabs)
+    {
+        if (cell != null)
+        {
+            var chuzzle = GamefieldUtility.GetChuzzleInCell(cell, Gamefield.Level.Chuzzles);
+            if (chuzzle == null) return;
+            var possible = possiblePrefabs.FirstOrDefault(x => x.GetComponent<Chuzzle>().Color == chuzzle.Color);
+            if (possible != null)
+            {
+                possiblePrefabs.Remove(possible);
+            }
+        }
+    }
+
+    public Chuzzle CreateLockChuzzle(Cell cell, bool isUniq)
     {
         var colorsNumber = NumberOfColors == -1 ? ChuzzlePrefabs.Length : NumberOfColors;
-        var prefab = ChuzzleLockPrefabs[Random.Range(0, colorsNumber)];
+        var prefab = isUniq ? GetUniqRandomPrefabForCell(cell, new List<GameObject>(ChuzzleLockPrefabs)) : ChuzzleLockPrefabs[Random.Range(0, colorsNumber)];
         Chuzzle c = CreateChuzzle(cell, prefab);
         return c;
     }
 
-    public Chuzzle CreateTwoTimeChuzzle(Cell cell)
+    public Chuzzle CreateTwoTimeChuzzle(Cell cell, bool isUniq)
     {
         var colorsNumber = NumberOfColors == -1 ? ChuzzlePrefabs.Length : NumberOfColors;
-        var prefab = ChuzzleTwoTimesPrefabs[Random.Range(0, colorsNumber)];
+        var prefab = isUniq ? GetUniqRandomPrefabForCell(cell, new List<GameObject>(ChuzzleTwoTimesPrefabs)) : ChuzzleTwoTimesPrefabs[Random.Range(0, colorsNumber)];
         Chuzzle c = CreateChuzzle(cell, prefab);
         return c;
     }
@@ -92,10 +123,11 @@ public class TilesFactory : MonoBehaviour {
     }
 
 
-    public Chuzzle CreateCounterChuzzle(Cell cell)
+    public Chuzzle CreateCounterChuzzle(Cell cell, bool isUniq)
     {
         var colorsNumber = NumberOfColors == -1 ? ChuzzlePrefabs.Length : NumberOfColors;
-        var prefab = ChuzzleCounterPrefabs[Random.Range(0, colorsNumber)];
+
+        var prefab = isUniq ? GetUniqRandomPrefabForCell(cell, new List<GameObject>(ChuzzleCounterPrefabs)) : ChuzzleCounterPrefabs[Random.Range(0, colorsNumber)];
         var c = CreateChuzzle(cell, prefab);
 
         var chuzzle = c as CounterChuzzle;
@@ -139,7 +171,7 @@ public class TilesFactory : MonoBehaviour {
         return chuzzle;
     }
 
-    public Chuzzle CreateChuzzle(Cell cell)
+    public Chuzzle CreateChuzzle(Cell cell, bool isUniq = false)
     {
         if (cell.Type == CellTypes.Usual)
         {
@@ -147,17 +179,17 @@ public class TilesFactory : MonoBehaviour {
             {
                 case CreationType.Usual:
                 case CreationType.Place:
-                    return CreateRandomChuzzle(cell);
+                    return CreateRandomChuzzle(cell, isUniq);
                 case CreationType.Counter:
                     if (Gamefield.GameMode is TargetChuzzleGameMode)
                     {
-                        return CreateCounterChuzzle(cell);
+                        return CreateCounterChuzzle(cell, isUniq);
                     }
-                    return CreateRandomChuzzle(cell);
+                    return CreateRandomChuzzle(cell, isUniq);
                 case CreationType.Lock:
-                    return CreateLockChuzzle(cell);
+                    return CreateLockChuzzle(cell, isUniq);
                 case CreationType.TwoTimes:
-                    return CreateTwoTimeChuzzle(cell);
+                    return CreateTwoTimeChuzzle(cell,isUniq);
                 case CreationType.Invader:
                     return CreateInvader(cell);
                 default:

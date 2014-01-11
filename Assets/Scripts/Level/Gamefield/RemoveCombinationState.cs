@@ -11,8 +11,6 @@ using Object = UnityEngine.Object;
 [Serializable]
 public class RemoveCombinationState : GamefieldState
 {
-    public List<List<Chuzzle>> Combinations;
-
     #region Event Handlers
 
     public override void OnEnter()
@@ -21,8 +19,8 @@ public class RemoveCombinationState : GamefieldState
         Chuzzle.DropEventHandlers();
         Chuzzle.AnimationStarted += OnAnimationStarted;
 
-        Combinations = GamefieldUtility.FindCombinations(Gamefield.Level.ActiveChuzzles);
-        if (Combinations.Any())
+        var anyCombination = GamefieldUtility.FindOnlyOneCombination(Gamefield.Level.ActiveChuzzles);
+        if (anyCombination.Any())
         {   
             RemoveCombinations();
         }
@@ -62,23 +60,45 @@ public class RemoveCombinationState : GamefieldState
 
     private void RemoveCombinations()
     {
-        //remove combinations
-        foreach (var combination in Combinations)
+        var powerUpCombination = GamefieldUtility.FindOnlyOneCombinationWithCondition(Gamefield.Chuzzles,
+            GamefieldUtility.IsPowerUp);
+
+        //if has any powerups
+        if (powerUpCombination.Any())
         {
-            Gamefield.InvokeCombinationDestroyed(combination);
-
-            //count points
-            Gamefield.PointSystem.CountForCombinations(combination);
-
-
-            foreach (var chuzzle in combination)
-            {   
+            //destroy step by step
+            foreach (var chuzzle in powerUpCombination)
+            {
                 chuzzle.Destroy(true);
             }
 
             if (!AnimatedChuzzles.Any())
             {
                 Gamefield.SwitchStateTo(Gamefield.CreateNewChuzzlesState);
+            }
+        }
+        else
+        {
+
+            var combinations = GamefieldUtility.FindCombinations(Gamefield.Chuzzles);
+            //remove combinations
+            foreach (var combination in combinations)
+            {
+                Gamefield.InvokeCombinationDestroyed(combination);
+
+                //count points
+                Gamefield.PointSystem.CountForCombinations(combination);
+
+
+                foreach (var chuzzle in combination)
+                {
+                    chuzzle.Destroy(true);
+                }
+
+                if (!AnimatedChuzzles.Any())
+                {
+                    Gamefield.SwitchStateTo(Gamefield.CreateNewChuzzlesState);
+                }
             }
         }
     }

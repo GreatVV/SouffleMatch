@@ -46,7 +46,7 @@ public class Level : MonoBehaviour
         {
             for (var x = 0; x < Width; x++)
             {   
-                TilesFactory.Instance.CreateChuzzle(GetCellAt(x, y));
+                TilesFactory.Instance.CreateChuzzle(GetCellAt(x, y), true);
             }
         }
     }

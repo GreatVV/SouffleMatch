@@ -66,6 +66,7 @@ public class GuiLevelList : Window
         if (mapId.Index < LoadedLevels.Count && mapId.Index >= 0)
         {
             //UI.Instance.TryStartLevel(LoadedLevels[mapId.Index]);
+            Debug.Log("Show start level: "+sender.name);
             UI.Instance.ShowStartLevelPopup(LoadedLevels[mapId.Index]);
         }
     }

@@ -43,6 +43,69 @@ public class GamefieldUtility
         return combinations;
     }
 
+    /// <summary>
+    /// Try to find any combination of chuzzles from chuzzles with length more then combinationSize
+    /// </summary>
+    /// <param name="chuzzles">list of chuzzle to find in</param>
+    /// <param name="combinationSize">required combination size</param>
+    /// <returns></returns>
+    public static List<Chuzzle> FindOnlyOneCombination(List<Chuzzle> chuzzles, int combinationSize = 3)
+    {
+        foreach (var c in chuzzles)
+        {
+            c.IsCheckedForSearch = false;
+        }
+
+        //find combination
+        foreach (var c in chuzzles)
+        {
+            if (c.IsCheckedForSearch) continue;
+
+            var combination = RecursiveFind(c, new List<Chuzzle>(), chuzzles);
+
+            if (combination.Count() >= combinationSize)
+            {
+                return combination;
+            }
+        }
+
+        foreach (var c in chuzzles)
+        {
+            c.IsCheckedForSearch = false;
+        }
+
+        return new List<Chuzzle>();
+    }
+
+    public static List<Chuzzle> FindOnlyOneCombinationWithCondition(List<Chuzzle> chuzzles, Func<Chuzzle, bool> condition, int combinationSize = 3)
+    {
+        foreach (var c in chuzzles)
+        {
+            c.IsCheckedForSearch = false;
+        }
+
+        //find combination
+        foreach (var c in chuzzles)
+        {
+            if (c.IsCheckedForSearch) continue;
+
+            var combination = RecursiveFind(c, new List<Chuzzle>(), chuzzles);
+
+            if (combination.Count() >= combinationSize && combination.Any(condition))
+            {
+                return combination;
+            }
+        }
+
+        foreach (var c in chuzzles)
+        {
+            c.IsCheckedForSearch = false;
+        }
+
+        return new List<Chuzzle>();
+    }
+
+
     public static List<Chuzzle> RecursiveFind(Chuzzle chuzzle, List<Chuzzle> combination, IEnumerable<Chuzzle> chuzzles)
     {
         if (chuzzle == null || combination.Contains(chuzzle) || chuzzle.IsCheckedForSearch)
@@ -147,6 +210,16 @@ public class GamefieldUtility
 
     #region Tips
 
+    public static int CompareByX(Chuzzle first, Chuzzle second)
+    {
+        if (first.Current.x == second.Current.x)
+        {
+            return 0;
+        }
+
+        return first.Current.x > second.Current.x ? 1 : -1;
+    }
+
     /// <summary>
     ///     Находит любую возможную комбинацию
     /// </summary>
@@ -179,12 +252,12 @@ public class GamefieldUtility
 
         var left = chuzzles.FirstOrDefault(x => BetweenXCheck(x, chuzzles));
 
-        if (left != null && left.Current.Left != null && left.Current.Left.Type != CellTypes.Block)
+        if (left != null && left.Current.Right != null && left.Current.Right.Type != CellTypes.Block)
         {
             var right = chuzzles.First(ch => ch.Current == left.Current.Right.Right);
 
             var leftPart = RecursiveFind(left, new List<Chuzzle>(), chuzzles);
-            var middlePart = GetVerticalLineChuzzles(left.Current.x + 1, left.Color, chuzzles);
+            var middlePart = GetVerticalLineChuzzles(left.Current.Right.x, left.Color, chuzzles);
             var rightPart = RecursiveFind(right, new List<Chuzzle>(), chuzzles);
 
             var posibleCombination = new List<Chuzzle>();
@@ -202,6 +275,8 @@ public class GamefieldUtility
 
         foreach (var combination in combinations)
         {
+            combination.Sort(CompareByX);
+
             var first = combination[0];
             var second = combination[1];
 
@@ -287,15 +362,18 @@ public class GamefieldUtility
                 //try left             
                 if (first.Current.Left != null && first.Current.Left.Type != CellTypes.Block)
                 {
-                    var leftPart = GetVerticalLineChuzzles(first.Current.x - 1, first.Color, chuzzles).ToList();
+                    var leftPart = GetVerticalLineChuzzles(first.Current.Left.x, first.Color, chuzzles).ToList();
                     if (leftPart.Any())
                     {
                         var possibleCombination = new List<Chuzzle>();
                         possibleCombination.AddRange(combination);
                         possibleCombination.AddRange(leftPart);
 
+                        Debug.Log("First:"+first);
+                        Debug.Log("Second:"+second.ToString());
+
                         Debug.Log("Combination 7");
-                        isHorizontalMove = new IntVector2(first.Current.x - 1, first.Current.y);
+                        isHorizontalMove = new IntVector2(first.Current.Left.x, first.Current.y);
                         chuzzleToMove = leftPart.First();
                         return possibleCombination;
                     }
@@ -464,7 +542,7 @@ public class GamefieldUtility
         IEnumerable<Chuzzle> chuzzles)
     {
         var enumerable = chuzzles as IList<Chuzzle> ?? chuzzles.ToList();
-        var firstChuzzle = enumerable.FirstOrDefault(c => c.Real.x == x && c.Color == chuzzleColor);
+        var firstChuzzle = enumerable.FirstOrDefault(c => c.Real.x == x && c.Color == chuzzleColor && !(c is InvaderChuzzle));
         if (firstChuzzle != null)
         {
             var secondChuzzle =
@@ -610,5 +688,10 @@ public class GamefieldUtility
     public static bool IsCounter(Chuzzle chuzzle)
     {
         return chuzzle is CounterChuzzle;
+    }
+
+    public static Chuzzle GetChuzzleInCell(Cell cell, IEnumerable<Chuzzle> chuzzles)
+    {
+        return chuzzles.FirstOrDefault(x => x.Current == cell);
     }
 }

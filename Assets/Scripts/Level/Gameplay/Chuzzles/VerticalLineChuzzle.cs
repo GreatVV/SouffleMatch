@@ -10,8 +10,13 @@ public class VerticalLineChuzzle : Chuzzle
 
     public override void Destroy(bool needCreateNew, bool withAnimation = true)
     {
+        if (IsDead)
+        {
+            return;
+        }
+
         base.Destroy(needCreateNew, withAnimation);
-        var vertical = Gamefield.Chuzzles.Where(x => x.Current.x == Current.x && !GamefieldUtility.IsPowerUp(x)).ToArray();
+        var vertical = Gamefield.Chuzzles.Where(x => x.Current.x == Current.x).ToArray();
         foreach (var chuzzle in vertical)
         {
             chuzzle.Destroy(true);

@@ -66,6 +66,7 @@ public class GuiStartLevelPopup : Window
 
     public void Show(SerializedLevel level)
     {
+        Debug.Log("Show start popup for level: "+level);
         CurrentLevel = level;
         CurrentLevelInfo = Player.Instance.GetLevelInfo(level.Name);
 
@@ -110,7 +111,6 @@ public class GuiStartLevelPopup : Window
             StarTarget.text = LocalizationStrings.GetString(Star1TargetString, CurrentLevel.Star1Score);
             BestScoreLabel.gameObject.SetActive(false);
         }
-
         Show();
     }
 }
