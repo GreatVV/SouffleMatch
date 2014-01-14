@@ -194,10 +194,10 @@ public class Gamefield : MonoBehaviour
 
     public void SwitchStateTo(GamefieldState newState)
     {
-        Debug.Log("Old state: "+_currentState);
+       // Debug.Log("Old state: "+_currentState);
         _currentState.OnExit();
         _currentState = newState;
-        Debug.Log("Switch to: " + _currentState);
+       // Debug.Log("Switch to: " + _currentState);
         _currentState.OnEnter();
     }
 

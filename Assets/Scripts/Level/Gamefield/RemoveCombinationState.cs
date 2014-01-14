@@ -1,6 +1,7 @@
 ﻿#region
 
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -22,7 +23,7 @@ public class RemoveCombinationState : GamefieldState
         var anyCombination = GamefieldUtility.FindOnlyOneCombination(Gamefield.Level.ActiveChuzzles);
         if (anyCombination.Any())
         {   
-            RemoveCombinations();
+            StartCoroutine(RemoveCombinations());
         }
         else
         {
@@ -36,6 +37,8 @@ public class RemoveCombinationState : GamefieldState
         {
             Debug.LogError("FUCK YOU FROM REMOVE COMBINATION: "+AnimatedChuzzles.Count);
         }
+
+        PowerUpDestroyManager.Instance.IsInDestroyState = false;
     }
 
     public void OnAnimationFinished(Chuzzle chuzzle)
@@ -58,7 +61,7 @@ public class RemoveCombinationState : GamefieldState
     {
     }
 
-    private void RemoveCombinations()
+    private IEnumerator RemoveCombinations()
     {
         var powerUpCombination = GamefieldUtility.FindOnlyOneCombinationWithCondition(Gamefield.Chuzzles,
             GamefieldUtility.IsPowerUp);
@@ -99,8 +102,11 @@ public class RemoveCombinationState : GamefieldState
                 {
                     Gamefield.SwitchStateTo(Gamefield.CreateNewChuzzlesState);
                 }
+                yield return new WaitForSeconds(0.1f);
             }
         }
+
+        yield return new WaitForEndOfFrame();
     }
 
     private void OnAnimationStarted(Chuzzle chuzzle)

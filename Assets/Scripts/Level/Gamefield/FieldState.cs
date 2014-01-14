@@ -3,6 +3,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Xml.Schema;
 using UnityEngine;
 using Object = UnityEngine.Object;
 using Random = UnityEngine.Random;
@@ -46,7 +47,10 @@ public class FieldState : GamefieldState
     private bool _hasLockedChuzzles;
 
     public bool IsTurn = false;
+    private List<Chuzzle> _possibleCombination;
 
+    IntVector2 _targetPosition = null;
+    Chuzzle _arrowChuzzle = null;
     #region Event Handlers
 
     public override void OnEnter()
@@ -59,6 +63,241 @@ public class FieldState : GamefieldState
             InvaderChuzzle.Populate(Gamefield);
         }
         IsTurn = true;
+
+        CheckPossibleCombinations();
+    }
+
+    private void CheckPossibleCombinations()
+    {
+        _targetPosition = null;
+        _arrowChuzzle = null;
+        _possibleCombination = GamefieldUtility.Tip(Gamefield.Level.ActiveChuzzles, out _targetPosition,
+            out _arrowChuzzle);
+
+        var numberOfTries = 0;
+        while (!_possibleCombination.Any())
+        {   
+            numberOfTries++;
+
+            var possible = Gamefield.Chuzzles.Where(GamefieldUtility.IsUsual);
+             //complex logic of repainting
+                                                 
+             //check number of invaders
+             //if more then third of maximum and possible less then 10
+            if (InvaderChuzzle.AllInvaderChuzzles.Count > InvaderChuzzle.MaxInvadersOnLevel/3 && possible.Count() < 10)
+            {
+                //Debug.Log("Repaint invaders");
+                var invadersForRepaint =
+                    InvaderChuzzle.AllInvaderChuzzles.Where(
+                        x =>
+                            InvaderChuzzle.AllInvaderChuzzles.IndexOf(x) <
+                            InvaderChuzzle.MaxInvadersOnLevel/3).ToArray();
+                //repaint them to random color
+                foreach (var invaderToReplace in invadersForRepaint)
+                {
+                    TilesFactory.Instance.ReplaceWithRandom(invaderToReplace);
+                }
+                //TODO show message to player                               
+            }
+            else
+            {
+                //try to find pair and repaint only one
+                var combinations = GamefieldUtility.FindCombinations(Gamefield.Chuzzles, 2);
+                if (combinations.Any())
+                {
+                    foreach (var comb in combinations)
+                    {
+                        //if vertical 
+                        if (comb[0].Current.x == comb[1].Current.x)
+                        {
+                            //try to find up and bottom
+                            var top = comb[0].Current.y > comb[1].Current.y ? comb[0] : comb[1];
+                            var bottom = top == comb[0] ? comb[1] : comb[0];
+
+                            var repainted = false;
+                            if (top.Current.Top != null && top.Current.Top.Type != CellTypes.Block)
+                            {
+                                var possibleAbove =
+                                    Gamefield.Chuzzles.Where(
+                                        x =>
+                                            GamefieldUtility.IsUsual(x) && x.Current.y == top.Current.Top.y &&
+                                            x.Current != top.Current.Top)
+                                        .ToArray();
+
+                                if (possibleAbove.Any())
+                                {
+                                    Chuzzle toReplace = possibleAbove[Random.Range(0, possibleAbove.Length)];
+                                    TilesFactory.Instance.ReplaceWithColor(toReplace, top.Color);
+                                    //    Debug.Log("Repaint above pair");
+                                    repainted = true;
+                                }
+                            }
+
+                            if (bottom.Current.Bottom != null &&
+                                bottom.Current.Bottom.Type != CellTypes.Block && !repainted)
+                            {
+                                var possibleBellow =
+                                    Gamefield.Chuzzles.Where(
+                                        x =>
+                                            GamefieldUtility.IsUsual(x) &&
+                                            x.Current.y == bottom.Current.Bottom.y &&
+                                            x.Current != bottom.Current.Bottom)
+                                        .ToArray();
+
+                                if (possibleBellow.Any())
+                                {
+                                    Chuzzle toReplace =
+                                        possibleBellow[Random.Range(0, possibleBellow.Length)];
+                                    TilesFactory.Instance.ReplaceWithColor(
+                                        toReplace, bottom.Color);
+                                    repainted = true;
+                                    //      Debug.Log("Repaint bellow pair");
+                                }
+                            }
+
+                            if (repainted)
+                            {
+                                break;
+                            }
+                        }
+                        else
+                        {
+                            //horizontal pair
+
+                            var left = comb[0].Current.x < comb[1].Current.x ? comb[0] : comb[1];
+                            var right = comb[0] == left ? comb[1] : comb[0];
+
+                            var repainted = false;
+
+                            //left?
+                            if (left.Current.Left != null && left.Current.Left.Type != CellTypes.Block)
+                            {
+                                var possibleLeft =
+                                    Gamefield.Chuzzles.Where(
+                                        x =>
+                                            GamefieldUtility.IsUsual(x) &&
+                                            x.Current.x == left.Current.Left.x &&
+                                            x.Current != left.Current.Left)
+                                        .ToArray();
+
+                                if (possibleLeft.Any())
+                                {
+                                    Chuzzle toReplace = possibleLeft[Random.Range(0, possibleLeft.Length)];
+                                    TilesFactory.Instance.ReplaceWithColor(toReplace, left.Color);
+                                    //        Debug.Log("Repaint left pair");
+                                    repainted = true;
+                                }
+                            }
+
+                            //right?
+                            if (right.Current.Right != null && right.Current.Right.Type != CellTypes.Block &&
+                                !repainted)
+                            {
+                                var possibleRight =
+                                    Gamefield.Chuzzles.Where(
+                                        x =>
+                                            GamefieldUtility.IsUsual(x) &&
+                                            x.Current.x == right.Current.Right.x &&
+                                            x.Current != right.Current.Right)
+                                        .ToArray();
+
+                                if (possibleRight.Any())
+                                {
+                                    Chuzzle toReplace = possibleRight[Random.Range(0, possibleRight.Length)];
+                                    TilesFactory.Instance.ReplaceWithColor(
+                                        toReplace, right.Color);
+                                    repainted = true;
+                                    //          Debug.Log("Repaint right pair");
+                                }
+                            }
+
+                            if (repainted)
+                            {
+                                break;
+                            }
+                        }
+                    }
+                }
+                else
+                {
+                    //if now pairs
+                    if (numberOfTries > 5)
+                    {
+                        //create combination guaranteed
+                        //get random usual cell
+                        var possibleCellsLeftLeft = Gamefield.Level.Cells.Where(
+                            cell =>
+                                //слева есть обычная клетка и слева слева тоже есть обычная клетка и в стобце левее левого есть еще одна обычная клетка и в ней находится обычный тайл
+                                (cell.Left != null && cell.Left.Type == CellTypes.Usual &&
+                                 (cell.Left.Left != null && cell.Left.Left.Type == CellTypes.Usual &&
+                                  Gamefield.Level.Cells.Count(x => x.x == cell.Left.Left.x && x.Type == CellTypes.Usual) >
+                                  1) && Gamefield.Chuzzles.FirstOrDefault(chuzzle => chuzzle.Current == cell) != null && GamefieldUtility.IsUsual(Gamefield.Chuzzles.FirstOrDefault(chuzzle => chuzzle.Current == cell)))
+                            ).ToList();
+                        if (possibleCellsLeftLeft.Any())
+                        {
+                            var randomLeftLeft = possibleCellsLeftLeft[Random.Range(0, possibleCellsLeftLeft.Count)];
+                            var randomLeftLeftChuzzle = GamefieldUtility.GetChuzzleInCell(randomLeftLeft,
+                                Gamefield.Chuzzles);
+                            TilesFactory.Instance.ReplaceWithColor(
+                                GamefieldUtility.GetChuzzleInCell(randomLeftLeft.Left, Gamefield.Chuzzles),
+                                randomLeftLeftChuzzle.Color);
+                            var possibleLeftLeftLeft =
+                                Gamefield.Chuzzles.Where(
+                                    x =>
+                                        x.Current != randomLeftLeft.Left.Left &&
+                                        x.Current.x == randomLeftLeft.Left.Left.x &&
+                                        (GamefieldUtility.IsUsual(x) || !GamefieldUtility.IsOrdinaryDestroyable(x)))
+                                    .ToList();
+                            TilesFactory.Instance.ReplaceWithColor(
+                                possibleLeftLeftLeft[Random.Range(0, possibleLeftLeftLeft.Count)],
+                                randomLeftLeftChuzzle.Color);
+                            Debug.Log("Random left left");
+                        }
+                        else
+                        {
+                            Debug.LogWarning("All our life is a lie");
+                            break;
+                        }
+                        //check if has free neighbour
+                        //repaint to same color
+                        //repaint random tile in near row to same color
+                    }
+                    else
+                    {
+                        var possibleChuzzles = Gamefield.Chuzzles.Where(GamefieldUtility.IsUsual).ToArray();
+
+                        for (int index = 0; index < possibleChuzzles.Length; index++)
+                        {
+                            var possibleChuzzle = possibleChuzzles[index];
+                            TilesFactory.Instance.ReplaceWithRandom(possibleChuzzle);
+                        }
+                    }
+                }
+            }
+
+
+            //if create combination - repaint random
+            var combination = GamefieldUtility.FindOnlyOneCombination(Gamefield.Chuzzles);
+            if (combination.Any())
+            {
+                foreach (var chuzzle in combination)
+                {
+                    if (GamefieldUtility.IsUsual(chuzzle))
+                    {
+                        //Debug.Log("Oops, combination. Repaint");
+                        TilesFactory.Instance.ReplaceWithOtherColor(chuzzle);
+                        break;
+                    }
+                }
+            }
+            
+            
+            _possibleCombination = GamefieldUtility.Tip(Gamefield.Level.ActiveChuzzles, out _targetPosition,
+                out _arrowChuzzle);
+            //Debug.Log("Arrow chuzzle: " + _arrowChuzzle);
+            //Debug.Log("Target position: " + _targetPosition);
+        }
+        Debug.Log("Repainted in "+numberOfTries + " attempts");
     }
 
     public override void OnExit()
@@ -127,25 +366,15 @@ public class FieldState : GamefieldState
         
         TimeFromTip += Time.deltaTime;
         if (TimeFromTip > 1 && !Gamefield.Level.ActiveChuzzles.Any(x => x.Shine))
-        {
-            IntVector2 targetPosition = null;
-            Chuzzle arrowChuzzle = null;
-            var possibleCombination = GamefieldUtility.Tip(Gamefield.Level.ActiveChuzzles, out targetPosition,
-                out arrowChuzzle);
-            if (possibleCombination.Any())
+        {                        
+            if (_possibleCombination.Any())
             {
-                foreach (var chuzzle in possibleCombination)
+                foreach (var chuzzle in _possibleCombination)
                 {
                     chuzzle.Shine = true;
                 }
-                GamefieldUtility.ShowArrow(arrowChuzzle, targetPosition, DownArrow);
+                GamefieldUtility.ShowArrow(_arrowChuzzle, _targetPosition, DownArrow);
             }
-            else
-            {
-                RepaintRandom();
-                return;
-            }
-
 
             TimeFromTip = 0;
         }       
@@ -156,7 +385,7 @@ public class FieldState : GamefieldState
             (Input.GetMouseButtonDown(0) || (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began)))
         {
             _dragOrigin = Input.mousePosition;
-            Debug.Log("Position: " + _dragOrigin);
+           // Debug.Log("Position: " + _dragOrigin);
 
             if (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began)
             {
@@ -264,16 +493,6 @@ public class FieldState : GamefieldState
         _dragOrigin = Input.mousePosition;
 
         #endregion
-    }
-
-    private void RepaintRandom()
-    {
-        Debug.Log("Random repaint");
-        var possibleChuzzles = Gamefield.Level.ActiveChuzzles.Where(GamefieldUtility.IsUsual).ToArray();
-        var randomChuzzle = possibleChuzzles[Random.Range(0, possibleChuzzles.Length)];
-
-        TilesFactory.Instance.CreateChuzzle(randomChuzzle.Current);
-        randomChuzzle.Destroy(false, false);
     }
 
     public void LateUpdateState(List<Cell> activeCells)

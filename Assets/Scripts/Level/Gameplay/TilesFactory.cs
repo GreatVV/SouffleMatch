@@ -153,6 +153,7 @@ public class TilesFactory : MonoBehaviour {
     {
         var chuzzleObject = Instantiate(prefab) as GameObject;
         var chuzzle = chuzzleObject.GetComponent<Chuzzle>();
+        
         chuzzle.Real = chuzzle.MoveTo = chuzzle.Current = cell;
 
         if (!chuzzle.Explosion)
@@ -168,6 +169,8 @@ public class TilesFactory : MonoBehaviour {
 
         chuzzle.Died += Gamefield.Level.OnChuzzleDeath;
 
+        //Debug.Log("Chuzzle created: " + chuzzle);
+
         return chuzzle;
     }
 
@@ -175,22 +178,28 @@ public class TilesFactory : MonoBehaviour {
     {
         if (cell.Type == CellTypes.Usual)
         {
+
             switch (cell.CreationType)
             {
                 case CreationType.Usual:
                 case CreationType.Place:
+                    cell.CreationType = CreationType.Usual;
                     return CreateRandomChuzzle(cell, isUniq);
                 case CreationType.Counter:
+                    cell.CreationType = CreationType.Usual;
                     if (Gamefield.GameMode is TargetChuzzleGameMode)
                     {
                         return CreateCounterChuzzle(cell, isUniq);
                     }
                     return CreateRandomChuzzle(cell, isUniq);
                 case CreationType.Lock:
+                    cell.CreationType = CreationType.Usual;
                     return CreateLockChuzzle(cell, isUniq);
                 case CreationType.TwoTimes:
+                    cell.CreationType = CreationType.Usual;
                     return CreateTwoTimeChuzzle(cell,isUniq);
                 case CreationType.Invader:
+                    cell.CreationType = CreationType.Usual;
                     return CreateInvader(cell);
                 default:
                     throw new ArgumentOutOfRangeException();
@@ -204,4 +213,26 @@ public class TilesFactory : MonoBehaviour {
         return ChuzzlePrefabs.FirstOrDefault(x => x.GetComponent<Chuzzle>().Color == color);
     }
 
+    public void ReplaceWithRandom(Chuzzle toReplace)
+    {
+        CreateChuzzle(toReplace.Current);
+        toReplace.Destroy(false, false, true);
+    }
+
+    public void ReplaceWithColor(Chuzzle toReplace, ChuzzleColor color)
+    {
+        CreateChuzzle(toReplace.Current, color);
+        toReplace.Destroy(false, false, true);
+    }
+
+    public void ReplaceWithOtherColor(Chuzzle toReplace)
+    {
+        var exceptColor = toReplace.Color;
+        var possibleColors = ((ChuzzleColor[])Enum.GetValues(typeof(ChuzzleColor))).ToList();
+        possibleColors.Remove(exceptColor);
+         
+        ReplaceWithColor(toReplace, possibleColors[Random.Range(0, possibleColors.Count)]);
+    }
+
+    
 }

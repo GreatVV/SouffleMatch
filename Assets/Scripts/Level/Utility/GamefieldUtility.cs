@@ -220,6 +220,16 @@ public class GamefieldUtility
         return first.Current.x > second.Current.x ? 1 : -1;
     }
 
+    public static int CompareByY(Chuzzle first, Chuzzle second)
+    {
+        if (first.Current.y == second.Current.y)
+        {
+            return 0;
+        }
+
+        return first.Current.y > second.Current.y ? 1 : -1;
+    }
+
     /// <summary>
     ///     Находит любую возможную комбинацию
     /// </summary>
@@ -274,20 +284,21 @@ public class GamefieldUtility
         var combinations = FindCombinations(chuzzles, 2);
 
         foreach (var combination in combinations)
-        {
-            combination.Sort(CompareByX);
-
+        {         
             var first = combination[0];
             var second = combination[1];
 
             //vertical combination
             if (first.Current.x == second.Current.x)
             {
+                combination.Sort(CompareByY);
+                var topChuzzle = combination[0];
+                var bottomChuzzle = combination[1];
                 //try left             
-                if ((first.Current.Left != null && first.Current.Left.Type != CellTypes.Block) ||
-                    (second.Current.Left != null && second.Current.Left.Type != CellTypes.Block))
+                if ((topChuzzle.Current.Left != null && topChuzzle.Current.Left.Type != CellTypes.Block) ||
+                    (bottomChuzzle.Current.Left != null && bottomChuzzle.Current.Left.Type != CellTypes.Block))
                 {
-                    var leftPart = GetVerticalLineChuzzles(first.Current.x - 1, first.Color, chuzzles).ToList();
+                    var leftPart = GetVerticalLineChuzzles(topChuzzle.Current.x - 1, topChuzzle.Color, chuzzles).ToList();
                     if (leftPart.Any())
                     {
                         var possibleCombination = new List<Chuzzle>();
@@ -295,17 +306,17 @@ public class GamefieldUtility
                         possibleCombination.AddRange(leftPart);
 
                         Debug.Log("Combination 3");
-                        isHorizontalMove = new IntVector2(first.Current.x - 1, first.Current.y);
+                        isHorizontalMove = new IntVector2(topChuzzle.Current.x - 1, topChuzzle.Current.y);
                         chuzzleToMove = leftPart.First();
                         return possibleCombination;
                     }
                 }
 
                 //try right
-                if ((first.Current.Right != null && first.Current.Right.Type != CellTypes.Block) ||
-                    (second.Current.Right != null && second.Current.Right.Type != CellTypes.Block))
+                if ((topChuzzle.Current.Right != null && topChuzzle.Current.Right.Type != CellTypes.Block) ||
+                    (bottomChuzzle.Current.Right != null && bottomChuzzle.Current.Right.Type != CellTypes.Block))
                 {
-                    var rightPart = GetVerticalLineChuzzles(first.Current.x + 1, first.Color, chuzzles).ToList();
+                    var rightPart = GetVerticalLineChuzzles(topChuzzle.Current.x + 1, topChuzzle.Color, chuzzles).ToList();
                     if (rightPart.Any())
                     {
                         var possibleCombination = new List<Chuzzle>();
@@ -313,17 +324,17 @@ public class GamefieldUtility
                         possibleCombination.AddRange(rightPart);
 
                         Debug.Log("Combination 4");
-                        isHorizontalMove = new IntVector2(first.Current.x + 1, first.Current.y);
+                        isHorizontalMove = new IntVector2(topChuzzle.Current.x + 1, topChuzzle.Current.y);
                         chuzzleToMove = rightPart.First();
                         return possibleCombination;
                     }
                 }
 
                 //try top    
-                if (second.Current.Top != null && second.Current.Top.Type != CellTypes.Block &&
-                    chuzzles.Any(x => x.Current == second.Current.Top))
+                if (bottomChuzzle.Current.Top != null && bottomChuzzle.Current.Top.Type != CellTypes.Block &&
+                    chuzzles.Any(x => x.Current == bottomChuzzle.Current.Top))
                 {
-                    var topPart = GetHorizontalLineChuzzles(second.Current.Top.y, second.Color, chuzzles).ToList();
+                    var topPart = GetHorizontalLineChuzzles(bottomChuzzle.Current.Top.y, bottomChuzzle.Color, chuzzles).ToList();
                     if (topPart.Any())
                     {
                         var possibleCombination = new List<Chuzzle>();
@@ -331,17 +342,19 @@ public class GamefieldUtility
                         possibleCombination.AddRange(topPart);
 
                         Debug.Log("Combination 5");
-                        isHorizontalMove = new IntVector2(second.Current.x, second.Current.Top.y);
+                       // Debug.Log("Top Chuzzle: "+topChuzzle);
+                       // Debug.Log("Bottom Chuzzle: "+bottomChuzzle);
+                        isHorizontalMove = new IntVector2(bottomChuzzle.Current.x, bottomChuzzle.Current.Top.y);
                         chuzzleToMove = topPart.First();
                         return possibleCombination;
                     }
                 }
 
                 //try bottom    
-                if (first.Current.Bottom != null && first.Current.Bottom.Type != CellTypes.Block &&
-                    chuzzles.Any(x => x.Current == first.Current.Bottom))
+                if (topChuzzle.Current.Bottom != null && topChuzzle.Current.Bottom.Type != CellTypes.Block &&
+                    chuzzles.Any(x => x.Current == topChuzzle.Current.Bottom))
                 {
-                    var bottomPart = GetHorizontalLineChuzzles(first.Current.Bottom.y, first.Color, chuzzles).ToList();
+                    var bottomPart = GetHorizontalLineChuzzles(topChuzzle.Current.Bottom.y, topChuzzle.Color, chuzzles).ToList();
                     if (bottomPart.Any())
                     {
                         var possibleCombination = new List<Chuzzle>();
@@ -349,7 +362,7 @@ public class GamefieldUtility
                         possibleCombination.AddRange(bottomPart);
 
                         Debug.Log("Combination 6");
-                        isHorizontalMove = new IntVector2(second.Current.x, second.Current.Bottom.y);
+                        isHorizontalMove = new IntVector2(bottomChuzzle.Current.x, bottomChuzzle.Current.Bottom.y);
                         chuzzleToMove = bottomPart.First();
                         return possibleCombination;
                     }
@@ -357,32 +370,35 @@ public class GamefieldUtility
             }
             else
             {
+                combination.Sort(CompareByX);
+                var leftChuzzle = combination[0];
+                var rightChuzzle = combination[1];
                 //horizontal combinations
-
+               
                 //try left             
-                if (first.Current.Left != null && first.Current.Left.Type != CellTypes.Block)
+                if (leftChuzzle.Current.Left != null && leftChuzzle.Current.Left.Type != CellTypes.Block)
                 {
-                    var leftPart = GetVerticalLineChuzzles(first.Current.Left.x, first.Color, chuzzles).ToList();
+                    var leftPart = GetVerticalLineChuzzles(leftChuzzle.Current.Left.x, leftChuzzle.Color, chuzzles).ToList();
                     if (leftPart.Any())
                     {
                         var possibleCombination = new List<Chuzzle>();
                         possibleCombination.AddRange(combination);
                         possibleCombination.AddRange(leftPart);
 
-                        Debug.Log("First:"+first);
-                        Debug.Log("Second:"+second.ToString());
+                      //  Debug.Log("Left:"+leftChuzzle);
+                      //  Debug.Log("Right:"+rightChuzzle.ToString());
 
                         Debug.Log("Combination 7");
-                        isHorizontalMove = new IntVector2(first.Current.Left.x, first.Current.y);
+                        isHorizontalMove = new IntVector2(leftChuzzle.Current.Left.x, leftChuzzle.Current.y);
                         chuzzleToMove = leftPart.First();
                         return possibleCombination;
                     }
                 }
 
                 //try right
-                if (second.Current.Right != null && second.Current.Right.Type != CellTypes.Block)
+                if (rightChuzzle.Current.Right != null && rightChuzzle.Current.Right.Type != CellTypes.Block)
                 {
-                    var rightPart = GetVerticalLineChuzzles(second.Current.x + 1, second.Color, chuzzles).ToList();
+                    var rightPart = GetVerticalLineChuzzles(rightChuzzle.Current.x + 1, rightChuzzle.Color, chuzzles).ToList();
                     if (rightPart.Any())
                     {
                         var possibleCombination = new List<Chuzzle>();
@@ -390,7 +406,7 @@ public class GamefieldUtility
                         possibleCombination.AddRange(rightPart);
 
                         Debug.Log("Combination 8");
-                        isHorizontalMove = new IntVector2(second.Current.x + 1, second.Current.y);
+                        isHorizontalMove = new IntVector2(rightChuzzle.Current.x + 1, rightChuzzle.Current.y);
                         chuzzleToMove = rightPart.First();
                         return possibleCombination;
                     }
@@ -398,13 +414,13 @@ public class GamefieldUtility
 
                 //try top    
                 if (
-                    (first.Current.Top != null && first.Current.Top.Type != CellTypes.Block &&
-                     chuzzles.Any(x => x.Current == first.Current.Top)) ||
-                    (second.Current.Top != null && second.Current.Top.Type != CellTypes.Block &&
-                     chuzzles.Any(x => x.Current == second.Current.Top))
+                    (leftChuzzle.Current.Top != null && leftChuzzle.Current.Top.Type != CellTypes.Block &&
+                     chuzzles.Any(x => x.Current == leftChuzzle.Current.Top)) ||
+                    (rightChuzzle.Current.Top != null && rightChuzzle.Current.Top.Type != CellTypes.Block &&
+                     chuzzles.Any(x => x.Current == rightChuzzle.Current.Top))
                     )
                 {
-                    var topPart = GetHorizontalLineChuzzles(second.Current.y + 1, second.Color, chuzzles).ToList();
+                    var topPart = GetHorizontalLineChuzzles(rightChuzzle.Current.y + 1, rightChuzzle.Color, chuzzles).ToList();
                     if (topPart.Any())
                     {
                         var possibleCombination = new List<Chuzzle>();
@@ -412,7 +428,7 @@ public class GamefieldUtility
                         possibleCombination.AddRange(topPart);
 
                         Debug.Log("Combination 9");
-                        isHorizontalMove = new IntVector2(second.Current.x, second.Current.y + 1);
+                        isHorizontalMove = new IntVector2(rightChuzzle.Current.x, rightChuzzle.Current.y + 1);
                         chuzzleToMove = topPart.First();
                         return possibleCombination;
                     }
@@ -420,13 +436,13 @@ public class GamefieldUtility
 
                 //try bottom    
                 if (
-                    (first.Current.Bottom != null && first.Current.Bottom.Type != CellTypes.Block &&
-                     chuzzles.Any(x => x.Current == first.Current.Bottom)) ||
-                    (second.Current.Bottom != null && second.Current.Bottom.Type != CellTypes.Block &&
-                     chuzzles.Any(x => x.Current == second.Current.Bottom))
+                    (leftChuzzle.Current.Bottom != null && leftChuzzle.Current.Bottom.Type != CellTypes.Block &&
+                     chuzzles.Any(x => x.Current == leftChuzzle.Current.Bottom)) ||
+                    (rightChuzzle.Current.Bottom != null && rightChuzzle.Current.Bottom.Type != CellTypes.Block &&
+                     chuzzles.Any(x => x.Current == rightChuzzle.Current.Bottom))
                     )
                 {
-                    var bottomPart = GetHorizontalLineChuzzles(first.Current.y - 1, first.Color, chuzzles).ToList();
+                    var bottomPart = GetHorizontalLineChuzzles(leftChuzzle.Current.y - 1, leftChuzzle.Color, chuzzles).ToList();
                     if (bottomPart.Any())
                     {
                         var possibleCombination = new List<Chuzzle>();
@@ -434,7 +450,7 @@ public class GamefieldUtility
                         possibleCombination.AddRange(bottomPart);
 
                         Debug.Log("Combination 10");
-                        isHorizontalMove = new IntVector2(first.Current.x, first.Current.y - 1);
+                        isHorizontalMove = new IntVector2(leftChuzzle.Current.x, leftChuzzle.Current.y - 1);
                         chuzzleToMove = bottomPart.First();
                         return possibleCombination;
                     }
@@ -522,7 +538,7 @@ public class GamefieldUtility
         IEnumerable<Chuzzle> chuzzles)
     {
         var enumerable = chuzzles as IList<Chuzzle> ?? chuzzles.ToList();
-        var firstChuzzle = enumerable.FirstOrDefault(x => x.Real.y == y && x.Color == chuzzleColor);
+        var firstChuzzle = enumerable.FirstOrDefault(x => x.Real.y == y && x.Color == chuzzleColor && IsOrdinaryDestroyable(x));
         if (firstChuzzle != null)
         {
             var secondChuzzle =
@@ -688,6 +704,11 @@ public class GamefieldUtility
     public static bool IsCounter(Chuzzle chuzzle)
     {
         return chuzzle is CounterChuzzle;
+    }
+
+    public static bool IsOrdinaryDestroyable(Chuzzle chuzzle)
+    {
+        return !(chuzzle is InvaderChuzzle);
     }
 
     public static Chuzzle GetChuzzleInCell(Cell cell, IEnumerable<Chuzzle> chuzzles)

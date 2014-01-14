@@ -5,7 +5,7 @@ using UnityEngine;
 
 #endregion
 
-[RequireComponent(typeof (Chuzzle))]
+//[RequireComponent(typeof (Chuzzle))]
 public class TeleportableEntity : MonoBehaviour
 {
     public GameObject Copy;
@@ -31,6 +31,7 @@ public class TeleportableEntity : MonoBehaviour
             Copy = Instantiate(gameObject) as GameObject;
             Copy.gameObject.name += " is copy";
             Copy.transform.parent = gameObject.transform;
+            Destroy(Copy.GetComponent<Chuzzle>());
         }
         
 

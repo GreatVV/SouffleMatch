@@ -34,6 +34,7 @@ public class GuiLevelList : Window
     private void OnEnable()
     {
         IsLevelsLoaded = false;
+        return;
 #if !UNITY_ANDROID
         Loading.text = "Loading";
         //NGUITools.ClearChildren(Grid);
@@ -43,9 +44,9 @@ public class GuiLevelList : Window
 
     public void Start()
     {
-        #if UNITY_ANDROID
+      //  #if UNITY_ANDROID
             LoadDefaultLevels();
-        #endif
+      //  #endif
     }
 
     public void LoadDefaultLevels()

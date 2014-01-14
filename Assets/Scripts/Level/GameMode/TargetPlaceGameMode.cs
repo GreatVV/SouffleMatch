@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
-using Debug = UnityEngine.Debug;
+using UnityEngine;
 
 [Serializable]
 public class TargetPlaceGameMode : GameMode
@@ -21,13 +20,14 @@ public class TargetPlaceGameMode : GameMode
 
     private void OnTileDestroyed(Chuzzle destroyedChuzzle)
     {
-        if (PlaceCoordinates.Count == 0)
+        if (PlaceCoordinates.Count == 0 || destroyedChuzzle.IsReplacingOnDeath ||
+            !GamefieldUtility.IsOrdinaryDestroyable(destroyedChuzzle))
         {
             return;
         }
-       
 
-        var place =
+
+        IntVector2 place =
             CurrentPlaceCoordinates.FirstOrDefault(
                 x => x.x == destroyedChuzzle.Current.x && x.y == destroyedChuzzle.Current.y);
         if (place != null)
@@ -53,10 +53,10 @@ public class TargetPlaceGameMode : GameMode
         Gamefield.TileDestroyed += OnTileDestroyed;
 
         PlaceCoordinates.Clear();
-        var placeCell = Gamefield.Level.Cells.Where(x => x.CreationType == CreationType.Place);
-        var enumerable = placeCell as Cell[] ?? placeCell.ToArray();
-        Debug.Log("Now of cells: "+enumerable.Count());
-        foreach (var cell in enumerable)
+        IEnumerable<Cell> placeCell = Gamefield.Level.Cells.Where(x => x.CreationType == CreationType.Place);
+        Cell[] enumerable = placeCell as Cell[] ?? placeCell.ToArray();
+        Debug.Log("Now of cells: " + enumerable.Count());
+        foreach (Cell cell in enumerable)
         {
             PlaceCoordinates.Add(new IntVector2(cell.x, cell.y));
         }
