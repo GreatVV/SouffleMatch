@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Runtime.InteropServices;
+using UnityEngine;
 
 public class Profile : MonoBehaviour
 {
@@ -8,6 +9,13 @@ public class Profile : MonoBehaviour
 
     private void Awake()
     {
+        if (Instance != null)
+        {
+            Destroy(gameObject);
+            return;
+        }
+
+        DontDestroyOnLoad(this);
         Instance = this;
     }
 
@@ -56,5 +64,10 @@ public class Profile : MonoBehaviour
         PlayerPrefs.GetString("lastUsedProfile", Current);
 
         PlayerPrefs.Save();
+    }
+
+    void OnApplicationQuit()
+    {
+        Save();
     }
 }

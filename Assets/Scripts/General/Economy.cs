@@ -49,8 +49,19 @@ public class Economy : MonoBehaviour
 
     private void Awake()
     {
+        if (Instance != null)
+        {
+            Destroy(gameObject);
+            return;
+        }
+
         Instance = this;
         //TODO load from files
+    }
+
+    void OnDestroy()
+    {
+        Instance = null;
     }
 
     public JSONObject Serialize()
