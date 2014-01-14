@@ -214,10 +214,11 @@ public class JSONObject : Nullable
                                                         {
                                                             //string propName = str.Substring(tokenTmp + 2,i - tokenTmp - 3);
                                                             string propName = str.Substring(tokenTmp + 1, i - tokenTmp - 1);
-                                                            if (propName.StartsWith("\""))
+                                                            /*if (propName.StartsWith("\""))
                                                             {
                                                                 propName = propName.Replace("\"", "");
-                                                            }
+                                                            }*/
+                                                            propName = propName.Trim().Trim('"');
                                                             keys.Add(propName);
                                                         }
                                                         catch
@@ -311,6 +312,7 @@ public class JSONObject : Nullable
                 Debug.LogWarning(
                     "tried to add a field to a non-object JSON.  We'll do it for you, but you might be doing something wrong.");
             }
+            name = name.Trim().Trim('"');
             keys.Add(name);
             list.Add(obj);
         }
@@ -479,6 +481,14 @@ public class JSONObject : Nullable
     public JSONObject this[string index]
     {
         get { return GetField(index); }
+    }
+
+    public void PrintKeys()
+    {
+        foreach (var key in keys)
+        {
+            Debug.Log(key);
+        }
     }
 
     public override string ToString()
