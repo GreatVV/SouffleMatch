@@ -1,24 +1,26 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 
-public class HorizontalLineChuzzle : Chuzzle
+public class HorizontalLineChuzzle : Chuzzle, IPowerUp
 {             
     protected override void OnAwake()
     {
         
     }
 
-    public override void Destroy(bool needCreateNew, bool withAnimation = true)
+    public override void Destroy(bool needCreateNew, bool withAnimation = true, bool isReplacingOnDeath = false)
     {
         if (IsDead)
         {
             return;
         }
 
-        base.Destroy(needCreateNew, withAnimation);
-        var horizontal = Gamefield.Chuzzles.Where(x => x.Current.y == Current.y).ToArray();
-        foreach (var chuzzle in horizontal)
-        {
-            chuzzle.Destroy(true);
-        }
+        base.Destroy(needCreateNew, withAnimation, isReplacingOnDeath);
+        StartCoroutine(PowerUpDestroyManager.Instance.Destroy(this));
+    }
+
+    public IEnumerable<Chuzzle> ToDestroy
+    {
+        get { return PowerUpDestroyManager.GetRow(Current.y); }
     }
 }

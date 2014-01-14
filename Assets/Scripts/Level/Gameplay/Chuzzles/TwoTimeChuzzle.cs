@@ -1,8 +1,8 @@
 ﻿using UnityEngine;
 
 public class TwoTimeChuzzle : Chuzzle
-{   
-    public override void Destroy(bool needCreateNew, bool withAnimation = true)
+{
+    public override void Destroy(bool needCreateNew, bool withAnimation = true, bool isReplacingOnDeath = false)
     {
         if (IsDead)
         {

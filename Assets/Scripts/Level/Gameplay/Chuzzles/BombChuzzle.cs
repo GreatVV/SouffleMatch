@@ -1,31 +1,26 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
 
-public class BombChuzzle : Chuzzle
+public class BombChuzzle : Chuzzle, IPowerUp
 {      
     protected override void OnAwake()
     {
         
     }
 
-    public override void Destroy(bool needCreateNew, bool withAnimation = true)
+    public override void Destroy(bool needCreateNew, bool withAnimation = true, bool isReplacingOnDeath = false)
     {
         if (IsDead)
         {
             return;
         }
 
-        base.Destroy(needCreateNew, withAnimation);
+        base.Destroy(needCreateNew, withAnimation, isReplacingOnDeath);
+        StartCoroutine(PowerUpDestroyManager.Instance.Destroy(this));
+    }
 
-        var square =
-    Gamefield.Chuzzles.Where(
-        x =>
-            (x.Current.x == Current.x - 1 || x.Current.x == Current.x + 1 ||
-             x.Current.x == Current.x) &&
-            (x.Current.y == Current.y - 1 || x.Current.y == Current.y ||
-             x.Current.y == Current.y + 1)).ToArray();
-        foreach (var chuzzle in square)
-        {
-            chuzzle.Destroy(true);
-        }
+
+    public IEnumerable<Chuzzle> ToDestroy
+    {
+        get { return PowerUpDestroyManager.GetSquare(Current.x, Current.y); }
     }
 }

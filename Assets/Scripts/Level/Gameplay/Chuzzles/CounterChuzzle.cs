@@ -5,8 +5,8 @@ public class CounterChuzzle : Chuzzle
     public int Counter;
 
     public TextMesh TextMesh;
-  
-    public override void Destroy(bool needCreateNew, bool withAnimation = true)
+
+    public override void Destroy(bool needCreateNew, bool withAnimation = true, bool isReplacingOnDeath = false)
     {
         NeedCreateNew = needCreateNew;
         if (Counter <= 0)

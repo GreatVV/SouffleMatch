@@ -5,28 +5,38 @@ using UnityEngine;
 public class InvaderChuzzle : Chuzzle
 {
     public static List<InvaderChuzzle> AllInvaderChuzzles = new List<InvaderChuzzle>();
-
+    public static int MaxInvadersOnLevel = 20;
 
     protected override void OnAwake()
     {
-        if (!AllInvaderChuzzles.Contains(this))
+        if (AllInvaderChuzzles.Contains(this))
+        {
+            Debug.LogError("Already contains this invader: " + this);
+        }
+        else
         {
             AllInvaderChuzzles.Add(this);
         }
-    }         
-    public override void Destroy(bool needCreateNew , bool withAnimation = true)
+    }
+
+    public override string ToString()
     {
-        if (AllInvaderChuzzles.Contains(this))
-        {
-            AllInvaderChuzzles.Remove(this);
-        }
-        base.Destroy(needCreateNew, withAnimation);
+        return string.Format("Invader chuzzle: Current: ({0},{1}); Real: ({2},{3})", Current.x, Current.y, Real.x, Real.y);
+    }
+
+    public override void Destroy(bool needCreateNew, bool withAnimation = true, bool isReplacingOnDeath = false)
+    {
+        
+        AllInvaderChuzzles.Remove(this);
+        
+        base.Destroy(needCreateNew, withAnimation, isReplacingOnDeath);
     }
 
     void OnDestroy()
     {
         if (AllInvaderChuzzles.Contains(this))
         {
+            //Debug.LogError("Contain this chuzzle: "+this);
             AllInvaderChuzzles.Remove(this);
         }
     }
@@ -58,7 +68,7 @@ public class InvaderChuzzle : Chuzzle
 
     public static void Populate(Gamefield gamefield)
     {
-        if (!AllInvaderChuzzles.Any())
+        if (!AllInvaderChuzzles.Any() || AllInvaderChuzzles.Count == MaxInvadersOnLevel)
         {
             return;
         }
@@ -78,10 +88,17 @@ public class InvaderChuzzle : Chuzzle
             if (targetTile != null)
             {
                 TilesFactory.Instance.CreateInvader(targetTile.Current);
-                targetTile.Destroy(false);
+                targetTile.Destroy(false,true,true);
                 break;
             }
         }
+
+        var listInvaders = "";
+        foreach (var allInvaderChuzzle in AllInvaderChuzzles)
+        {
+            listInvaders += allInvaderChuzzle + "\n";
+        }
+        Debug.Log("Invaders: \n"+listInvaders);
     }
 }
 

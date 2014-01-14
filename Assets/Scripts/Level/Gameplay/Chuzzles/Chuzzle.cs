@@ -30,6 +30,7 @@ public abstract class Chuzzle : MonoBehaviour
     public TeleportableEntity Teleportable;
 
     public bool IsDead;
+    public bool IsReplacingOnDeath;
 
     #region Events
 
@@ -179,10 +180,11 @@ public abstract class Chuzzle : MonoBehaviour
         {
             transform.position = targetPosition;
         }
-    }    
+    }
 
-    public virtual void Destroy(bool needCreateNew, bool withAnimation = true)
+    public virtual void Destroy(bool needCreateNew, bool withAnimation = true, bool isReplacingOnDeath = false)
     {
+        IsReplacingOnDeath = isReplacingOnDeath;
         NeedCreateNew = needCreateNew;
         Die(withAnimation);
     }
@@ -211,4 +213,5 @@ public abstract class Chuzzle : MonoBehaviour
     {
         AnimationStarted = null;
     }
+    
 }
