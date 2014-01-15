@@ -1,8 +1,10 @@
 ﻿using System.Runtime.InteropServices;
+using UnityEditor;
 using UnityEngine;
 
 public class Profile : MonoBehaviour
 {
+    public const string defaultProfileName = "default";
     public static Profile Instance;
 
     public string Current;
@@ -21,7 +23,7 @@ public class Profile : MonoBehaviour
 
     private void Start()
     {
-        var lastUsedProfile = PlayerPrefs.GetString("lastUsedProfile", "default");
+        var lastUsedProfile = PlayerPrefs.GetString("lastUsedProfile", defaultProfileName);
         Load(lastUsedProfile);
     }
 
@@ -30,7 +32,7 @@ public class Profile : MonoBehaviour
         Current = profileName;
 
         // Set current user profile
-        var prefix = string.Format("profile_{0}_", profileName);
+        var prefix = GetPrefix(profileName);
 
         // Load ecomomy progress
         var economy = PlayerPrefs.GetString(string.Format("{0}_economy", prefix), "");
@@ -43,11 +45,17 @@ public class Profile : MonoBehaviour
         var player = PlayerPrefs.GetString(string.Format("{0}_player", prefix));
         if (!string.IsNullOrEmpty(player))
         {
+            Debug.Log("Unserialize player: "+player);
             Player.Instance.Unserialize(new JSONObject(player));
         }
 
         // Is profile exists?
         return PlayerPrefs.HasKey(string.Format("{0}_profile", prefix));
+    }
+
+    public static string GetPrefix(string profileName)
+    {
+        return string.Format("profile_{0}_", profileName);
     }
 
     public void Save()
@@ -58,16 +66,32 @@ public class Profile : MonoBehaviour
         Debug.Log("Save Profile");
 
         PlayerPrefs.SetString(string.Format("{0}_profile", prefix), Current);
-        PlayerPrefs.SetString(string.Format("{0}_economy", prefix), Economy.Instance.Serialize().ToString());
-        PlayerPrefs.SetString(string.Format("{0}_player", prefix), Player.Instance.Serialize().ToString());
+        SaveEconomy(prefix);
+        SavePlayer(prefix, Player.Instance.Serialize());
 
         PlayerPrefs.GetString("lastUsedProfile", Current);
 
         PlayerPrefs.Save();
     }
 
+    public static void SavePlayer(string prefix, JSONObject playerJsonObject)
+    {
+        PlayerPrefs.SetString(string.Format("{0}_player", prefix), playerJsonObject.ToString());
+    }
+
+    private static void SaveEconomy(string prefix)
+    {
+        PlayerPrefs.SetString(string.Format("{0}_economy", prefix), Economy.Instance.Serialize().ToString());
+    }
+
     void OnApplicationQuit()
     {
         Save();
+    }
+
+    [MenuItem("Utils/Reset")]
+    public static void Reset()
+    {
+        PlayerPrefs.DeleteAll();
     }
 }

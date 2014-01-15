@@ -80,8 +80,28 @@ public class LifeSystem : MonoBehaviour
 
     public static LifeSystem Unserialize(JSONObject jsonObject)
     {
-        return new LifeSystem {Lifes = jsonObject.GetField("Lifes").integer};
+        if (Instance == null)
+        {
+            var lifeSystem = new GameObject();
+            lifeSystem.AddComponent<LifeSystem>();
+        }
+        
+        Instance.Lifes = jsonObject.GetField("Lifes", new JSONObject("0")).integer;
+        return Instance;
+        
     }
+
+    void Awake()
+    {
+        if (Instance != null)
+        {
+            Destroy(gameObject);
+        }
+
+        Instance = this;
+    }
+
+    public static LifeSystem Instance { get; set; }
 
     public void Update()
     {
