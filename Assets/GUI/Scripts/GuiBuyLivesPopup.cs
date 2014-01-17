@@ -57,16 +57,11 @@ public class GuiBuyLivesPopup : Window
     {
         AddEventHandlers();
         OnLifesChanged(Player.Instance.Lifes.Lifes);
-        transform.localPosition = new Vector3(0, -800, -5);
-        iTween.MoveTo(gameObject, new Vector3(0, 0, -0.01f), 0.5f);
     }
 
     protected override bool OnClose()
     {
         Debug.Log("onclose");
-        iTween.MoveTo(gameObject,
-            iTween.Hash("x", 0, "y", 2, "z", -0.01f, "time", 0.5f,
-                "oncomplete", "OnCloseAnimationComplete", "oncompletetarget", gameObject, "oncompleteparams", 0));
 
         return false;
     }
