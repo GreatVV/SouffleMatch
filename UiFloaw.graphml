@@ -36,7 +36,7 @@
       <data key="d6">
         <y:ShapeNode>
           <y:Geometry height="416.32070312500014" width="230.4889705882354" x="1769.8055147058822" y="2740.862304687501"/>
-          <y:Fill hasColor="false" transparent="false"/>
+          <y:Fill color="#FF99CC" transparent="false"/>
           <y:BorderStyle color="#000000" type="line" width="1.0"/>
           <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="18.701171875" modelName="custom" textColor="#000000" visible="true" width="84.6484375" x="72.9202665441178" y="198.80976562500018">Попап победы<y:LabelModel>
               <y:SmartNodeLabelModel distance="4.0"/>
@@ -53,7 +53,7 @@
       <data key="d6">
         <y:ShapeNode>
           <y:Geometry height="416.32070312500014" width="230.4889705882354" x="1078.4904353408028" y="1184.7708007812503"/>
-          <y:Fill hasColor="false" transparent="false"/>
+          <y:Fill color="#FF99CC" transparent="false"/>
           <y:BorderStyle color="#000000" type="line" width="1.0"/>
           <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="18.701171875" modelName="custom" textColor="#000000" visible="true" width="142.5859375" x="43.951516544117794" y="198.80976562500018">Соединиться к фейсбуку<y:LabelModel>
               <y:SmartNodeLabelModel distance="4.0"/>
@@ -68,7 +68,6 @@
     </node>
     <node id="n3" yfiles.foldertype="group">
       <data key="d4"/>
-      <data key="d5"/>
       <data key="d6">
         <y:ProxyAutoBoundsNode>
           <y:Realizers active="0">
@@ -100,7 +99,7 @@
           <data key="d6">
             <y:ShapeNode>
               <y:Geometry height="416.32070312500014" width="230.4889705882354" x="2208.4713877217555" y="2264.5416015625005"/>
-              <y:Fill hasColor="false" transparent="false"/>
+              <y:Fill color="#FF99CC" transparent="false"/>
               <y:BorderStyle color="#000000" type="line" width="1.0"/>
               <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="18.701171875" modelName="custom" textColor="#000000" visible="true" width="75.6015625" x="77.44370404411757" y="198.80976562500018">Попап паузы<y:LabelModel>
                   <y:SmartNodeLabelModel distance="4.0"/>
@@ -168,7 +167,6 @@
     </node>
     <node id="n4" yfiles.foldertype="group">
       <data key="d4"/>
-      <data key="d5"/>
       <data key="d6">
         <y:ProxyAutoBoundsNode>
           <y:Realizers active="0">
@@ -200,7 +198,7 @@
           <data key="d6">
             <y:ShapeNode>
               <y:Geometry height="416.32070312500014" width="230.4889705882354" x="357.3249591503268" y="656.0736328125001"/>
-              <y:Fill hasColor="false" transparent="false"/>
+              <y:Fill color="#FF99CC" transparent="false"/>
               <y:BorderStyle color="#000000" type="line" width="1.0"/>
               <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="18.701171875" modelName="custom" textColor="#000000" visible="true" width="121.498046875" x="54.49546185661768" y="198.80976562500007">Попап старта уровня<y:LabelModel>
                   <y:SmartNodeLabelModel distance="4.0"/>
@@ -268,7 +266,6 @@
     </node>
     <node id="n5" yfiles.foldertype="group">
       <data key="d4"/>
-      <data key="d5"/>
       <data key="d6">
         <y:ProxyAutoBoundsNode>
           <y:Realizers active="0">
@@ -300,7 +297,7 @@
           <data key="d6">
             <y:ShapeNode>
               <y:Geometry height="416.32070312500014" width="230.4889705882354" x="909.9071020074697" y="97.37646484375"/>
-              <y:Fill hasColor="false" transparent="false"/>
+              <y:Fill color="#339966" transparent="false"/>
               <y:BorderStyle color="#000000" type="line" width="1.0"/>
               <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="18.701171875" modelName="custom" textColor="#000000" visible="true" width="36.5078125" x="96.99057904411768" y="198.80976562500007">Карта<y:LabelModel>
                   <y:SmartNodeLabelModel distance="4.0"/>
@@ -402,7 +399,6 @@
     </node>
     <node id="n6" yfiles.foldertype="group">
       <data key="d4"/>
-      <data key="d5"/>
       <data key="d6">
         <y:ProxyAutoBoundsNode>
           <y:Realizers active="0">
@@ -434,7 +430,7 @@
           <data key="d6">
             <y:ShapeNode>
               <y:Geometry height="416.32070312500014" width="230.4889705882354" x="1812.8527369281044" y="1184.7708007812503"/>
-              <y:Fill hasColor="false" transparent="false"/>
+              <y:Fill color="#FF99CC" transparent="false"/>
               <y:BorderStyle color="#000000" type="line" width="1.0"/>
               <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="18.701171875" modelName="custom" textColor="#000000" visible="true" width="56.552734375" x="86.9681181066178" y="198.80976562500018">Туториал<y:LabelModel>
                   <y:SmartNodeLabelModel distance="4.0"/>
@@ -451,7 +447,7 @@
           <data key="d6">
             <y:ShapeNode>
               <y:Geometry height="416.32070312500014" width="230.4889705882354" x="1552.3634512138187" y="1184.7708007812503"/>
-              <y:Fill hasColor="false" transparent="false"/>
+              <y:Fill color="#FF99CC" transparent="false"/>
               <y:BorderStyle color="#000000" type="line" width="1.0"/>
               <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="18.701171875" modelName="custom" textColor="#000000" visible="true" width="85.73828125" x="72.3753446691178" y="198.80976562500018">Показ задания<y:LabelModel>
                   <y:SmartNodeLabelModel distance="4.0"/>
@@ -468,7 +464,7 @@
           <data key="d6">
             <y:ShapeNode>
               <y:Geometry height="416.32070312500014" width="230.4889705882354" x="1740.994403594771" y="2264.5416015625005"/>
-              <y:Fill hasColor="false" transparent="false"/>
+              <y:Fill color="#FF99CC" transparent="false"/>
               <y:BorderStyle color="#000000" type="line" width="1.0"/>
               <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="18.701171875" modelName="custom" textColor="#000000" visible="true" width="83.8515625" x="73.3187040441178" y="198.80976562500018">Бом-бом моуд<y:LabelModel>
                   <y:SmartNodeLabelModel distance="4.0"/>
@@ -483,7 +479,6 @@
         </node>
         <node id="n6::n3" yfiles.foldertype="group">
           <data key="d4"/>
-          <data key="d5"/>
           <data key="d6">
             <y:ProxyAutoBoundsNode>
               <y:Realizers active="0">
@@ -515,7 +510,7 @@
               <data key="d6">
                 <y:ShapeNode>
                   <y:Geometry height="416.32070312500014" width="230.4889705882354" x="1712.18329248366" y="1735.8444335937502"/>
-                  <y:Fill hasColor="false" transparent="false"/>
+                  <y:Fill color="#339966" transparent="false"/>
                   <y:BorderStyle color="#000000" type="line" width="1.0"/>
                   <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="18.701171875" modelName="custom" textColor="#000000" visible="true" width="32.30078125" x="99.0940946691178" y="198.80976562500018">Игры<y:LabelModel>
                       <y:SmartNodeLabelModel distance="4.0"/>
@@ -551,7 +546,6 @@
     </node>
     <node id="n7" yfiles.foldertype="group">
       <data key="d4"/>
-      <data key="d5"/>
       <data key="d6">
         <y:ProxyAutoBoundsNode>
           <y:Realizers active="0">
@@ -583,7 +577,7 @@
           <data key="d6">
             <y:ShapeNode>
               <y:Geometry height="416.32070312500014" width="230.4889705882354" x="1156.2995623249299" y="2264.5416015625005"/>
-              <y:Fill hasColor="false" transparent="false"/>
+              <y:Fill color="#FF99CC" transparent="false"/>
               <y:BorderStyle color="#000000" type="line" width="1.0"/>
               <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="18.701171875" modelName="custom" textColor="#000000" visible="true" width="103.3515625" x="63.568704044117794" y="198.80976562500018">Попап поражения<y:LabelModel>
                   <y:SmartNodeLabelModel distance="4.0"/>
@@ -651,7 +645,6 @@
     </node>
     <node id="n8" yfiles.foldertype="group">
       <data key="d4"/>
-      <data key="d5"/>
       <data key="d6">
         <y:ProxyAutoBoundsNode>
           <y:Realizers active="0">
@@ -683,7 +676,7 @@
           <data key="d6">
             <y:ShapeNode>
               <y:Geometry height="416.32070312500014" width="230.4889705882354" x="522.4043242296918" y="1184.7708007812503"/>
-              <y:Fill hasColor="false" transparent="false"/>
+              <y:Fill color="#FF99CC" transparent="false"/>
               <y:BorderStyle color="#000000" type="line" width="1.0"/>
               <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="18.701171875" modelName="custom" textColor="#000000" visible="true" width="121.005859375" x="54.74155560661768" y="198.80976562500018">Послать жизни другу<y:LabelModel>
                   <y:SmartNodeLabelModel distance="4.0"/>
@@ -717,7 +710,6 @@
     </node>
     <node id="n9" yfiles.foldertype="group">
       <data key="d4"/>
-      <data key="d5"/>
       <data key="d6">
         <y:ProxyAutoBoundsNode>
           <y:Realizers active="0">
@@ -749,7 +741,7 @@
           <data key="d6">
             <y:ShapeNode>
               <y:Geometry height="416.32070312500014" width="230.4889705882354" x="335.10511788048547" y="1735.8444335937502"/>
-              <y:Fill hasColor="false" transparent="false"/>
+              <y:Fill color="#FF99CC" transparent="false"/>
               <y:BorderStyle color="#000000" type="line" width="1.0"/>
               <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="18.701171875" modelName="custom" textColor="#000000" visible="true" width="109.92578125" x="60.28159466911768" y="198.80976562500018">Список сообщений<y:LabelModel>
                   <y:SmartNodeLabelModel distance="4.0"/>
@@ -800,7 +792,6 @@
     </node>
     <node id="n10" yfiles.foldertype="group">
       <data key="d4"/>
-      <data key="d5"/>
       <data key="d6">
         <y:ProxyAutoBoundsNode>
           <y:Realizers active="0">
@@ -832,7 +823,7 @@
           <data key="d6">
             <y:ShapeNode>
               <y:Geometry height="416.32070312500014" width="230.4889705882354" x="123.45749883286642" y="3269.5594726562513"/>
-              <y:Fill hasColor="false" transparent="false"/>
+              <y:Fill color="#FF99CC" transparent="false"/>
               <y:BorderStyle color="#000000" type="line" width="1.0"/>
               <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="18.701171875" modelName="custom" textColor="#000000" visible="true" width="100.4921875" x="64.9983915441177" y="198.80976562500018">Попросить жизни<y:LabelModel>
                   <y:SmartNodeLabelModel distance="4.0"/>
@@ -866,7 +857,6 @@
     </node>
     <node id="n11" yfiles.foldertype="group">
       <data key="d4"/>
-      <data key="d5"/>
       <data key="d6">
         <y:ProxyAutoBoundsNode>
           <y:Realizers active="0">
@@ -898,7 +888,7 @@
           <data key="d6">
             <y:ShapeNode>
               <y:Geometry height="416.32070312500014" width="230.4889705882354" x="16.000355975723565" y="2740.862304687501"/>
-              <y:Fill hasColor="false" transparent="false"/>
+              <y:Fill color="#FF99CC" transparent="false"/>
               <y:BorderStyle color="#000000" type="line" width="1.0"/>
               <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="18.701171875" modelName="custom" textColor="#000000" visible="true" width="78.8359375" x="75.8265165441177" y="198.80976562500018">Купить жизни<y:LabelModel>
                   <y:SmartNodeLabelModel distance="4.0"/>
@@ -966,7 +956,6 @@
     </node>
     <node id="n12" yfiles.foldertype="group">
       <data key="d4"/>
-      <data key="d5"/>
       <data key="d6">
         <y:ProxyAutoBoundsNode>
           <y:Realizers active="0">
@@ -998,7 +987,7 @@
           <data key="d6">
             <y:ShapeNode>
               <y:Geometry height="416.32070312500014" width="230.4889705882354" x="1338.331308356676" y="3269.5594726562513"/>
-              <y:Fill hasColor="false" transparent="false"/>
+              <y:Fill color="#FF99CC" transparent="false"/>
               <y:BorderStyle color="#000000" type="line" width="1.0"/>
               <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="18.701171875" modelName="custom" textColor="#000000" visible="true" width="82.908203125" x="73.7903837316178" y="198.80976562500018">Купить деньги<y:LabelModel>
                   <y:SmartNodeLabelModel distance="4.0"/>
@@ -1243,7 +1232,6 @@
       </data>
     </edge>
     <edge id="n6::e1" source="n6::n1" target="n6::n3::n0">
-      <data key="d9"/>
       <data key="d10">
         <y:PolyLineEdge>
           <y:Path sx="28.81112132352942" sy="208.16035156250007" tx="-57.62224264705885" ty="-208.16035156250007">
@@ -1259,7 +1247,6 @@
       </data>
     </edge>
     <edge id="e13" source="n3::n2" target="n6::n1">
-      <data key="d9"/>
       <data key="d10">
         <y:PolyLineEdge>
           <y:Path sx="0.0" sy="-19.834868769032255" tx="86.43336397058829" ty="208.16035156250018">
@@ -1277,7 +1264,6 @@
       </data>
     </edge>
     <edge id="e14" source="n6::n3::n1" target="n3::n0">
-      <data key="d9"/>
       <data key="d10">
         <y:PolyLineEdge>
           <y:Path sx="0.0" sy="19.834868769032255" tx="0.0" ty="-208.16035156250007">
@@ -1291,7 +1277,6 @@
       </data>
     </edge>
     <edge id="e15" source="n6::n2" target="n1">
-      <data key="d9"/>
       <data key="d10">
         <y:PolyLineEdge>
           <y:Path sx="0.0" sy="208.16035156250007" tx="-28.81112132352942" ty="-208.16035156250007"/>
@@ -1304,7 +1289,6 @@
       </data>
     </edge>
     <edge id="e16" source="n1" target="n6::n1">
-      <data key="d9"/>
       <data key="d10">
         <y:PolyLineEdge>
           <y:Path sx="-86.43336397058829" sy="-208.16035156250018" tx="-28.811121323529505" ty="208.16035156250018">
@@ -1320,7 +1304,6 @@
       </data>
     </edge>
     <edge id="e17" source="n1" target="n5::n0">
-      <data key="d9"/>
       <data key="d10">
         <y:PolyLineEdge>
           <y:Path sx="86.43336397058829" sy="-208.16035156250018" tx="98.78098739495795" ty="208.16035156250007">
@@ -1336,7 +1319,6 @@
       </data>
     </edge>
     <edge id="e18" source="n7::n1" target="n6::n1">
-      <data key="d9"/>
       <data key="d10">
         <y:PolyLineEdge>
           <y:Path sx="0.0" sy="-19.834868769032255" tx="-86.43336397058829" ty="208.16035156250018">
@@ -1352,7 +1334,6 @@
       </data>
     </edge>
     <edge id="n6::e2" source="n6::n3::n0" target="n6::n2">
-      <data key="d9"/>
       <data key="d10">
         <y:PolyLineEdge>
           <y:Path sx="28.81112132352942" sy="208.16035156250007" tx="0.0" ty="-208.16035156250007"/>
@@ -1365,7 +1346,6 @@
       </data>
     </edge>
     <edge id="e19" source="n3::n1" target="n6::n3::n0">
-      <data key="d9"/>
       <data key="d10">
         <y:PolyLineEdge>
           <y:Path sx="0.0" sy="-19.834868769032255" tx="86.43336397058827" ty="208.16035156250007">
@@ -1379,7 +1359,6 @@
       </data>
     </edge>
     <edge id="e20" source="n3::n3" target="n5::n0">
-      <data key="d9"/>
       <data key="d10">
         <y:PolyLineEdge>
           <y:Path sx="0.0" sy="-19.834868769032255" tx="32.92699579831924" ty="208.16035156250007">
@@ -1393,7 +1372,6 @@
       </data>
     </edge>
     <edge id="e21" source="n4::n2" target="n8::n0">
-      <data key="d9"/>
       <data key="d10">
         <y:PolyLineEdge>
           <y:Path sx="0.0" sy="19.834868769032255" tx="0.0" ty="-208.16035156250007">
@@ -1407,7 +1385,6 @@
       </data>
     </edge>
     <edge id="e22" source="n8::n1" target="n4::n0">
-      <data key="d9"/>
       <data key="d10">
         <y:PolyLineEdge>
           <y:Path sx="0.0" sy="-19.834868769032255" tx="0.0" ty="208.16035156250007"/>
@@ -1420,7 +1397,6 @@
       </data>
     </edge>
     <edge id="e23" source="n8::n1" target="n9::n0">
-      <data key="d9"/>
       <data key="d10">
         <y:PolyLineEdge>
           <y:Path sx="0.0" sy="19.834868769032255" tx="57.62224264705901" ty="-208.1603515625011">
@@ -1436,7 +1412,6 @@
       </data>
     </edge>
     <edge id="e24" source="n5::n4" target="n9::n0">
-      <data key="d9"/>
       <data key="d10">
         <y:PolyLineEdge>
           <y:Path sx="0.0" sy="19.834868769032255" tx="-57.62224264705873" ty="-208.1603515625011">
@@ -1452,7 +1427,6 @@
       </data>
     </edge>
     <edge id="e25" source="n10::n1" target="n11::n0">
-      <data key="d9"/>
       <data key="d10">
         <y:PolyLineEdge>
           <y:Path sx="0.0" sy="-19.834868769032255" tx="-57.622242647058854" ty="208.16035156250007"/>
@@ -1463,7 +1437,6 @@
       </data>
     </edge>
     <edge id="e26" source="n11::n2" target="n10::n0">
-      <data key="d9"/>
       <data key="d10">
         <y:PolyLineEdge>
           <y:Path sx="0.0" sy="19.834868769032255" tx="0.0" ty="-208.16035156250007">
@@ -1477,7 +1450,6 @@
       </data>
     </edge>
     <edge id="e27" source="n9::n2" target="n5::n0">
-      <data key="d9"/>
       <data key="d10">
         <y:PolyLineEdge>
           <y:Path sx="1.1368683772161603E-13" sy="-19.834868769033164" tx="-65.8539915966387" ty="208.16035156250007">
@@ -1495,7 +1467,6 @@
       </data>
     </edge>
     <edge id="e28" source="n9::n1" target="n8::n0">
-      <data key="d9"/>
       <data key="d10">
         <y:PolyLineEdge>
           <y:Path sx="-1.1368683772161603E-13" sy="-19.834868769033164" tx="0.0" ty="208.16035156250007">
@@ -1509,7 +1480,6 @@
       </data>
     </edge>
     <edge id="e29" source="n7::n3" target="n12::n0">
-      <data key="d9"/>
       <data key="d10">
         <y:PolyLineEdge>
           <y:Path sx="0.0" sy="19.834868769032255" tx="0.0" ty="-208.16035156250018"/>
@@ -1522,7 +1492,6 @@
       </data>
     </edge>
     <edge id="e30" source="n7::n3" target="n6::n3::n0">
-      <data key="d9"/>
       <data key="d10">
         <y:PolyLineEdge>
           <y:Path sx="0.0" sy="-19.834868769032255" tx="-28.811121323529434" ty="208.16035156250007">
@@ -1538,7 +1507,6 @@
       </data>
     </edge>
     <edge id="n11::e0" source="n11::n1" target="n11::n3">
-      <data key="d9"/>
       <data key="d10">
         <y:PolyLineEdge>
           <y:Path sx="9.917434384516127" sy="19.834868769032255" tx="-13.223245846021502" ty="-19.834868769032255">
@@ -1554,7 +1522,6 @@
       </data>
     </edge>
     <edge id="e31" source="n11::n3" target="n5::n0">
-      <data key="d9"/>
       <data key="d10">
         <y:PolyLineEdge>
           <y:Path sx="0.0" sy="-19.834868769032255" tx="-98.78098739495806" ty="208.16035156250007">
@@ -1570,7 +1537,6 @@
       </data>
     </edge>
     <edge id="e32" source="n11::n3" target="n7::n0">
-      <data key="d9"/>
       <data key="d10">
         <y:PolyLineEdge>
           <y:Path sx="13.223245846021499" sy="-19.834868769032255" tx="-57.622242647058854" ty="208.16035156250007">
@@ -1586,7 +1552,6 @@
       </data>
     </edge>
     <edge id="e33" source="n12::n2" target="n11::n0">
-      <data key="d9"/>
       <data key="d10">
         <y:PolyLineEdge>
           <y:Path sx="-13.223245846021502" sy="-19.834868769032255" tx="57.62224264705885" ty="208.16035156250007">
@@ -1602,7 +1567,6 @@
       </data>
     </edge>
     <edge id="e34" source="n12::n2" target="n7::n0">
-      <data key="d9"/>
       <data key="d10">
         <y:PolyLineEdge>
           <y:Path sx="13.223245846021427" sy="-19.834868769032255" tx="57.62224264705878" ty="208.16035156250018">
@@ -1618,7 +1582,6 @@
       </data>
     </edge>
     <edge id="e35" source="n12::n2" target="n5::n0">
-      <data key="d9"/>
       <data key="d10">
         <y:PolyLineEdge>
           <y:Path sx="0.0" sy="-19.834868769032255" tx="-32.92699579831935" ty="208.16035156250007">
