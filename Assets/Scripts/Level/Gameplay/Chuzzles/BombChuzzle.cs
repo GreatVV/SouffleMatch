@@ -15,7 +15,7 @@ public class BombChuzzle : Chuzzle, IPowerUp
         }
 
         base.Destroy(needCreateNew, withAnimation, isReplacingOnDeath);
-        StartCoroutine(PowerUpDestroyManager.Instance.Destroy(this));
+        PowerUpDestroyManager.Instance.Destroy(this);
     }
 
 

@@ -13,15 +13,15 @@ public class InitState : GamefieldState
 
         Gamefield.CombinationDestroyed -= InvaderChuzzle.OnCombinationDestroyed;
         Gamefield.CombinationDestroyed += InvaderChuzzle.OnCombinationDestroyed;
-
+        
         Gamefield.Level.InitFromFile(Player.Instance.LastPlayedLevel);
-        Gamefield.StageManager.Init(Player.Instance.LastPlayedLevel.Stages);  
-
+        Gamefield.StageManager.Init(Player.Instance.LastPlayedLevel.Stages);
+        
         Gamefield.NewTilesInColumns = new int[Gamefield.Level.Width];
 
         Gamefield.AddEventHandlers();
-
         Gamefield.InvokeGameStarted();
+        
     }
 
     public override void OnExit()

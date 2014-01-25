@@ -48,8 +48,7 @@ public class GuiInAppPopup : Window
   
     protected override bool OnClose()
     {
-
-        return false;
+        return true;
     }
 
     public void OnCloseAnimationComplete()

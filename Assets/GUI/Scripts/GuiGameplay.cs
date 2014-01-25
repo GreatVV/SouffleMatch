@@ -30,7 +30,7 @@ public class GuiGameplay : Window
         UI.Instance.TaskPopup.Show(gamefield.GameMode);
         OnTurnsChanged(gamefield.GameMode.Turns);
         OnPointsChanged(gamefield.PointSystem.CurrentPoints);
-        Camera.main.orthographicSize = gamefield.Level.Width;
+      //  Camera.main.orthographicSize = gamefield.Level.Width;
     }
 
     private void OnPointsChanged(int points)

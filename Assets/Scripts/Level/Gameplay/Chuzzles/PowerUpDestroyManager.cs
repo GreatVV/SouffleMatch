@@ -1,12 +1,13 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
 public class PowerUpDestroyManager : MonoBehaviour
 {
-    private readonly List<IPowerUp> _powerUpDestroySequince = new List<IPowerUp>();
     public bool IsInDestroyState;
+    private Chuzzle _firstChuzzle;
     public static PowerUpDestroyManager Instance { get; private set; }
 
     private void Awake()
@@ -18,68 +19,96 @@ public class PowerUpDestroyManager : MonoBehaviour
         Instance = this;
     }
 
-    public IEnumerator Destroy(IPowerUp powerUpChuzzle)
+    public void Destroy(Chuzzle powerUpChuzzle)
     {
-        if (IsInDestroyState)
+        if (!IsInDestroyState)
         {
-            IPowerUp previousChuzzle = _powerUpDestroySequince.LastOrDefault();
-            _powerUpDestroySequince.Add(powerUpChuzzle);
+             IsInDestroyState = true;
+            _firstChuzzle = powerUpChuzzle;
+            var destroyedPowerUps = new List<Chuzzle>() { };
+            var tilesToDestroy = new List<Chuzzle> {powerUpChuzzle as Chuzzle};
+            int previousCount = 0;
+            while (tilesToDestroy.Count != previousCount)
+            {
+                previousCount = tilesToDestroy.Count;
 
-            if (previousChuzzle == null)
-            {
-                yield return StartCoroutine(DestroyCollection(powerUpChuzzle.ToDestroy));
-            }
-            else
-            {
-                if (previousChuzzle is HorizontalLineChuzzle)
+                for (int index = 0; index < previousCount; index++)
                 {
-                    if (powerUpChuzzle is HorizontalLineChuzzle)
+                    var chuzzle = tilesToDestroy[index];
+                    if (GamefieldUtility.IsPowerUp(chuzzle) && !destroyedPowerUps.Contains(chuzzle))
                     {
-                        int column = (powerUpChuzzle as HorizontalLineChuzzle).Current.x;
-                        yield return StartCoroutine(DestroyCollection(GetColumn(column)));
-                    }
-                    else
-                    {
-                        yield return StartCoroutine(DestroyCollection(powerUpChuzzle.ToDestroy));
-                    }
-                }
-                else
-                {
-                    if (previousChuzzle is VerticalLineChuzzle)
-                    {
-                        if (powerUpChuzzle is VerticalLineChuzzle)
+                        destroyedPowerUps.Add(chuzzle);
+                        if (chuzzle is BombChuzzle)
                         {
-                            int row = (powerUpChuzzle as VerticalLineChuzzle).Current.y;
-                            yield return StartCoroutine(DestroyCollection(GetRow(row)));
+                            tilesToDestroy.AddUniqRange(GetSquare(chuzzle.Current.x, chuzzle.Current.y));
                         }
                         else
                         {
-                            yield return StartCoroutine(DestroyCollection(powerUpChuzzle.ToDestroy));
+                            var rowNumber = chuzzle.Current.y;
+                            var row = GetRow(rowNumber).ToArray();
+
+                            var columnNumber = chuzzle.Current.x;
+                            var column = GetColumn(columnNumber).ToArray();
+
+                            if (chuzzle is HorizontalLineChuzzle)
+                            {
+                                //all tiles in row destroyed - destroy column otherwise row
+                                tilesToDestroy.AddUniqRange(row.All(tilesToDestroy.Contains) ? column : row);
+                            }
+                            else
+                            {
+                                if (chuzzle is VerticalLineChuzzle)
+                                {
+                                    //all tiles in column destroyed - destroy row otherwise - column
+                                    tilesToDestroy.AddUniqRange(column.All(tilesToDestroy.Contains) ? row : column);
+                                }
+                            }
                         }
-                    }
-                    else
-                    {
-                        yield return StartCoroutine(DestroyCollection(powerUpChuzzle.ToDestroy));
+
+                       
                     }
                 }
             }
+
+            //TODO sort collection for correct removing
+            //var destructionOrder = tilesToDestroy.Select(chuzzle => new KeyValuePair<Chuzzle, Chuzzle>(_firstChuzzle, chuzzle)).ToList();
+            //destructionOrder.Sort(ChuzzleValueComparison);
+
+            var destructionOrder = new List<List<Chuzzle>>() { new List<Chuzzle>() {_firstChuzzle}};
+
+            for (int i = 1; i < 20; i++)
+            {
+                var currentDistance = tilesToDestroy.Where(chuzzle => Math.Abs((chuzzle.Current.Position - _firstChuzzle.Current.Position).magnitude - i) < float.Epsilon).ToList();
+                destructionOrder.Add(currentDistance);
+            }
+            StartCoroutine(DestroyCollection(destructionOrder));
         }
-        else
-        {
-            IsInDestroyState = true;
-            _powerUpDestroySequince.Clear();
-            StartCoroutine(Destroy(powerUpChuzzle));
-        }
-        yield return new WaitForEndOfFrame();
+     
     }
 
-    private static IEnumerator DestroyCollection(IEnumerable<Chuzzle> chuzzleToDestroy)
+    private int ChuzzleValueComparison(KeyValuePair<Chuzzle, Chuzzle> x, KeyValuePair<Chuzzle, Chuzzle> y)
     {
-        foreach (Chuzzle chuzzle in chuzzleToDestroy.ToArray())
-        {   
-            chuzzle.Destroy(true);
+        var difference = (x.Key.Current.Position - x.Value.Current.Position).magnitude -
+                         (y.Key.Current.Position - y.Value.Current.Position).magnitude;
+        if (difference == 0)
+        {
+            return 0;
+        }
+
+        return difference > 0 ? 1 : -1;
+    }
+
+    private IEnumerator DestroyCollection(List<List<Chuzzle>> chuzzleToDestroy)
+    {
+        foreach (var listChuzzle in chuzzleToDestroy.ToArray())
+        {
+            foreach (var chuzzle in listChuzzle)
+            {
+                chuzzle.Destroy(true);
+            }
             yield return new WaitForSeconds(0.1f);
         }
+        IsInDestroyState = false;
         yield return new WaitForEndOfFrame();
     }
 

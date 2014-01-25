@@ -63,7 +63,7 @@ public class GuiBuyLivesPopup : Window
     {
         Debug.Log("onclose");
 
-        return false;
+        return true;
     }
 
     public void OnCloseAnimationComplete()

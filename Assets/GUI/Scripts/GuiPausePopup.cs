@@ -25,9 +25,7 @@ public class GuiPausePopup : Window
 
     protected override bool OnClose()
     {
-        Debug.Log("onclose");
-
-        return false;
+        return true;
     }
 
     public void OnCloseAnimationComplete()

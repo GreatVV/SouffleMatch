@@ -1,17 +1,12 @@
-﻿using UnityEngine;
-using System.Collections;
-
-public class GuiSendLivesPopup : Window {
-
+﻿public class GuiSendLivesPopup : Window
+{
     private void OnEnable()
-    {   
+    {
     }
 
     protected override bool OnClose()
     {
-        Debug.Log("onclose");
-
-        return false;
+        return true;
     }
 
     public void OnCloseAnimationComplete()
@@ -28,6 +23,7 @@ public class GuiSendLivesPopup : Window {
     {
         Close();
     }
+
     private void OnCheckAllFriends()
     {
         Close();

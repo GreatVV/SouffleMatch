@@ -16,7 +16,7 @@ public class VerticalLineChuzzle : Chuzzle, IPowerUp
         }
 
         base.Destroy(needCreateNew, withAnimation, isReplacingOnDeath);
-        StartCoroutine(PowerUpDestroyManager.Instance.Destroy(this));
+        PowerUpDestroyManager.Instance.Destroy(this);
     }
 
     public IEnumerable<Chuzzle> ToDestroy
