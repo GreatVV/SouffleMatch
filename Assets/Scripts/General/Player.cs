@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Runtime.InteropServices;
-using UnityEditor;
+//using UnityEditor;
 using UnityEngine;
 
 public class Player : MonoBehaviour
@@ -63,7 +63,7 @@ public class Player : MonoBehaviour
         Lifes = LifeSystem.Unserialize(jsonObject.GetField("Lifes"));
     }
 
-    [MenuItem("Utils/Unlock All Levels")]
+   // [MenuItem("Utils/Unlock All Levels")]
     public static void UnlockAllLevels()
     {
         var levels = new List<LevelInfo>();

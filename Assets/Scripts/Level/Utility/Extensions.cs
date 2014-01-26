@@ -1,17 +1,12 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public static class Extensions
 {
     public static void AddUniqRange(this List<Chuzzle> list, IEnumerable<Chuzzle> range)
     {
-        foreach (var item in range)
-        {
-            if (!list.Contains(item))
-            {
-                list.Add(item);
-            }
-        }
+        list.AddRange(range.Where(x=>!list.Contains(x)));
     }
 
     public static Transform Search(this Transform target, string name, GameObject original = null)
@@ -26,5 +21,10 @@ public static class Extensions
         }
 
         return null;
+    }
+
+    public static bool IsPowerUp(this Chuzzle chuzzle)
+    {
+        return GamefieldUtility.IsPowerUp(chuzzle);
     }
 }

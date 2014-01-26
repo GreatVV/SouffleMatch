@@ -47,18 +47,27 @@ public class CenterCameraOnField : MonoBehaviour
         Camera.aspect = fieldRatio;
         Camera.orthographicSize = fh / 2;
 
-        float height;
+        if (baseAspect < 1)
+        {
+            float height = baseAspect*normalizedSize.x/fieldRatio;
 
-
-        height = baseAspect * normalizedSize.x / fieldRatio;
-        
-
-        Camera.rect = new Rect(
-                       (1 - normalizedSize.x) / 2f,
-                       (1 - height) / 2f,
-                       normalizedSize.x,
-                       height
-                       );
+            Camera.rect = new Rect(
+                (1 - normalizedSize.x)/2f,
+                (1 - height)/2f,
+                normalizedSize.x,
+                height
+                );
+        }
+        else
+        {
+            float width = normalizedSize.y * fieldRatio / baseAspect;
+            Camera.rect = new Rect(
+               (1 - width) / 2f,
+               (1 - normalizedSize.y) / 2f,
+               width,
+               normalizedSize.y
+               );
+        }
 
         centerPosition = new Vector3(minX + Camera.aspect * Camera.orthographicSize - 0.5f,
                 maxY - Camera.orthographicSize + 0.5f, DefaultPosition.z);

@@ -7,6 +7,13 @@ public class Points : MonoBehaviour
 {
     public int CurrentPoints;              
     public event Action<int> PointChanged;
+    public event Action<IEnumerable<Chuzzle>, int> PointsForDestroy;
+
+    protected virtual void InvokePointsForDestroy(IEnumerable<Chuzzle> comb, int pointsForComb)
+    {
+        Action<IEnumerable<Chuzzle>, int> handler = PointsForDestroy;
+        if (handler != null) handler(comb, pointsForComb);
+    }
 
     public void Reset()
     {
@@ -31,7 +38,8 @@ public class Points : MonoBehaviour
 
     public void CountForCombinations(IEnumerable<Chuzzle> combination)
     {
-        var newPoints = combination.Count()*10;
+        var newPoints = combination.Count()*25;
         AddPoints(newPoints);
+        InvokePointsForDestroy(combination, newPoints);
     }
 }

@@ -70,10 +70,7 @@ public class RemoveCombinationState : GamefieldState
         if (powerUpCombination.Any())
         {
             //destroy step by step
-            foreach (var chuzzle in powerUpCombination)
-            {
-                chuzzle.Destroy(true);
-            }
+            PowerUpDestroyManager.Instance.Destroy(powerUpCombination);
 
             if (!AnimatedChuzzles.Any())
             {
@@ -89,10 +86,6 @@ public class RemoveCombinationState : GamefieldState
             {
                 Gamefield.InvokeCombinationDestroyed(combination);
 
-                //count points
-                Gamefield.PointSystem.CountForCombinations(combination);
-
-
                 foreach (var chuzzle in combination)
                 {
                     chuzzle.Destroy(true);
@@ -102,7 +95,7 @@ public class RemoveCombinationState : GamefieldState
                 {
                     Gamefield.SwitchStateTo(Gamefield.CreateNewChuzzlesState);
                 }
-                yield return new WaitForSeconds(0.1f);
+                yield return new WaitForSeconds(0.05f);
             }
         }
 

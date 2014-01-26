@@ -3,6 +3,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Security.Cryptography.X509Certificates;
 using UnityEngine;
 using Object = UnityEngine.Object;
@@ -274,10 +275,10 @@ public class GamefieldUtility
             posibleCombination.AddRange(leftPart);
             posibleCombination.AddRange(middlePart);
             posibleCombination.AddRange(rightPart);
-
-            Debug.Log("Combination 2");
+            
             isHorizontalMove = new IntVector2(left.Current.x + 1, left.Current.y);
             chuzzleToMove = middlePart.First();
+            Debug.Log("Combination 2: " + chuzzleToMove);
             return posibleCombination;
         }
 
@@ -471,10 +472,10 @@ public class GamefieldUtility
                 ch =>
                     ch.Current.x == firstChuzzle.Current.x && ch.Current.y == firstChuzzle.Current.y + 2 && IsSameColor(ch, firstChuzzle));
 
-        if (secondChuzzle == null)
+        if (secondChuzzle == null || allChuzzles.Any(x => x.Current.y == firstChuzzle.Current.y + 1 && IsLock(x)))
             return false;
 
-        return allChuzzles.Any(x => x.Current.y == firstChuzzle.Current.y + 1 && IsSameColor(x, firstChuzzle));
+        return allChuzzles.Any(x => x.Current.y == firstChuzzle.Current.y + 1 && IsSameColor(x, firstChuzzle) );
     }
 
     public static bool BetweenXCheck(Chuzzle chuzzle, List<Chuzzle> allChuzzles)
@@ -486,10 +487,10 @@ public class GamefieldUtility
                     ch.Current.y == firstChuzzle.Current.y && ch.Current.x == firstChuzzle.Current.x + 2 &&
                     IsSameColor(ch, firstChuzzle));
 
-        if (secondChuzzle == null)
+        if (secondChuzzle == null || allChuzzles.Any(x => x.Current.x == firstChuzzle.Current.x + 1 && IsLock(x)))
             return false;
 
-        return allChuzzles.Any(x => x.Current.x == firstChuzzle.Current.x + 1 && IsSameColor(x, firstChuzzle));
+        return allChuzzles.Any(x => x.Current.x == firstChuzzle.Current.x + 1 && IsSameColor(x, firstChuzzle) && !IsLock(x));
     }
 
     // вертикальная и горизонтальная проверка для второго случая

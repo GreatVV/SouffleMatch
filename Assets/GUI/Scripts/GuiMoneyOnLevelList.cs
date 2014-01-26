@@ -13,7 +13,10 @@ public class GuiMoneyOnLevelList : MonoBehaviour
 
     private void OnDestroy()
     {
-        Economy.Instance.MoneyChanged -= OnMoneyChanged;
+        if (Economy.Instance)
+        {
+            Economy.Instance.MoneyChanged -= OnMoneyChanged;
+        }
     }
 
     private void OnMoneyChanged(int money)

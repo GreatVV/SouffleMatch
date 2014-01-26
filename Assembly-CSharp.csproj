@@ -225,6 +225,10 @@
      <Compile Include="Assets\Scripts\Level\Gameplay\TeleportableEntity.cs" />
      <Compile Include="Assets\Scripts\Level\Gameplay\TilesFactory.cs" />
      <Compile Include="Assets\Scripts\Level\UI\AutoBackgroundChanger.cs" />
+     <Compile Include="Assets\Scripts\Level\UI\FlyingLabelPool.cs" />
+     <Compile Include="Assets\Scripts\Level\UI\FlyingPoints.cs" />
+     <Compile Include="Assets\Scripts\Level\UI\Hide.cs" />
+     <Compile Include="Assets\Scripts\Level\UI\TweenOffset.cs" />
      <Compile Include="Assets\Scripts\Level\UI\UI.cs" />
      <Compile Include="Assets\Scripts\Level\Utility\CenterCameraOnField.cs" />
      <Compile Include="Assets\Scripts\Level\Utility\Extensions.cs" />

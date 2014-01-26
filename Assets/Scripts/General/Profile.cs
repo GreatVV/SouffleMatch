@@ -1,5 +1,5 @@
 ﻿using System.Runtime.InteropServices;
-using UnityEditor;
+//using UnityEditor;
 using UnityEngine;
 
 public class Profile : MonoBehaviour
@@ -89,7 +89,7 @@ public class Profile : MonoBehaviour
         Save();
     }
 
-    [MenuItem("Utils/Reset")]
+//    [MenuItem("Utils/Reset")]
     public static void Reset()
     {
         PlayerPrefs.DeleteAll();

@@ -395,12 +395,12 @@ public class FieldState : GamefieldState
 
             var ray = Camera.main.ScreenPointToRay(_dragOrigin);
 
-            Debug.Log("Ray: " + ray);
+        //    Debug.Log("Ray: " + ray);
             Debug.DrawRay(ray.origin, ray.direction*Single.MaxValue);
             var hit = Physics2D.Raycast(ray.origin, ray.direction, Single.MaxValue, Gamefield.ChuzzleMask);
             if (hit.transform != null)
             {
-                Debug.Log("hit: " + hit.transform.gameObject);
+              //  Debug.Log("hit: " + hit.transform.gameObject);
                 var wasNull = CurrentChuzzle == null;
                 CurrentChuzzle = hit.transform.gameObject.transform.parent.GetComponent<Chuzzle>();
                 if (wasNull)

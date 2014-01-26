@@ -67,12 +67,14 @@ public class Gamefield : MonoBehaviour
 
     private void OnGameOver()
     {
+        CombinationDestroyed -= PointSystem.CountForCombinations;
         SwitchStateTo(GameOverState);
         Player.Instance.Lifes.SpentLife();
     }
 
     private void OnWin()
-    {   
+    {
+        CombinationDestroyed -= PointSystem.CountForCombinations;
         SwitchStateTo(WinState);
     }
 
@@ -159,6 +161,7 @@ public class Gamefield : MonoBehaviour
     public void StartGame(SerializedLevel level = null)
     {
         Player.Instance.LastPlayedLevel = level;
+        CombinationDestroyed += PointSystem.CountForCombinations;
         _currentState = InitState;
         _currentState.OnEnter();
     }
