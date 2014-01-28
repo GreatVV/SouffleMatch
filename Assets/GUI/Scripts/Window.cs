@@ -1,8 +1,16 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using System.Linq;
+using UnityEngine;
 
-public class Window : MonoBehaviour
+public class Window : UIPanel
 {
     public Window ShowAfter;
+
+    public int Depth
+    {
+        get { return depth; }
+        set { depth = value; }
+    }
 
     public void Show(Window showAfterAction = null)
     {
@@ -57,5 +65,46 @@ public class Window : MonoBehaviour
     protected virtual void OnUpdate()
     {
         
+    }
+
+    public void StopRecieveTouches()
+    {
+        var colliders = GetComponentsInChildren<Collider>();
+        foreach (var collider in colliders)
+        {
+            collider.enabled = false;
+        }
+    }
+
+    public void StartReceiveTouches()
+    {
+        
+    }
+}
+
+public class PanelManager : MonoBehaviour
+{
+    public List<Window> windows  = new List<Window>();
+
+    public void Show(Window newWindow)
+    {
+        foreach (var window in windows)
+        {
+            window.StopRecieveTouches();
+        }
+        windows.Add(newWindow);
+        newWindow.Depth = windows.Count;
+    }
+
+    public void Close()
+    {
+        var toClose = windows.Last();
+        windows.Remove(toClose);
+        windows.Last().StartReceiveTouches();
+    }
+
+    public void OnBackButton()
+    {
+        Close();
     }
 }
