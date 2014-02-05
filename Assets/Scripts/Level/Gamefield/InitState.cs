@@ -21,6 +21,7 @@ public class InitState : GamefieldState
 
         Gamefield.AddEventHandlers();
         Gamefield.InvokeGameStarted();
+        Gamefield.SwitchStateTo(Gamefield.CheckSpecialState);
         
     }
 

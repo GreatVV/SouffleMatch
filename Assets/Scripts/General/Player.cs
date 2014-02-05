@@ -2,13 +2,11 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
-using System.Runtime.InteropServices;
-//using UnityEditor;
 using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-    public static Player Instance;
+    public static Player Instance { get; private set; }
     public List<LevelInfo> Levels;
     public LifeSystem Lifes;
 
@@ -18,6 +16,11 @@ public class Player : MonoBehaviour
 
     private void Awake()
     {
+        if (Instance != null)
+        {
+            Destroy(this);
+            return;
+        }
         Instance = this;
     }
 
@@ -60,6 +63,7 @@ public class Player : MonoBehaviour
         {
             Levels.Add(LevelInfo.Unserialize(o));
         }
+        Levels.Sort(LevelInfo.Comparer);
         Lifes = LifeSystem.Unserialize(jsonObject.GetField("Lifes"));
     }
 
@@ -83,5 +87,10 @@ public class Player : MonoBehaviour
         Profile.SavePlayer(Profile.GetPrefix(Profile.defaultProfileName), json);
         PlayerPrefs.Save();
         Debug.Log("Unlocked: "+json);
+    }
+
+    public LevelInfo Info(int index)
+    {
+        return GetLevelInfo(index.ToString(CultureInfo.InvariantCulture));
     }
 }

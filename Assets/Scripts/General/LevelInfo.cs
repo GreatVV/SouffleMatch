@@ -31,4 +31,9 @@ public class LevelInfo
             IsCompleted = jsonObject.GetField("IsCompleted").b,
         };
     }
+
+    public static int Comparer(LevelInfo x, LevelInfo y)
+    {
+        return String.CompareOrdinal(x.Name, y.Name);
+    }
 }

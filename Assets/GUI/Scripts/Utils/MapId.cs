@@ -13,12 +13,12 @@ public class MapId : MonoBehaviour
     
     public void Start()
     {
-        GuiLevelList.LevelsLoaded += OnLevelsLoaded;
+        MainMenu.LevelsLoaded += OnLevelsLoaded;
     }
 
     public void OnDestroy()
     {
-        GuiLevelList.LevelsLoaded -= OnLevelsLoaded;
+        MainMenu.LevelsLoaded -= OnLevelsLoaded;
     }
 
     private void OnLevelsLoaded(bool obj)
@@ -29,10 +29,10 @@ public class MapId : MonoBehaviour
     public void OnEnable()
     {
         SetStars(0);
-        if (UI.Instance && UI.Instance.GuiLevelList.IsLevelsLoaded)
+        /*if (UI.Instance && UI.Instance.GuiLevelList.IsLevelsLoaded)
         {
             RefreshNumberOfStars();
-        }
+        }*/
     }
 
     public void Update()
@@ -49,12 +49,14 @@ public class MapId : MonoBehaviour
 
     public void RefreshNumberOfStars()
     {
-        if (Index >= UI.Instance.GuiLevelList.LoadedLevels.Count)
-            return;
+        //if (Index >= UI.Instance.GuiLevelList.LoadedLevels.Count)
+         //   return;
 
-        var level = UI.Instance.GuiLevelList.LoadedLevels[Index];
-        Debug.Log("PL: "+Player.Instance);
-        Debug.Log("Level name: "+level.Name);
+        var level = new SerializedLevel();
+
+        //    UI.Instance.GuiLevelList.LoadedLevels[Index];
+        //Debug.Log("PL: "+Player.Instance);
+        //Debug.Log("Level name: "+level.Name);
         var levelInfo = Player.Instance.GetLevelInfo(level.Name);
         if (levelInfo != null && levelInfo.IsCompleted)
         {
@@ -92,6 +94,14 @@ public class MapId : MonoBehaviour
                 ThirdStar.SetActive(true);
                 break;
             }
+        }
+    }
+
+    public void OnClick()
+    {
+        if (!PanelManager.IsCurrent(Windows.instance.startLevelPopup))
+        {
+            PanelManager.Show(Windows.StartLevelPopup(Index));
         }
     }
 }

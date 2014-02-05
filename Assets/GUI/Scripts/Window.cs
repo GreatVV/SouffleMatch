@@ -1,110 +1,50 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using UnityEngine;
+﻿using UnityEngine;
 
-public class Window : UIPanel
+[RequireComponent(typeof(Animator))]
+[RequireComponent(typeof(UIPanel))]
+public abstract class Window : MonoBehaviour
 {
-    public Window ShowAfter;
+    private Collider[] _colliders;
 
+    private UIPanel _panel;
+
+    public Animator Animator;
     public int Depth
     {
-        get { return depth; }
-        set { depth = value; }
-    }
-
-    public void Show(Window showAfterAction = null)
-    {
-        ShowAfter = showAfterAction;
-        gameObject.SetActive(true);
-        OnShow();
-    }
-
-    protected virtual void OnShow()
-    {
-    }
-
-    public void Close()
-    {
-        var needDisable = OnClose();
-        if (needDisable)
+        get { return _panel.depth; }
+        set
         {
-            Disable();
+            _panel.depth = value;
+            Debug.Log("Set depth: "+value);
         }
     }
 
-    protected void Disable()
+    protected virtual void Awake()
     {
-        gameObject.SetActive(false);
-        if (ShowAfter != null)
-        {
-            ShowAfter.Show();
-            ShowAfter = null;
-        }
+        _colliders = GetComponentsInChildren<Collider>();
+        _panel = GetComponent<UIPanel>();
+        Animator = GetComponent<Animator>();
+        OnAwake();
     }
 
-    protected virtual bool OnClose()
-    {
-        return true;
-    }
-
-    public void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            OnCloseButton();
-        }
-        OnUpdate();
-    }
-
-    public virtual void OnCloseButton()
-    {
-        
-    }
-    
-
-    protected virtual void OnUpdate()
+    protected virtual void OnAwake()
     {
         
     }
 
-    public void StopRecieveTouches()
+    public void Activate()
     {
-        var colliders = GetComponentsInChildren<Collider>();
-        foreach (var collider in colliders)
+        foreach (var currentCollider in _colliders)
         {
-            collider.enabled = false;
+            currentCollider.enabled = true;
         }
     }
 
-    public void StartReceiveTouches()
+    public void Deactivate()
     {
-        
-    }
-}
-
-public class PanelManager : MonoBehaviour
-{
-    public List<Window> windows  = new List<Window>();
-
-    public void Show(Window newWindow)
-    {
-        foreach (var window in windows)
+        foreach (var currentCollider in _colliders)
         {
-            window.StopRecieveTouches();
+            currentCollider.enabled = false;
         }
-        windows.Add(newWindow);
-        newWindow.Depth = windows.Count;
-    }
-
-    public void Close()
-    {
-        var toClose = windows.Last();
-        windows.Remove(toClose);
-        windows.Last().StartReceiveTouches();
-    }
-
-    public void OnBackButton()
-    {
-        Close();
     }
 }

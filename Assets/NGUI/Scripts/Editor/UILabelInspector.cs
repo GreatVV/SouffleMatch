@@ -1,6 +1,6 @@
 //----------------------------------------------
 //            NGUI: Next-Gen UI kit
-// Copyright © 2011-2013 Tasharen Entertainment
+// Copyright © 2011-2014 Tasharen Entertainment
 //----------------------------------------------
 
 #if !UNITY_3_5 && !UNITY_FLASH
@@ -15,7 +15,11 @@ using UnityEditor;
 /// </summary>
 
 [CanEditMultipleObjects]
+#if UNITY_3_5
 [CustomEditor(typeof(UILabel))]
+#else
+[CustomEditor(typeof(UILabel), true)]
+#endif
 public class UILabelInspector : UIWidgetInspector
 {
 	public enum FontType
@@ -25,13 +29,13 @@ public class UILabelInspector : UIWidgetInspector
 	}
 
 	UILabel mLabel;
-	FontType mType;
+	FontType mFontType;
 
 	protected override void OnEnable ()
 	{
 		base.OnEnable();
 		SerializedProperty bit = serializedObject.FindProperty("mFont");
-		mType = (bit != null && bit.objectReferenceValue != null) ? FontType.Bitmap : FontType.Dynamic;
+		mFontType = (bit != null && bit.objectReferenceValue != null) ? FontType.Bitmap : FontType.Dynamic;
 	}
 
 	void OnBitmapFont (Object obj)
@@ -56,7 +60,7 @@ public class UILabelInspector : UIWidgetInspector
 	/// Draw the label's properties.
 	/// </summary>
 
-	protected override bool DrawProperties ()
+	protected override bool ShouldDrawProperties ()
 	{
 		mLabel = mWidget as UILabel;
 
@@ -64,26 +68,26 @@ public class UILabelInspector : UIWidgetInspector
 		
 		if (NGUIEditorTools.DrawPrefixButton("Font"))
 		{
-			if (mType == FontType.Bitmap)
+			if (mFontType == FontType.Bitmap)
 			{
 				ComponentSelector.Show<UIFont>(OnBitmapFont);
 			}
 			else
 			{
-				ComponentSelector.Show<Font>(OnDynamicFont);
+				ComponentSelector.Show<Font>(OnDynamicFont, new string[] { ".ttf", ".otf" });
 			}
 		}
 
 #if DYNAMIC_FONT
-		mType = (FontType)EditorGUILayout.EnumPopup(mType, GUILayout.Width(62f));
+		mFontType = (FontType)EditorGUILayout.EnumPopup(mFontType, GUILayout.Width(62f));
 #else
-		mType = FontType.Bitmap;
+		mFontType = FontType.Bitmap;
 #endif
 		bool isValid = false;
 		SerializedProperty fnt = null;
 		SerializedProperty ttf = null;
 
-		if (mType == FontType.Bitmap)
+		if (mFontType == FontType.Bitmap)
 		{
 			fnt = NGUIEditorTools.DrawProperty("", serializedObject, "mFont", GUILayout.MinWidth(40f));
 			
@@ -149,7 +153,7 @@ public class UILabelInspector : UIWidgetInspector
 			SerializedProperty ov = NGUIEditorTools.DrawProperty("Overflow", serializedObject, "mOverflow");
 			NGUISettings.overflowStyle = (UILabel.Overflow)ov.intValue;
 
-			if (ov.intValue == (int)UILabel.Overflow.ShrinkContent && ttf != null && ttf.objectReferenceValue != null)
+			if (ttf != null && ttf.objectReferenceValue != null)
 				NGUIEditorTools.DrawProperty("Keep crisp", serializedObject, "keepCrispWhenShrunk");
 
 			GUILayout.BeginHorizontal();

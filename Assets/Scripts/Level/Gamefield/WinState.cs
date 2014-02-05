@@ -32,7 +32,7 @@ public class WinState : GamefieldState
             levelInfo.IsCompleted = true;
             levelInfo.NumberOfAttempts++;
 
-            UI.Instance.GuiGameplay.OnWin();
+            //UI.Instance.GuiGameplay.OnWin();
         }
     }
 
@@ -55,8 +55,8 @@ public class WinState : GamefieldState
 
     public void CreateBonusPowerUps()
     {
-        UI.Instance.BomBomPopup.BomBomHided += OnBomBomHided;
-        UI.Instance.ShowBomBomTime();
+        //UI.Instance.BomBomPopup.BomBomHided += OnBomBomHided;
+       // UI.Instance.ShowBomBomTime();
     }
 
     public void OnBomBomHided()

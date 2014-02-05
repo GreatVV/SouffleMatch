@@ -19,7 +19,7 @@
 	<DebugType>full</DebugType>
 	<Optimize>false</Optimize>
 	<OutputPath>Temp\bin\Debug\</OutputPath>
-	<DefineConstants>DEBUG;TRACE;UNITY_STANDALONE_WIN;ENABLE_MICROPHONE;ENABLE_TEXTUREID_MAP;ENABLE_AUDIO_FMOD;UNITY_STANDALONE;ENABLE_MONO;ENABLE_SPRITES;ENABLE_TERRAIN;ENABLE_GENERICS;ENABLE_SUBSTANCE;INCLUDE_WP8SUPPORT;ENABLE_MOVIES;ENABLE_WWW;ENABLE_IMAGEEFFECTS;ENABLE_WEBCAM;INCLUDE_METROSUPPORT;RENDER_SOFTWARE_CURSOR;ENABLE_NETWORK;ENABLE_PHYSICS;ENABLE_CACHING;ENABLE_CLOTH;ENABLE_2D_PHYSICS;ENABLE_SHADOWS;ENABLE_AUDIO;ENABLE_NAVMESH_CARVING;ENABLE_DUCK_TYPING;ENABLE_SINGLE_INSTANCE_BUILD_SETTING;UNITY_4_3_3;UNITY_4_3;ENABLE_PROFILER;UNITY_EDITOR;UNITY_EDITOR_WIN</DefineConstants>
+	<DefineConstants>DEBUG;TRACE;UNITY_ANDROID;ENABLE_MICROPHONE;ENABLE_TEXTUREID_MAP;ENABLE_AUDIO_FMOD;ENABLE_MONO;ENABLE_SPRITES;ENABLE_TERRAIN;ENABLE_GENERICS;ENABLE_SUBSTANCE;INCLUDE_WP8SUPPORT;ENABLE_WWW;ENABLE_IMAGEEFFECTS;ENABLE_WEBCAM;INCLUDE_METROSUPPORT;RENDER_SOFTWARE_CURSOR;ENABLE_NETWORK;ENABLE_PHYSICS;ENABLE_CACHING;ENABLE_CLOTH;UNITY_ANDROID_API;ENABLE_2D_PHYSICS;ENABLE_SHADOWS;ENABLE_AUDIO;ENABLE_NAVMESH_CARVING;ENABLE_SINGLE_INSTANCE_BUILD_SETTING;UNITY_4_3_3;UNITY_4_3;ENABLE_PROFILER;UNITY_EDITOR;UNITY_EDITOR_WIN</DefineConstants>
 	<ErrorReport>prompt</ErrorReport>
 	<WarningLevel>4</WarningLevel>
 	<NoWarn>0169</NoWarn>
@@ -58,19 +58,11 @@
      <Compile Include="Assets\Facebook\Scripts\IOSFacebook.cs" />
      <Compile Include="Assets\Facebook\Scripts\IOSFacebookLoader.cs" />
      <Compile Include="Assets\Facebook\Scripts\NativeDialogModes.cs" />
-     <Compile Include="Assets\GUI\Scripts\GuiBomBomTimePopup.cs" />
-     <Compile Include="Assets\GUI\Scripts\GuiBuyLivesPopup.cs" />
-     <Compile Include="Assets\GUI\Scripts\GuiGameOverPopup.cs" />
-     <Compile Include="Assets\GUI\Scripts\GuiGameplay.cs" />
-     <Compile Include="Assets\GUI\Scripts\GuiInAppPopup.cs" />
-     <Compile Include="Assets\GUI\Scripts\GuiLevelList.cs" />
-     <Compile Include="Assets\GUI\Scripts\GuiLifes.cs" />
-     <Compile Include="Assets\GUI\Scripts\GuiMoneyOnLevelList.cs" />
-     <Compile Include="Assets\GUI\Scripts\GuiPausePopup.cs" />
-     <Compile Include="Assets\GUI\Scripts\GuiSendLivesPopup.cs" />
-     <Compile Include="Assets\GUI\Scripts\GuiStartLevelPopup.cs" />
-     <Compile Include="Assets\GUI\Scripts\GuiTaskPopup.cs" />
-     <Compile Include="Assets\GUI\Scripts\GuiWinPanel.cs" />
+     <Compile Include="Assets\GUI\Scripts\PanelManager.cs" />
+     <Compile Include="Assets\GUI\Scripts\Screens\Gameplay.cs" />
+     <Compile Include="Assets\GUI\Scripts\Screens\MainMenu.cs" />
+     <Compile Include="Assets\GUI\Scripts\Screens\StartLevelPopup.cs" />
+     <Compile Include="Assets\GUI\Scripts\Screens\Windows.cs" />
      <Compile Include="Assets\GUI\Scripts\Utils\GameModeToString.cs" />
      <Compile Include="Assets\GUI\Scripts\Utils\MapId.cs" />
      <Compile Include="Assets\GUI\Scripts\Utils\PopupStar.cs" />
@@ -100,8 +92,10 @@
      <Compile Include="Assets\NGUI\Scripts\Interaction\UIDragDropItem.cs" />
      <Compile Include="Assets\NGUI\Scripts\Interaction\UIDragDropRoot.cs" />
      <Compile Include="Assets\NGUI\Scripts\Interaction\UIDragObject.cs" />
+     <Compile Include="Assets\NGUI\Scripts\Interaction\UIDragResize.cs" />
      <Compile Include="Assets\NGUI\Scripts\Interaction\UIDragScrollView.cs" />
      <Compile Include="Assets\NGUI\Scripts\Interaction\UIDraggableCamera.cs" />
+     <Compile Include="Assets\NGUI\Scripts\Interaction\UIEventTrigger.cs" />
      <Compile Include="Assets\NGUI\Scripts\Interaction\UIForwardEvents.cs" />
      <Compile Include="Assets\NGUI\Scripts\Interaction\UIGrid.cs" />
      <Compile Include="Assets\NGUI\Scripts\Interaction\UIImageButton.cs" />
@@ -139,6 +133,7 @@
      <Compile Include="Assets\NGUI\Scripts\Internal\UIDrawCall.cs" />
      <Compile Include="Assets\NGUI\Scripts\Internal\UIEventListener.cs" />
      <Compile Include="Assets\NGUI\Scripts\Internal\UIGeometry.cs" />
+     <Compile Include="Assets\NGUI\Scripts\Internal\UIRect.cs" />
      <Compile Include="Assets\NGUI\Scripts\Internal\UIWidget.cs" />
      <Compile Include="Assets\NGUI\Scripts\Tweening\AnimatedAlpha.cs" />
      <Compile Include="Assets\NGUI\Scripts\Tweening\AnimatedColor.cs" />
@@ -156,6 +151,7 @@
      <Compile Include="Assets\NGUI\Scripts\Tweening\TweenWidth.cs" />
      <Compile Include="Assets\NGUI\Scripts\Tweening\UITweener.cs" />
      <Compile Include="Assets\NGUI\Scripts\UI\UI2DSprite.cs" />
+     <Compile Include="Assets\NGUI\Scripts\UI\UI2DSpriteAnimation.cs" />
      <Compile Include="Assets\NGUI\Scripts\UI\UIAnchor.cs" />
      <Compile Include="Assets\NGUI\Scripts\UI\UIAtlas.cs" />
      <Compile Include="Assets\NGUI\Scripts\UI\UICamera.cs" />
@@ -229,7 +225,6 @@
      <Compile Include="Assets\Scripts\Level\UI\FlyingPoints.cs" />
      <Compile Include="Assets\Scripts\Level\UI\Hide.cs" />
      <Compile Include="Assets\Scripts\Level\UI\TweenOffset.cs" />
-     <Compile Include="Assets\Scripts\Level\UI\UI.cs" />
      <Compile Include="Assets\Scripts\Level\Utility\CenterCameraOnField.cs" />
      <Compile Include="Assets\Scripts\Level\Utility\Extensions.cs" />
      <Compile Include="Assets\Scripts\Level\Utility\GamefieldUtility.cs" />
@@ -243,12 +238,14 @@
      <Compile Include="Assets\iTweenEditor\iTweenPath.cs" />
      <None Include="Assets\NGUI\Resources\Shaders\Unlit - Depth Cutout.shader" />
      <None Include="Assets\Plugins\Android\facebook\res\values\attrs.xml" />
+     <None Include="Assets\NGUI\ReadMe - 3.0.9 f7.txt" />
      <None Include="Assets\Plugins\Android\facebook\res\layout\com_facebook_picker_activity_circle_row.xml" />
      <None Include="Assets\JMO Assets\Cartoon FX\Shaders\CFX3 Multiply Color.shader" />
      <None Include="Assets\Plugins\Android\facebook\res\values-iw\strings.xml" />
      <None Include="Assets\Plugins\Android\facebook\res\drawable\com_facebook_picker_top_button.xml" />
      <None Include="Assets\Plugins\Android\facebook\res\layout\com_facebook_picker_search_box.xml" />
      <None Include="Assets\JMO Assets\Cartoon FX\Shaders (Mobile)\CFXM_MobileParticleAdd_Alpha8.shader" />
+     <None Include="Assets\NGUI\Resources\Shaders\Unlit - Text (SoftClip).shader" />
      <None Include="Assets\Plugins\Android\facebook\res\values-ldpi\dimens.xml" />
      <None Include="Assets\Plugins\Android\facebook\res\values\colors.xml" />
      <None Include="Assets\Plugins\Android\facebook\res\layout\com_facebook_friendpickerfragment.xml" />
@@ -261,22 +258,20 @@
      <None Include="Assets\Plugins\Android\facebook\res\drawable\com_facebook_top_button.xml" />
      <None Include="Assets\NGUI\Resources\Shaders\Unlit - Transparent Colored (Packed) (AlphaClip) .shader" />
      <None Include="Assets\Plugins\Android\facebook\res\layout\com_facebook_usersettingsfragment.xml" />
-     <None Include="Assets\NGUI\Resources\Shaders\Unlit - Text (SoftClip).shader" />
      <None Include="Assets\NGUI\Resources\Shaders\Unlit - Premultiplied Colored (AlphaClip).shader" />
      <None Include="Assets\Plugins\Android\facebook\res\layout\com_facebook_picker_checkbox.xml" />
-     <None Include="Assets\NGUI\ReadMe - 3.0.6 f7.txt" />
      <None Include="Assets\Plugins\Android\facebook\bin\R.txt" />
      <None Include="Assets\Plugins\Android\facebook\res\layout\com_facebook_picker_title_bar_stub.xml" />
      <None Include="Assets\Plugins\Android\facebook\res\values\strings.xml" />
      <None Include="Assets\Plugins\Android\facebook\res\drawable\com_facebook_picker_item_background.xml" />
      <None Include="Assets\Plugins\Android\facebook\res\layout\com_facebook_picker_image.xml" />
      <None Include="Assets\NGUI\Resources\Shaders\Unlit - Transparent Colored (AlphaClip).shader" />
+     <None Include="Assets\NGUI\Resources\Shaders\Unlit - Text (AlphaClip).shader" />
      <None Include="Assets\Plugins\Android\facebook\res\drawable\com_facebook_top_background.xml" />
      <None Include="Assets\iTweenEditor\README.txt" />
      <None Include="Assets\Plugins\Android\facebook\res\values-hdpi\dimens.xml" />
      <None Include="Assets\Plugins\Android\facebook\build.xml" />
      <None Include="Assets\JMO Assets\Cartoon FX\Shaders\CFX3 Invert.shader" />
-     <None Include="Assets\NGUI\Resources\Shaders\Unlit - Text (AlphaClip).shader" />
      <None Include="Assets\NGUI\Resources\Shaders\Unlit - Dynamic Font (SoftClip).shader" />
      <None Include="Assets\Localization\Russian.txt" />
      <None Include="Assets\Plugins\Android\facebook\res\drawable\com_facebook_button_blue.xml" />

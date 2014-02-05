@@ -7,7 +7,7 @@ AnimationClip:
   m_PrefabInternal: {fileID: 0}
   m_Name: Popup - Out
   serializedVersion: 4
-  m_AnimationType: 1
+  m_AnimationType: 2
   m_Compressed: 0
   m_UseHighQualityCurve: 1
   m_RotationCurves: []
@@ -18,13 +18,13 @@ AnimationClip:
       m_Curve:
       - time: 0
         value: {x: 0, y: 0, z: -5}
-        inSlope: {x: 0, y: -2000, z: 0}
-        outSlope: {x: 0, y: -2000, z: 0}
-        tangentMode: 1
+        inSlope: {x: 0, y: 2000, z: 0}
+        outSlope: {x: 0, y: 2000, z: 0}
+        tangentMode: 1104674816
       - time: .5
-        value: {x: 0, y: -1000, z: -5}
-        inSlope: {x: 0, y: -2000, z: 0}
-        outSlope: {x: 0, y: -2000, z: 0}
+        value: {x: 0, y: 1000, z: -5}
+        inSlope: {x: 0, y: 2000, z: 0}
+        outSlope: {x: 0, y: 2000, z: 0}
         tangentMode: 0
       m_PreInfinity: 2
       m_PostInfinity: 2
@@ -50,7 +50,7 @@ AnimationClip:
     m_LoopBlendPositionY: 0
     m_LoopBlendPositionXZ: 0
     m_KeepOriginalOrientation: 0
-    m_KeepOriginalPositionY: 1
+    m_KeepOriginalPositionY: 0
     m_KeepOriginalPositionXZ: 0
     m_HeightFromFeet: 0
     m_Mirror: 0
@@ -79,13 +79,13 @@ AnimationClip:
       m_Curve:
       - time: 0
         value: 0
-        inSlope: -2000
-        outSlope: -2000
+        inSlope: 2000
+        outSlope: 2000
         tangentMode: 10
       - time: .5
-        value: -1000
-        inSlope: -2000
-        outSlope: -2000
+        value: 1000
+        inSlope: 2000
+        outSlope: 2000
         tangentMode: 10
       m_PreInfinity: 2
       m_PostInfinity: 2
@@ -113,4 +113,18 @@ AnimationClip:
     classID: 4
     script: {fileID: 0}
   m_EulerEditorCurves: []
-  m_Events: []
+  m_Events:
+  - time: 0
+    functionName: set_depth
+    data: 
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0
+  - time: 0
+    functionName: get_depth
+    data: 
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0
