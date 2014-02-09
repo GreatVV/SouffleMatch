@@ -16,7 +16,9 @@ public class InitState : GamefieldState
         
         Gamefield.Level.InitFromFile(Player.Instance.LastPlayedLevel);
         Gamefield.StageManager.Init(Player.Instance.LastPlayedLevel.Stages);
-        
+
+        Gamefield.PointSystem.TargetPoints = Gamefield.GameMode.TargetPoints;
+
         Gamefield.NewTilesInColumns = new int[Gamefield.Level.Width];
 
         Gamefield.AddEventHandlers();

@@ -10,9 +10,13 @@ public class Gameplay : Window
 
     #endregion
 
+    public Gamefield gamefield;
+
     public UILabel PointsLabel;
+    public UIProgressBar PointsBar;
     // public UILabel TargetScoreLabel;
     public UILabel TurnsLabel;
+    public UIProgressBar TurnsBar;
 
     public void AddEventHandlers(Gamefield gamefield)
     {
@@ -31,30 +35,41 @@ public class Gameplay : Window
         gamefield.GameMode.TurnsChanged -= OnTurnsChanged;
     }
 
+    public void Awake()
+    {
+        gamefield.GameStarted += OnGameStarted;
+    }
+
+    public void OnDestroy()
+    {
+        gamefield.GameStarted -= OnGameStarted;
+    }
+
     public void OnGameStarted(Gamefield gamefield)
     {
         AddEventHandlers(gamefield);
 
         //TargetScoreLabel.text = LocalizationStrings.GetString(TargetString, GameModeToString.GetString(gamefield.GameMode));
        // UI.Instance.TaskPopup.Show(gamefield.GameMode);
-        OnTurnsChanged(gamefield.GameMode.Turns);
-        OnPointsChanged(gamefield.PointSystem.CurrentPoints);
+        OnTurnsChanged(gamefield.GameMode.Turns, gamefield.GameMode.StartTurns);
+        OnPointsChanged(gamefield.PointSystem.CurrentPoints, gamefield.GameMode.TargetPoints);
         //  Camera.main.orthographicSize = gamefield.Level.Width;
     }
 
-    private void OnPointsChanged(int points)
+    private void OnPointsChanged(int points, int targetPoints)
     {
         PointsLabel.text = LocalizationStrings.GetString(PointsString, points);
+        PointsBar.value = ((float) points)/targetPoints;
     }
 
-    private void OnTurnsChanged(int turns)
+    private void OnTurnsChanged(int turns, int maxTurns)
     {
         TurnsLabel.text = LocalizationStrings.GetString(TurnsString, turns);
+        TurnsBar.value = ((float) turns)/maxTurns;
     }
 
     public void OnGameOver()
     {
 //        UI.Instance.ShowGameoverPopup();
     }
-	
 }

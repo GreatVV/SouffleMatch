@@ -4,7 +4,9 @@ using System;
 [Serializable]
 public class TargetScoreGameMode : GameMode
 {
-    public int TargetScore;         
+    public int TargetScore;
+
+    public override int TargetPoints { get { return TargetScore; }}
 
     public TargetScoreGameMode(GameModeDescription description) : base(description)
     {
@@ -16,7 +18,7 @@ public class TargetScoreGameMode : GameMode
         PointSystem.PointChanged -= OnPointChanged;
     }
 
-    public void OnPointChanged(int points)
+    public void OnPointChanged(int points, int i)
     {
         if (points >= TargetScore)
         {

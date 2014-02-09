@@ -161,6 +161,7 @@ public class Gamefield : MonoBehaviour
     public void StartGame(SerializedLevel level = null)
     {
         Player.Instance.LastPlayedLevel = level;
+        CombinationDestroyed -= PointSystem.CountForCombinations;
         CombinationDestroyed += PointSystem.CountForCombinations;
         _currentState = InitState;
         _currentState.OnEnter();

@@ -6,8 +6,10 @@ using UnityEngine;
 public class Points : MonoBehaviour
 {
     public int CurrentPoints;              
-    public event Action<int> PointChanged;
+    public event Action<int, int> PointChanged;
     public event Action<IEnumerable<Chuzzle>, int> PointsForDestroy;
+
+    public int TargetPoints { get; set; }
 
     protected virtual void InvokePointsForDestroy(IEnumerable<Chuzzle> comb, int pointsForComb)
     {
@@ -32,7 +34,7 @@ public class Points : MonoBehaviour
     {
         if (PointChanged != null)
         {
-            PointChanged(CurrentPoints);
+            PointChanged(CurrentPoints, TargetPoints);
         }
     }
 

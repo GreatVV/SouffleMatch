@@ -20,11 +20,13 @@ public abstract class GameMode
     }
 
     public int StartTurns;
+    public virtual int TargetPoints { get; protected set; }
 
     public abstract void HumanTurn();                              
 
     public virtual void Reset()
     {
+        TargetPoints = 1;
         Turns = StartTurns;
         IsWin = IsGameOver = false;
         OnReset();
@@ -34,7 +36,7 @@ public abstract class GameMode
 
     public event Action GameOver;
     public event Action Win;
-    public event Action<int> TurnsChanged;
+    public event Action<int, int> TurnsChanged;
 
     public void InvokeWin()
     {
@@ -88,7 +90,7 @@ public abstract class GameMode
     {
         if (TurnsChanged != null)
         {
-            TurnsChanged(Turns);
+            TurnsChanged(Turns, StartTurns);
         }
     }
 

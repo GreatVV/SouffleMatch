@@ -220,6 +220,8 @@
      <Compile Include="Assets\Scripts\Level\Gameplay\SerializedLevel.cs" />
      <Compile Include="Assets\Scripts\Level\Gameplay\TeleportableEntity.cs" />
      <Compile Include="Assets\Scripts\Level\Gameplay\TilesFactory.cs" />
+     <Compile Include="Assets\Scripts\Level\LevelManager.cs" />
+     <Compile Include="Assets\Scripts\Level\SessionRestorer.cs" />
      <Compile Include="Assets\Scripts\Level\UI\AutoBackgroundChanger.cs" />
      <Compile Include="Assets\Scripts\Level\UI\FlyingLabelPool.cs" />
      <Compile Include="Assets\Scripts\Level\UI\FlyingPoints.cs" />

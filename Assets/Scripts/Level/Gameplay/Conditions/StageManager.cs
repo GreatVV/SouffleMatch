@@ -23,7 +23,7 @@ public class Stage
         if (handler != null) handler();
     }
 
-    public void OnPointsChanged(int points)
+    public void OnPointsChanged(int points, int i)
     {
         if (Condition.IsScore)
         {
