@@ -41,8 +41,8 @@ MonoBehaviour:
   material: {fileID: 2100000, guid: 5a28dda875046fe4abe7b53f703f5ed7, type: 2}
   mSprites:
   - name: 0-99
-    x: 1434
-    y: 1821
+    x: 405
+    y: 560
     width: 236
     height: 104
     borderLeft: 0
@@ -54,32 +54,6 @@ MonoBehaviour:
     paddingTop: 0
     paddingBottom: 0
   - name: 1-99
-    x: 1709
-    y: 1944
-    width: 236
-    height: 104
-    borderLeft: 0
-    borderRight: 0
-    borderTop: 0
-    borderBottom: 0
-    paddingLeft: 0
-    paddingRight: 0
-    paddingTop: 0
-    paddingBottom: 0
-  - name: 19-99
-    x: 1709
-    y: 1839
-    width: 236
-    height: 104
-    borderLeft: 0
-    borderRight: 0
-    borderTop: 0
-    borderBottom: 0
-    paddingLeft: 0
-    paddingRight: 0
-    paddingTop: 0
-    paddingBottom: 0
-  - name: 4-99
     x: 415
     y: 437
     width: 236
@@ -92,9 +66,35 @@ MonoBehaviour:
     paddingRight: 0
     paddingTop: 0
     paddingBottom: 0
+  - name: 19-99
+    x: 1434
+    y: 1821
+    width: 236
+    height: 104
+    borderLeft: 0
+    borderRight: 0
+    borderTop: 0
+    borderBottom: 0
+    paddingLeft: 0
+    paddingRight: 0
+    paddingTop: 0
+    paddingBottom: 0
+  - name: 4-99
+    x: 1709
+    y: 1944
+    width: 236
+    height: 104
+    borderLeft: 0
+    borderRight: 0
+    borderTop: 0
+    borderBottom: 0
+    paddingLeft: 0
+    paddingRight: 0
+    paddingTop: 0
+    paddingBottom: 0
   - name: 9-99
-    x: 405
-    y: 560
+    x: 1709
+    y: 1839
     width: 236
     height: 104
     borderLeft: 0
@@ -328,7 +328,7 @@ MonoBehaviour:
     paddingBottom: 0
   - name: lose-lemur-head
     x: 0
-    y: 93
+    y: 264
     width: 238
     height: 170
     borderLeft: 0
@@ -340,8 +340,8 @@ MonoBehaviour:
     paddingTop: 0
     paddingBottom: 0
   - name: lvl_actual
-    x: 539
-    y: 820
+    x: 1055
+    y: 1430
     width: 132
     height: 116
     borderLeft: 0
@@ -366,8 +366,8 @@ MonoBehaviour:
     paddingTop: 0
     paddingBottom: 0
   - name: lvl_locked
-    x: 1055
-    y: 1430
+    x: 539
+    y: 820
     width: 132
     height: 116
     borderLeft: 0
@@ -405,8 +405,8 @@ MonoBehaviour:
     paddingTop: 0
     paddingBottom: 0
   - name: next
-    x: 675
-    y: 1424
+    x: 1819
+    y: 1697
     width: 200
     height: 122
     borderLeft: 0
@@ -574,8 +574,8 @@ MonoBehaviour:
     paddingTop: 0
     paddingBottom: 0
   - name: Restart
-    x: 1819
-    y: 1697
+    x: 675
+    y: 1424
     width: 200
     height: 122
     borderLeft: 0
@@ -626,7 +626,7 @@ MonoBehaviour:
     paddingTop: 0
     paddingBottom: 0
   - name: stars1
-    x: 1484
+    x: 1337
     y: 1551
     width: 146
     height: 68
@@ -639,7 +639,7 @@ MonoBehaviour:
     paddingTop: 0
     paddingBottom: 0
   - name: stars2
-    x: 1337
+    x: 1484
     y: 1551
     width: 146
     height: 68
@@ -664,9 +664,22 @@ MonoBehaviour:
     paddingRight: 0
     paddingTop: 0
     paddingBottom: 0
+  - name: whitepixel
+    x: 301
+    y: 955
+    width: 2
+    height: 2
+    borderLeft: 0
+    borderRight: 0
+    borderTop: 0
+    borderBottom: 0
+    paddingLeft: 0
+    paddingRight: 0
+    paddingTop: 0
+    paddingBottom: 0
   - name: win-lemur-head
     x: 0
-    y: 264
+    y: 93
     width: 238
     height: 170
     borderLeft: 0
