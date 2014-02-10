@@ -557,10 +557,10 @@
               <y:Shape type="roundrectangle"/>
               <y:State closed="false" closedHeight="50.0" closedWidth="50.0" innerGraphDisplayEnabled="false"/>
               <y:Insets bottom="15" bottomF="15.0" left="15" leftF="15.0" right="15" rightF="15.0" top="15" topF="15.0"/>
-              <y:BorderInsets bottom="0" bottomF="0.0" left="1" leftF="1.0002759176588825" right="1" rightF="1.0001922123012719" top="0" topF="0.0"/>
+              <y:BorderInsets bottom="0" bottomF="0.0" left="154" leftF="154.27813375350138" right="105" rightF="104.57456232492973" top="0" topF="0.0"/>
             </y:GroupNode>
             <y:GroupNode>
-              <y:Geometry height="50.0" width="50.0" x="0.0" y="60.0"/>
+              <y:Geometry height="50.0" width="50.0" x="987.0214285714285" y="2227.1651367187505"/>
               <y:Fill color="#F5F5F5" transparent="false"/>
               <y:BorderStyle color="#000000" type="dashed" width="1.0"/>
               <y:NodeLabel alignment="right" autoSizePolicy="node_width" backgroundColor="#EBEBEB" borderDistance="0.0" fontFamily="Dialog" fontSize="15" fontStyle="plain" hasLineColor="false" height="22.37646484375" modelName="internal" modelPosition="t" textColor="#000000" visible="true" width="59.02685546875" x="-4.513427734375" y="0.0">Folder 6</y:NodeLabel>
@@ -593,7 +593,7 @@
         <node id="n7::n1">
           <data key="d6">
             <y:ShapeNode>
-              <y:Geometry height="39.66973753806451" width="39.66973753806451" x="1081.955607421444" y="2452.8670843559685"/>
+              <y:Geometry height="39.66973753806451" width="39.66973753806451" x="1251.7091788500154" y="2582.2877553011385"/>
               <y:Fill hasColor="false" transparent="false"/>
               <y:BorderStyle color="#000000" type="line" width="1.0"/>
               <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="18.701171875" modelName="custom" textColor="#000000" visible="true" width="49.017578125" x="-4.673920293467745" y="10.484282831532255">Рестарт<y:LabelModel>
@@ -610,7 +610,7 @@
         <node id="n7::n2">
           <data key="d6">
             <y:ShapeNode>
-              <y:Geometry height="39.66973753806451" width="39.66973753806451" x="1005.3167185325551" y="2452.8670843559685"/>
+              <y:Geometry height="39.66973753806451" width="39.66973753806451" x="1189.5129431557637" y="2582.2877553011385"/>
               <y:Fill hasColor="false" transparent="false"/>
               <y:BorderStyle color="#000000" type="line" width="1.0"/>
               <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="18.701171875" modelName="custom" textColor="#000000" visible="true" width="44.259765625" x="-2.295014043467745" y="10.484282831532255">в меню<y:LabelModel>
@@ -627,7 +627,7 @@
         <node id="n7::n3">
           <data key="d6">
             <y:ShapeNode>
-              <y:Geometry height="39.66973753806451" width="39.66973753806451" x="1433.7409248817614" y="2452.8670843559685"/>
+              <y:Geometry height="39.66973753806451" width="39.66973753806451" x="1251.7091788500154" y="2502.8095009447684"/>
               <y:Fill hasColor="false" transparent="false"/>
               <y:BorderStyle color="#000000" type="line" width="1.0"/>
               <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="18.701171875" modelName="custom" textColor="#000000" visible="true" width="73.57421875" x="-16.952240605967745" y="10.484282831532255">Купить ходы<y:LabelModel>
@@ -1093,13 +1093,13 @@
     <edge id="e4" source="n6::n3::n0" target="n7::n0">
       <data key="d10">
         <y:PolyLineEdge>
-          <y:Path sx="-86.43336397058827" sy="208.16035156250007" tx="0.0" ty="-208.16035156250007">
+          <y:Path sx="-86.43336397058827" sy="208.16035156250007" tx="-4.547473508864641E-13" ty="-208.16035156249927">
             <y:Point x="1740.9944138071894" y="2197.1651367187505"/>
-            <y:Point x="1271.5440476190477" y="2197.1651367187505"/>
+            <y:Point x="1271.5440476190472" y="2197.1651367187505"/>
           </y:Path>
           <y:LineStyle color="#FF0000" type="line" width="1.0"/>
           <y:Arrows source="none" target="standard"/>
-          <y:EdgeLabel alignment="center" configuration="AutoFlippingLabel" distance="2.0" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="18.701171875" modelName="side_slider" preferredPlacement="right" ratio="0.4801478133843975" textColor="#000000" visible="true" width="90.58984375" x="-280.02007592750647" y="24.298925781250546">При поражении<y:PreferredPlacementDescriptor angle="0.0" angleOffsetOnRightSide="0" angleReference="absolute" angleRotationOnRightSide="co" distance="-1.0" placement="anywhere" side="right" sideReference="relative_to_edge_flow"/>
+          <y:EdgeLabel alignment="center" configuration="AutoFlippingLabel" distance="2.0" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="18.701171875" modelName="side_slider" preferredPlacement="right" ratio="0.4801478133843975" textColor="#000000" visible="true" width="90.58984375" x="-280.0200759275067" y="24.298925781250546">При поражении<y:PreferredPlacementDescriptor angle="0.0" angleOffsetOnRightSide="0" angleReference="absolute" angleRotationOnRightSide="co" distance="-1.0" placement="anywhere" side="right" sideReference="relative_to_edge_flow"/>
           </y:EdgeLabel>
           <y:BendStyle smoothed="false"/>
         </y:PolyLineEdge>
@@ -1123,7 +1123,10 @@
     <edge id="e6" source="n7::n2" target="n5::n0">
       <data key="d10">
         <y:PolyLineEdge>
-          <y:Path sx="0.0" sy="-19.834868769032255" tx="0.0" ty="208.16035156250007"/>
+          <y:Path sx="4.547473508864641E-13" sy="-19.8348687690318" tx="0.0" ty="208.16035156250007">
+            <y:Point x="1209.3478119247964" y="1483.2821261623594"/>
+            <y:Point x="1025.1515873015874" y="1483.2821261623594"/>
+          </y:Path>
           <y:LineStyle color="#0000FF" type="line" width="1.0"/>
           <y:Arrows source="none" target="standard"/>
           <y:BendStyle smoothed="false"/>
@@ -1196,13 +1199,13 @@
     <edge id="e10" source="n7::n1" target="n11::n0">
       <data key="d10">
         <y:PolyLineEdge>
-          <y:Path sx="0.0" sy="19.834868769032255" tx="57.622242647058854" ty="-208.16035156250007">
-            <y:Point x="1101.7904761904763" y="2710.862304687501"/>
+          <y:Path sx="-4.547473508864641E-13" sy="19.834868769032255" tx="57.622242647058854" ty="-208.16035156250007">
+            <y:Point x="1271.5440476190472" y="2710.862304687501"/>
             <y:Point x="188.86708391690013" y="2710.862304687501"/>
           </y:Path>
           <y:LineStyle color="#0000FF" type="line" width="1.0"/>
           <y:Arrows source="none" target="standard"/>
-          <y:EdgeLabel alignment="center" configuration="AutoFlippingLabel" distance="2.0" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="18.701171875" modelName="side_slider" preferredPlacement="right" ratio="0.4825435675636227" textColor="#000000" visible="true" width="97.41015625" x="-403.4776709121147" y="197.6242675781259">Если нет жизней<y:PreferredPlacementDescriptor angle="0.0" angleOffsetOnRightSide="0" angleReference="absolute" angleRotationOnRightSide="co" distance="-1.0" placement="anywhere" side="right" sideReference="relative_to_edge_flow"/>
+          <y:EdgeLabel alignment="center" configuration="AutoFlippingLabel" distance="2.0" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="18.701171875" modelName="side_slider" preferredPlacement="right" ratio="0.4333954415198531" textColor="#000000" visible="true" width="97.41015625" x="-467.13522880832045" y="68.20361328125091">Если нет жизней<y:PreferredPlacementDescriptor angle="0.0" angleOffsetOnRightSide="0" angleReference="absolute" angleRotationOnRightSide="co" distance="-1.0" placement="anywhere" side="right" sideReference="relative_to_edge_flow"/>
           </y:EdgeLabel>
           <y:BendStyle smoothed="false"/>
         </y:PolyLineEdge>
@@ -1321,13 +1324,13 @@
     <edge id="e18" source="n7::n1" target="n6::n1">
       <data key="d10">
         <y:PolyLineEdge>
-          <y:Path sx="0.0" sy="-19.834868769032255" tx="-86.43336397058829" ty="208.16035156250018">
-            <y:Point x="1101.7904761904763" y="2167.1651367187505"/>
-            <y:Point x="1581.1746031746031" y="2167.1651367187505"/>
+          <y:Path sx="-4.547473508864641E-13" sy="-19.8348687690318" tx="-86.43336397058829" ty="208.16035156250018">
+            <y:Point x="1271.5440476190472" y="2167.1651367187505"/>
+            <y:Point x="1581.1745725373482" y="2167.1651367187505"/>
           </y:Path>
           <y:LineStyle color="#0000FF" type="line" width="1.0"/>
           <y:Arrows source="none" target="standard"/>
-          <y:EdgeLabel alignment="center" configuration="AutoFlippingLabel" distance="2.0" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="18.701171875" modelName="side_slider" preferredPlacement="right" ratio="0.4845078372667645" textColor="#000000" visible="true" width="96.361328125" x="286.7670479910714" y="-306.36831054687445">Если есть жизни<y:PreferredPlacementDescriptor angle="0.0" angleOffsetOnRightSide="0" angleReference="absolute" angleRotationOnRightSide="co" distance="-1.0" placement="anywhere" side="right" sideReference="relative_to_edge_flow"/>
+          <y:EdgeLabel alignment="center" configuration="AutoFlippingLabel" distance="2.0" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="18.701171875" modelName="side_slider" preferredPlacement="right" ratio="0.5623457514083758" textColor="#000000" visible="true" width="96.361328125" x="159.45187783121037" y="-435.79848632812445">Если есть жизни<y:PreferredPlacementDescriptor angle="0.0" angleOffsetOnRightSide="0" angleReference="absolute" angleRotationOnRightSide="co" distance="-1.0" placement="anywhere" side="right" sideReference="relative_to_edge_flow"/>
           </y:EdgeLabel>
           <y:BendStyle smoothed="false"/>
         </y:PolyLineEdge>
@@ -1482,10 +1485,13 @@
     <edge id="e29" source="n7::n3" target="n12::n0">
       <data key="d10">
         <y:PolyLineEdge>
-          <y:Path sx="0.0" sy="19.834868769032255" tx="0.0" ty="-208.16035156250018"/>
+          <y:Path sx="-4.547473508864641E-13" sy="19.83486876903271" tx="0.0" ty="-208.16035156250018">
+            <y:Point x="1271.5440476190472" y="2881.048147275142"/>
+            <y:Point x="1453.5757936507937" y="2881.048147275142"/>
+          </y:Path>
           <y:LineStyle color="#0000FF" type="line" width="1.0"/>
           <y:Arrows source="none" target="standard"/>
-          <y:EdgeLabel alignment="center" configuration="AutoFlippingLabel" distance="2.0" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="18.701171875" modelName="side_slider" preferredPlacement="right" ratio="0.5" textColor="#000000" visible="true" width="88.52734375" x="1.9999879867311847" y="379.1606961032671">Если нет денег<y:PreferredPlacementDescriptor angle="0.0" angleOffsetOnRightSide="0" angleReference="absolute" angleRotationOnRightSide="co" distance="-1.0" placement="anywhere" side="right" sideReference="relative_to_edge_flow"/>
+          <y:EdgeLabel alignment="center" configuration="AutoFlippingLabel" distance="2.0" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="18.701171875" modelName="side_slider" preferredPlacement="right" ratio="0.1849017671157313" textColor="#000000" visible="true" width="88.52734375" x="1.9999802362347054" y="164.4963588946125">Если нет денег<y:PreferredPlacementDescriptor angle="0.0" angleOffsetOnRightSide="0" angleReference="absolute" angleRotationOnRightSide="co" distance="-1.0" placement="anywhere" side="right" sideReference="relative_to_edge_flow"/>
           </y:EdgeLabel>
           <y:BendStyle smoothed="false"/>
         </y:PolyLineEdge>
@@ -1494,13 +1500,13 @@
     <edge id="e30" source="n7::n3" target="n6::n3::n0">
       <data key="d10">
         <y:PolyLineEdge>
-          <y:Path sx="0.0" sy="-19.834868769032255" tx="-28.811121323529434" ty="208.16035156250007">
-            <y:Point x="1453.5757936507937" y="2212.1651367187505"/>
+          <y:Path sx="-4.547473508864641E-13" sy="-19.83486876903089" tx="-28.811121323529434" ty="208.16035156250007">
+            <y:Point x="1271.5440476190472" y="2212.1651367187505"/>
             <y:Point x="1798.6166564542482" y="2212.1651367187505"/>
           </y:Path>
           <y:LineStyle color="#0000FF" type="line" width="1.0"/>
           <y:Arrows source="none" target="standard"/>
-          <y:EdgeLabel alignment="center" configuration="AutoFlippingLabel" distance="2.0" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="18.701171875" modelName="side_slider" preferredPlacement="right" ratio="0.3690511568962635" textColor="#000000" visible="true" width="100.43359375" x="1.9999879867311847" y="-239.67250976562445">Если есть деньги<y:PreferredPlacementDescriptor angle="0.0" angleOffsetOnRightSide="0" angleReference="absolute" angleRotationOnRightSide="co" distance="-1.0" placement="anywhere" side="right" sideReference="relative_to_edge_flow"/>
+          <y:EdgeLabel alignment="center" configuration="AutoFlippingLabel" distance="2.0" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="18.701171875" modelName="side_slider" preferredPlacement="right" ratio="0.3275511137133196" textColor="#000000" visible="true" width="100.43359375" x="1.9999802362347054" y="-289.60878906249945">Если есть деньги<y:PreferredPlacementDescriptor angle="0.0" angleOffsetOnRightSide="0" angleReference="absolute" angleRotationOnRightSide="co" distance="-1.0" placement="anywhere" side="right" sideReference="relative_to_edge_flow"/>
           </y:EdgeLabel>
           <y:BendStyle smoothed="false"/>
         </y:PolyLineEdge>
@@ -1539,13 +1545,13 @@
     <edge id="e32" source="n11::n3" target="n7::n0">
       <data key="d10">
         <y:PolyLineEdge>
-          <y:Path sx="13.223245846021499" sy="-19.834868769032255" tx="-57.622242647058854" ty="208.16035156250007">
+          <y:Path sx="13.223245846021499" sy="-19.834868769032255" tx="-57.62224264705924" ty="208.16035156250155">
             <y:Point x="309.54784902062465" y="2725.862304687501"/>
-            <y:Point x="1213.9218049719889" y="2725.862304687501"/>
+            <y:Point x="1213.9218049719884" y="2725.862304687501"/>
           </y:Path>
           <y:LineStyle color="#0000FF" type="line" width="1.0"/>
           <y:Arrows source="none" target="standard"/>
-          <y:EdgeLabel alignment="center" configuration="AutoFlippingLabel" distance="2.0" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="18.701171875" modelName="side_slider" preferredPlacement="right" ratio="0.4369154333215516" textColor="#000000" visible="true" width="130.9375" x="258.145482775246" y="-201.2758789062491">если попап поражения<y:PreferredPlacementDescriptor angle="0.0" angleOffsetOnRightSide="0" angleReference="absolute" angleRotationOnRightSide="co" distance="-1.0" placement="anywhere" side="right" sideReference="relative_to_edge_flow"/>
+          <y:EdgeLabel alignment="center" configuration="AutoFlippingLabel" distance="2.0" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="18.701171875" modelName="side_slider" preferredPlacement="right" ratio="0.4369154333215516" textColor="#000000" visible="true" width="130.9375" x="258.1454827752459" y="-201.2758789062491">если попап поражения<y:PreferredPlacementDescriptor angle="0.0" angleOffsetOnRightSide="0" angleReference="absolute" angleRotationOnRightSide="co" distance="-1.0" placement="anywhere" side="right" sideReference="relative_to_edge_flow"/>
           </y:EdgeLabel>
           <y:BendStyle smoothed="false"/>
         </y:PolyLineEdge>
@@ -1569,13 +1575,13 @@
     <edge id="e34" source="n12::n2" target="n7::n0">
       <data key="d10">
         <y:PolyLineEdge>
-          <y:Path sx="13.223245846021427" sy="-19.834868769032255" tx="57.62224264705878" ty="208.16035156250018">
+          <y:Path sx="13.223245846021427" sy="-19.834868769032255" tx="57.62224264705833" ty="208.16035156250155">
             <y:Point x="1301.71967441745" y="2964.022656250001"/>
-            <y:Point x="1329.16626984127" y="2964.022656250001"/>
+            <y:Point x="1329.166290266106" y="2964.022656250001"/>
           </y:Path>
           <y:LineStyle color="#000000" type="line" width="1.0"/>
           <y:Arrows source="none" target="standard"/>
-          <y:EdgeLabel alignment="center" configuration="AutoFlippingLabel" distance="2.0" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="18.701171875" modelName="side_slider" preferredPlacement="right" ratio="0.493233714693387" textColor="#000000" visible="true" width="154.48046875" x="1.999947854950051" y="-400.0248546131802">Если из попапа поражения<y:PreferredPlacementDescriptor angle="0.0" angleOffsetOnRightSide="0" angleReference="absolute" angleRotationOnRightSide="co" distance="-1.0" placement="anywhere" side="right" sideReference="relative_to_edge_flow"/>
+          <y:EdgeLabel alignment="center" configuration="AutoFlippingLabel" distance="2.0" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="18.701171875" modelName="side_slider" preferredPlacement="right" ratio="0.4932337018798911" textColor="#000000" visible="true" width="154.48046875" x="1.999947854950051" y="-400.0248546131802">Если из попапа поражения<y:PreferredPlacementDescriptor angle="0.0" angleOffsetOnRightSide="0" angleReference="absolute" angleRotationOnRightSide="co" distance="-1.0" placement="anywhere" side="right" sideReference="relative_to_edge_flow"/>
           </y:EdgeLabel>
           <y:BendStyle smoothed="false"/>
         </y:PolyLineEdge>

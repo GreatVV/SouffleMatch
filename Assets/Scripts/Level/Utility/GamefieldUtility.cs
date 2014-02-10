@@ -540,7 +540,7 @@ public class GamefieldUtility
     {
         var enumerable = chuzzles as IList<Chuzzle> ?? chuzzles.ToList();
         var firstChuzzle = enumerable.FirstOrDefault(x => x.Real.y == y && x.Color == chuzzleColor && IsOrdinaryDestroyable(x));
-        if (firstChuzzle != null)
+        if (firstChuzzle != null && !enumerable.Any(c => c is LockChuzzle))
         {
             var secondChuzzle =
                 enumerable.FirstOrDefault(
@@ -560,7 +560,7 @@ public class GamefieldUtility
     {
         var enumerable = chuzzles as IList<Chuzzle> ?? chuzzles.ToList();
         var firstChuzzle = enumerable.FirstOrDefault(c => c.Real.x == x && c.Color == chuzzleColor && !(c is InvaderChuzzle));
-        if (firstChuzzle != null)
+        if (firstChuzzle != null && !enumerable.Any(c=>c is LockChuzzle))
         {
             var secondChuzzle =
                 enumerable.FirstOrDefault(
