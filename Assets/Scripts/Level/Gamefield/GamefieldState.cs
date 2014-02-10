@@ -10,7 +10,7 @@ using UnityEngine;
 public abstract class GamefieldState : MonoBehaviour
 {
     public List<Chuzzle> AnimatedChuzzles = new List<Chuzzle>();  
-    void Awake()
+    protected virtual void Awake()
     {
         Gamefield = GetComponent<Gamefield>();   
     }                

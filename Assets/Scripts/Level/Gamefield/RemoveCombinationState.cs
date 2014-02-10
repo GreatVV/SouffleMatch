@@ -12,6 +12,7 @@ using Object = UnityEngine.Object;
 [Serializable]
 public class RemoveCombinationState : GamefieldState
 {
+
     #region Event Handlers
 
     public override void OnEnter()

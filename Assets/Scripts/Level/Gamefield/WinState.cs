@@ -31,8 +31,6 @@ public class WinState : GamefieldState
 
             levelInfo.IsCompleted = true;
             levelInfo.NumberOfAttempts++;
-
-            //UI.Instance.GuiGameplay.OnWin();
         }
     }
 

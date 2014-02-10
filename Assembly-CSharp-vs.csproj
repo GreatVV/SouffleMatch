@@ -62,6 +62,7 @@
      <Compile Include="Assets\GUI\Scripts\Screens\Gameplay.cs" />
      <Compile Include="Assets\GUI\Scripts\Screens\MainMenu.cs" />
      <Compile Include="Assets\GUI\Scripts\Screens\StartLevelPopup.cs" />
+     <Compile Include="Assets\GUI\Scripts\Screens\WinPopup.cs" />
      <Compile Include="Assets\GUI\Scripts\Screens\Windows.cs" />
      <Compile Include="Assets\GUI\Scripts\Utils\GameModeToString.cs" />
      <Compile Include="Assets\GUI\Scripts\Utils\MapId.cs" />
