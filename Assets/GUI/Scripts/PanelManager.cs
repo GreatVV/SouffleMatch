@@ -20,8 +20,11 @@ public class PanelManager : MonoBehaviour
         newWindow.Depth = windows.Count;
         newWindow.Activate();
 
-        newWindow.Animator.runtimeAnimatorController = windowAnimator;
-        newWindow.Animator.SetBool("Close",false);
+        if (windowAnimator)
+        {
+            newWindow.Animator.runtimeAnimatorController = windowAnimator;
+            newWindow.Animator.SetBool("Close", false);
+        }
     }
 
     public static void Show(Window window, bool dropAllOtherWindows = false)
@@ -44,12 +47,16 @@ public class PanelManager : MonoBehaviour
     public void Close()
     {
         var toClose = windows.LastOrDefault();
-        if (toClose != null)
+        if (toClose != null && windowAnimator)
         {
             var animator = toClose.gameObject.GetComponent<Animator>();
             animator.SetBool("Close", true);
             var length = animator.GetCurrentAnimationClipState(0)[0].clip.length;
             Invoke("CloseAnimationEnded", length);
+        }
+        else
+        {
+            CloseAnimationEnded();
         }
     }
 

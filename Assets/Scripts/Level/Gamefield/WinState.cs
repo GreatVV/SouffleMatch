@@ -7,14 +7,16 @@ using UnityEngine;
 [Serializable]
 public class WinState : GamefieldState
 {
-    
+    public WinPopup winPopup;
     public GameObject TileReplaceEffect;
 
     #region Event Handlers
 
     public override void OnEnter()
     {
-        if (Gamefield.GameMode.Turns > 0)
+        winPopup.Init(Gamefield.PointSystem.CurrentPoints);
+        PanelManager.Show(winPopup);
+        /*if (Gamefield.GameMode.Turns > 0)
         {
             CreateBonusPowerUps();
         }
@@ -31,7 +33,7 @@ public class WinState : GamefieldState
 
             levelInfo.IsCompleted = true;
             levelInfo.NumberOfAttempts++;
-        }
+        }*/
     }
 
     public override void OnExit()

@@ -8,6 +8,8 @@ public class SessionRestorer : MonoBehaviour
     private LevelManager levelManager;
 
     public Gamefield Gamefield;
+    public Gameplay Gameplay;
+
 
     void Awake()
     {
@@ -26,6 +28,16 @@ public class SessionRestorer : MonoBehaviour
     public void StartLevel(int index)
     {
         Gamefield.StartGame(levelManager[index]);
+        PanelManager.Show(Gameplay, true);
+    }
+
+    public void PlayNextLevel()
+    {
+        if (lastPlayedLevel < levelManager.LoadedLevels.Count-1)
+        {
+            lastPlayedLevel++;
+        }
+        StartLevel(lastPlayedLevel);
     }
 
     public void Restart()

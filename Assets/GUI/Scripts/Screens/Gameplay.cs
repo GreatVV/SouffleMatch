@@ -35,7 +35,7 @@ public class Gameplay : Window
         gamefield.GameMode.TurnsChanged -= OnTurnsChanged;
     }
 
-    public void Awake()
+    protected override void OnAwake()
     {
         gamefield.GameStarted += OnGameStarted;
     }
