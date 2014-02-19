@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using UnityEditor;
 using UnityEngine;
 using System.Collections;
 using Random = UnityEngine.Random;
@@ -51,7 +52,50 @@ public class TilesFactory : MonoBehaviour {
 
     void Awake()
     {
+        if (Instance)
+        {
+            Debug.Log("Tiles factory already created");
+            return;
+        }
+
         Instance = this;
+
+        foreach (var chuzzlePrefab in ChuzzlePrefabs)
+        {
+            ChuzzlePool.Instance.RegisterChuzzlePrefab(chuzzlePrefab.GetComponent<Chuzzle>().Color, typeof(ColorChuzzle), chuzzlePrefab);
+        }
+
+        foreach (var chuzzlePrefab in ChuzzleLockPrefabs)
+        {
+            ChuzzlePool.Instance.RegisterChuzzlePrefab(chuzzlePrefab.GetComponent<Chuzzle>().Color, typeof(LockChuzzle), chuzzlePrefab);
+        }
+
+        foreach (var chuzzlePrefab in ChuzzleTwoTimesPrefabs)
+        {
+            ChuzzlePool.Instance.RegisterChuzzlePrefab(chuzzlePrefab.GetComponent<Chuzzle>().Color, typeof(TwoTimeChuzzle), chuzzlePrefab);
+        }
+
+        foreach (var chuzzlePrefab in ChuzzleCounterPrefabs)
+        {
+            ChuzzlePool.Instance.RegisterChuzzlePrefab(chuzzlePrefab.GetComponent<Chuzzle>().Color, typeof(CounterChuzzle), chuzzlePrefab);
+        }
+
+        foreach (var chuzzlePrefab in HorizontalLineChuzzlePrefabs)
+        {
+            ChuzzlePool.Instance.RegisterChuzzlePrefab(chuzzlePrefab.GetComponent<Chuzzle>().Color, typeof(HorizontalLineChuzzle), chuzzlePrefab);
+        }
+
+        foreach (var chuzzlePrefab in VerticalLineChuzzlePrefabs)
+        {
+            ChuzzlePool.Instance.RegisterChuzzlePrefab(chuzzlePrefab.GetComponent<Chuzzle>().Color, typeof(VerticalLineChuzzle), chuzzlePrefab);
+        }
+
+        foreach (var chuzzlePrefab in BombChuzzlePrefabs)
+        {
+            ChuzzlePool.Instance.RegisterChuzzlePrefab(chuzzlePrefab.GetComponent<Chuzzle>().Color, typeof(BombChuzzle), chuzzlePrefab);
+        }
+
+        ChuzzlePool.Instance.RegisterChuzzlePrefab(InvaderPrefab.GetComponent<Chuzzle>().Color, typeof(InvaderChuzzle), InvaderPrefab);
     }
 
     public int NumberOfColors;
@@ -151,8 +195,9 @@ public class TilesFactory : MonoBehaviour {
 
     public Chuzzle CreateChuzzle(Cell cell, GameObject prefab)
     {
-        var chuzzleObject = Instantiate(prefab) as GameObject;
-        var chuzzle = chuzzleObject.GetComponent<Chuzzle>();
+        var type = prefab.GetComponent<Chuzzle>().GetType();
+        var chuzzle = ChuzzlePool.Instance.Get(prefab.GetComponent<Chuzzle>().Color, type).GetComponent<Chuzzle>();
+            
         
         chuzzle.Real = chuzzle.MoveTo = chuzzle.Current = cell;
 

@@ -297,7 +297,7 @@ public class FieldState : GamefieldState
             //Debug.Log("Arrow chuzzle: " + _arrowChuzzle);
             //Debug.Log("Target position: " + _targetPosition);
         }
-        Debug.Log("Repainted in "+numberOfTries + " attempts");
+        //Debug.Log("Repainted in "+numberOfTries + " attempts");
     }
 
     public override void OnExit()

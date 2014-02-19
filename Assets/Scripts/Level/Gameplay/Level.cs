@@ -167,7 +167,7 @@ public class Level : MonoBehaviour
     {
         foreach (var chuzzle in Chuzzles)
         {
-            Destroy(chuzzle.gameObject);
+            ChuzzlePool.Instance.Release(chuzzle.Color, chuzzle.GetType(), chuzzle.gameObject);
         }
         Chuzzles.Clear();
         ActiveChuzzles.Clear();

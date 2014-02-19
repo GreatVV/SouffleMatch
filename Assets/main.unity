@@ -4544,6 +4544,7 @@ GameObject:
   - 114: {fileID: 2122841555}
   - 65: {fileID: 2122841558}
   - 114: {fileID: 2122841559}
+  - 114: {fileID: 2122841560}
   m_Layer: 8
   m_Name: Restart
   m_TagString: Untagged
@@ -4683,3 +4684,14 @@ MonoBehaviour:
   onDeselect: []
   onClick: []
   onDoubleClick: []
+--- !u!114 &2122841560
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 2122841554}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2fedf5cc1a5f9bf4cbd20f406452bfff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

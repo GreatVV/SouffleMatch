@@ -48,7 +48,8 @@ public abstract class Chuzzle : MonoBehaviour
         {
             InvokeAnimationFinished();
         }
-        Object.Destroy(gameObject);
+        ChuzzlePool.Instance.Release(Color, GetType(), gameObject);
+        //Object.Destroy(gameObject);
     }
 
     private void OnAnimateMoveEnd(object obj)
@@ -213,5 +214,10 @@ public abstract class Chuzzle : MonoBehaviour
     {
         AnimationStarted = null;
     }
-    
+
+    void OnEnable()
+    {
+        transform.localScale = Vector3.one;
+        IsDead = false;
+    }
 }
