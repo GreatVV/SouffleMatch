@@ -61,7 +61,7 @@ public class ChuzzlePool
             Debug.LogError("Not registered prefab for: " + color + " of " + type);
             return;
         }
-        Debug.Log("release: "+color + " of "+type + " : "+gameObject.name);
+        //Debug.Log("release: "+color + " of "+type + " : "+gameObject.name);
         gameObject.SetActive(false);
         freeObjects.FirstOrDefault(x => x.Key.type == type && x.Key.color == color).Value.Add(gameObject);
     }
