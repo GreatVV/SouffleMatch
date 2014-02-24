@@ -1084,6 +1084,7 @@ CSS 3.0;CSS 3.0</PropertyValue>
 					<Shortcut Command="ReSharper.ReSharper_ExploreStackTrace" Scope="Global">Ctrl+Shift+·</Shortcut>
 					<Shortcut Command="ReSharper.ReSharper_ExploreStackTrace" Scope="Text Editor">Ctrl+Shift+·</Shortcut>
 					<Shortcut Command="ReSharper.ReSharper_ExploreStackTrace" Scope="XAML UI Designer">Ctrl+Shift+·</Shortcut>
+					<RemoveShortcut Command="ReSharper.ReSharper_Bookmarks_BookmarksMenu" Scope="Global">Ctrl+W</RemoveShortcut>
 					<Shortcut Command="ReSharper.ReSharper_FindUsages" Scope="Global">Ctrl+W</Shortcut>
 					<Shortcut Command="ReSharper.ReSharper_FindUsagesAdvanced" Scope="Global">Shift+Alt+F7</Shortcut>
 					<Shortcut Command="ReSharper.ReSharper_FindUsagesAdvanced" Scope="Text Editor">Shift+Alt+F7</Shortcut>
@@ -1231,10 +1232,15 @@ CSS 3.0;CSS 3.0</PropertyValue>
 					<Shortcut Command="ReSharper_WindowManager_CloseRecentTool" Scope="Text Editor">Ctrl+Shift+F4</Shortcut>
 					<Shortcut Command="ReSharper_WindowManager_CloseRecentTool" Scope="XAML UI Designer">Ctrl+Shift+F4</Shortcut>
 					<Shortcut Command="ReSharper.ReSharper_GotoDeclaration" Scope="Text Editor">Alt+G</Shortcut>
+					<RemoveShortcut Command="ReSharper.ReSharper_Bookmarks_BookmarksMenu" Scope="Text Editor">Ctrl+R, Ctrl+M</RemoveShortcut>
 					<Shortcut Command="ReSharper.ReSharper_ExtractMethod" Scope="Text Editor">Ctrl+R, Ctrl+M</Shortcut>
+					<RemoveShortcut Command="ReSharper.ReSharper_Bookmarks_BookmarksMenu" Scope="Text Editor">Ctrl+M, Ctrl+O</RemoveShortcut>
 					<Shortcut Command="Edit.CollapsetoDefinitions" Scope="Text Editor">Ctrl+M, Ctrl+O</Shortcut>
+					<RemoveShortcut Command="ReSharper.ReSharper_Bookmarks_BookmarksMenu" Scope="Text Editor">Ctrl+D</RemoveShortcut>
 					<Shortcut Command="ReSharper.ReSharper_DuplicateText" Scope="Text Editor">Ctrl+D</Shortcut>
+					<RemoveShortcut Command="ReSharper.ReSharper_Bookmarks_BookmarksMenu" Scope="Text Editor">Ctrl+Q</RemoveShortcut>
 					<Shortcut Command="ReSharper.ReSharper_RefactorThis" Scope="Text Editor">Ctrl+Q</Shortcut>
+					<RemoveShortcut Command="ReSharper.ReSharper_Bookmarks_BookmarksMenu" Scope="Global">Ctrl+T</RemoveShortcut>
 					<Shortcut Command="ReSharper.ReSharper_GotoType" Scope="Global">Ctrl+T</Shortcut>
 					<Shortcut Command="ReSharper.ReSharper_Rename" Scope="Text Editor">Ctrl+R, Ctrl+R</Shortcut>
 					<Shortcut Command="ReSharper.ReSharper_CleanupCode" Scope="Text Editor">Ctrl+E, Ctrl+C</Shortcut>
