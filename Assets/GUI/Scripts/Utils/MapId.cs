@@ -10,7 +10,13 @@ public class MapId : MonoBehaviour
     public GameObject FirstStar;
     public GameObject SecondStar;
     public GameObject ThirdStar;
-    
+
+    public void Awake()
+    {
+        name = "0";
+        //UpdateName();
+    }
+
     public void Start()
     {
         MainMenu.LevelsLoaded += OnLevelsLoaded;
@@ -38,14 +44,19 @@ public class MapId : MonoBehaviour
     public void Update()
     {
 #if UNITY_EDITOR
-        Index = Convert.ToInt32(name);
-        FirstStar = transform.Search("1", gameObject).gameObject;
-        SecondStar = transform.Search("2", gameObject).gameObject;
-        ThirdStar = transform.Search("3", gameObject).gameObject;
-        transform.Search("Label", gameObject).GetComponent<UILabel>().text = (Index + 1).ToString(CultureInfo.InvariantCulture);
+       // UpdateName();
 #endif
     }
 
+    public void UpdateName()
+    {
+        Index = Convert.ToInt32(name)-1;
+        FirstStar = transform.Search("1", gameObject).gameObject;
+        SecondStar = transform.Search("2", gameObject).gameObject;
+        ThirdStar = transform.Search("3", gameObject).gameObject;
+        transform.Search("Label", gameObject).GetComponent<UILabel>().text =
+            (Index).ToString(CultureInfo.InvariantCulture);
+    }
 
     public void RefreshNumberOfStars()
     {
@@ -99,9 +110,9 @@ public class MapId : MonoBehaviour
 
     public void OnClick()
     {
-        if (!PanelManager.IsCurrent(Windows.instance.startLevelPopup))
-        {
-            PanelManager.Show(Windows.StartLevelPopup(Index));
-        }
+//        if (!PanelManager.IsCurrent(Windows.instance.startLevelPopup))
+//        {
+//            PanelManager.Show(Windows.StartLevelPopup(Index));
+//        }
     }
 }

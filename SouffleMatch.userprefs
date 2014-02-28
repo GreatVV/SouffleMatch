@@ -1,8 +1,8 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workspace />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\GUI\Scripts\Screens\Gameplay.cs">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\GUI\Scripts\Screens\GuiLevelList.cs">
     <Files>
-      <File FileName="Assets\GUI\Scripts\Screens\Gameplay.cs" Line="1" Column="1" />
+      <File FileName="Assets\GUI\Scripts\Screens\GuiLevelList.cs" Line="1" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
