@@ -19,7 +19,7 @@ public abstract class Window : MonoBehaviour
         }
     }
 
-    protected virtual void Awake()
+    protected void Awake()
     {
         _colliders = GetComponentsInChildren<Collider>();
         _panel = GetComponent<UIPanel>();

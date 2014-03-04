@@ -65,7 +65,7 @@ public class StartLevelPopup : Window
         else
         {
             //TODO show buy life popup;
-            PanelManager.Show(Windows.BuyLivesPopup());
+            //PanelManager.Show(Windows.BuyLivesPopup());
         }
     }
 }

@@ -9,10 +9,18 @@ public class SessionRestorer : MonoBehaviour
 
     public Gamefield Gamefield;
     public Gameplay Gameplay;
-
+    public static SessionRestorer Instance;
 
     void Awake()
     {
+        if (Instance != null)
+        {
+            Destroy(this);
+            return;
+        }
+
+        Instance = this;
+
         levelManager = GetComponent<LevelManager>();
 
         lastPlayedLevel = PlayerPrefs.GetInt("LastPlayedLevel", 0);
@@ -47,7 +55,10 @@ public class SessionRestorer : MonoBehaviour
 
     void OnDestroy()
     {
-        levelManager.LevelsAreReady -= OnLevelsAreReady;
+        if (Instance == this)
+        {
+            levelManager.LevelsAreReady -= OnLevelsAreReady;
+        }
     }
 
     void OnApplicationPause()

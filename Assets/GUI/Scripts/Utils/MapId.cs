@@ -110,9 +110,6 @@ public class MapId : MonoBehaviour
 
     public void OnClick()
     {
-//        if (!PanelManager.IsCurrent(Windows.instance.startLevelPopup))
-//        {
-//            PanelManager.Show(Windows.StartLevelPopup(Index));
-//        }
+        SessionRestorer.Instance.StartLevel(Index);
     }
 }

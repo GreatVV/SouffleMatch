@@ -1,17 +1,15 @@
 ﻿using System;
 using UnityEngine;
-using System.Collections;
 
-public class GuiLevelList : MonoBehaviour
+public class GuiLevelList : Window
 {
-
     public LevelManager levelManager;
 
     public MapId mapIdPrefab;
 
     public UITable grid;
 
-    public void Awake()
+    protected override void OnAwake()
     {
         levelManager.LevelsAreReady += OnLevelsAreReady;
     }
@@ -28,7 +26,7 @@ public class GuiLevelList : MonoBehaviour
             var mapId = ((GameObject) Instantiate(mapIdPrefab.gameObject)).GetComponent<MapId>();
             mapId.transform.parent = grid.transform;
             mapId.transform.localScale = Vector3.one;
-            mapId.name = serializedLevel.Name;
+            mapId.name = string.Format("{00}", Convert.ToInt32(serializedLevel.Name));
             mapId.UpdateName();
         }
 
