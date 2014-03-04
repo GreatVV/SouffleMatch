@@ -9,7 +9,7 @@ public class GuiLevelList : MonoBehaviour
 
     public MapId mapIdPrefab;
 
-    public UIGrid grid;
+    public UITable grid;
 
     public void Awake()
     {
