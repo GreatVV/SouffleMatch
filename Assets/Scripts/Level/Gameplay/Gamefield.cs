@@ -105,6 +105,8 @@ public class Gamefield : MonoBehaviour
     #endregion
 
     private static Gamefield Instance;
+    public static bool InvaderWasDestroyed;
+
     public void Awake()
     {   
         Instance = this;

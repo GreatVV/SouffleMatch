@@ -45,7 +45,6 @@ public class InvaderChuzzle : Chuzzle
     public static void OnCombinationDestroyed(IEnumerable<Chuzzle> chuzzles)
     {
         var invadersNear = new List<Chuzzle>();
-          
 
         foreach (var chuzzle in chuzzles)
         {
@@ -58,6 +57,7 @@ public class InvaderChuzzle : Chuzzle
                 }
             }
         }
+        Gamefield.InvaderWasDestroyed |= invadersNear.Any();
 
         while (invadersNear.Any())
         {   

@@ -1,14 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.Linq;
-using UnityEditor;
 using UnityEngine;
-using System.Collections;
 using Random = UnityEngine.Random;
 
-public class TilesFactory : MonoBehaviour {
-
+public class TilesFactory : MonoBehaviour
+{
+    public static TilesFactory Instance;
     public CellSprite[] CellPrefabs;
     public GameObject[] ChuzzlePrefabs;
     public GameObject[] ChuzzleLockPrefabs;
@@ -23,15 +21,16 @@ public class TilesFactory : MonoBehaviour {
     public GameObject Explosion;
 
     public Gamefield Gamefield;
+    public int NumberOfColors;
 
     public GameObject CellSprite(Cell cell)
     {
         GameObject prefab = null;
-        var prefabs = CellPrefabs.Where(c => c.Type == cell.Type).ToArray();
+        CellSprite[] prefabs = CellPrefabs.Where(c => c.Type == cell.Type).ToArray();
 
         if (cell.Type == CellTypes.Block)
-        {                                    
-            prefab = prefabs[(Math.Abs(cell.x) + Math.Abs(cell.y)) % 2].CellPrefab;
+        {
+            prefab = prefabs[(Math.Abs(cell.x) + Math.Abs(cell.y))%2].CellPrefab;
         }
 
         prefab = prefabs.First().CellPrefab;
@@ -40,7 +39,7 @@ public class TilesFactory : MonoBehaviour {
 
         if (cell.CreationType == CreationType.Place)
         {
-            var place = NGUITools.AddChild(cellSprite, PlacePrefab);
+            GameObject place = NGUITools.AddChild(cellSprite, PlacePrefab);
             place.transform.localPosition = Vector3.zero;
             cell.PlaceSprite = place;
         }
@@ -48,9 +47,7 @@ public class TilesFactory : MonoBehaviour {
         return cellSprite;
     }
 
-    public static TilesFactory Instance;
-
-    void Awake()
+    private void Awake()
     {
         if (Instance)
         {
@@ -60,60 +57,68 @@ public class TilesFactory : MonoBehaviour {
 
         Instance = this;
 
-        foreach (var chuzzlePrefab in ChuzzlePrefabs)
+        foreach (GameObject chuzzlePrefab in ChuzzlePrefabs)
         {
-            ChuzzlePool.Instance.RegisterChuzzlePrefab(chuzzlePrefab.GetComponent<Chuzzle>().Color, typeof(ColorChuzzle), chuzzlePrefab);
+            ChuzzlePool.Instance.RegisterChuzzlePrefab(chuzzlePrefab.GetComponent<Chuzzle>().Color,
+                typeof (ColorChuzzle), chuzzlePrefab);
         }
 
-        foreach (var chuzzlePrefab in ChuzzleLockPrefabs)
+        foreach (GameObject chuzzlePrefab in ChuzzleLockPrefabs)
         {
-            ChuzzlePool.Instance.RegisterChuzzlePrefab(chuzzlePrefab.GetComponent<Chuzzle>().Color, typeof(LockChuzzle), chuzzlePrefab);
+            ChuzzlePool.Instance.RegisterChuzzlePrefab(chuzzlePrefab.GetComponent<Chuzzle>().Color, typeof (LockChuzzle),
+                chuzzlePrefab);
         }
 
-        foreach (var chuzzlePrefab in ChuzzleTwoTimesPrefabs)
+        foreach (GameObject chuzzlePrefab in ChuzzleTwoTimesPrefabs)
         {
-            ChuzzlePool.Instance.RegisterChuzzlePrefab(chuzzlePrefab.GetComponent<Chuzzle>().Color, typeof(TwoTimeChuzzle), chuzzlePrefab);
+            ChuzzlePool.Instance.RegisterChuzzlePrefab(chuzzlePrefab.GetComponent<Chuzzle>().Color,
+                typeof (TwoTimeChuzzle), chuzzlePrefab);
         }
 
-        foreach (var chuzzlePrefab in ChuzzleCounterPrefabs)
+        foreach (GameObject chuzzlePrefab in ChuzzleCounterPrefabs)
         {
-            ChuzzlePool.Instance.RegisterChuzzlePrefab(chuzzlePrefab.GetComponent<Chuzzle>().Color, typeof(CounterChuzzle), chuzzlePrefab);
+            ChuzzlePool.Instance.RegisterChuzzlePrefab(chuzzlePrefab.GetComponent<Chuzzle>().Color,
+                typeof (CounterChuzzle), chuzzlePrefab);
         }
 
-        foreach (var chuzzlePrefab in HorizontalLineChuzzlePrefabs)
+        foreach (GameObject chuzzlePrefab in HorizontalLineChuzzlePrefabs)
         {
-            ChuzzlePool.Instance.RegisterChuzzlePrefab(chuzzlePrefab.GetComponent<Chuzzle>().Color, typeof(HorizontalLineChuzzle), chuzzlePrefab);
+            ChuzzlePool.Instance.RegisterChuzzlePrefab(chuzzlePrefab.GetComponent<Chuzzle>().Color,
+                typeof (HorizontalLineChuzzle), chuzzlePrefab);
         }
 
-        foreach (var chuzzlePrefab in VerticalLineChuzzlePrefabs)
+        foreach (GameObject chuzzlePrefab in VerticalLineChuzzlePrefabs)
         {
-            ChuzzlePool.Instance.RegisterChuzzlePrefab(chuzzlePrefab.GetComponent<Chuzzle>().Color, typeof(VerticalLineChuzzle), chuzzlePrefab);
+            ChuzzlePool.Instance.RegisterChuzzlePrefab(chuzzlePrefab.GetComponent<Chuzzle>().Color,
+                typeof (VerticalLineChuzzle), chuzzlePrefab);
         }
 
-        foreach (var chuzzlePrefab in BombChuzzlePrefabs)
+        foreach (GameObject chuzzlePrefab in BombChuzzlePrefabs)
         {
-            ChuzzlePool.Instance.RegisterChuzzlePrefab(chuzzlePrefab.GetComponent<Chuzzle>().Color, typeof(BombChuzzle), chuzzlePrefab);
+            ChuzzlePool.Instance.RegisterChuzzlePrefab(chuzzlePrefab.GetComponent<Chuzzle>().Color, typeof (BombChuzzle),
+                chuzzlePrefab);
         }
 
-        ChuzzlePool.Instance.RegisterChuzzlePrefab(InvaderPrefab.GetComponent<Chuzzle>().Color, typeof(InvaderChuzzle), InvaderPrefab);
+        ChuzzlePool.Instance.RegisterChuzzlePrefab(InvaderPrefab.GetComponent<Chuzzle>().Color, typeof (InvaderChuzzle),
+            InvaderPrefab);
     }
-
-    public int NumberOfColors;
 
     public Chuzzle CreateRandomChuzzle(Cell cell, bool isUniq)
     {
-        var colorsNumber = NumberOfColors == -1 ? ChuzzlePrefabs.Length : NumberOfColors;
-        var prefab = isUniq ? GetUniqRandomPrefabForCell(cell, new List<GameObject>(ChuzzlePrefabs)) : ChuzzlePrefabs[Random.Range(0, colorsNumber)];
+        int colorsNumber = NumberOfColors == -1 ? ChuzzlePrefabs.Length : NumberOfColors;
+        GameObject prefab = isUniq
+            ? GetUniqRandomPrefabForCell(cell, new List<GameObject>(ChuzzlePrefabs))
+            : ChuzzlePrefabs[Random.Range(0, colorsNumber)];
         return CreateChuzzle(cell, prefab);
     }
 
     private GameObject GetUniqRandomPrefabForCell(Cell cell, List<GameObject> possiblePrefabs)
     {
         GameObject prefab;
-        var leftCell = cell.Left;
-        var rightCell = cell.Right;
-        var topCell = cell.Top;
-        var bottomCell = cell.Bottom;
+        Cell leftCell = cell.Left;
+        Cell rightCell = cell.Right;
+        Cell topCell = cell.Top;
+        Cell bottomCell = cell.Bottom;
 
         RemoveColorFromPossible(leftCell, possiblePrefabs);
         RemoveColorFromPossible(rightCell, possiblePrefabs);
@@ -127,9 +132,9 @@ public class TilesFactory : MonoBehaviour {
     {
         if (cell != null)
         {
-            var chuzzle = GamefieldUtility.GetChuzzleInCell(cell, Gamefield.Level.Chuzzles);
+            Chuzzle chuzzle = GamefieldUtility.GetChuzzleInCell(cell, Gamefield.Level.Chuzzles);
             if (chuzzle == null) return;
-            var possible = possiblePrefabs.FirstOrDefault(x => x.GetComponent<Chuzzle>().Color == chuzzle.Color);
+            GameObject possible = possiblePrefabs.FirstOrDefault(x => x.GetComponent<Chuzzle>().Color == chuzzle.Color);
             if (possible != null)
             {
                 possiblePrefabs.Remove(possible);
@@ -139,16 +144,20 @@ public class TilesFactory : MonoBehaviour {
 
     public Chuzzle CreateLockChuzzle(Cell cell, bool isUniq)
     {
-        var colorsNumber = NumberOfColors == -1 ? ChuzzlePrefabs.Length : NumberOfColors;
-        var prefab = isUniq ? GetUniqRandomPrefabForCell(cell, new List<GameObject>(ChuzzleLockPrefabs)) : ChuzzleLockPrefabs[Random.Range(0, colorsNumber)];
+        int colorsNumber = NumberOfColors == -1 ? ChuzzlePrefabs.Length : NumberOfColors;
+        GameObject prefab = isUniq
+            ? GetUniqRandomPrefabForCell(cell, new List<GameObject>(ChuzzleLockPrefabs))
+            : ChuzzleLockPrefabs[Random.Range(0, colorsNumber)];
         Chuzzle c = CreateChuzzle(cell, prefab);
         return c;
     }
 
     public Chuzzle CreateTwoTimeChuzzle(Cell cell, bool isUniq)
     {
-        var colorsNumber = NumberOfColors == -1 ? ChuzzlePrefabs.Length : NumberOfColors;
-        var prefab = isUniq ? GetUniqRandomPrefabForCell(cell, new List<GameObject>(ChuzzleTwoTimesPrefabs)) : ChuzzleTwoTimesPrefabs[Random.Range(0, colorsNumber)];
+        int colorsNumber = NumberOfColors == -1 ? ChuzzlePrefabs.Length : NumberOfColors;
+        GameObject prefab = isUniq
+            ? GetUniqRandomPrefabForCell(cell, new List<GameObject>(ChuzzleTwoTimesPrefabs))
+            : ChuzzleTwoTimesPrefabs[Random.Range(0, colorsNumber)];
         Chuzzle c = CreateChuzzle(cell, prefab);
         return c;
     }
@@ -160,19 +169,20 @@ public class TilesFactory : MonoBehaviour {
 
     public Chuzzle CreateBomb(Cell cell)
     {
-        var colorsNumber = NumberOfColors == -1 ? ChuzzlePrefabs.Length : NumberOfColors;
-        var prefab = BombChuzzlePrefabs[Random.Range(0, colorsNumber)];
+        int colorsNumber = NumberOfColors == -1 ? ChuzzlePrefabs.Length : NumberOfColors;
+        GameObject prefab = BombChuzzlePrefabs[Random.Range(0, colorsNumber)];
         Chuzzle ch = CreateChuzzle(cell, prefab);
         return ch;
     }
 
-
     public Chuzzle CreateCounterChuzzle(Cell cell, bool isUniq)
     {
-        var colorsNumber = NumberOfColors == -1 ? ChuzzlePrefabs.Length : NumberOfColors;
+        int colorsNumber = NumberOfColors == -1 ? ChuzzlePrefabs.Length : NumberOfColors;
 
-        var prefab = isUniq ? GetUniqRandomPrefabForCell(cell, new List<GameObject>(ChuzzleCounterPrefabs)) : ChuzzleCounterPrefabs[Random.Range(0, colorsNumber)];
-        var c = CreateChuzzle(cell, prefab);
+        GameObject prefab = isUniq
+            ? GetUniqRandomPrefabForCell(cell, new List<GameObject>(ChuzzleCounterPrefabs))
+            : ChuzzleCounterPrefabs[Random.Range(0, colorsNumber)];
+        Chuzzle c = CreateChuzzle(cell, prefab);
 
         var chuzzle = c as CounterChuzzle;
         if (chuzzle == null)
@@ -195,11 +205,10 @@ public class TilesFactory : MonoBehaviour {
 
     public Chuzzle CreateChuzzle(Cell cell, GameObject prefab)
     {
-        var type = prefab.GetComponent<Chuzzle>().GetType();
+        Type type = prefab.GetComponent<Chuzzle>().GetType();
         var chuzzle = ((GameObject) Instantiate(prefab)).GetComponent<Chuzzle>();
-            //ChuzzlePool.Instance.Get(prefab.GetComponent<Chuzzle>().Color, type).GetComponent<Chuzzle>();
-            
-        
+        //ChuzzlePool.Instance.Get(prefab.GetComponent<Chuzzle>().Color, type).GetComponent<Chuzzle>();
+
         chuzzle.Real = chuzzle.MoveTo = chuzzle.Current = cell;
 
         if (!chuzzle.Explosion)
@@ -224,7 +233,6 @@ public class TilesFactory : MonoBehaviour {
     {
         if (cell.Type == CellTypes.Usual)
         {
-
             switch (cell.CreationType)
             {
                 case CreationType.Usual:
@@ -243,7 +251,7 @@ public class TilesFactory : MonoBehaviour {
                     return CreateLockChuzzle(cell, isUniq);
                 case CreationType.TwoTimes:
                     cell.CreationType = CreationType.Usual;
-                    return CreateTwoTimeChuzzle(cell,isUniq);
+                    return CreateTwoTimeChuzzle(cell, isUniq);
                 case CreationType.Invader:
                     cell.CreationType = CreationType.Usual;
                     return CreateInvader(cell);
@@ -273,12 +281,10 @@ public class TilesFactory : MonoBehaviour {
 
     public void ReplaceWithOtherColor(Chuzzle toReplace)
     {
-        var exceptColor = toReplace.Color;
-        var possibleColors = ((ChuzzleColor[])Enum.GetValues(typeof(ChuzzleColor))).ToList();
+        ChuzzleColor exceptColor = toReplace.Color;
+        List<ChuzzleColor> possibleColors = ((ChuzzleColor[]) Enum.GetValues(typeof (ChuzzleColor))).ToList();
         possibleColors.Remove(exceptColor);
-         
+
         ReplaceWithColor(toReplace, possibleColors[Random.Range(0, possibleColors.Count)]);
     }
-
-    
 }

@@ -28,7 +28,7 @@ public class FieldState : GamefieldState
     public Chuzzle CurrentChuzzle;
     public Vector3 CurrentChuzzlePrevPosition;
     public Direction CurrentDirection;
-    public GameObject DownArrow;
+    public TipArrow tipArrow;
     public List<Chuzzle> SelectedChuzzles = new List<Chuzzle>();
     public float TimeFromTip = 0;
     private bool _axisChozen;
@@ -58,13 +58,14 @@ public class FieldState : GamefieldState
         AnimatedChuzzles.Clear();
         Chuzzle.DropEventHandlers();
         Chuzzle.AnimationStarted += OnAnimationStarted;
-        if (IsTurn)
+        CheckPossibleCombinations();
+
+
+        if (!Gamefield.InvaderWasDestroyed)
         {
             InvaderChuzzle.Populate(Gamefield);
         }
-        IsTurn = true;
-
-        CheckPossibleCombinations();
+        Gamefield.InvaderWasDestroyed = false;
     }
 
     private void CheckPossibleCombinations()
@@ -363,23 +364,22 @@ public class FieldState : GamefieldState
         {
             return;
         }
-
         
         TimeFromTip += Time.deltaTime;
         if (TimeFromTip > 1 && !Gamefield.Level.ActiveChuzzles.Any(x => x.Shine))
         {                        
-            if (_possibleCombination.Any())
+            if (_possibleCombination.Any() && _arrowChuzzle)
             {
                 foreach (var chuzzle in _possibleCombination)
                 {
                     chuzzle.Shine = true;
                 }
-                GamefieldUtility.ShowArrow(_arrowChuzzle, _targetPosition, DownArrow);
+                GamefieldUtility.ShowArrow(_arrowChuzzle, _targetPosition, tipArrow);
             }
 
             TimeFromTip = 0;
         }       
-         
+
         #region Drag
 
         if (CurrentChuzzle == null &&
@@ -499,6 +499,7 @@ public class FieldState : GamefieldState
 
     public void LateUpdateState(List<Cell> activeCells)
     {
+        tipArrow.UpdateState();
         if (_isReturning)
         {
             foreach (var selectedChuzzle in SelectedChuzzles)

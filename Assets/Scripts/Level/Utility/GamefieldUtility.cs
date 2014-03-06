@@ -256,8 +256,6 @@ public class GamefieldUtility
             posibleCombination.AddRange(topPart);
 
             Debug.Log("Combination 1");
-            Debug.Log("Bottom Part: "+bottomPart[0]);
-            Debug.Log("Top Part: "+topPart[0]);
             isHorizontalMove = new IntVector2(bottom.Current.x, bottom.Current.y + 1);
             chuzzleToMove = middlePart.First();
             return posibleCombination;
@@ -278,10 +276,7 @@ public class GamefieldUtility
             posibleCombination.AddRange(middlePart);
             posibleCombination.AddRange(rightPart);
 
-            Debug.Log("Left Part: " + leftPart[0]);
-            Debug.Log("Right Part: " + rightPart[0]);
             isHorizontalMove = new IntVector2(left.Current.x + 1, left.Current.y);
-            Debug.Log("Chuzzle count: " + chuzzles.Count);
             chuzzleToMove = middlePart.First();
             Debug.Log("Combination 2: " + chuzzleToMove);
             return posibleCombination;
@@ -601,10 +596,8 @@ public class GamefieldUtility
         return new Vector3(x*scale.x, y*scale.y, 0);
     }
 
-    public static void ShowArrow(Chuzzle from, IntVector2 to, GameObject downArrowPrefab)
+    public static void ShowArrow(Chuzzle from, IntVector2 to, TipArrow tipArrow)
     {
-        var down = Object.Instantiate(downArrowPrefab) as GameObject;
-/*        ScaleSprite(down.GetComponent<Sprite>(), from.Scale);*/
 
         if (from.Current.x == to.x)
         {
@@ -618,7 +611,7 @@ public class GamefieldUtility
             {
                 //to up
                 //mirror vertical
-                down.transform.rotation = Quaternion.Euler(0, 0, 180);
+                tipArrow.transform.rotation = Quaternion.Euler(0, 0, 180);
             }
         }
         else
@@ -627,18 +620,17 @@ public class GamefieldUtility
             if (from.Current.x < to.x)
             {
                 //to right
-                down.transform.rotation = Quaternion.Euler(0, 0, 90);
+                tipArrow.transform.rotation = Quaternion.Euler(0, 0, 90);
             }
             else
             {
                 //to left
                 //to right
-                down.transform.rotation = Quaternion.Euler(0, 0, -90);
+                tipArrow.transform.rotation = Quaternion.Euler(0, 0, -90);
             }
         }
 
-        down.transform.parent = from.transform;  
-        from.Arrow = down;
+        tipArrow.Chuzzle = from;
     }
 
     public static Cell MaxColumnAvailiablePosition(int column, IEnumerable<Cell> cells)

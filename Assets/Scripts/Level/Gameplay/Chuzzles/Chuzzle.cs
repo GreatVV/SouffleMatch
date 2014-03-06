@@ -12,7 +12,6 @@ public abstract class Chuzzle : MonoBehaviour
 {
     public float Alpha;
 
-    public GameObject Arrow;
     public ChuzzleColor Color;
 
     public Cell Current;
@@ -98,10 +97,6 @@ public abstract class Chuzzle : MonoBehaviour
         {
             _shine = value;
             Alpha = 1;
-            if (!_shine && Arrow != null)
-            {
-                Object.Destroy(Arrow);
-            }
         }
     }
 
