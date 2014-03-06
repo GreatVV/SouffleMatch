@@ -48,8 +48,8 @@ public abstract class Chuzzle : MonoBehaviour
         {
             InvokeAnimationFinished();
         }
-        ChuzzlePool.Instance.Release(Color, GetType(), gameObject);
-        //Object.Destroy(gameObject);
+       // ChuzzlePool.Instance.Release(Color, GetType(), gameObject);
+        Object.Destroy(gameObject);
     }
 
     private void OnAnimateMoveEnd(object obj)

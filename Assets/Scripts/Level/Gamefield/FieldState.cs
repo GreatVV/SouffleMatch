@@ -307,6 +307,7 @@ public class FieldState : GamefieldState
             Debug.LogError("FUCK you in field state: " + AnimatedChuzzles.Count);
         }
         Gamefield.GameMode.HumanTurn();
+        Reset();
     }
 
     public void CheckCombinations()
@@ -848,9 +849,7 @@ public class FieldState : GamefieldState
             CheckAnimationCompleted();
         }
     }
-
     
-
     public void Reset()
     {
         foreach (var selectedChuzzle in SelectedChuzzles)

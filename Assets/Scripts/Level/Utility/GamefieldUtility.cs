@@ -175,7 +175,7 @@ public class GamefieldUtility
     {
         if (a == null || b == null)
         {
-            Debug.Log("A or b is NULL. a:"+a+"b:"+b);
+            Debug.LogError(string.Format("A or b is NULL. a: {0} b: {1}", a, b));
             return false;
         }
 
@@ -256,6 +256,8 @@ public class GamefieldUtility
             posibleCombination.AddRange(topPart);
 
             Debug.Log("Combination 1");
+            Debug.Log("Bottom Part: "+bottomPart[0]);
+            Debug.Log("Top Part: "+topPart[0]);
             isHorizontalMove = new IntVector2(bottom.Current.x, bottom.Current.y + 1);
             chuzzleToMove = middlePart.First();
             return posibleCombination;
@@ -275,8 +277,11 @@ public class GamefieldUtility
             posibleCombination.AddRange(leftPart);
             posibleCombination.AddRange(middlePart);
             posibleCombination.AddRange(rightPart);
-            
+
+            Debug.Log("Left Part: " + leftPart[0]);
+            Debug.Log("Right Part: " + rightPart[0]);
             isHorizontalMove = new IntVector2(left.Current.x + 1, left.Current.y);
+            Debug.Log("Chuzzle count: " + chuzzles.Count);
             chuzzleToMove = middlePart.First();
             Debug.Log("Combination 2: " + chuzzleToMove);
             return posibleCombination;
@@ -467,10 +472,10 @@ public class GamefieldUtility
     public static bool BetweenYCheck(Chuzzle chuzzle, List<Chuzzle> allChuzzles)
     {
         var firstChuzzle = chuzzle;
-        var secondChuzzle =
-            allChuzzles.FirstOrDefault(
-                ch =>
-                    ch.Current.x == firstChuzzle.Current.x && ch.Current.y == firstChuzzle.Current.y + 2 && IsSameColor(ch, firstChuzzle));
+        var secondChuzzle = allChuzzles.FirstOrDefault( ch => 
+            ch.Current.x == firstChuzzle.Current.x && 
+            ch.Current.y == firstChuzzle.Current.y + 2 && 
+            IsSameColor(ch, firstChuzzle));
 
         if (secondChuzzle == null || allChuzzles.Any(x => x.Current.y == firstChuzzle.Current.y + 1 && IsLock(x)))
             return false;
@@ -540,7 +545,7 @@ public class GamefieldUtility
     {
         var enumerable = chuzzles as IList<Chuzzle> ?? chuzzles.ToList();
         var firstChuzzle = enumerable.FirstOrDefault(x => x.Real.y == y && x.Color == chuzzleColor && IsOrdinaryDestroyable(x));
-        if (firstChuzzle != null && !enumerable.Any(c => c is LockChuzzle))
+        if (firstChuzzle != null && !enumerable.Any(c => c is LockChuzzle && c.Current.y == y))
         {
             var secondChuzzle =
                 enumerable.FirstOrDefault(
@@ -556,16 +561,14 @@ public class GamefieldUtility
     }
 
     public static IEnumerable<Chuzzle> GetVerticalLineChuzzles(int x, ChuzzleColor chuzzleColor,
-        IEnumerable<Chuzzle> chuzzles)
+        List<Chuzzle> chuzzles)
     {
-        var enumerable = chuzzles as IList<Chuzzle> ?? chuzzles.ToList();
-        var firstChuzzle = enumerable.FirstOrDefault(c => c.Real.x == x && c.Color == chuzzleColor && !(c is InvaderChuzzle));
-        if (firstChuzzle != null && !enumerable.Any(c=>c is LockChuzzle))
+        var firstChuzzle = chuzzles.FirstOrDefault(c => c.Real.x == x && c.Color == chuzzleColor && !(c is InvaderChuzzle));
+        //Debug.Log(string.Format("fc:{0} |x: {1} Color: {2}", firstChuzzle, x, chuzzleColor));
+       // Debug.Log("Any is lock: "+chuzzles.FirstOrDefault(c=>c is LockChuzzle));
+        if (firstChuzzle != null && !chuzzles.Any(c => c is LockChuzzle && c.Current.x == x))
         {
-            var secondChuzzle =
-                enumerable.FirstOrDefault(
-                    c => IsSameColor(c, firstChuzzle) &&
-                        (c.Current == firstChuzzle.Current.Top || c.Current == firstChuzzle.Current.Bottom));
+            var secondChuzzle = chuzzles.FirstOrDefault(c => IsSameColor(c, firstChuzzle) && (c.Current == firstChuzzle.Current.Top || c.Current == firstChuzzle.Current.Bottom));
             if (secondChuzzle != null)
             {
                 return new List<Chuzzle> {firstChuzzle, secondChuzzle};

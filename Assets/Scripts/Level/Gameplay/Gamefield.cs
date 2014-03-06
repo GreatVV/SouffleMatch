@@ -165,8 +165,7 @@ public class Gamefield : MonoBehaviour
         Player.Instance.LastPlayedLevel = level;
         CombinationDestroyed -= PointSystem.CountForCombinations;
         CombinationDestroyed += PointSystem.CountForCombinations;
-        _currentState = InitState;
-        _currentState.OnEnter();
+        SwitchStateTo(InitState);
     }
 
     public void AddEventHandlers()
@@ -201,7 +200,10 @@ public class Gamefield : MonoBehaviour
     public void SwitchStateTo(GamefieldState newState)
     {
        // Debug.Log("Old state: "+_currentState);
-        _currentState.OnExit();
+        if (_currentState != null)
+        {
+            _currentState.OnExit();
+        }
         _currentState = newState;
        // Debug.Log("Switch to: " + _currentState);
         _currentState.OnEnter();
@@ -213,5 +215,28 @@ public class Gamefield : MonoBehaviour
         {
             return Instance.Level.ActiveChuzzles;
         }
-    }      
+    }
+
+    public void Reset()
+    {
+        PointSystem.Reset();
+        Level.Reset();
+
+        CombinationDestroyed -= InvaderChuzzle.OnCombinationDestroyed;
+        CombinationDestroyed += InvaderChuzzle.OnCombinationDestroyed;
+
+        Level.InitFromFile(Player.Instance.LastPlayedLevel);
+        StageManager.Init(Player.Instance.LastPlayedLevel.Stages);
+
+        PointSystem.TargetPoints = GameMode.TargetPoints;
+
+        NewTilesInColumns = new int[Level.Width];
+
+        AddEventHandlers();
+    }
+
+    public void TogglePause()
+    {
+        IsPause = !IsPause;
+    }
 }

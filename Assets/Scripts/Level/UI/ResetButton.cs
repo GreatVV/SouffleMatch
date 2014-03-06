@@ -1,14 +1,13 @@
 ﻿using UnityEngine;
 
-public class MapButton : MonoBehaviour
+public class ResetButton : MonoBehaviour
 {
     public GameObject pauseButton;
+    public SessionRestorer sessionRestorer;
 
-    public Window levelList;
-
-    public void OnPress()
+    public void Restart()
     {
-        PanelManager.Show(levelList);
+        sessionRestorer.Restart();
         pauseButton.SendMessage("OnClick", SendMessageOptions.DontRequireReceiver);
     }
 }
