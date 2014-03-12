@@ -10,7 +10,7 @@ public class CenterCameraOnField : MonoBehaviour
 {
     public static CenterCameraOnField Instance;
 
-    public Camera Camera;
+    public Camera[] Cameras;
     public Vector3 DefaultPosition = new Vector3(240, 400, -10);
 
     public bool IsTweening;
@@ -38,63 +38,67 @@ public class CenterCameraOnField : MonoBehaviour
         var fh = maxY - minY+1f;
 
         var fieldRatio = fw/fh;
-        //Debug.Log("Field ratio: "+fieldRatio);
-        //Debug.Log("Aspect: "+Camera.aspect);
-        Camera.rect = new Rect(0,0,1,1);
-        Camera.ResetAspect();
-        var baseAspect = Camera.aspect;
 
-        Camera.aspect = fieldRatio;
-        Camera.orthographicSize = fh / 2;
-
-        if (baseAspect < 1)
+        foreach (var currentCamera in Cameras)
         {
-            float height = baseAspect*normalizedSize.x/fieldRatio;
+            //Debug.Log("Field ratio: "+fieldRatio);
+            //Debug.Log("Aspect: "+Camera.aspect);
+            currentCamera.rect = new Rect(0, 0, 1, 1);
+            currentCamera.ResetAspect();
+            var baseAspect = currentCamera.aspect;
 
-            Camera.rect = new Rect(
-                (1 - normalizedSize.x)/2f,
-                (1 - height)/2f,
-                normalizedSize.x,
-                height
-                );
-        }
-        else
-        {
-            float width = normalizedSize.y * fieldRatio / baseAspect;
-            Camera.rect = new Rect(
-               (1 - width) / 2f,
-               (1 - normalizedSize.y) / 2f,
-               width,
-               normalizedSize.y
-               );
-        }
+            currentCamera.aspect = fieldRatio;
+            currentCamera.orthographicSize = fh/2;
 
-        centerPosition = new Vector3(minX + Camera.aspect * Camera.orthographicSize - 0.5f,
-                maxY - Camera.orthographicSize + 0.5f, DefaultPosition.z);
+            if (baseAspect < 1)
+            {
+                float height = baseAspect*normalizedSize.x/fieldRatio;
 
-        if (instantly)
-        {
-            Camera.transform.position = centerPosition;
+                currentCamera.rect = new Rect(
+                    (1 - normalizedSize.x)/2f,
+                    (1 - height)/2f,
+                    normalizedSize.x,
+                    height
+                    );
+            }
+            else
+            {
+                float width = normalizedSize.y*fieldRatio/baseAspect;
+                currentCamera.rect = new Rect(
+                    (1 - width)/2f,
+                    (1 - normalizedSize.y)/2f,
+                    width,
+                    normalizedSize.y
+                    );
+            }
 
-         /*   var chuzzle = Gamefield.Chuzzles.First(x => x.Current.Right != null && x.Current.Right.Top != null);
+            centerPosition = new Vector3(minX + currentCamera.aspect*currentCamera.orthographicSize - 0.5f,
+                maxY - currentCamera.orthographicSize + 0.5f, DefaultPosition.z);
+
+            if (instantly)
+            {
+                currentCamera.transform.position = centerPosition;
+
+                /*   var chuzzle = Gamefield.Chuzzles.First(x => x.Current.Right != null && x.Current.Right.Top != null);
             Debug.Log("Pos: "+Camera.WorldToScreenPoint(chuzzle.transform.position));
             Debug.Log("Pos2:"+Camera.WorldToScreenPoint(chuzzle.Current.Right.Top.Sprite.transform.position));
             Debug.Log("Difference: " + (Camera.WorldToScreenPoint(chuzzle.transform.position) - Camera.WorldToScreenPoint(chuzzle.Current.Right.Top.Sprite.transform.position)));*/
-            return;
-        }
-        
+                continue;
+            }
 
-        if (Vector3.Distance(Camera.transform.position, centerPosition) > 0.1f)
-        {
-            iTween.MoveTo(Camera.gameObject,
-                iTween.Hash("x", centerPosition.x, "y", centerPosition.y, "z", centerPosition.z, "time", 2f,
-                    "oncomplete", "OnTweenComplete", "oncompletetarget",
-                    gameObject, "oncompleteparams", centerPosition));
-            IsTweening = true;
-        }
-        else
-        {
-            Camera.transform.position = centerPosition;
+
+            if (Vector3.Distance(currentCamera.transform.position, centerPosition) > 0.1f)
+            {
+                iTween.MoveTo(currentCamera.gameObject,
+                    iTween.Hash("x", centerPosition.x, "y", centerPosition.y, "z", centerPosition.z, "time", 2f,
+                        "oncomplete", "OnTweenComplete", "oncompletetarget",
+                        gameObject, "oncompleteparams", centerPosition));
+                IsTweening = true;
+            }
+            else
+            {
+                currentCamera.transform.position = centerPosition;
+            }
         }
     }
 
@@ -113,14 +117,14 @@ public class CenterCameraOnField : MonoBehaviour
 
     public void ToDefault()
     {
-        Camera.transform.position = DefaultPosition;
+        foreach (var currentCamera in Cameras)
+        {
+            currentCamera.transform.position = DefaultPosition;
+        }
     }
 
     void Update()
     {
-        
-
-
         if (previousNormalizedSize != normalizedSize)
         {
             Instance.CenterCameraOnChuzzles(Gamefield.Chuzzles, false);

@@ -1,4 +1,5 @@
-﻿using TutorialSpace;
+﻿using System.Linq;
+using TutorialSpace;
 using UnityEngine;
 
 public class Tutorial : MonoBehaviour
@@ -19,8 +20,9 @@ public class Tutorial : MonoBehaviour
     private TutorialPage startPage;
 
     private TutorialPage currentPage;
-    public static int[] blockedRows;
-    public static int[] blockedColumns;
+    public int[] blockedY = new int[0];
+    public int[] blockedX = new int[0];
+    public static Tutorial instance;
 
     void OnPageEnd(TutorialPage page)
     {
@@ -34,5 +36,20 @@ public class Tutorial : MonoBehaviour
         }
     }
 
-    
+    public bool CantMoveThisChuzzle(Chuzzle currentChuzzle)
+    {
+        return blockedX.Any(x => x == currentChuzzle.Current.x) ||
+               blockedY.Any(y => y == currentChuzzle.Current.y);
+    }
+
+    public void Awake()
+    {
+        instance = this;
+    }
+
+    public bool CantMoveThisCell(Cell cell)
+    {
+        return blockedX.Any(x => x == cell.x) ||
+               blockedY.Any(y => y == cell.y);
+    }
 }

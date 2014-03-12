@@ -382,8 +382,7 @@ public class FieldState : GamefieldState
 
         #region Drag
 
-        if (CurrentChuzzle == null &&
-            (Input.GetMouseButtonDown(0) || (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began)))
+        if (CurrentChuzzle == null && (Input.GetMouseButtonDown(0) || (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began)))
         {
             _dragOrigin = Input.mousePosition;
            // Debug.Log("Position: " + _dragOrigin);
@@ -423,6 +422,12 @@ public class FieldState : GamefieldState
 
         if (CurrentChuzzle == null)
         {
+            return;
+        }
+
+        if (CurrentChuzzle && Tutorial.instance.CantMoveThisChuzzle(CurrentChuzzle))
+        {
+            Reset();
             return;
         }
 
