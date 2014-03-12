@@ -42,7 +42,7 @@ MonoBehaviour:
   mSprites:
   - name: 0-99
     x: 405
-    y: 560
+    y: 37
     width: 236
     height: 104
     borderLeft: 0
@@ -54,8 +54,8 @@ MonoBehaviour:
     paddingTop: 0
     paddingBottom: 0
   - name: 1-99
-    x: 415
-    y: 437
+    x: 1720
+    y: 1515
     width: 236
     height: 104
     borderLeft: 0
@@ -67,8 +67,8 @@ MonoBehaviour:
     paddingTop: 0
     paddingBottom: 0
   - name: 19-99
-    x: 1434
-    y: 1821
+    x: 675
+    y: 1392
     width: 236
     height: 104
     borderLeft: 0
@@ -80,8 +80,8 @@ MonoBehaviour:
     paddingTop: 0
     paddingBottom: 0
   - name: 4-99
-    x: 1709
-    y: 1944
+    x: 912
+    y: 1392
     width: 236
     height: 104
     borderLeft: 0
@@ -93,8 +93,8 @@ MonoBehaviour:
     paddingTop: 0
     paddingBottom: 0
   - name: 9-99
-    x: 1709
-    y: 1839
+    x: 1149
+    y: 1392
     width: 236
     height: 104
     borderLeft: 0
@@ -106,8 +106,8 @@ MonoBehaviour:
     paddingTop: 0
     paddingBottom: 0
   - name: banan-title
-    x: 796
-    y: 1299
+    x: 239
+    y: 65
     width: 138
     height: 124
     borderLeft: 0
@@ -119,8 +119,8 @@ MonoBehaviour:
     paddingTop: 0
     paddingBottom: 0
   - name: buy
-    x: 1434
-    y: 1636
+    x: 1386
+    y: 1392
     width: 220
     height: 104
     borderLeft: 0
@@ -133,7 +133,7 @@ MonoBehaviour:
     paddingBottom: 0
   - name: buy-button
     x: 405
-    y: 665
+    y: 313
     width: 204
     height: 122
     borderLeft: 0
@@ -145,8 +145,8 @@ MonoBehaviour:
     paddingTop: 0
     paddingBottom: 0
   - name: cash
-    x: 0
-    y: 19
+    x: 1765
+    y: 1623
     width: 224
     height: 73
     borderLeft: 0
@@ -159,7 +159,7 @@ MonoBehaviour:
     paddingBottom: 0
   - name: close
     x: 557
-    y: 939
+    y: 587
     width: 84
     height: 84
     borderLeft: 0
@@ -170,9 +170,22 @@ MonoBehaviour:
     paddingRight: 0
     paddingTop: 0
     paddingBottom: 0
+  - name: cloud
+    x: 0
+    y: 886
+    width: 512
+    height: 351
+    borderLeft: 0
+    borderRight: 0
+    borderTop: 0
+    borderBottom: 0
+    paddingLeft: 0
+    paddingRight: 0
+    paddingTop: 0
+    paddingBottom: 0
   - name: empty-star
     x: 557
-    y: 1131
+    y: 779
     width: 106
     height: 106
     borderLeft: 0
@@ -184,8 +197,8 @@ MonoBehaviour:
     paddingTop: 0
     paddingBottom: 0
   - name: energy
-    x: 538
-    y: 14
+    x: 513
+    y: 1063
     width: 124
     height: 174
     borderLeft: 0
@@ -197,8 +210,8 @@ MonoBehaviour:
     paddingTop: 0
     paddingBottom: 0
   - name: energy_count
-    x: 1188
-    y: 1456
+    x: 1607
+    y: 1406
     width: 130
     height: 90
     borderLeft: 82
@@ -211,7 +224,7 @@ MonoBehaviour:
     paddingBottom: 0
   - name: energy_prize
     x: 610
-    y: 701
+    y: 349
     width: 58
     height: 86
     borderLeft: 0
@@ -224,7 +237,7 @@ MonoBehaviour:
     paddingBottom: 0
   - name: fb
     x: 0
-    y: 937
+    y: 585
     width: 300
     height: 300
     borderLeft: 0
@@ -262,8 +275,8 @@ MonoBehaviour:
     paddingTop: 3
     paddingBottom: 0
   - name: header
-    x: 1090
-    y: 1550
+    x: 1434
+    y: 1627
     width: 246
     height: 69
     borderLeft: 0
@@ -275,7 +288,7 @@ MonoBehaviour:
     paddingTop: 1
     paddingBottom: 0
   - name: header_lose
-    x: 675
+    x: 1305
     y: 1547
     width: 414
     height: 72
@@ -289,7 +302,7 @@ MonoBehaviour:
     paddingBottom: 0
   - name: header_won
     x: 1434
-    y: 1741
+    y: 1863
     width: 384
     height: 78
     borderLeft: 0
@@ -301,8 +314,8 @@ MonoBehaviour:
     paddingTop: 0
     paddingBottom: 0
   - name: heart
-    x: 301
-    y: 958
+    x: 638
+    y: 1214
     width: 27
     height: 23
     borderLeft: 0
@@ -315,7 +328,7 @@ MonoBehaviour:
     paddingBottom: 0
   - name: keys-plate
     x: 0
-    y: 788
+    y: 436
     width: 538
     height: 148
     borderLeft: 0
@@ -327,8 +340,8 @@ MonoBehaviour:
     paddingTop: 0
     paddingBottom: 0
   - name: lose-lemur-head
-    x: 0
-    y: 264
+    x: 405
+    y: 142
     width: 238
     height: 170
     borderLeft: 0
@@ -340,8 +353,8 @@ MonoBehaviour:
     paddingTop: 0
     paddingBottom: 0
   - name: lvl_actual
-    x: 1055
-    y: 1430
+    x: 539
+    y: 468
     width: 132
     height: 116
     borderLeft: 0
@@ -353,8 +366,8 @@ MonoBehaviour:
     paddingTop: 0
     paddingBottom: 0
   - name: lvl_complete
-    x: 1655
-    y: 1624
+    x: 1210
+    y: 1275
     width: 132
     height: 116
     borderLeft: 0
@@ -366,8 +379,8 @@ MonoBehaviour:
     paddingTop: 0
     paddingBottom: 0
   - name: lvl_locked
-    x: 539
-    y: 820
+    x: 1077
+    y: 1275
     width: 132
     height: 116
     borderLeft: 0
@@ -379,8 +392,8 @@ MonoBehaviour:
     paddingTop: 0
     paddingBottom: 0
   - name: MapButton
-    x: 304
-    y: 1
+    x: 1555
+    y: 1327
     width: 64
     height: 64
     borderLeft: 0
@@ -392,8 +405,8 @@ MonoBehaviour:
     paddingTop: 0
     paddingBottom: 0
   - name: new-high-score
-    x: 0
-    y: 435
+    x: 1434
+    y: 1942
     width: 414
     height: 106
     borderLeft: 0
@@ -405,8 +418,8 @@ MonoBehaviour:
     paddingTop: 0
     paddingBottom: 0
   - name: next
-    x: 1819
-    y: 1697
+    x: 675
+    y: 1269
     width: 200
     height: 122
     borderLeft: 0
@@ -418,8 +431,8 @@ MonoBehaviour:
     paddingTop: 0
     paddingBottom: 0
   - name: parrot
-    x: 675
-    y: 1265
+    x: 513
+    y: 904
     width: 120
     height: 158
     borderLeft: 0
@@ -431,8 +444,8 @@ MonoBehaviour:
     paddingTop: 0
     paddingBottom: 0
   - name: pearls_count
-    x: 1819
-    y: 1621
+    x: 1849
+    y: 1858
     width: 197
     height: 75
     borderLeft: 181
@@ -444,8 +457,8 @@ MonoBehaviour:
     paddingTop: 25
     paddingBottom: 6
   - name: pears-title
-    x: 876
-    y: 1432
+    x: 1849
+    y: 1934
     width: 178
     height: 114
     borderLeft: 0
@@ -457,8 +470,8 @@ MonoBehaviour:
     paddingTop: 0
     paddingBottom: 0
   - name: Play
-    x: 239
-    y: 1
+    x: 1490
+    y: 1327
     width: 64
     height: 64
     borderLeft: 0
@@ -470,8 +483,8 @@ MonoBehaviour:
     paddingTop: 0
     paddingBottom: 0
   - name: play_startPopup
-    x: 239
-    y: 189
+    x: 675
+    y: 1497
     width: 330
     height: 122
     borderLeft: 0
@@ -483,8 +496,8 @@ MonoBehaviour:
     paddingTop: 0
     paddingBottom: 0
   - name: play-empty
-    x: 239
-    y: 312
+    x: 1434
+    y: 1697
     width: 330
     height: 122
     borderLeft: 0
@@ -496,8 +509,8 @@ MonoBehaviour:
     paddingTop: 0
     paddingBottom: 0
   - name: plusButton
-    x: 570
-    y: 362
+    x: 1681
+    y: 1624
     width: 72
     height: 72
     borderLeft: 0
@@ -522,8 +535,8 @@ MonoBehaviour:
     paddingTop: 0
     paddingBottom: 0
   - name: price-pearl
-    x: 570
-    y: 243
+    x: 1957
+    y: 1551
     width: 68
     height: 68
     borderLeft: 0
@@ -536,7 +549,7 @@ MonoBehaviour:
     paddingBottom: 0
   - name: pusab_0
     x: 301
-    y: 982
+    y: 630
     width: 255
     height: 255
     borderLeft: 0
@@ -548,8 +561,8 @@ MonoBehaviour:
     paddingTop: 0
     paddingBottom: 1
   - name: refill
-    x: 239
-    y: 66
+    x: 1006
+    y: 1497
     width: 298
     height: 122
     borderLeft: 0
@@ -562,7 +575,7 @@ MonoBehaviour:
     paddingBottom: 0
   - name: replay
     x: 0
-    y: 542
+    y: 313
     width: 404
     height: 122
     borderLeft: 0
@@ -574,8 +587,8 @@ MonoBehaviour:
     paddingTop: 0
     paddingBottom: 0
   - name: Restart
-    x: 675
-    y: 1424
+    x: 876
+    y: 1269
     width: 200
     height: 122
     borderLeft: 0
@@ -588,7 +601,7 @@ MonoBehaviour:
     paddingBottom: 0
   - name: resume
     x: 0
-    y: 665
+    y: 190
     width: 404
     height: 122
     borderLeft: 0
@@ -600,8 +613,8 @@ MonoBehaviour:
     paddingTop: 0
     paddingBottom: 0
   - name: selectlev
-    x: 1434
-    y: 1926
+    x: 1765
+    y: 1697
     width: 274
     height: 122
     borderLeft: 0
@@ -614,7 +627,7 @@ MonoBehaviour:
     paddingBottom: 0
   - name: star
     x: 557
-    y: 1024
+    y: 672
     width: 106
     height: 106
     borderLeft: 0
@@ -626,8 +639,8 @@ MonoBehaviour:
     paddingTop: 0
     paddingBottom: 0
   - name: stars1
-    x: 1337
-    y: 1551
+    x: 1738
+    y: 1428
     width: 146
     height: 68
     borderLeft: 0
@@ -639,8 +652,8 @@ MonoBehaviour:
     paddingTop: 0
     paddingBottom: 0
   - name: stars2
-    x: 1484
-    y: 1551
+    x: 1885
+    y: 1428
     width: 146
     height: 68
     borderLeft: 0
@@ -652,8 +665,8 @@ MonoBehaviour:
     paddingTop: 0
     paddingBottom: 0
   - name: stars3
-    x: 1631
-    y: 1551
+    x: 1343
+    y: 1323
     width: 146
     height: 68
     borderLeft: 0
@@ -665,8 +678,8 @@ MonoBehaviour:
     paddingTop: 0
     paddingBottom: 0
   - name: whitepixel
-    x: 301
-    y: 955
+    x: 666
+    y: 1235
     width: 2
     height: 2
     borderLeft: 0
@@ -679,7 +692,7 @@ MonoBehaviour:
     paddingBottom: 0
   - name: win-lemur-head
     x: 0
-    y: 93
+    y: 19
     width: 238
     height: 170
     borderLeft: 0

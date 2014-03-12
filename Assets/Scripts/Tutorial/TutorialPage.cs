@@ -1,18 +1,10 @@
 ﻿using System;
-using System.Linq;
 using UnityEngine;
 
 namespace TutorialSpace 
 {
     internal class TutorialPage : MonoBehaviour
     {
-        [Serializable]
-        public class Position
-        {
-            public int x;
-            public int y;
-        }
-
         public event Action<TutorialPage> End;
 
         protected virtual void FireEnd(TutorialPage page)
@@ -21,21 +13,19 @@ namespace TutorialSpace
             if (handler != null) handler(page);
         }
 
-        public UI2DSprite blackBg;
-
         #region In Inspector
 
         public TutorialPage NextPage;
 
-        public int[] blockedY;
-        public int[] blockedX;
 
-        public Position fromFingerPosition;
-        public Position toFingerPosition;
+        public IntVector2 fromFingerPosition;
+        public IntVector2 toFingerPosition;
 
         public iTweenEvent finger;
         [SerializeField]
         private Gamefield gamefield;
+
+        public TutorialCloud tutorialCloud;
 
         #endregion
 
@@ -46,38 +36,49 @@ namespace TutorialSpace
 
         public void Show()
         {
-            blackBg.gameObject.SetActive(true);
-            Tutorial.instance.blockedY = blockedY;
-            Tutorial.instance.blockedX = blockedX;
+            gameObject.SetActive(true);
+            
+            IntVector2 targetPosition;
+            Chuzzle arrowChuzzle;
+            GamefieldUtility.Tip(gamefield.Level.ActiveChuzzles, out targetPosition, out arrowChuzzle);
 
-            finger.transform.position = GamefieldUtility.ConvertXYToPosition((int) fromFingerPosition.x, (int) fromFingerPosition.y, Chuzzle.Scale);
+            fromFingerPosition = arrowChuzzle.Current.IntVector2Position;
+            toFingerPosition = targetPosition;
+
+            var fromPosition = GamefieldUtility.ConvertXYToPosition((int) fromFingerPosition.x, (int) fromFingerPosition.y, Chuzzle.Scale);
+            finger.transform.position = fromPosition;
             finger.Values["position"] = GamefieldUtility.ConvertXYToPosition((int)toFingerPosition.x, (int)toFingerPosition.y, Chuzzle.Scale);
+            finger.Play();
 
-            var chuzzles = Gamefield.Chuzzles.Where(x=>Tutorial.instance.CantMoveThisChuzzle(x));
-            foreach (var chuzzle in chuzzles)
-            {
-                MakeTutorial(chuzzle.gameObject);
-            }
+            Tutorial.instance.targetCell = gamefield.Level.GetCellAt(targetPosition);
+            Tutorial.instance.takeableChuzzle = gamefield.Level.At(fromFingerPosition.x, fromFingerPosition.y);
+            gamefield.TileDestroyed += OnTileDestroyed;
 
-            var cells = gamefield.Level.Cells.Where(c=>Tutorial.instance.CantMoveThisCell(c));
-            foreach (var cell in cells)
-            {
-                MakeTutorial(cell.Sprite.gameObject);
-            }
-
+            tutorialCloud.SetText("U should drag and cry!");
+            tutorialCloud.SetPosition(Camera.main.WorldToScreenPoint(fromPosition + Vector3.up * 0.5f));
+            tutorialCloud.Show();
         }
 
-        public void MakeTutorial(GameObject go)
+        private void OnTileDestroyed(Chuzzle chuzzle)
         {
-           NGUITools.SetLayer(go, LayerMask.NameToLayer("Tutorial"));
+            FireEnd(this);
+            gamefield.TileDestroyed -= OnTileDestroyed;
+        }
+
+        public void MakeTutorial(GameObject go, int order)
+        {
+           //NGUITools.SetLayer(go, LayerMask.NameToLayer("Tutorial"));
+            var renderers = go.GetComponentsInChildren<SpriteRenderer>();
+            foreach (var render in renderers)
+            {
+                render.sortingOrder = order;
+            }
         }
 
         public void Hide()
         {
-            blackBg.gameObject.SetActive(false);
-            Tutorial.instance.blockedY = new int[0];
-            Tutorial.instance.blockedX = new int[0];
+            gameObject.SetActive(false);
+            tutorialCloud.Hide();
         }
     }
-
 }

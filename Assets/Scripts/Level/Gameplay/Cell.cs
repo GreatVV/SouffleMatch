@@ -114,5 +114,13 @@ public class Cell
     public override string ToString()
     {
         return string.Format("({0},{1}):{2} Temp:{3}", x,y, Type,IsTemporary);
-    }                        
+    }
+
+    public IntVector2 IntVector2Position
+    {
+        get
+        {
+            return new IntVector2(x,y);
+        }
+    }
 }

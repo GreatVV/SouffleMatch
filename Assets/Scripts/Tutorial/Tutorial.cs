@@ -1,12 +1,22 @@
-﻿using System.Linq;
-using TutorialSpace;
+﻿using TutorialSpace;
 using UnityEngine;
 
 public class Tutorial : MonoBehaviour
 {
+    public static Tutorial instance;
+    public static bool isActive;
+
+    public Chuzzle takeableChuzzle;
+    public Cell targetCell;
+    [SerializeField] private TutorialPage startPage;
+
+    private TutorialPage currentPage;
+
     public void Begin()
     {
+        isActive = true;
         currentPage = startPage;
+        currentPage.End += OnPageEnd;
         currentPage.Show();
     }
 
@@ -14,17 +24,10 @@ public class Tutorial : MonoBehaviour
     {
         currentPage.Hide();
         currentPage.End -= OnPageEnd;
+        isActive = false;
     }
 
-    [SerializeField]
-    private TutorialPage startPage;
-
-    private TutorialPage currentPage;
-    public int[] blockedY = new int[0];
-    public int[] blockedX = new int[0];
-    public static Tutorial instance;
-
-    void OnPageEnd(TutorialPage page)
+    private void OnPageEnd(TutorialPage page)
     {
         page.End -= OnPageEnd;
         page.Hide();
@@ -34,12 +37,10 @@ public class Tutorial : MonoBehaviour
             currentPage.End += OnPageEnd;
             currentPage.Show();
         }
-    }
-
-    public bool CantMoveThisChuzzle(Chuzzle currentChuzzle)
-    {
-        return blockedX.Any(x => x == currentChuzzle.Current.x) ||
-               blockedY.Any(y => y == currentChuzzle.Current.y);
+        else
+        {
+            End();
+        }
     }
 
     public void Awake()
@@ -47,9 +48,13 @@ public class Tutorial : MonoBehaviour
         instance = this;
     }
 
-    public bool CantMoveThisCell(Cell cell)
+    public bool CanTakeOnlyThisChuzzle(Chuzzle currentChuzzle)
     {
-        return blockedX.Any(x => x == cell.x) ||
-               blockedY.Any(y => y == cell.y);
+        return takeableChuzzle == currentChuzzle;
+    }
+
+    public bool IsTargetCell(Cell cell)
+    {
+        return cell == targetCell;
     }
 }

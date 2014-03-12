@@ -58,7 +58,10 @@ public class FieldState : GamefieldState
         AnimatedChuzzles.Clear();
         Chuzzle.DropEventHandlers();
         Chuzzle.AnimationStarted += OnAnimationStarted;
-        CheckPossibleCombinations();
+        if (!Tutorial.isActive)
+        {
+            CheckPossibleCombinations();
+        }
 
 
         if (!Gamefield.InvaderWasDestroyed)
@@ -314,7 +317,7 @@ public class FieldState : GamefieldState
     public void CheckCombinations()
     {
         var combinations = GamefieldUtility.FindCombinations(Gamefield.Level.ActiveChuzzles);
-        if (combinations.Any())
+        if (combinations.Any() && (!Tutorial.isActive || (Tutorial.isActive && CurrentChuzzle!=null&& Tutorial.instance.IsTargetCell(CurrentChuzzle.Real))))
         {
             foreach (var c in Gamefield.Level.Chuzzles)
             {
@@ -327,16 +330,21 @@ public class FieldState : GamefieldState
         {
             if (CurrentChuzzle != null)
             {
-                var velocity = -5f*(CurrentChuzzle.Real.Position - CurrentChuzzle.Current.Position);
-                foreach (var c in SelectedChuzzles)
-                {
-                    c.MoveTo = c.Real = c.Current;
-                    c.Velocity = velocity;
-                }
-
-                _isReturning = true;
+                StartReturn();
             }
         }
+    }
+
+    private void StartReturn()
+    {
+        var velocity = -5f*(CurrentChuzzle.Real.Position - CurrentChuzzle.Current.Position);
+        foreach (var c in SelectedChuzzles)
+        {
+            c.MoveTo = c.Real = c.Current;
+            c.Velocity = velocity;
+        }
+
+        _isReturning = true;
     }
 
     private void OnAnimationFinished(Chuzzle chuzzle)
@@ -425,7 +433,7 @@ public class FieldState : GamefieldState
             return;
         }
 
-        if (CurrentChuzzle && Tutorial.instance.CantMoveThisChuzzle(CurrentChuzzle))
+        if (CurrentChuzzle && Tutorial.isActive && !Tutorial.instance.CanTakeOnlyThisChuzzle(CurrentChuzzle))
         {
             Reset();
             return;
