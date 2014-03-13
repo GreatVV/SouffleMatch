@@ -206,8 +206,8 @@ public class TilesFactory : MonoBehaviour
     public Chuzzle CreateChuzzle(Cell cell, GameObject prefab)
     {
         Type type = prefab.GetComponent<Chuzzle>().GetType();
-        var chuzzle = ((GameObject) Instantiate(prefab)).GetComponent<Chuzzle>();
-        //ChuzzlePool.Instance.Get(prefab.GetComponent<Chuzzle>().Color, type).GetComponent<Chuzzle>();
+        var chuzzle = //((GameObject) Instantiate(prefab)).GetComponent<Chuzzle>();
+        ChuzzlePool.Instance.Get(prefab.GetComponent<Chuzzle>().Color, type).GetComponent<Chuzzle>();
 
         chuzzle.Real = chuzzle.MoveTo = chuzzle.Current = cell;
 

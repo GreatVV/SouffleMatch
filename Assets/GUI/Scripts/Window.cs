@@ -15,7 +15,7 @@ public abstract class Window : MonoBehaviour
         set
         {
             _panel.depth = value;
-            Debug.Log("Set depth: "+value);
+         //   Debug.Log("Set depth: "+value);
         }
     }
 

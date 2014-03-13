@@ -93,12 +93,8 @@ public class InvaderChuzzle : Chuzzle
             }
         }
 
-        var listInvaders = "";
-        foreach (var allInvaderChuzzle in AllInvaderChuzzles)
-        {
-            listInvaders += allInvaderChuzzle + "\n";
-        }
-        Debug.Log("Invaders: \n"+listInvaders);
+      //  var listInvaders = AllInvaderChuzzles.Aggregate("", (current, allInvaderChuzzle) => current + (allInvaderChuzzle + "\n"));
+      //  Debug.Log("Invaders: \n"+listInvaders);
     }
 }
 

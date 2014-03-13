@@ -23,12 +23,10 @@ public class TipArrow : MonoBehaviour
             {
                 chuzzle.Died -= OnDied;
             }
-
-            
             chuzzle = value;
 
             gameObject.SetActive(chuzzle);
-            Debug.Log("Chuzzle for tip: " + chuzzle);
+            //Debug.Log("Chuzzle for tip: " + chuzzle);
 
             if (chuzzle)
             {

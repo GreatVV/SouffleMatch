@@ -1001,6 +1001,10 @@ Prefab:
       propertyPath: m_SortingOrder
       value: 5
       objectReference: {fileID: 0}
+    - target: {fileID: 11400008, guid: 73096e4eebecd2c48814857c1a8d36b3, type: 2}
+      propertyPath: returnSpeed
+      value: 12
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 73096e4eebecd2c48814857c1a8d36b3, type: 2}
   m_RootGameObject: {fileID: 1454228155}
@@ -3387,6 +3391,7 @@ MonoBehaviour:
   SelectedChuzzles: []
   TimeFromTip: 1
   IsTurn: 0
+  returnSpeed: 12
 --- !u!114 &1454228162
 MonoBehaviour:
   m_ObjectHideFlags: 0

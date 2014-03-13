@@ -79,7 +79,7 @@ public class FieldState : GamefieldState
         _arrowChuzzle = null;
         _possibleCombination = GamefieldUtility.Tip(Gamefield.Level.ActiveChuzzles, out _targetPosition,
             out _arrowChuzzle);
-
+        Debug.Log(string.Format("Tip. From: {0} To: {1}", _arrowChuzzle, _targetPosition));
         var numberOfTries = 0;
         while (!_possibleCombination.Any())
         {   
