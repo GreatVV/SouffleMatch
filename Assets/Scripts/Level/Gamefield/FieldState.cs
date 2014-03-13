@@ -51,6 +51,8 @@ public class FieldState : GamefieldState
 
     IntVector2 _targetPosition = null;
     Chuzzle _arrowChuzzle = null;
+    public float returnSpeed = 3f;
+
     #region Event Handlers
 
     public override void OnEnter()
@@ -337,11 +339,42 @@ public class FieldState : GamefieldState
 
     private void StartReturn()
     {
-        var velocity = -5f*(CurrentChuzzle.Real.Position - CurrentChuzzle.Current.Position);
+        var size = 0f;
+        if (_isVerticalDrag)
+        {
+            size = Gamefield.Level.Height*Chuzzle.Scale.y;
+        }
+        else
+        {
+            size = Gamefield.Level.Width*Chuzzle.Scale.x;
+        }
+        
+        var difference = CurrentChuzzle.Real.Position - CurrentChuzzle.Current.Position;
+        var velocity = -returnSpeed*difference.normalized;
+
+        Debug.Log("differnce: "+difference);
+        Debug.Log("size: "+size);
+        Debug.Log("start: "+CurrentChuzzle.Real.Position);
+        Debug.Log("end: "+CurrentChuzzle.Current.Position);
+
+        if (difference.magnitude > size - difference.magnitude)
+        {
+            velocity *= -1;
+        }
+
         foreach (var c in SelectedChuzzles)
         {
             c.MoveTo = c.Real = c.Current;
             c.Velocity = velocity;
+        }
+
+        if (_isVerticalDrag)
+        {
+            CurrentDirection = CurrentChuzzle.Velocity.y > 0 ? Direction.Top : Direction.Bottom;            
+        }
+        else
+        {
+            CurrentDirection = CurrentChuzzle.Velocity.x > 0 ? Direction.Right : Direction.Left;
         }
 
         _isReturning = true;
@@ -517,34 +550,53 @@ public class FieldState : GamefieldState
         {
             foreach (var selectedChuzzle in SelectedChuzzles)
             {
-                selectedChuzzle.transform.position += selectedChuzzle.Velocity*Time.deltaTime;
-            }
-
-            if (_isVerticalDrag)
-            {
-                CurrentDirection = CurrentChuzzle.Velocity.y > 0 ? Direction.Top : Direction.Bottom;
-            }
-            else
-            {
-                CurrentDirection = CurrentChuzzle.Velocity.x > 0 ? Direction.Right : Direction.Left;
+                var change = selectedChuzzle.Velocity*Time.deltaTime;
+                var currentPos = selectedChuzzle.transform.position;
+                var nextPos = currentPos + change;
+                var moveToPos = selectedChuzzle.MoveTo.Position;
+                switch (CurrentDirection)
+                {
+                    case Direction.Right:
+                        if (currentPos.x < moveToPos.x && nextPos.x > moveToPos.x)
+                        {
+                            selectedChuzzle.transform.position = selectedChuzzle.MoveTo.Position;
+                            selectedChuzzle.Velocity = Vector3.zero;
+                            continue;
+                        }
+                        break;
+                    case Direction.Left:
+                        if (currentPos.x > moveToPos.x && nextPos.x < moveToPos.x)
+                        {
+                            selectedChuzzle.transform.position = selectedChuzzle.MoveTo.Position;
+                            selectedChuzzle.Velocity = Vector3.zero;
+                            continue;
+                        }
+                        break;
+                    case Direction.Top:
+                        if (currentPos.y < moveToPos.y && nextPos.y > moveToPos.y)
+                        {
+                            selectedChuzzle.transform.position = selectedChuzzle.MoveTo.Position;
+                            selectedChuzzle.Velocity = Vector3.zero;
+                            continue;
+                        }
+                        break;
+                    case Direction.Bottom:
+                        if (currentPos.y > moveToPos.y && nextPos.y < moveToPos.y)
+                        {
+                            selectedChuzzle.transform.position = selectedChuzzle.MoveTo.Position;
+                            selectedChuzzle.Velocity = Vector3.zero;
+                            continue;
+                        }
+                        break;
+                    default:
+                        throw new ArgumentOutOfRangeException();
+                }
+                selectedChuzzle.transform.position = nextPos;
             }
 
             MoveChuzzles(activeCells);
-
-            var isAllOnPosition = true;
-            foreach (var selectedChuzzle in SelectedChuzzles)
-            {
-                if (Vector3.Distance(selectedChuzzle.transform.position, selectedChuzzle.MoveTo.Position) < 0.1f)
-                {
-                    selectedChuzzle.Velocity = Vector3.zero;
-                    selectedChuzzle.transform.position = selectedChuzzle.MoveTo.Position;
-                }
-                else
-                {
-                    isAllOnPosition = false;
-                }
-            }
-            if (isAllOnPosition)
+            
+            if (SelectedChuzzles.All(x=>x.Velocity == Vector3.zero))
             {
                 Reset();
             }
@@ -604,6 +656,14 @@ public class FieldState : GamefieldState
             }
 
             MoveChuzzles(activeCells);
+        }
+    }
+
+    private void RevertVelocity()
+    {
+        foreach (var selectedChuzzle in SelectedChuzzles)
+        {
+            selectedChuzzle.Velocity *= -0.9f;
         }
     }
 
