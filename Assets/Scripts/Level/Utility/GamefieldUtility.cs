@@ -250,15 +250,17 @@ public class GamefieldUtility
             var middlePart = GetHorizontalLineChuzzles(bottom.Current.y + 1, bottom.Color, chuzzles);
             var topPart = RecursiveFind(top, new List<Chuzzle>(), chuzzles);
 
-            var posibleCombination = new List<Chuzzle>();
-            posibleCombination.AddRange(bottomPart);
-            posibleCombination.AddRange(middlePart);
-            posibleCombination.AddRange(topPart);
+            var possibleCombination = new List<Chuzzle>();
+            possibleCombination.AddRange(bottomPart);
+            possibleCombination.AddRange(middlePart);
+            possibleCombination.AddRange(topPart);
 
             Debug.Log("Combination 1");
             isHorizontalMove = new IntVector2(bottom.Current.x, bottom.Current.y + 1);
             chuzzleToMove = middlePart.First();
-            return posibleCombination;
+            var target = possibleCombination.Aggregate("", (current, chuzzle) => current + (chuzzle + Environment.NewLine));
+            Debug.Log(target);
+            return possibleCombination;
         }
 
         var left = chuzzles.FirstOrDefault(x => BetweenXCheck(x, chuzzles));
@@ -271,15 +273,17 @@ public class GamefieldUtility
             var middlePart = GetVerticalLineChuzzles(left.Current.Right.x, left.Color, chuzzles);
             var rightPart = RecursiveFind(right, new List<Chuzzle>(), chuzzles);
 
-            var posibleCombination = new List<Chuzzle>();
-            posibleCombination.AddRange(leftPart);
-            posibleCombination.AddRange(middlePart);
-            posibleCombination.AddRange(rightPart);
+            var possibleCombination = new List<Chuzzle>();
+            possibleCombination.AddRange(leftPart);
+            possibleCombination.AddRange(middlePart);
+            possibleCombination.AddRange(rightPart);
 
             isHorizontalMove = new IntVector2(left.Current.x + 1, left.Current.y);
             chuzzleToMove = middlePart.First();
             Debug.Log("Combination 2: " + chuzzleToMove);
-            return posibleCombination;
+            var target = possibleCombination.Aggregate("", (current, chuzzle) => current + (chuzzle + Environment.NewLine));
+            Debug.Log(target);
+            return possibleCombination;
         }
 
         var combinations = FindCombinations(chuzzles, 2);
@@ -307,6 +311,8 @@ public class GamefieldUtility
                         possibleCombination.AddRange(leftPart);
 
                         Debug.Log("Combination 3");
+                        var target = possibleCombination.Aggregate("", (current, chuzzle) => current + (chuzzle + Environment.NewLine));
+                        Debug.Log(target);
                         isHorizontalMove = new IntVector2(topChuzzle.Current.x - 1, topChuzzle.Current.y);
                         chuzzleToMove = leftPart.First();
                         return possibleCombination;
@@ -325,6 +331,8 @@ public class GamefieldUtility
                         possibleCombination.AddRange(rightPart);
 
                         Debug.Log("Combination 4");
+                        var target = possibleCombination.Aggregate("", (current, chuzzle) => current + (chuzzle + Environment.NewLine));
+                        Debug.Log(target);
                         isHorizontalMove = new IntVector2(topChuzzle.Current.x + 1, topChuzzle.Current.y);
                         chuzzleToMove = rightPart.First();
                         return possibleCombination;
@@ -343,8 +351,8 @@ public class GamefieldUtility
                         possibleCombination.AddRange(topPart);
 
                         Debug.Log("Combination 5");
-                       // Debug.Log("Top Chuzzle: "+topChuzzle);
-                       // Debug.Log("Bottom Chuzzle: "+bottomChuzzle);
+                        var target = possibleCombination.Aggregate("", (current, chuzzle) => current + (chuzzle + Environment.NewLine));
+                        Debug.Log(target);
                         isHorizontalMove = new IntVector2(bottomChuzzle.Current.x, bottomChuzzle.Current.Top.y);
                         chuzzleToMove = topPart.First();
                         return possibleCombination;
@@ -363,6 +371,8 @@ public class GamefieldUtility
                         possibleCombination.AddRange(bottomPart);
 
                         Debug.Log("Combination 6");
+                        var target = possibleCombination.Aggregate("", (current, chuzzle) => current + (chuzzle + Environment.NewLine));
+                        Debug.Log(target);
                         isHorizontalMove = new IntVector2(bottomChuzzle.Current.x, bottomChuzzle.Current.Bottom.y);
                         chuzzleToMove = bottomPart.First();
                         return possibleCombination;
@@ -390,6 +400,8 @@ public class GamefieldUtility
                       //  Debug.Log("Right:"+rightChuzzle.ToString());
 
                         Debug.Log("Combination 7");
+                        var target = possibleCombination.Aggregate("", (current, chuzzle) => current + (chuzzle + Environment.NewLine));
+                        Debug.Log(target);
                         isHorizontalMove = new IntVector2(leftChuzzle.Current.Left.x, leftChuzzle.Current.y);
                         chuzzleToMove = leftPart.First();
                         return possibleCombination;
@@ -407,6 +419,8 @@ public class GamefieldUtility
                         possibleCombination.AddRange(rightPart);
 
                         Debug.Log("Combination 8");
+                        var target = possibleCombination.Aggregate("", (current, chuzzle) => current + (chuzzle + Environment.NewLine));
+                        Debug.Log(target);
                         isHorizontalMove = new IntVector2(rightChuzzle.Current.x + 1, rightChuzzle.Current.y);
                         chuzzleToMove = rightPart.First();
                         return possibleCombination;
@@ -429,6 +443,8 @@ public class GamefieldUtility
                         possibleCombination.AddRange(topPart);
 
                         Debug.Log("Combination 9");
+                        var target = possibleCombination.Aggregate("", (current, chuzzle) => current + (chuzzle + Environment.NewLine));
+                        Debug.Log(target);
                         isHorizontalMove = new IntVector2(rightChuzzle.Current.x, rightChuzzle.Current.y + 1);
                         chuzzleToMove = topPart.First();
                         return possibleCombination;
@@ -451,6 +467,8 @@ public class GamefieldUtility
                         possibleCombination.AddRange(bottomPart);
 
                         Debug.Log("Combination 10");
+                        var target = possibleCombination.Aggregate("", (current, chuzzle) => current + (chuzzle + Environment.NewLine));
+                        Debug.Log(target);
                         isHorizontalMove = new IntVector2(leftChuzzle.Current.x, leftChuzzle.Current.y - 1);
                         chuzzleToMove = bottomPart.First();
                         return possibleCombination;

@@ -79,7 +79,7 @@ public class FieldState : GamefieldState
         _arrowChuzzle = null;
         _possibleCombination = GamefieldUtility.Tip(Gamefield.Level.ActiveChuzzles, out _targetPosition,
             out _arrowChuzzle);
-        Debug.Log(string.Format("Tip. From: {0} To: {1}", _arrowChuzzle, _targetPosition));
+      //  Debug.Log(string.Format("Tip. From: {0} To: {1}", _arrowChuzzle, _targetPosition));
         var numberOfTries = 0;
         while (!_possibleCombination.Any())
         {   
@@ -351,12 +351,12 @@ public class FieldState : GamefieldState
         
         var difference = CurrentChuzzle.Real.Position - CurrentChuzzle.Current.Position;
         var velocity = -returnSpeed*difference.normalized;
-
+        /*
         Debug.Log("differnce: "+difference);
         Debug.Log("size: "+size);
         Debug.Log("start: "+CurrentChuzzle.Real.Position);
         Debug.Log("end: "+CurrentChuzzle.Current.Position);
-
+        */
         if (difference.magnitude > size - difference.magnitude)
         {
             velocity *= -1;

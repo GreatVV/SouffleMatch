@@ -35,6 +35,7 @@ public class SessionRestorer : MonoBehaviour
 
     public void StartLevel(int index)
     {
+        lastPlayedLevel = index;
         Gamefield.StartGame(levelManager[index]);
         PanelManager.Show(Gameplay, true);
         Tutorial.instance.Begin();
