@@ -38,9 +38,11 @@ public class CenterCameraOnField : MonoBehaviour
         var fh = maxY - minY+1f;
 
         var fieldRatio = fw/fh;
-
-        foreach (var currentCamera in Cameras)
+        var currentCamera = Camera.main;
+        //foreach (var currentCamera in Cameras)
         {
+            
+
             //Debug.Log("Field ratio: "+fieldRatio);
             //Debug.Log("Aspect: "+Camera.aspect);
             currentCamera.rect = new Rect(0, 0, 1, 1);
@@ -83,22 +85,30 @@ public class CenterCameraOnField : MonoBehaviour
             Debug.Log("Pos: "+Camera.WorldToScreenPoint(chuzzle.transform.position));
             Debug.Log("Pos2:"+Camera.WorldToScreenPoint(chuzzle.Current.Right.Top.Sprite.transform.position));
             Debug.Log("Difference: " + (Camera.WorldToScreenPoint(chuzzle.transform.position) - Camera.WorldToScreenPoint(chuzzle.Current.Right.Top.Sprite.transform.position)));*/
-                continue;
-            }
 
-
-            if (Vector3.Distance(currentCamera.transform.position, centerPosition) > 0.1f)
-            {
-                iTween.MoveTo(currentCamera.gameObject,
-                    iTween.Hash("x", centerPosition.x, "y", centerPosition.y, "z", centerPosition.z, "time", 2f,
-                        "oncomplete", "OnTweenComplete", "oncompletetarget",
-                        gameObject, "oncompleteparams", centerPosition));
-                IsTweening = true;
             }
             else
             {
-                currentCamera.transform.position = centerPosition;
+
+
+                if (Vector3.Distance(currentCamera.transform.position, centerPosition) > 0.1f)
+                {
+                    iTween.MoveTo(currentCamera.gameObject,
+                        iTween.Hash("x", centerPosition.x, "y", centerPosition.y, "z", centerPosition.z, "time", 2f,
+                            "oncomplete", "OnTweenComplete", "oncompletetarget",
+                            gameObject, "oncompleteparams", centerPosition));
+                    IsTweening = true;
+                }
+                else
+                {
+                    currentCamera.transform.position = centerPosition;
+                }
             }
+        }
+
+        foreach (var tCamera in Cameras)
+        {
+            tCamera.transform.position = Camera.main.transform.position;
         }
     }
 
@@ -107,10 +117,25 @@ public class CenterCameraOnField : MonoBehaviour
         IsTweening = false;
     }
 
+    void OnDestroy()
+    {
+        if (this == Instance)
+        {
+            Instance = null;
+        }
+    }
+
     #endregion
 
     public void Awake()
     {
+        if (Instance)
+        {
+            Debug.Log("It's should be only one center camera on field");
+            Destroy(this);
+            return;
+        }
+
         Instance = this;
         previousNormalizedSize = normalizedSize;
     }

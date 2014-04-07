@@ -47,6 +47,7 @@
   </ItemGroup>
   <ItemGroup>
      <Compile Include="Assets\ApproveButton.cs" />
+     <Compile Include="Assets\Cartoon FX\CartoonFX.asset" />
      <Compile Include="Assets\Examples\Scripts\InteractiveConsole.cs" />
      <Compile Include="Assets\Facebook\Scripts\AndroidFacebook.cs" />
      <Compile Include="Assets\Facebook\Scripts\AndroidFacebookLoader.cs" />
@@ -176,6 +177,7 @@
      <Compile Include="Assets\NGUI\Scripts\UI\UITexture.cs" />
      <Compile Include="Assets\NGUI\Scripts\UI\UITooltip.cs" />
      <Compile Include="Assets\NGUI\Scripts\UI\UIViewport.cs" />
+     <Compile Include="Assets\RandomRotationOnEnable.cs" />
      <Compile Include="Assets\Scripts\General\ChuzzlePool.cs" />
      <Compile Include="Assets\Scripts\General\Economy.cs" />
      <Compile Include="Assets\Scripts\General\Facebook\FacebookIntegration.cs" />

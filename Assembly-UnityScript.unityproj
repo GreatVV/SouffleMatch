@@ -46,16 +46,20 @@
 	</Reference>
   </ItemGroup>
   <ItemGroup>
-     <Compile Include="Assets\DynamicElements_Effects\scripts\ParticleScale.js" />
-     <Compile Include="Assets\DynamicElements_Effects\scripts\PrefabGenerator.js" />
-     <Compile Include="Assets\DynamicElements_Effects\scripts\Raycast.js" />
-     <Compile Include="Assets\DynamicElements_Effects\scripts\activateWithDelay.js" />
-     <Compile Include="Assets\DynamicElements_Effects\scripts\destroyThisTimed.js" />
-     <Compile Include="Assets\DynamicElements_Effects\scripts\moveThis.js" />
-     <Compile Include="Assets\DynamicElements_Effects\scripts\moveThisAdvanced.js" />
-     <Compile Include="Assets\DynamicElements_Effects\scripts\rampDownParticle.js" />
-     <Compile Include="Assets\DynamicElements_Effects\scripts\rotateThis.js" />
-     <Compile Include="Assets\DynamicElements_Effects\scripts\scaleThisTimed.js" />
+     <Compile Include="Assets\Sources\CrumpleMesh.js" />
+     <Compile Include="Assets\Sources\ExtrudedMeshTrail.js" />
+     <Compile Include="Assets\Sources\FractalTexture.js" />
+     <Compile Include="Assets\Sources\HeightmapGenerator.js" />
+     <Compile Include="Assets\Sources\InitialRigidbodyVelocity.js" />
+     <Compile Include="Assets\Sources\MouseOrbit.js" />
+     <Compile Include="Assets\Sources\PaintVertices.js" />
+     <Compile Include="Assets\Sources\SinusCurveModifier.js" />
+     <Compile Include="Assets\Sources\SmoothRandomPosition.js" />
+     <Compile Include="Assets\Sources\TronTrail.js" />
+     <Compile Include="Assets\Sources\Twist.js" />
+     <Compile Include="Assets\Sources\~ControlScripts\DragTransform.js" />
+     <Compile Include="Assets\Sources\~ControlScripts\KeyboardOrbit.js" />
+     <Compile Include="Assets\Sources\~ControlScripts\VPS.js" />
      <None Include="Assets\NGUI\Resources\Shaders\Unlit - Depth Cutout.shader" />
      <None Include="Assets\Plugins\Android\facebook\res\values\attrs.xml" />
      <None Include="Assets\NGUI\ReadMe - 3.0.9 f7.txt" />
@@ -96,7 +100,6 @@
      <None Include="Assets\Localization\Russian.txt" />
      <None Include="Assets\Plugins\Android\facebook\res\drawable\com_facebook_button_blue.xml" />
      <None Include="Assets\JMO Assets\Cartoon FX Easy Editor\CartoonFX Easy Editor Readme.txt" />
-     <None Include="Assets\DynamicElements_Effects\readme.txt" />
      <None Include="Assets\NGUI\Resources\Shaders\Unlit - Transparent Colored (Packed) (SoftClip).shader" />
      <None Include="Assets\NGUI\Resources\Shaders\Unlit - Premultiplied Colored (SoftClip).shader" />
      <None Include="Assets\JMO Assets\!JMO Assets Readme.txt" />
@@ -134,6 +137,10 @@
  <Reference Include="IFacebook">
  <HintPath>Assets\Facebook\Scripts\IFacebook.dll</HintPath>
  </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="Assembly-CSharp-firstpass.csproj">
+      <Project>{15C4E3E4-5B13-5EDD-7B66-6B01DE9F6EB8}</Project>      <Name>Assembly-CSharp-firstpass</Name>    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
