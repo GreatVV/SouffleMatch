@@ -480,10 +480,10 @@ public class GamefieldUtility
         Debug.Log("Combination NOOOOOOOOOO 11");
         Repaint(100);
         Tip(chuzzles, out isHorizontalMove, out chuzzleToMove);
-        /*    
+            
         isHorizontalMove = new IntVector2();
         chuzzleToMove = null;
-        return new List<Chuzzle>();*/
+        return new List<Chuzzle>();
     }
 
     public static bool BetweenYCheck(Chuzzle chuzzle, List<Chuzzle> allChuzzles)
@@ -620,7 +620,7 @@ public class GamefieldUtility
 
     public static void ShowArrow(Chuzzle from, IntVector2 to, TipArrow tipArrow)
     {
-
+        Debug.Log(string.Format("Arrow. From:{0} To:{1} ", from, to));
         if (@from.Current.x == to.x)
         {
             //vertical
@@ -628,6 +628,7 @@ public class GamefieldUtility
             {
                 //to down
                 //do nothing
+                tipArrow.transform.rotation = Quaternion.Euler(0, 0, 0);
             }
             else
             {
@@ -736,6 +737,11 @@ public class GamefieldUtility
 
     public static bool Repaint(int numberOfTries)
     {
+        if (numberOfTries == 0)
+        {
+            return false;
+        }
+
         var possible = Gamefield.Chuzzles.Where(IsUsual);
         //complex logic of repainting
 

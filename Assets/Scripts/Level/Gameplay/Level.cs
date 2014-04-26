@@ -33,7 +33,8 @@ public class Level : MonoBehaviour
     public int CurrentMinY;
     public int Height = 6;
     public SerializedLevel Serialized;
-    public int Width = 6; 
+    public int Width = 6;
+    public string LevelName { get { return string.Format("Level {0}", Serialized.Name); }}
 
     void Awake()
     {

@@ -26,6 +26,21 @@ public class SessionRestorer : MonoBehaviour
         lastPlayedLevel = PlayerPrefs.GetInt("LastPlayedLevel", 0);
 
         levelManager.LevelsAreReady += OnLevelsAreReady;
+
+        PanelManager.WindowChanged += OnWindowChanged;
+
+
+        Gamefield.Paused += OnPause;
+    }
+
+    public void OnWindowChanged(Window currentActiveWindow)
+    {
+        Gamefield.IsPause = !PanelManager.IsCurrent(SessionRestorer.Instance.Gameplay);
+    }
+
+    private void OnPause(bool pause)
+    {
+        Tutorial.SetActive(!pause);
     }
 
     private void OnLevelsAreReady()

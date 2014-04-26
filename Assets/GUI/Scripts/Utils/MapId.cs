@@ -54,8 +54,8 @@ public class MapId : MonoBehaviour
         FirstStar = transform.Search("1", gameObject).gameObject;
         SecondStar = transform.Search("2", gameObject).gameObject;
         ThirdStar = transform.Search("3", gameObject).gameObject;
-        transform.Search("Label", gameObject).GetComponent<UILabel>().text =
-            (Index).ToString(CultureInfo.InvariantCulture);
+        transform.Search("Label", gameObject).GetComponent<UILabel>().text = name;
+        //(Index).ToString(CultureInfo.InvariantCulture);
     }
 
     public void RefreshNumberOfStars()

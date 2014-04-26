@@ -9,6 +9,9 @@ public class MapButton : MonoBehaviour
     public void OnPress()
     {
         PanelManager.Show(levelList);
-        pauseButton.SendMessage("OnClick", SendMessageOptions.DontRequireReceiver);
+        if (pauseButton)
+        {
+            pauseButton.SendMessage("OnClick", SendMessageOptions.DontRequireReceiver);
+        }
     }
 }

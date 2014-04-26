@@ -57,4 +57,19 @@ public class Tutorial : MonoBehaviour
     {
         return cell == targetCell;
     }
+
+    public static void SetActive(bool active)
+    {
+        if (instance.currentPage)
+        {
+            if (active)
+            {
+                instance.currentPage.Show();
+            }
+            else
+            {
+                instance.currentPage.Hide();
+            }
+        }
+    }
 }

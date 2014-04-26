@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
@@ -11,6 +12,11 @@ public class PanelManager : MonoBehaviour
 
     private void ShowWindow(Window newWindow)
     {
+        if (windows.LastOrDefault() == newWindow)
+        {
+            return;
+        }
+
         if (windows.Any())
         {
             windows.Last().Deactivate();
@@ -19,6 +25,8 @@ public class PanelManager : MonoBehaviour
         newWindow.gameObject.SetActive(true);
         newWindow.Depth = windows.Count;
         newWindow.Activate();
+
+        FireWindowChanged(newWindow);
 
         if (windowAnimator)
         {
@@ -108,5 +116,13 @@ public class PanelManager : MonoBehaviour
     public static bool IsCurrent(Window window)
     {
         return instance.windows.Any() && instance.windows.Last() == window;
+    }
+
+    public static event Action<Window> WindowChanged;
+
+    private static void FireWindowChanged(Window window)
+    {
+        Action<Window> handler = WindowChanged;
+        if (handler != null) handler(window);
     }
 }

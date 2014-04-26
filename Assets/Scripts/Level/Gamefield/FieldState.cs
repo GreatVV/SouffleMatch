@@ -77,23 +77,17 @@ public class FieldState : GamefieldState
     {
         _targetPosition = null;
         _arrowChuzzle = null;
-        _possibleCombination = GamefieldUtility.Tip(Gamefield.Level.ActiveChuzzles, out _targetPosition,
-            out _arrowChuzzle);
-      //  Debug.Log(string.Format("Tip. From: {0} To: {1}", _arrowChuzzle, _targetPosition));
         var numberOfTries = 0;
-        while (!_possibleCombination.Any())
-        {   
-            numberOfTries++;
-
+        do
+        {
             if (GamefieldUtility.Repaint(numberOfTries)) break;
-
 
             _possibleCombination = GamefieldUtility.Tip(Gamefield.Level.ActiveChuzzles, out _targetPosition,
                 out _arrowChuzzle);
-            //Debug.Log("Arrow chuzzle: " + _arrowChuzzle);
-            //Debug.Log("Target position: " + _targetPosition);
-        }
-        //Debug.Log("Repainted in "+numberOfTries + " attempts");
+            Debug.Log(string.Format("Tip. From: {0} To: {1}", _arrowChuzzle, _targetPosition));
+            numberOfTries++;
+        } 
+        while (!_possibleCombination.Any());
     }
 
     public override void OnExit()
@@ -197,7 +191,7 @@ public class FieldState : GamefieldState
         }
         
         TimeFromTip += Time.deltaTime;
-        if (TimeFromTip > 1 && !Gamefield.Level.ActiveChuzzles.Any(x => x.Shine))
+        if (TimeFromTip > 1)
         {                        
             if (_possibleCombination.Any() && _arrowChuzzle)
             {

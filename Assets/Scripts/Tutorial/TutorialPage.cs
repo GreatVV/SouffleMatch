@@ -54,7 +54,7 @@ namespace TutorialSpace
             Tutorial.instance.takeableChuzzle = gamefield.Level.At(fromFingerPosition.x, fromFingerPosition.y);
             gamefield.TileDestroyed += OnTileDestroyed;
 
-            tutorialCloud.SetText("U should drag and cry!");
+            tutorialCloud.SetText("Drag to destroy");
             tutorialCloud.SetPosition(Camera.main.WorldToScreenPoint(fromPosition + Vector3.up * 0.5f));
             tutorialCloud.Show();
         }

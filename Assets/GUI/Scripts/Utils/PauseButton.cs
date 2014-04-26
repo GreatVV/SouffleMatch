@@ -19,6 +19,5 @@ public class PauseButton : MonoBehaviour
     public void OnClick()
     {
         Debug.Log("Toogle pause");
-        gamefield.TogglePause();
     }
 }

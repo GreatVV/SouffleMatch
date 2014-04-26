@@ -25,7 +25,19 @@ public class Gamefield : MonoBehaviour
     public LayerMask ChuzzleMask;
 
     public GameMode GameMode;
-    public bool IsPause;
+
+    public bool IsPause
+    {
+        get { return _isPause; }
+        set
+        {
+            if (_isPause != value)
+            {
+                _isPause = value;
+                FirePaused();
+            }
+        }
+    }
 
     [HideInInspector] public Level Level;
     public int[] NewTilesInColumns;
@@ -50,6 +62,7 @@ public class Gamefield : MonoBehaviour
     [HideInInspector] public WinCreateNewChuzzlesState WinCreateNewChuzzlesState = null;
     [HideInInspector] public WinCheckSpecialState WinCheckSpecialState = null;
     private GamefieldState _currentState;
+    private bool _isPause;
 
     #endregion
 
@@ -60,6 +73,8 @@ public class Gamefield : MonoBehaviour
     public event Action<Gamefield> GameStarted;
 
     public event Action<Chuzzle> TileDestroyed;
+
+    public event Action<bool> Paused;
 
     #endregion
 
@@ -81,6 +96,12 @@ public class Gamefield : MonoBehaviour
     #endregion
 
     #region Event Invokators
+
+    protected virtual void FirePaused()
+    {
+        var handler = Paused;
+        if (handler != null) handler(IsPause);
+    }
 
     public virtual void InvokeCombinationDestroyed(List<Chuzzle> combination)
     {
@@ -106,6 +127,9 @@ public class Gamefield : MonoBehaviour
 
     private static Gamefield Instance;
     public static bool InvaderWasDestroyed;
+    
+
+   
 
     public void Awake()
     {   
@@ -235,10 +259,5 @@ public class Gamefield : MonoBehaviour
         NewTilesInColumns = new int[Level.Width];
 
         AddEventHandlers();
-    }
-
-    public void TogglePause()
-    {
-        IsPause = !IsPause;
     }
 }
