@@ -2,6 +2,7 @@
 
 using System;
 using System.Collections;
+using System.Linq;
 using UnityEngine;
 using Object = UnityEngine.Object;
 
@@ -30,6 +31,7 @@ public abstract class Chuzzle : MonoBehaviour
 
     public bool IsDead;
     public bool IsReplacingOnDeath;
+    private static Camera EffectsCamera;
 
     #region Events
 
@@ -138,7 +140,7 @@ public abstract class Chuzzle : MonoBehaviour
                     "time", 0.2f));
             var ps = Instantiate(Explosion) as GameObject;
             //  Debug.Log("Ps: "+ps);
-            ps.transform.position = transform.position;
+            ps.transform.position = EffectsCamera.ScreenToWorldPoint(Camera.main.WorldToScreenPoint(transform.position));
             if (gameObject.activeSelf)
             {
                 StartCoroutine("CheckIfAlive");
@@ -199,6 +201,11 @@ public abstract class Chuzzle : MonoBehaviour
 
     void Awake()
     {
+        if (!EffectsCamera)
+        {
+            EffectsCamera = GameObject.Find("EffectCamera").camera;
+        }
+
         Teleportable = GetComponent<TeleportableEntity>();
         OnAwake();
     }

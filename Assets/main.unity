@@ -4057,7 +4057,7 @@ MonoBehaviour:
   - {fileID: 100004, guid: f24305ffb0f88f2448e8ad1c4ae94167, type: 2}
   InvaderPrefab: {fileID: 100002, guid: ffa0e9d22812a3a45912b333b24a07aa, type: 2}
   PlacePrefab: {fileID: 100000, guid: 308eca18f51c18143a51ad459b205625, type: 2}
-  Explosion: {fileID: 100000, guid: 4c5a17ca1f9fec84e941441ebb8be079, type: 2}
+  Explosion: {fileID: 100000, guid: 21e4cd11e820faf4ca6dcdcdb35945a8, type: 2}
   Gamefield: {fileID: 1454228157}
   NumberOfColors: 0
 --- !u!4 &1498693731
