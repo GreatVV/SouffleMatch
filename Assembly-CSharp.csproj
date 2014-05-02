@@ -46,7 +46,6 @@
 	</Reference>
   </ItemGroup>
   <ItemGroup>
-     <Compile Include="Assets\ApproveButton.cs" />
      <Compile Include="Assets\GUI\Scripts\CurrentLevelLabel.cs" />
      <Compile Include="Assets\GUI\Scripts\PanelManager.cs" />
      <Compile Include="Assets\GUI\Scripts\Screens\BackButton.cs" />
@@ -162,7 +161,7 @@
      <Compile Include="Assets\NGUI\Scripts\UI\UITexture.cs" />
      <Compile Include="Assets\NGUI\Scripts\UI\UITooltip.cs" />
      <Compile Include="Assets\NGUI\Scripts\UI\UIViewport.cs" />
-     <Compile Include="Assets\RandomRotationOnEnable.cs" />
+     <Compile Include="Assets\Scripts\ApproveButton.cs" />
      <Compile Include="Assets\Scripts\General\ChuzzlePool.cs" />
      <Compile Include="Assets\Scripts\General\Economy.cs" />
      <Compile Include="Assets\Scripts\General\JSONObject.cs" />
@@ -196,8 +195,10 @@
      <Compile Include="Assets\Scripts\Level\Gameplay\Chuzzles\BombChuzzle.cs" />
      <Compile Include="Assets\Scripts\Level\Gameplay\Chuzzles\Chuzzle.cs" />
      <Compile Include="Assets\Scripts\Level\Gameplay\Chuzzles\ChuzzleColor.cs" />
+     <Compile Include="Assets\Scripts\Level\Gameplay\Chuzzles\ChuzzleExplosion.cs" />
      <Compile Include="Assets\Scripts\Level\Gameplay\Chuzzles\ColorChuzzle.cs" />
      <Compile Include="Assets\Scripts\Level\Gameplay\Chuzzles\CounterChuzzle.cs" />
+     <Compile Include="Assets\Scripts\Level\Gameplay\Chuzzles\ExplosionPool.cs" />
      <Compile Include="Assets\Scripts\Level\Gameplay\Chuzzles\HorizontalLineChuzzle.cs" />
      <Compile Include="Assets\Scripts\Level\Gameplay\Chuzzles\IPowerUp.cs" />
      <Compile Include="Assets\Scripts\Level\Gameplay\Chuzzles\InvaderChuzzle.cs" />
@@ -226,6 +227,7 @@
      <Compile Include="Assets\Scripts\Level\Utility\GamefieldUtility.cs" />
      <Compile Include="Assets\Scripts\Level\Utility\IntVector2.cs" />
      <Compile Include="Assets\Scripts\Level\Utility\TipArrow.cs" />
+     <Compile Include="Assets\Scripts\RandomRotationOnEnable.cs" />
      <Compile Include="Assets\Scripts\Tutorial\Tutorial.cs" />
      <Compile Include="Assets\Scripts\Tutorial\TutorialCloud.cs" />
      <Compile Include="Assets\Scripts\Tutorial\TutorialPage.cs" />
@@ -261,9 +263,6 @@
      <None Include="Assets\NGUI\Resources\Shaders\Unlit - Additive Colored.shader" />
      <None Include="Assets\NGUI\Resources\Shaders\Unlit - Depth.shader" />
      <None Include="Assets\NGUI\Resources\Shaders\Unlit - Transparent Colored (SoftClip).shader" />
- <Reference Include="IFacebook">
- <HintPath>Assets\Facebook\Scripts\IFacebook.dll</HintPath>
- </Reference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

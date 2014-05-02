@@ -31,7 +31,8 @@ public abstract class Chuzzle : MonoBehaviour
 
     public bool IsDead;
     public bool IsReplacingOnDeath;
-    private static Camera EffectsCamera;
+
+    private static ExplosionPool ExplosionPool;
 
     #region Events
 
@@ -132,15 +133,9 @@ public abstract class Chuzzle : MonoBehaviour
                 return;
             }
             InvokeAnimationStarted();
-            iTween.ScaleTo(gameObject,
-                iTween.Hash(
-                    "x", 0,
-                    "y", 0,
-                    "z", 0,
-                    "time", 0.2f));
-            var ps = Instantiate(Explosion) as GameObject;
-            //  Debug.Log("Ps: "+ps);
-            ps.transform.position = EffectsCamera.ScreenToWorldPoint(Camera.main.WorldToScreenPoint(transform.position));
+           
+            ExplosionPool.Explode(this);
+          
             if (gameObject.activeSelf)
             {
                 StartCoroutine("CheckIfAlive");
@@ -201,9 +196,9 @@ public abstract class Chuzzle : MonoBehaviour
 
     void Awake()
     {
-        if (!EffectsCamera)
+        if (!ExplosionPool)
         {
-            EffectsCamera = GameObject.Find("EffectCamera").camera;
+            ExplosionPool = FindObjectOfType<ExplosionPool>();
         }
 
         Teleportable = GetComponent<TeleportableEntity>();
