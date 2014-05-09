@@ -34,7 +34,7 @@ public class Level : MonoBehaviour
     public int Height = 6;
     public SerializedLevel Serialized;
     public int Width = 6;
-    public string LevelName { get { return string.Format("Level {0}", Serialized.Name); }}
+    public string LevelName { get { return string.Format(Localization.Get("LevelNumber"), Serialized.Name); } }
 
     void Awake()
     {

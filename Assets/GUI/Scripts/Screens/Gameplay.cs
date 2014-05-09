@@ -1,15 +1,6 @@
 ﻿
 public class Gameplay : Window
 {
-
-    #region Localization
-    
-    public static Phrase PointsString = new Phrase("Очки: {0}", "Gameplay_Points");
-    public static Phrase TargetString = new Phrase("Цель: {0}", "Gameplay_Target");
-    public static Phrase TurnsString = new Phrase("Ходов: {0}", "Gameplay_Turns");
-
-    #endregion
-
     public Gamefield gamefield;
 
     public UILabel PointsLabel;
@@ -58,7 +49,7 @@ public class Gameplay : Window
 
     private void OnPointsChanged(int points, int targetPoints)
     {
-        PointsLabel.text = LocalizationStrings.GetString(PointsString, points);
+        PointsLabel.text = string.Format(Localization.Get("Gameplay_Points"), points,targetPoints);
         if (PointsBar)
         {
             PointsBar.value = ((float) points)/targetPoints;
@@ -67,7 +58,7 @@ public class Gameplay : Window
 
     private void OnTurnsChanged(int turns, int maxTurns)
     {
-        TurnsLabel.text = LocalizationStrings.GetString(TurnsString, turns);
+        TurnsLabel.text = string.Format(Localization.Get("Gameplay_Turns"), turns);
         if (TurnsBar)
         {
             TurnsBar.value = ((float) turns)/maxTurns;

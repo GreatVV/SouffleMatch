@@ -9,6 +9,6 @@
 
     public void Init(int currentPoints)
     {
-        pointLabel.text = string.Format("{0} points", currentPoints);
+        pointLabel.text = string.Format(Localization.Get("FinalWindow_Score"), currentPoints);
     }
 }

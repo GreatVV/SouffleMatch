@@ -149,6 +149,23 @@ public class Gamefield : MonoBehaviour
         Level = GetComponent<Level>();
         StageManager = GetComponent<StageManager>();
         PointSystem = GetComponent<Points>();
+
+        if (!Application.isEditor)
+        {
+            switch (Application.systemLanguage)
+            {
+                case SystemLanguage.Russian:
+                    Localization.language = "Russian";
+                    break;
+                default:
+                    Localization.language = "English";
+                    break;
+            }
+        }
+        else
+        {
+            Localization.language = "Russian";
+        }
     }
 
     private void LateUpdate()
