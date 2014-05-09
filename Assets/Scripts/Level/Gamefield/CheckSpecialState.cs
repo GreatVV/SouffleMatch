@@ -70,7 +70,7 @@ public class CheckSpecialState : GamefieldState
     public bool CheckForSpecial(List<List<Chuzzle>> combinations)
     {
         var isNewSpecial = false;
-
+        /*
         foreach (var comb in combinations)
         {
             //if any tile is powerup - then don't check for new bonuses
@@ -91,7 +91,7 @@ public class CheckSpecialState : GamefieldState
                     isNewSpecial = CreateBomb(comb);
                 }
             }
-        }
+        }*/
 
         return isNewSpecial;
     }

@@ -190,6 +190,7 @@ public class FieldState : GamefieldState
             return;
         }
         
+        /*
         TimeFromTip += Time.deltaTime;
         if (TimeFromTip > 1)
         {                        
@@ -204,7 +205,7 @@ public class FieldState : GamefieldState
 
             TimeFromTip = 0;
         }       
-
+        */
         #region Drag
 
         if (CurrentChuzzle == null && (Input.GetMouseButtonDown(0) || (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began)))
@@ -329,7 +330,7 @@ public class FieldState : GamefieldState
 
     public void LateUpdateState(List<Cell> activeCells)
     {
-        tipArrow.UpdateState();
+        //tipArrow.UpdateState();
         if (_isReturning)
         {
             foreach (var selectedChuzzle in SelectedChuzzles)

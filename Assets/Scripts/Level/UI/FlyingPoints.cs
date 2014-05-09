@@ -20,6 +20,7 @@ public class FlyingPoints : MonoBehaviour
     private void OnPointsForDestroy(IEnumerable<Chuzzle> comb, int points)
     {
         var label = Pool.GetLabel;
+        label.gameObject.SetActive(true);
         var minx = comb.Min(x => x.Current.Position.x);
         var maxx = comb.Max(x => x.Current.Position.x);
         var miny = comb.Min(x => x.Current.Position.y);
@@ -27,9 +28,11 @@ public class FlyingPoints : MonoBehaviour
         var center = new Vector2((minx + maxx) / 2f, (miny + maxy) / 2f);
         label.transform.position = UiCamera.ScreenPointToRay(Camera.main.WorldToScreenPoint(center)).GetPoint(0);
         label.text = string.Format("+{0}", points);
-        label.gameObject.SetActive(true);
+        label.gameObject.GetComponent<TweenScale>().enabled = true;
         label.gameObject.GetComponent<TweenScale>().Play(true);
+        label.gameObject.GetComponent<TweenAlpha>().enabled = true;
         label.gameObject.GetComponent<TweenAlpha>().Play(true);
+        Debug.Log("Play: " + Camera.main.WorldToScreenPoint(center));
     }
 
     void OnDestroy()

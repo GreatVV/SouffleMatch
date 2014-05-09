@@ -53,7 +53,14 @@ public class SessionRestorer : MonoBehaviour
         lastPlayedLevel = index;
         Gamefield.StartGame(levelManager[index]);
         PanelManager.Show(Gameplay, true);
-        Tutorial.instance.Begin();
+        if (index == 0)
+        {
+            Tutorial.instance.Begin();
+        }
+        else
+        {
+            Tutorial.instance.End();
+        }
     }
 
     public void PlayNextLevel()

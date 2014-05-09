@@ -59,13 +59,19 @@ public class Gameplay : Window
     private void OnPointsChanged(int points, int targetPoints)
     {
         PointsLabel.text = LocalizationStrings.GetString(PointsString, points);
-        PointsBar.value = ((float) points)/targetPoints;
+        if (PointsBar)
+        {
+            PointsBar.value = ((float) points)/targetPoints;
+        }
     }
 
     private void OnTurnsChanged(int turns, int maxTurns)
     {
         TurnsLabel.text = LocalizationStrings.GetString(TurnsString, turns);
-        TurnsBar.value = ((float) turns)/maxTurns;
+        if (TurnsBar)
+        {
+            TurnsBar.value = ((float) turns)/maxTurns;
+        }
     }
 
     public void OnGameOver()

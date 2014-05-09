@@ -14,6 +14,7 @@ public class FlyingLabelPool : MonoBehaviour
             var label = CurrentLabels.FirstOrDefault(x => !x.gameObject.activeInHierarchy);
             if (label)
             {
+                Debug.Log("Label: "+label.GetInstanceID());
                 return label;
             }
             label = NGUITools.AddChild(gameObject,Prefab.gameObject).GetComponent<UILabel>();

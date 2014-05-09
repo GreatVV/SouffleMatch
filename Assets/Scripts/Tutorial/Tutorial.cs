@@ -22,8 +22,11 @@ public class Tutorial : MonoBehaviour
 
     public void End()
     {
-        currentPage.Hide();
-        currentPage.End -= OnPageEnd;
+        if (currentPage)
+        {
+            currentPage.Hide();
+            currentPage.End -= OnPageEnd;
+        }
         isActive = false;
     }
 

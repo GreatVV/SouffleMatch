@@ -41,8 +41,10 @@ namespace TutorialSpace
             IntVector2 targetPosition;
             Chuzzle arrowChuzzle;
             GamefieldUtility.Tip(gamefield.Level.ActiveChuzzles, out targetPosition, out arrowChuzzle);
-
-            fromFingerPosition = arrowChuzzle.Current.IntVector2Position;
+            if (arrowChuzzle && arrowChuzzle.Current != null)
+            {
+                fromFingerPosition = arrowChuzzle.Current.IntVector2Position;
+            }
             toFingerPosition = targetPosition;
 
             var fromPosition = GamefieldUtility.ConvertXYToPosition((int) fromFingerPosition.x, (int) fromFingerPosition.y, Chuzzle.Scale);
@@ -54,7 +56,7 @@ namespace TutorialSpace
             Tutorial.instance.takeableChuzzle = gamefield.Level.At(fromFingerPosition.x, fromFingerPosition.y);
             gamefield.TileDestroyed += OnTileDestroyed;
 
-            tutorialCloud.SetText("Drag to destroy");
+            tutorialCloud.SetText("Drag to destroy zombie veggies.\n That's all");
             tutorialCloud.SetPosition(Camera.main.WorldToScreenPoint(fromPosition + Vector3.up * 0.5f));
             tutorialCloud.Show();
         }
