@@ -1,7 +1,4 @@
-﻿using System.Security.Cryptography;
-using UnityEngine;
-using System.Collections;
-using System;
+﻿using System;
 
 [Serializable]
 public abstract class GameMode
@@ -58,12 +55,16 @@ public abstract class GameMode
     {
         if (IsGameOver)
         {
+
+            GA.API.Design.NewEvent(string.Format("Game:{0}:Lose:Points", Gamefield.Level.LevelName), PointSystem.CurrentPoints);
             InvokeGameOver();
             return true;
         }
 
         if (IsWin)
         {
+            GA.API.Design.NewEvent(string.Format("Game:{0}:Win:Points", Gamefield.Level.LevelName), PointSystem.CurrentPoints);
+            GA.API.Design.NewEvent(string.Format("Game:{0}:Win:Turns", Gamefield.Level.LevelName), PointSystem.CurrentPoints);
             InvokeWin();
             return true;
         }

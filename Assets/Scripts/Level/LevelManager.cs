@@ -8,9 +8,10 @@ public class LevelManager : MonoBehaviour {
 
     public TextAsset LevelFile;
     public event Action LevelsAreReady;
-
+    public bool IsLoaded;
     protected virtual void FireLevelsAreReady()
     {
+        IsLoaded = true;
         Action handler = LevelsAreReady;
         if (handler != null) handler();
     }

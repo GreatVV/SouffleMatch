@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Globalization;
 using UnityEngine;
+using Object = UnityEngine.Object;
 
 [ExecuteInEditMode]
 public class MapId : MonoBehaviour
@@ -10,6 +11,9 @@ public class MapId : MonoBehaviour
     public GameObject FirstStar;
     public GameObject SecondStar;
     public GameObject ThirdStar;
+
+    public GameObject currentLevelParticle;
+    private GameObject effect;
 
     public void Awake()
     {
@@ -111,5 +115,21 @@ public class MapId : MonoBehaviour
     public void OnClick()
     {
         SessionRestorer.Instance.StartLevel(Index);
+    }
+
+    void OnDisable()
+    {
+        if (effect)
+        {
+            Destroy(effect);
+        }
+    }
+
+    public void ShowCurrent()
+    {
+        effect = (GameObject)Instantiate(currentLevelParticle);
+        effect.transform.parent = transform;
+        effect.transform.localPosition = Vector3.zero;
+        effect.transform.localScale = Vector3.one;
     }
 }

@@ -4,10 +4,10 @@ public class Gameplay : Window
     public Gamefield gamefield;
 
     public UILabel PointsLabel;
-    public UIProgressBar PointsBar;
     // public UILabel TargetScoreLabel;
     public UILabel TurnsLabel;
-    public UIProgressBar TurnsBar;
+
+    public TweenPosition pauseButtonTween;
 
     public void AddEventHandlers(Gamefield gamefield)
     {
@@ -50,23 +50,26 @@ public class Gameplay : Window
     private void OnPointsChanged(int points, int targetPoints)
     {
         PointsLabel.text = string.Format(Localization.Get("Gameplay_Points"), points,targetPoints);
-        if (PointsBar)
-        {
-            PointsBar.value = ((float) points)/targetPoints;
-        }
     }
 
     private void OnTurnsChanged(int turns, int maxTurns)
     {
         TurnsLabel.text = string.Format(Localization.Get("Gameplay_Turns"), turns);
-        if (TurnsBar)
-        {
-            TurnsBar.value = ((float) turns)/maxTurns;
-        }
     }
 
     public void OnGameOver()
     {
 //        UI.Instance.ShowGameoverPopup();
+    }
+
+    protected override void OnHideWindow()
+    {
+        pauseButtonTween.PlayForward();
+    }
+
+    protected override void OnShowWindow()
+    {
+        base.OnShowWindow();
+        pauseButtonTween.PlayReverse();
     }
 }

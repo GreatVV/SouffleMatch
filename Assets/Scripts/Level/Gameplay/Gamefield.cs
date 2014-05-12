@@ -166,6 +166,9 @@ public class Gamefield : MonoBehaviour
         {
             Localization.language = "Russian";
         }
+
+        GA.API.Design.NewEvent("Game:Localization:"+Localization.language);
+        GA.API.Design.NewEvent("Game:SystemLocalization:"+Application.systemLanguage);
     }
 
     private void LateUpdate()

@@ -9,5 +9,6 @@ public class ResetButton : MonoBehaviour
     {
         sessionRestorer.Restart();
         pauseButton.SendMessage("OnClick", SendMessageOptions.DontRequireReceiver);
+        GA.API.Design.NewEvent(string.Format("Game:{0}:Reset:Menu", sessionRestorer.Gamefield.Level.LevelName));
     }
 }

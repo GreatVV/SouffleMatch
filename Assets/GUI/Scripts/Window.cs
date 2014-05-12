@@ -39,6 +39,12 @@ public abstract class Window : MonoBehaviour
         {
             currentCollider.enabled = true;
         }
+        OnShowWindow();
+    }
+
+    protected virtual void OnShowWindow()
+    {
+        Debug.Log("On Activate");
     }
 
     public void Deactivate()
@@ -47,5 +53,11 @@ public abstract class Window : MonoBehaviour
         {
             currentCollider.enabled = false;
         }
+        OnHideWindow();
+    }
+
+    protected virtual void OnHideWindow()
+    {
+        
     }
 }
