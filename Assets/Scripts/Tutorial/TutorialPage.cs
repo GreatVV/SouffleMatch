@@ -1,77 +1,107 @@
 ﻿using System;
 using UnityEngine;
 
-namespace TutorialSpace 
+namespace TutorialSpace
 {
     internal class TutorialPage : MonoBehaviour
     {
+        private Gamefield _gamefield;
+        private TutorialCloud _tutorialCloud;
+
+        #region Events
+
         public event Action<TutorialPage> End;
 
         protected virtual void FireEnd(TutorialPage page)
         {
-            var handler = End;
+            Action<TutorialPage> handler = End;
             if (handler != null) handler(page);
         }
+
+        private void AddHandlers()
+        {
+            RemoveHandlers();
+            _gamefield.TileDestroyed += OnTileDestroyed;
+        }
+
+        private void RemoveHandlers()
+        {
+            _gamefield.TileDestroyed -= OnTileDestroyed;
+        }
+
+        #endregion
+
+        #region Events Subscribers
+
+        private void OnTileDestroyed(Chuzzle chuzzle)
+        {
+            FireEnd(this);
+            RemoveHandlers();
+        }
+
+        #endregion
+
+        #region Unity Methods
+
+        private void OnDestroy()
+        {
+            RemoveHandlers();
+        }
+
+        private void Start()
+        {
+            _gamefield = FindObjectOfType<Gamefield>();
+            _tutorialCloud = FindObjectOfType<TutorialCloud>();
+        }
+
+        #endregion
 
         #region In Inspector
 
         public TutorialPage NextPage;
-
+        public iTweenEvent finger;
 
         public IntVector2 fromFingerPosition;
         public IntVector2 toFingerPosition;
 
-        public iTweenEvent finger;
-        [SerializeField]
-        private Gamefield gamefield;
-
-        public TutorialCloud tutorialCloud;
-
         #endregion
-
-        void Awake()
-        {
-            
-        }
 
         public void Show()
         {
+            Debug.Log("Show");
             gameObject.SetActive(true);
-            
+
             IntVector2 targetPosition;
             Chuzzle arrowChuzzle;
-            GamefieldUtility.Tip(gamefield.Level.ActiveChuzzles, out targetPosition, out arrowChuzzle);
+            GamefieldUtility.Tip(_gamefield.Level.ActiveChuzzles, out targetPosition, out arrowChuzzle);
             if (arrowChuzzle && arrowChuzzle.Current != null)
             {
                 fromFingerPosition = arrowChuzzle.Current.IntVector2Position;
             }
             toFingerPosition = targetPosition;
 
-            var fromPosition = GamefieldUtility.ConvertXYToPosition((int) fromFingerPosition.x, (int) fromFingerPosition.y, Chuzzle.Scale);
+            Vector3 fromPosition = GamefieldUtility.ConvertXYToPosition(fromFingerPosition.x, fromFingerPosition.y,
+                Chuzzle.Scale);
             finger.transform.position = fromPosition;
-            finger.Values["position"] = GamefieldUtility.ConvertXYToPosition((int)toFingerPosition.x, (int)toFingerPosition.y, Chuzzle.Scale);
+            finger.Values["position"] = GamefieldUtility.ConvertXYToPosition(toFingerPosition.x, toFingerPosition.y,
+                Chuzzle.Scale);
             finger.Play();
 
-            Tutorial.instance.targetCell = gamefield.Level.GetCellAt(targetPosition);
-            Tutorial.instance.takeableChuzzle = gamefield.Level.At(fromFingerPosition.x, fromFingerPosition.y);
-            gamefield.TileDestroyed += OnTileDestroyed;
+            Tutorial.Instance.targetCell = _gamefield.Level.GetCellAt(targetPosition);
+            Tutorial.Instance.takeableChuzzle = _gamefield.Level.At(fromFingerPosition.x, fromFingerPosition.y);
 
-            tutorialCloud.SetText(Localization.Get("Tutorial_Drag"));
-            tutorialCloud.SetPosition(Camera.main.WorldToScreenPoint(fromPosition + Vector3.up * 0.5f));
-            tutorialCloud.Show();
-        }
+            AddHandlers();
 
-        private void OnTileDestroyed(Chuzzle chuzzle)
-        {
-            FireEnd(this);
-            gamefield.TileDestroyed -= OnTileDestroyed;
+            _tutorialCloud.SetText(Localization.Get("Tutorial_Drag"));
+            _tutorialCloud.SetPosition(Camera.main.WorldToScreenPoint(fromPosition + Vector3.up*0.5f));
+            _tutorialCloud.Show();
         }
 
         public void MakeTutorial(GameObject go, int order)
         {
-           //NGUITools.SetLayer(go, LayerMask.NameToLayer("Tutorial"));
-            var renderers = go.GetComponentsInChildren<SpriteRenderer>();
-            foreach (var render in renderers)
+            //NGUITools.SetLayer(go, LayerMask.NameToLayer("Tutorial"));
+            SpriteRenderer[] renderers = go.GetComponentsInChildren<SpriteRenderer>();
+            foreach (SpriteRenderer render in renderers)
             {
                 render.sortingOrder = order;
             }
@@ -79,8 +109,10 @@ namespace TutorialSpace
 
         public void Hide()
         {
+            RemoveHandlers();
+            Debug.Log("Hide");
             gameObject.SetActive(false);
-            tutorialCloud.Hide();
+            _tutorialCloud.Hide();
         }
     }
 }

@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class Tutorial : MonoBehaviour
 {
-    public static Tutorial instance;
+    public static Tutorial Instance { get; set; }
     public static bool isActive;
 
     public Chuzzle takeableChuzzle;
@@ -12,22 +12,24 @@ public class Tutorial : MonoBehaviour
 
     private TutorialPage currentPage;
 
-    public void Begin()
+    public static void Begin()
     {
         isActive = true;
-        currentPage = startPage;
-        currentPage.End += OnPageEnd;
-        currentPage.Show();
+        Instance.currentPage = Instance.startPage;
+        Instance.currentPage.End -= Instance.OnPageEnd;
+        Instance.currentPage.End += Instance.OnPageEnd;
+        Instance.currentPage.Show();
     }
 
-    public void End()
+    public static void End()
     {
-        if (currentPage)
+        if (Instance.currentPage)
         {
-            currentPage.Hide();
-            currentPage.End -= OnPageEnd;
+            Instance.currentPage.Hide();
+            Instance.currentPage.End -= Instance.OnPageEnd;
         }
         isActive = false;
+        Destroy(Instance.gameObject);
     }
 
     private void OnPageEnd(TutorialPage page)
@@ -37,6 +39,7 @@ public class Tutorial : MonoBehaviour
         if (page.NextPage)
         {
             currentPage = page.NextPage;
+            currentPage.End -= OnPageEnd;
             currentPage.End += OnPageEnd;
             currentPage.Show();
         }
@@ -48,12 +51,32 @@ public class Tutorial : MonoBehaviour
 
     public void Awake()
     {
-        instance = this;
+        if (Instance)
+        {
+            Debug.Log("Instance already created");
+            return;
+        }
+
+        Instance = this;
     }
 
-    public bool CanTakeOnlyThisChuzzle(Chuzzle currentChuzzle)
+    void OnDestroy()
     {
-        return takeableChuzzle == currentChuzzle;
+        if (Instance == this)
+        {
+            Instance = null;
+            isActive = false;
+        }
+    }
+
+    public static bool CanTakeOnlyThisChuzzle(Chuzzle currentChuzzle)
+    {
+        if (!isActive)
+        {
+            return false;
+        }
+
+        return Instance.takeableChuzzle == currentChuzzle;
     }
 
     public bool IsTargetCell(Cell cell)
@@ -63,15 +86,15 @@ public class Tutorial : MonoBehaviour
 
     public static void SetActive(bool active)
     {
-        if (instance.currentPage)
+        if (Instance.currentPage)
         {
             if (active)
             {
-                instance.currentPage.Show();
+                Instance.currentPage.Show();
             }
             else
             {
-                instance.currentPage.Hide();
+                Instance.currentPage.Hide();
             }
         }
     }

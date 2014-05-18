@@ -19,25 +19,14 @@ using UnityEngine;
 [RequireComponent(typeof (WinCheckSpecialState))]
 [RequireComponent(typeof (WinCreateNewChuzzlesState))]
 [RequireComponent(typeof (WinRemoveCombinationState))]
-
 public class Gamefield : MonoBehaviour
 {
+    private static Gamefield Instance;
+    public static bool InvaderWasDestroyed;
     public LayerMask ChuzzleMask;
 
     public GameMode GameMode;
-
-    public bool IsPause
-    {
-        get { return _isPause; }
-        set
-        {
-            if (_isPause != value)
-            {
-                _isPause = value;
-                FirePaused();
-            }
-        }
-    }
+    public DateTime GameStartTime;
 
     [HideInInspector] public Level Level;
     public int[] NewTilesInColumns;
@@ -57,14 +46,32 @@ public class Gamefield : MonoBehaviour
 
     [HideInInspector] public InitState InitState = null;
     [HideInInspector] public RemoveCombinationState RemoveState = null;
-    [HideInInspector] public WinState WinState = null;
-    [HideInInspector] public WinRemoveCombinationState WinRemoveCombinationState = null;
-    [HideInInspector] public WinCreateNewChuzzlesState WinCreateNewChuzzlesState = null;
     [HideInInspector] public WinCheckSpecialState WinCheckSpecialState = null;
+    [HideInInspector] public WinCreateNewChuzzlesState WinCreateNewChuzzlesState = null;
+    [HideInInspector] public WinRemoveCombinationState WinRemoveCombinationState = null;
+    [HideInInspector] public WinState WinState = null;
     private GamefieldState _currentState;
     private bool _isPause;
 
     #endregion
+
+    public bool IsPause
+    {
+        get { return _isPause; }
+        set
+        {
+            if (_isPause != value)
+            {
+                _isPause = value;
+                FirePaused();
+            }
+        }
+    }
+
+    public static List<Chuzzle> Chuzzles
+    {
+        get { return Instance.Level.ActiveChuzzles; }
+    }
 
     #region Events
 
@@ -75,6 +82,22 @@ public class Gamefield : MonoBehaviour
     public event Action<Chuzzle> TileDestroyed;
 
     public event Action<bool> Paused;
+
+    public void AddEventHandlers()
+    {
+        RemoveEventHandlers();
+        GameMode.Win += OnWin;
+        GameMode.GameOver += OnGameOver;
+    }
+
+    private void RemoveEventHandlers()
+    {
+        if (GameMode != null)
+        {
+            GameMode.Win -= OnWin;
+            GameMode.GameOver -= OnGameOver;
+        }
+    }
 
     #endregion
 
@@ -99,20 +122,14 @@ public class Gamefield : MonoBehaviour
 
     protected virtual void FirePaused()
     {
-        var handler = Paused;
+        Action<bool> handler = Paused;
         if (handler != null) handler(IsPause);
     }
 
     public virtual void InvokeCombinationDestroyed(List<Chuzzle> combination)
     {
-        var handler = CombinationDestroyed;
+        Action<List<Chuzzle>> handler = CombinationDestroyed;
         if (handler != null) handler(combination);
-    }
-
-    public virtual void InvokeGameStarted()
-    {
-        var handler = GameStarted;
-        if (handler != null) handler(this);
     }
 
     public void InvokeTileDestroyed(Chuzzle destroyedChuzzle)
@@ -123,16 +140,18 @@ public class Gamefield : MonoBehaviour
         }
     }
 
+    public virtual void InvokeGameStarted()
+    {
+        Action<Gamefield> handler = GameStarted;
+        if (handler != null) handler(this);
+    }
+
     #endregion
 
-    private static Gamefield Instance;
-    public static bool InvaderWasDestroyed;
-    
-
-   
+    #region Unity Methods
 
     public void Awake()
-    {   
+    {
         Instance = this;
         InitState = GetComponent<InitState>();
         CheckSpecialState = GetComponent<CheckSpecialState>();
@@ -167,8 +186,8 @@ public class Gamefield : MonoBehaviour
             Localization.language = "Russian";
         }
 
-        GA.API.Design.NewEvent("Game:Localization:"+Localization.language);
-        GA.API.Design.NewEvent("Game:SystemLocalization:"+Application.systemLanguage);
+        GA.API.Design.NewEvent("Game:Localization:" + Localization.language);
+        GA.API.Design.NewEvent("Game:SystemLocalization:" + Application.systemLanguage);
     }
 
     private void LateUpdate()
@@ -179,60 +198,9 @@ public class Gamefield : MonoBehaviour
         }
     }
 
-
-    /// <summary>
-    ///     Remove chuzzle from game logic and add new tiles in column
-    /// </summary>
-    /// <param name="chuzzle">Chuzzle to remove</param>
-    /// <param name="invokeEvent">Need to invoke event or not</param>
-    public void RemoveChuzzle(Chuzzle chuzzle, bool invokeEvent = true)
-    {
-        Level.Chuzzles.Remove(chuzzle);
-        Level.ActiveChuzzles.Remove(chuzzle);
-        
-        if (chuzzle.NeedCreateNew)
-        {
-            if (chuzzle is TwoTimeChuzzle)
-            {
-                Debug.LogError("Error: Two time chuzzle creation!!");
-            }
-            NewTilesInColumns[chuzzle.Current.x]++;
-        }
-        if (invokeEvent)
-        {
-            InvokeTileDestroyed(chuzzle);
-        }
-    }
-
-    public void StartGame(SerializedLevel level = null)
-    {
-        Level.Reset();
-
-        Player.Instance.LastPlayedLevel = level;
-        CombinationDestroyed -= PointSystem.CountForCombinations;
-        CombinationDestroyed += PointSystem.CountForCombinations;
-        SwitchStateTo(InitState);
-    }
-
-    public void AddEventHandlers()
+    private void OnDestroy()
     {
         RemoveEventHandlers();
-        GameMode.Win += OnWin;
-        GameMode.GameOver += OnGameOver;
-    }
-
-    void OnDestroy()
-    {
-        RemoveEventHandlers();
-    }
-
-    private void RemoveEventHandlers()
-    {
-        if (GameMode != null)
-        {
-            GameMode.Win -= OnWin;
-            GameMode.GameOver -= OnGameOver;
-        }
     }
 
     private void Update()
@@ -240,26 +208,6 @@ public class Gamefield : MonoBehaviour
         if (_currentState != null && !IsPause)
         {
             _currentState.UpdateState();
-        }
-    }
-
-    public void SwitchStateTo(GamefieldState newState)
-    {
-       // Debug.Log("Old state: "+_currentState);
-        if (_currentState != null)
-        {
-            _currentState.OnExit();
-        }
-        _currentState = newState;
-       // Debug.Log("Switch to: " + _currentState);
-        _currentState.OnEnter();
-    }
-
-    public static List<Chuzzle> Chuzzles
-    {
-        get
-        {
-            return Instance.Level.ActiveChuzzles;
         }
     }
 
@@ -279,5 +227,55 @@ public class Gamefield : MonoBehaviour
         NewTilesInColumns = new int[Level.Width];
 
         AddEventHandlers();
+    }
+
+    #endregion
+
+    public void StartGame(SerializedLevel level = null)
+    {
+        Level.Reset();
+
+        Player.Instance.LastPlayedLevel = level;
+        CombinationDestroyed -= PointSystem.CountForCombinations;
+        CombinationDestroyed += PointSystem.CountForCombinations;
+        SwitchStateTo(InitState);
+
+        GameStartTime = DateTime.UtcNow;
+    }
+
+    /// <summary>
+    ///     Remove chuzzle from game logic and add new tiles in column
+    /// </summary>
+    /// <param name="chuzzle">Chuzzle to remove</param>
+    /// <param name="invokeEvent">Need to invoke event or not</param>
+    public void RemoveChuzzle(Chuzzle chuzzle, bool invokeEvent = true)
+    {
+        Level.Chuzzles.Remove(chuzzle);
+        Level.ActiveChuzzles.Remove(chuzzle);
+
+        if (chuzzle.NeedCreateNew)
+        {
+            if (chuzzle is TwoTimeChuzzle)
+            {
+                Debug.LogError("Error: Two time chuzzle creation!!");
+            }
+            NewTilesInColumns[chuzzle.Current.x]++;
+        }
+        if (invokeEvent)
+        {
+            InvokeTileDestroyed(chuzzle);
+        }
+    }
+
+    public void SwitchStateTo(GamefieldState newState)
+    {
+        // Debug.Log("Old state: "+_currentState);
+        if (_currentState != null)
+        {
+            _currentState.OnExit();
+        }
+        _currentState = newState;
+        // Debug.Log("Switch to: " + _currentState);
+        _currentState.OnEnter();
     }
 }

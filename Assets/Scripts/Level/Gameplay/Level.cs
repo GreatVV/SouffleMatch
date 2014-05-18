@@ -83,7 +83,7 @@ public class Level : MonoBehaviour
         CurrentMinY = 0;
         CurrentMaxY = Height;
 
-        Random.seed = level.Seed;
+        Random.seed = level.Seed == -1 ? Environment.TickCount : level.Seed;
 
         Debug.Log("Add cells");
         foreach (var newCell in level.SpecialCells)

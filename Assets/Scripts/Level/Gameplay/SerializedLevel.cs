@@ -74,10 +74,7 @@ public class SerializedLevel
             ? (int) jsonObject.GetField("numberOfColors").n
             : 6;
         serializedLevel.Seed = jsonObject.HasField("seed") ? (int) jsonObject.GetField("seed").n : -1;
-        if (serializedLevel.Seed == -1)
-        {
-            serializedLevel.Seed = Environment.TickCount;
-        }
+        
 
         serializedLevel.GameMode = GameModeDescription.CreateFromJson(jsonObject.GetField("gameMode"));
 

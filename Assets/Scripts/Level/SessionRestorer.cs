@@ -1,17 +1,40 @@
 ﻿using UnityEngine;
 
-[RequireComponent(typeof(LevelManager))]
+[RequireComponent(typeof (LevelManager))]
 public class SessionRestorer : MonoBehaviour
 {
+    public static SessionRestorer Instance;
+    public Gamefield Gamefield;
+    public Gameplay Gameplay;
     public int lastPlayedLevel;
+
+    public Tutorial tutorialPrefab;
 
     private LevelManager levelManager;
 
-    public Gamefield Gamefield;
-    public Gameplay Gameplay;
-    public static SessionRestorer Instance;
+    #region Events Subscribers
 
-    void Awake()
+    public void OnWindowChanged(Window currentActiveWindow)
+    {
+        Debug.Log("Window changed: " + currentActiveWindow);
+        Gamefield.IsPause = !PanelManager.IsCurrent(Instance.Gameplay);
+    }
+
+    private void OnPause(bool pause)
+    {
+        //Tutorial.SetActive(!pause);
+    }
+
+    private void OnLevelsAreReady()
+    {
+        StartLevel(lastPlayedLevel);
+    }
+
+    #endregion
+
+    #region Unity Methods
+
+    private void Awake()
     {
         if (Instance != null)
         {
@@ -33,39 +56,49 @@ public class SessionRestorer : MonoBehaviour
         Gamefield.Paused += OnPause;
     }
 
-    public void OnWindowChanged(Window currentActiveWindow)
+    private void OnDestroy()
     {
-        Gamefield.IsPause = !PanelManager.IsCurrent(SessionRestorer.Instance.Gameplay);
+        if (Instance == this)
+        {
+            levelManager.LevelsAreReady -= OnLevelsAreReady;
+        }
     }
 
-    private void OnPause(bool pause)
+    private void OnApplicationPause()
     {
-        Tutorial.SetActive(!pause);
+        PlayerPrefs.SetInt("LastPlayedLevel", lastPlayedLevel);
+        PlayerPrefs.Save();
     }
 
-    private void OnLevelsAreReady()
-    {
-        StartLevel(lastPlayedLevel);
-    }
+    #endregion
 
     public void StartLevel(int index)
     {
         lastPlayedLevel = index;
         Gamefield.StartGame(levelManager[index]);
         PanelManager.Show(Gameplay, true);
+        
+        /*
         if (index == 0)
         {
-            Tutorial.instance.Begin();
+            if (!Tutorial.Instance)
+            {
+                Instantiate(tutorialPrefab);
+            }
+            Tutorial.Begin();
         }
         else
         {
-            Tutorial.instance.End();
-        }
+            if (Tutorial.isActive)
+            {
+                Tutorial.End();
+            }
+        }*/
     }
 
     public void PlayNextLevel()
     {
-        if (lastPlayedLevel < levelManager.LoadedLevels.Count-1)
+        if (lastPlayedLevel < levelManager.LoadedLevels.Count - 1)
         {
             lastPlayedLevel++;
         }
@@ -74,20 +107,7 @@ public class SessionRestorer : MonoBehaviour
 
     public void Restart()
     {
+        iTween.Stop();
         StartLevel(lastPlayedLevel);
-    }
-
-    void OnDestroy()
-    {
-        if (Instance == this)
-        {
-            levelManager.LevelsAreReady -= OnLevelsAreReady;
-        }
-    }
-
-    void OnApplicationPause()
-    {
-        PlayerPrefs.SetInt("LastPlayedLevel", lastPlayedLevel);
-        PlayerPrefs.Save();
     }
 }

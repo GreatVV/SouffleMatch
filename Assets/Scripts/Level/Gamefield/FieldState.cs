@@ -60,7 +60,7 @@ public class FieldState : GamefieldState
         AnimatedChuzzles.Clear();
         Chuzzle.DropEventHandlers();
         Chuzzle.AnimationStarted += OnAnimationStarted;
-        if (!Tutorial.isActive)
+      //  if (!Tutorial.isActive)
         {
             CheckPossibleCombinations();
         }
@@ -103,7 +103,7 @@ public class FieldState : GamefieldState
     public void CheckCombinations()
     {
         var combinations = GamefieldUtility.FindCombinations(Gamefield.Level.ActiveChuzzles);
-        if (combinations.Any() && (!Tutorial.isActive || (Tutorial.isActive && CurrentChuzzle!=null&& Tutorial.instance.IsTargetCell(CurrentChuzzle.Real))))
+        if (combinations.Any() /*&& (!Tutorial.isActive || (Tutorial.isActive && CurrentChuzzle!=null&& Tutorial.Instance.IsTargetCell(CurrentChuzzle.Real)))*/)
         {
             foreach (var c in Gamefield.Level.Chuzzles)
             {
@@ -251,7 +251,7 @@ public class FieldState : GamefieldState
             return;
         }
 
-        if (CurrentChuzzle && Tutorial.isActive && !Tutorial.instance.CanTakeOnlyThisChuzzle(CurrentChuzzle))
+        if (CurrentChuzzle /*&& !Tutorial.CanTakeOnlyThisChuzzle(CurrentChuzzle)*/)
         {
             Reset();
             return;

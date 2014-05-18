@@ -5,7 +5,15 @@ using UnityEngine;
 
 public class Points : MonoBehaviour
 {
-    public int CurrentPoints;              
+    public int CurrentPoints;
+    public event Action<int> PointChangeDelta;
+
+    protected virtual void InvokePointChangeDelta(int delta)
+    {
+        Action<int> handler = PointChangeDelta;
+        if (handler != null) handler(delta);
+    }
+
     public event Action<int, int> PointChanged;
     public event Action<IEnumerable<Chuzzle>, int> PointsForDestroy;
 
@@ -41,6 +49,7 @@ public class Points : MonoBehaviour
     public void CountForCombinations(IEnumerable<Chuzzle> combination)
     {
         var newPoints = combination.Count()*25;
+        InvokePointChangeDelta(newPoints);
         AddPoints(newPoints);
         InvokePointsForDestroy(combination, newPoints);
     }

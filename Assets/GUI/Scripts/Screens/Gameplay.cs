@@ -64,6 +64,7 @@ public class Gameplay : Window
 
     protected override void OnHideWindow()
     {
+        gamefield.IsPause = false;
         pauseButtonTween.PlayForward();
     }
 
@@ -71,5 +72,6 @@ public class Gameplay : Window
     {
         base.OnShowWindow();
         pauseButtonTween.PlayReverse();
+        gamefield.IsPause = false;
     }
 }
