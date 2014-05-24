@@ -139,8 +139,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   HorizontalFlip: 1
   Sprites:
-  - {fileID: 21300000, guid: d368cb3e04d71ff49a3390d4ab1ca1a5, type: 3}
+  - {fileID: 21300000, guid: 390b3aa195cd4ee4db92a90058a24ce9, type: 3}
   - {fileID: 21300000, guid: 5dd182c1c97da89468577413ffc6d684, type: 3}
+  - {fileID: 21300000, guid: 06902f532a663bf448d1d27c79e743ed, type: 3}
+  - {fileID: 21300000, guid: 1e20adb9b6b8f4946bb96f6ed3efe195, type: 3}
+  - {fileID: 21300000, guid: abd1b5f98c0d84c4f8fd58bbe3e69472, type: 3}
+  - {fileID: 21300000, guid: 44f4d7cc7944fa244b4ee7c81ebfcf44, type: 3}
+  - {fileID: 21300000, guid: 8ec827dd08e88ce4fb976cfdba9d10d0, type: 3}
   VerticalFlip: 1
 --- !u!212 &21200000
 SpriteRenderer:
