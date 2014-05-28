@@ -88,7 +88,7 @@ namespace GamefieldStates
                 yield return new WaitForSeconds(0.5f);
                 TilesFactory.Instance.CreateBomb(ch.Current);
             }
-            Gamefield.SwitchStateTo(Gamefield.WinRemoveCombinationState);
+         //   Gamefield.SwitchStateTo(Gamefield.WinRemoveCombinationState);
         }
     }
 }

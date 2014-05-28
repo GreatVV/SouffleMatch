@@ -7,7 +7,7 @@ namespace Game
 {
     public class LevelManager : MonoBehaviour {
 
-        public List<SerializedLevel> LoadedLevels = new List<SerializedLevel>();
+        public List<LevelDescription> LoadedLevels = new List<LevelDescription>();
 
         public TextAsset LevelFile;
         public event Action LevelsAreReady;
@@ -30,13 +30,13 @@ namespace Game
             var levelArray = jsonObject.GetField("levelArray").list;
             foreach (var level in levelArray)
             {
-                LoadedLevels.Add(SerializedLevel.FromJson(level));
+                LoadedLevels.Add(LevelDescription.FromJson(level));
             }
 
             FireLevelsAreReady();
         }
 
-        public SerializedLevel this[int index]
+        public LevelDescription this[int index]
         {
             get
             {

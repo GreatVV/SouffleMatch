@@ -27,10 +27,10 @@ public class Windows : MonoBehaviour
         }
     }
 
-    public static Window GamefieldScreen(SerializedLevel  level)
+    public static Window GamefieldScreen(LevelDescription  levelDescription)
     {
         instance.Gamefield.gameObject.SetActive(true);
-        instance.Gamefield.StartGame(level);
+        instance.Gamefield.StartGame(levelDescription);
         return instance.GuiGameplay;
     }
 }

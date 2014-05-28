@@ -13,51 +13,36 @@ using UnityEngine;
 [RequireComponent(typeof (Level))]
 [RequireComponent(typeof (StageManager))]
 [RequireComponent(typeof (Points))]
-[RequireComponent(typeof (CheckSpecialState))]
-[RequireComponent(typeof (CreateNewChuzzlesState))]
-[RequireComponent(typeof (GameOverState))]
-[RequireComponent(typeof (WinState))]
-[RequireComponent(typeof (FieldState))]
-[RequireComponent(typeof (RemoveCombinationState))]
-[RequireComponent(typeof (InitState))]
-[RequireComponent(typeof (WinCheckSpecialState))]
-[RequireComponent(typeof (WinCreateNewChuzzlesState))]
-[RequireComponent(typeof (WinRemoveCombinationState))]
 public class Gamefield : MonoBehaviour
 {
-    private static Gamefield Instance;
-    public static bool InvaderWasDestroyed;
     public LayerMask ChuzzleMask;
 
     public GameMode GameMode;
     public DateTime GameStartTime;
 
     [HideInInspector] public Level Level;
-    public int[] NewTilesInColumns;
-
     [HideInInspector] public Points PointSystem;
-
-    [HideInInspector] public StageManager StageManager;
 
     #region State
 
     [HideInInspector] public CheckSpecialState CheckSpecialState = null;
 
     [HideInInspector] public CreateNewChuzzlesState CreateNewChuzzlesState = null;
-
     [HideInInspector] public FieldState FieldState = null;
     [HideInInspector] public GameOverState GameOverState = null;
-
     [HideInInspector] public InitState InitState = null;
     [HideInInspector] public RemoveCombinationState RemoveState = null;
-    [HideInInspector] public WinCheckSpecialState WinCheckSpecialState = null;
-    [HideInInspector] public WinCreateNewChuzzlesState WinCreateNewChuzzlesState = null;
-    [HideInInspector] public WinRemoveCombinationState WinRemoveCombinationState = null;
     [HideInInspector] public WinState WinState = null;
+
     private GamefieldState _currentState;
     private bool _isPause;
 
     #endregion
+
+    public string LevelName
+    {
+        get { return string.Format(Localization.Get("LevelNumber"), LevelDescription.Name); }
+    }
 
     public bool IsPause
     {
@@ -72,18 +57,13 @@ public class Gamefield : MonoBehaviour
         }
     }
 
-    public static IEnumerable<Chuzzle> Chuzzles
-    {
-        get { return Instance.Level.Chuzzles.GetTiles(); }
-    }
+    public LevelDescription LevelDescription { get; set; }
 
     #region Events
 
     public event Action<List<Chuzzle>> CombinationDestroyed;
 
     public event Action<Gamefield> GameStarted;
-
-    public event Action<Chuzzle> TileDestroyed;
 
     public event Action<bool> Paused;
 
@@ -96,6 +76,7 @@ public class Gamefield : MonoBehaviour
 
     private void RemoveEventHandlers()
     {
+        CombinationDestroyed -= PointSystem.CountForCombinations;
         if (GameMode != null)
         {
             GameMode.Win -= OnWin;
@@ -136,13 +117,6 @@ public class Gamefield : MonoBehaviour
         if (handler != null) handler(combination);
     }
 
-    public void InvokeTileDestroyed(Chuzzle destroyedChuzzle)
-    {
-        if (TileDestroyed != null)
-        {
-            TileDestroyed(destroyedChuzzle);
-        }
-    }
 
     public virtual void InvokeGameStarted()
     {
@@ -156,23 +130,12 @@ public class Gamefield : MonoBehaviour
 
     public void Awake()
     {
-        Instance = this;
         InitState = GetComponent<InitState>();
-        CheckSpecialState = GetComponent<CheckSpecialState>();
-        CreateNewChuzzlesState = GetComponent<CreateNewChuzzlesState>();
-        RemoveState = GetComponent<RemoveCombinationState>();
-        GameOverState = GetComponent<GameOverState>();
-        WinState = GetComponent<WinState>();
-        FieldState = GetComponent<FieldState>();
-        WinCheckSpecialState = GetComponent<WinCheckSpecialState>();
-        WinCreateNewChuzzlesState = GetComponent<WinCreateNewChuzzlesState>();
-        WinRemoveCombinationState = GetComponent<WinRemoveCombinationState>();
+       
 
-
-        Level = GetComponent<Level>();
-        StageManager = GetComponent<StageManager>();
+        Level = new Level();
         PointSystem = GetComponent<Points>();
-
+        CombinationDestroyed += PointSystem.CountForCombinations;
         if (!Application.isEditor)
         {
             switch (Application.systemLanguage)
@@ -215,60 +178,16 @@ public class Gamefield : MonoBehaviour
         }
     }
 
-    public void Reset()
-    {
-        PointSystem.Reset();
-        Level.Reset();
-
-        CombinationDestroyed -= InvaderChuzzle.OnCombinationDestroyed;
-        CombinationDestroyed += InvaderChuzzle.OnCombinationDestroyed;
-
-        Level.InitFromFile(Player.Instance.LastPlayedLevel);
-        StageManager.Init(Player.Instance.LastPlayedLevel.Stages);
-
-        PointSystem.TargetPoints = GameMode.TargetPoints;
-
-        NewTilesInColumns = new int[Level.Cells.Width];
-
-        AddEventHandlers();
-    }
-
     #endregion
 
-    public void StartGame(SerializedLevel level = null)
+    public void StartGame(LevelDescription levelDescription = null)
     {
-        Level.Reset();
-
-        Player.Instance.LastPlayedLevel = level;
-        CombinationDestroyed -= PointSystem.CountForCombinations;
-        CombinationDestroyed += PointSystem.CountForCombinations;
-        SwitchStateTo(InitState);
+        Player.Instance.LastPlayedLevelDescription = levelDescription;
 
         GameStartTime = DateTime.UtcNow;
+        SwitchStateTo(InitState);
     }
 
-    /// <summary>
-    ///     Remove chuzzle from game logic and add new tiles in column
-    /// </summary>
-    /// <param name="chuzzle">Chuzzle to remove</param>
-    /// <param name="invokeEvent">Need to invoke event or not</param>
-    public void RemoveChuzzle(Chuzzle chuzzle, bool invokeEvent = true)
-    {
-        Level.Chuzzles.Remove(chuzzle);
-
-        if (chuzzle.NeedCreateNew)
-        {
-            if (chuzzle is TwoTimeChuzzle)
-            {
-                Debug.LogError("Error: Two time chuzzle creation!!");
-            }
-            NewTilesInColumns[chuzzle.Current.x]++;
-        }
-        if (invokeEvent)
-        {
-            InvokeTileDestroyed(chuzzle);
-        }
-    }
 
     public void SwitchStateTo(GamefieldState newState)
     {

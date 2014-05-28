@@ -22,6 +22,6 @@ public class CurrentLevelLabel : MonoBehaviour
 
     private void OnGameStarted(Gamefield gamefield)
     {
-        label.text = gamefield.Level.LevelName;
+        label.text = gamefield.LevelName;
     }
 }

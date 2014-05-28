@@ -17,9 +17,8 @@ namespace GamefieldStates
 
         public override void OnEnter()
         {
-            AnimatedChuzzles.Clear();
-            Chuzzle.DropEventHandlers();
-            Chuzzle.AnimationStarted += OnAnimationStarted;
+            TilesCollection = Gamefield.Chuzzles;
+            TilesCollection.AnimationFinished += OnAnimationFinished;
 
             var anyCombination = GamefieldUtility.FindOnlyOneCombination(Gamefield.Chuzzles);
             if (anyCombination.Any())
@@ -34,22 +33,15 @@ namespace GamefieldStates
 
         public override void OnExit()
         {
-            if (AnimatedChuzzles.Any())
+            if (TilesCollection.IsAnyAnimated)
             {
-                Debug.LogError("FUCK YOU FROM REMOVE COMBINATION: "+AnimatedChuzzles.Count);
+                Debug.LogError("FUCK YOU FROM REMOVE COMBINATION: "+TilesCollection.Count);
             }
-
-            PowerUpDestroyManager.Instance.IsInDestroyState = false;
         }
 
-        public void OnAnimationFinished(Chuzzle chuzzle)
+        public void OnAnimationFinished()
         {
-            chuzzle.AnimationFinished -= OnAnimationFinished;
-            AnimatedChuzzles.Remove(chuzzle);
-            if (!AnimatedChuzzles.Any())
-            {
-                Gamefield.SwitchStateTo(Gamefield.CreateNewChuzzlesState);
-            }
+            Gamefield.SwitchStateTo(Gamefield.CreateNewChuzzlesState);
         }
 
         #endregion
@@ -64,8 +56,7 @@ namespace GamefieldStates
 
         private IEnumerator RemoveCombinations()
         {
-            var powerUpCombination = GamefieldUtility.FindOnlyOneCombinationWithCondition(Gamefield.Chuzzles,
-                GamefieldUtility.IsPowerUp);
+            var powerUpCombination = GamefieldUtility.FindOnlyOneCombinationWithCondition(Gamefield.Chuzzles,GamefieldUtility.IsPowerUp);
 
             //if has any powerups
             if (powerUpCombination.Any())
@@ -73,7 +64,7 @@ namespace GamefieldStates
                 //destroy step by step
                 PowerUpDestroyManager.Instance.Destroy(powerUpCombination);
 
-                if (!AnimatedChuzzles.Any())
+                if (!TilesCollection.IsAnyAnimated)
                 {
                     Gamefield.SwitchStateTo(Gamefield.CreateNewChuzzlesState);
                 }
@@ -81,7 +72,7 @@ namespace GamefieldStates
             else
             {
 
-                var combinations = GamefieldUtility.FindCombinations(global::Gamefield.Chuzzles);
+                var combinations = GamefieldUtility.FindCombinations(Gamefield.Chuzzles);
                 //remove combinations
                 foreach (var combination in combinations)
                 {
@@ -92,7 +83,7 @@ namespace GamefieldStates
                         chuzzle.Destroy(true);
                     }
 
-                    if (!AnimatedChuzzles.Any())
+                    if (!TilesCollection.IsAnyAnimated)
                     {
                         Gamefield.SwitchStateTo(Gamefield.CreateNewChuzzlesState);
                     }
@@ -102,15 +93,5 @@ namespace GamefieldStates
 
             yield return new WaitForEndOfFrame();
         }
-
-        private void OnAnimationStarted(Chuzzle chuzzle)
-        {
-            if (!AnimatedChuzzles.Contains(chuzzle))
-            {
-                AnimatedChuzzles.Add(chuzzle);
-                chuzzle.AnimationFinished += OnAnimationFinished;
-            }
-        }
-
     }
 }

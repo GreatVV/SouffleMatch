@@ -57,20 +57,19 @@ namespace GamefieldStates
 
         public override void OnEnter()
         {
-            AnimatedChuzzles.Clear();
-            Chuzzle.DropEventHandlers();
-            Chuzzle.AnimationStarted += OnAnimationStarted;
+            TilesCollection = Gamefield.Chuzzles.GetTiles();
+            TilesCollection.AnimationFinished += OnAnimationFinished;
             //  if (!Tutorial.isActive)
             {
                 CheckPossibleCombinations();
             }
 
 
-            if (!global::Gamefield.InvaderWasDestroyed)
+            if (!Gamefield.InvaderWasDestroyed)
             {
                 InvaderChuzzle.Populate(Gamefield);
             }
-            global::Gamefield.InvaderWasDestroyed = false;
+            Gamefield.InvaderWasDestroyed = false;
         }
 
         private void CheckPossibleCombinations()
@@ -92,9 +91,9 @@ namespace GamefieldStates
 
         public override void OnExit()
         {
-            if (AnimatedChuzzles.Any())
+            if (TilesCollection.IsAnyAnimated)
             {
-                Debug.LogError("FUCK you in field state: " + AnimatedChuzzles.Count);
+                Debug.LogError("FUCK you in field state: " + TilesCollection.Count);
             }
             Gamefield.GameMode.HumanTurn();
             Reset();
@@ -164,21 +163,9 @@ namespace GamefieldStates
             _isReturning = true;
         }
 
-        private void OnAnimationFinished(Chuzzle chuzzle)
+        private void OnAnimationFinished()
         {
-            chuzzle.AnimationFinished -= OnAnimationFinished;
-            AnimatedChuzzles.Remove(chuzzle);
-
             CheckAnimationCompleted();
-        }
-
-        private void OnAnimationStarted(Chuzzle chuzzle)
-        {
-            if (!AnimatedChuzzles.Contains(chuzzle))
-            {
-                AnimatedChuzzles.Add(chuzzle);
-                chuzzle.AnimationFinished += OnAnimationFinished;
-            }
         }
 
         #endregion
@@ -725,7 +712,7 @@ namespace GamefieldStates
 
         public override void UpdateState()
         {
-            if (!AnimatedChuzzles.Any())
+            if (!TilesCollection.Any())
             {
                 UpdateState(Gamefield.Chuzzles);
             }
@@ -733,7 +720,7 @@ namespace GamefieldStates
 
         public void CheckAnimationCompleted()
         {
-            if (!AnimatedChuzzles.Any()) 
+            if (!TilesCollection.Any()) 
             {
                 CheckCombinations();
             }
@@ -742,7 +729,7 @@ namespace GamefieldStates
 
         public override void LateUpdateState()
         {
-            if (!AnimatedChuzzles.Any())
+            if (!TilesCollection.Any())
             {
                 LateUpdateState(Gamefield.Level.Cells.GetCells());
             }

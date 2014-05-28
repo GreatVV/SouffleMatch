@@ -1,33 +1,163 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using Game.Data;
 using UnityEngine;
-using Debug = UnityEngine.Debug;
+using Object = UnityEngine.Object;
 
-public class TilesCollection : MonoBehaviour, IJsonSerializable
+[Serializable]
+public class TilesCollection : IJsonSerializable, IEnumerable<Chuzzle>
 {
+    #region Delegates
 
     public delegate bool Condition(Chuzzle chuzzle);
 
-    private readonly List<Chuzzle> chuzzles = new List<Chuzzle>();
+    #endregion
 
-    public IEnumerable<Chuzzle> GetTiles(Func<Chuzzle,bool> condition = null)
+    private readonly List<Chuzzle> chuzzles = new List<Chuzzle>();
+    public int[] NewTilesInColumns;
+
+    public TilesCollection()
+    {
+    }
+
+    public TilesCollection(IEnumerable<Chuzzle> chuzzles)
+    {
+        this.chuzzles = new List<Chuzzle>(chuzzles);
+        foreach (Chuzzle chuzzle in chuzzles)
+        {
+            chuzzle.AnimationStarted += OnAnimationStarted;
+            chuzzle.AnimationFinished += OnAnimationFinished;
+        }
+    }
+
+    public int Count
+    {
+        get { return chuzzles.Count; }
+    }
+
+    public bool IsAnyAnimated
+    {
+        get { return chuzzles.Any(x => x.IsAnimationStarted); }
+    }
+
+    #region IEnumerable<Chuzzle> Members
+
+    public IEnumerator<Chuzzle> GetEnumerator()
+    {
+        return chuzzles.GetEnumerator();
+    }
+
+    IEnumerator IEnumerable.GetEnumerator()
+    {
+        return GetEnumerator();
+    }
+
+    #endregion
+
+    #region IJsonSerializable Members
+
+    public JSONObject Serialize()
+    {
+        var json = new JSONObject();
+        foreach (Chuzzle chuzzle in chuzzles)
+        {
+            json.Add(TilesFactory.Serialize(chuzzle));
+        }
+        return json;
+    }
+
+    public void Deserialize(JSONObject json)
+    {
+        if (json.type == JSONObject.Type.ARRAY)
+        {
+            foreach (JSONObject chuzzleJson in json.list)
+            {
+                Add(TilesFactory.Instance.CreateChuzzle(chuzzleJson));
+            }
+        }
+        else
+        {
+            Debug.LogWarning("Json is not array: " + json);
+        }
+    }
+
+    #endregion
+
+    #region Events
+
+    public event Action AnimationFinished;
+
+    protected virtual void InvokeAnimationFinished()
+    {
+        Action handler = AnimationFinished;
+        if (handler != null) handler();
+    }
+
+    public event Action AnimationStarted;
+
+    protected virtual void InvokeAnimationStarted()
+    {
+        Action handler = AnimationStarted;
+        if (handler != null) handler();
+    }
+
+    public event Action<Chuzzle> TileDestroyed;
+
+    public void InvokeTileDestroyed(Chuzzle destroyedChuzzle)
+    {
+        if (TileDestroyed != null)
+        {
+            TileDestroyed(destroyedChuzzle);
+        }
+    }
+
+    #endregion
+
+    #region Events Subscribers
+
+    private void OnAnimationFinished(Chuzzle chuzzle)
+    {
+        if (!IsAnyAnimated)
+        {
+            InvokeAnimationFinished();
+        }
+    }
+
+    private void OnAnimationStarted(Chuzzle chuzzle)
+    {
+        if (!IsAnyAnimated)
+        {
+            InvokeAnimationStarted();
+        }
+    }
+
+    public void OnChuzzleDeath(Chuzzle chuzzle)
+    {
+        chuzzle.Died -= OnChuzzleDeath;
+
+        //remove chuzzle from game logic
+        RemoveChuzzle(chuzzle);
+    }
+
+    #endregion
+
+    public TilesCollection GetTiles(Func<Chuzzle, bool> condition = null)
     {
         if (condition == null)
         {
-            condition = x=>true;
+            condition = x => true;
         }
-        return chuzzles.Where(condition);
+        return new TilesCollection(chuzzles.Where(condition));
     }
 
-    public IEnumerable<Chuzzle> GetVerticalLine(int column)
+    public TilesCollection GetVerticalLine(int column)
     {
         return GetTiles(x => x.Current.x == column);
     }
 
-    public IEnumerable<Chuzzle> GetHorizontalLine(int row)
+    public TilesCollection GetHorizontalLine(int row)
     {
         return GetTiles(x => x.Current.y == row);
     }
@@ -56,56 +186,63 @@ public class TilesCollection : MonoBehaviour, IJsonSerializable
     {
         if (chuzzles.Contains(chuzzle))
         {
-            Debug.LogWarning("Already contains chuzzle: "+chuzzle);
+            Debug.LogWarning("Already contains chuzzle: " + chuzzle);
             return;
         }
         chuzzles.Add(chuzzle);
     }
 
-    public void Clear()
+    public void DestroyChuzzles()
     {
-        Debug.LogWarning("Remove all chuzzles from collection. Total: "+chuzzles.Count);
-        foreach (var chuzzle in chuzzles)
+        Debug.LogWarning("Remove all chuzzles from collection. Total: " + chuzzles.Count);
+        foreach (Chuzzle chuzzle in chuzzles)
         {
             //ChuzzlePool.Instance.Release(chuzzle.Color, chuzzle.GetType(), chuzzle.gameObject);
-            Destroy(chuzzle.gameObject);
+            Object.Destroy(chuzzle.gameObject);
         }
         chuzzles.Clear();
     }
 
-    public JSONObject Serialize()
-    {
-        var json = new JSONObject();
-        foreach (var chuzzle in chuzzles)
-        {
-            json.Add(TilesFactory.Serialize(chuzzle));
-        }
-        return json;
-    }
-
-    public void Deserialize(JSONObject json)
-    {
-        if (json.type == JSONObject.Type.ARRAY)
-        {
-            foreach (var chuzzleJson in json.list)
-            {
-                Add(TilesFactory.Instance.CreateChuzzle(chuzzleJson));
-            }
-        }
-        else
-        {
-            Debug.LogWarning("Json is not array: "+json);
-        }
-    }
-
     public void Remove(Chuzzle chuzzle)
     {
-        Debug.Log("Remove chuzzle: "+chuzzle);
+        Debug.Log("Remove chuzzle: " + chuzzle);
         if (!chuzzles.Contains(chuzzle))
         {
-            Debug.LogWarning("Chuzzles dont contains chuzzle: "+chuzzle);
+            Debug.LogWarning("Chuzzles dont contains chuzzle: " + chuzzle);
             return;
         }
         chuzzles.Remove(chuzzle);
+    }
+
+    public void SyncFromMoveTo()
+    {
+        foreach (Chuzzle chuzzle in chuzzles)
+        {
+            chuzzle.Real = chuzzle.Current = chuzzle.MoveTo;
+        }
+    }
+
+    public void RemoveChuzzle(Chuzzle chuzzle, bool invokeEvent = true)
+    {
+        Remove(chuzzle);
+
+        if (chuzzle.NeedCreateNew)
+        {
+            if (chuzzle is TwoTimeChuzzle)
+            {
+                Debug.LogError("Error: Two time chuzzle creation!!");
+            }
+            NewTilesInColumns[chuzzle.Current.x]++;
+        }
+        if (invokeEvent)
+        {
+            InvokeTileDestroyed(chuzzle);
+        }
+    }
+
+    public void Clear()
+    {
+        //TODO remove all tiles for logic and return to pool
+        DestroyChuzzles();
     }
 }

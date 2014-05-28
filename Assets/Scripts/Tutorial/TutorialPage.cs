@@ -73,7 +73,7 @@ namespace TutorialSpace
 
             IntVector2 targetPosition;
             Chuzzle arrowChuzzle;
-            GamefieldUtility.Tip(_gamefield.Level.ActiveChuzzles, out targetPosition, out arrowChuzzle);
+            GamefieldUtility.Tip(Gamefield.Chuzzles, out targetPosition, out arrowChuzzle);
             if (arrowChuzzle && arrowChuzzle.Current != null)
             {
                 fromFingerPosition = arrowChuzzle.Current.IntVector2Position;
@@ -87,8 +87,8 @@ namespace TutorialSpace
                 Chuzzle.Scale);
             finger.Play();
 
-            Tutorial.Instance.targetCell = _gamefield.Level.GetCellAt(targetPosition);
-            Tutorial.Instance.takeableChuzzle = _gamefield.Level.At(fromFingerPosition.x, fromFingerPosition.y);
+            Tutorial.Instance.targetCell = _gamefield.Level.Cells.GetCellAt(targetPosition);
+            Tutorial.Instance.takeableChuzzle = _gamefield.Level.Chuzzles.GetTileAt(fromFingerPosition.x, fromFingerPosition.y);
 
             AddHandlers();
 

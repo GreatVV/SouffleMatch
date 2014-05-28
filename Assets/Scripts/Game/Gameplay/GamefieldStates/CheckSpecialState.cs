@@ -17,44 +17,22 @@ namespace GamefieldStates
 
         public override void OnEnter()
         {
-            AnimatedChuzzles.Clear();
-            Chuzzle.DropEventHandlers();
-            Chuzzle.AnimationStarted += OnAnimationStarted;
+            TilesCollection = Gamefield.Level.Chuzzles.GetTiles();
+            Gamefield.SwitchStateTo(Gamefield.RemoveState);
 
+            /*
             var combinations = GamefieldUtility.FindCombinations(Gamefield.Level.Chuzzles.GetTiles());
             if (!CheckForSpecial(combinations))
             {
                 Gamefield.SwitchStateTo(Gamefield.RemoveState);
-            }
+            }*/
         }
 
         public override void OnExit()
         {
-            if (AnimatedChuzzles.Any())
+            if (TilesCollection.IsAnyAnimated)
             {
-                Debug.LogError("FUCK YOU: " + AnimatedChuzzles.Count);
-            }
-        }
-
-        private void OnAnimationStarted(Chuzzle chuzzle)
-        {
-            if (!AnimatedChuzzles.Contains(chuzzle))
-            {
-                AnimatedChuzzles.Add(chuzzle);
-                chuzzle.AnimationFinished += OnAnimationFinished;
-            }
-        }
-
-        private void OnAnimationFinished(Chuzzle chuzzle)
-        {
-            chuzzle.AnimationFinished -= OnAnimationFinished;
-            AnimatedChuzzles.Remove(chuzzle);
-        
-            chuzzle.Destroy(true, false);    
-
-            if (!AnimatedChuzzles.Any())
-            {
-                Gamefield.SwitchStateTo(Gamefield.CreateNewChuzzlesState);
+                Debug.LogError("FUCK YOU: " + TilesCollection.Count);
             }
         }
 

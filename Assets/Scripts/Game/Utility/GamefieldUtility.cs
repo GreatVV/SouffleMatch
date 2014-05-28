@@ -52,7 +52,7 @@ public class GamefieldUtility
     /// <param name="chuzzles">list of chuzzle to find in</param>
     /// <param name="combinationSize">required combination size</param>
     /// <returns></returns>
-    public static List<Chuzzle> FindOnlyOneCombination(IEnumerable<Chuzzle> chuzzles, int combinationSize = 3)
+    public static List<Chuzzle> FindOnlyOneCombination(TilesCollection chuzzles, int combinationSize = 3)
     {
         foreach (var c in chuzzles)
         {

@@ -13,57 +13,37 @@ using Random = UnityEngine.Random;
 #endregion
 
 
-
-[RequireComponent(typeof(Gamefield))]
-public class Level : MonoBehaviour
+[Serializable]
+public class Level : IJsonSerializable
 {   
-    [HideInInspector]
-    public Gamefield Gamefield;
-
-    public TilesCollection Chuzzles = null;
-    public CellCollection Cells = null;
+    public TilesCollection Chuzzles = new TilesCollection();
+    public CellCollection Cells = new CellCollection();
    
-    public SerializedLevel Serialized;
+    public FieldDescription Serialized;
 
-    public string LevelName { get { return string.Format(Localization.Get("LevelNumber"), Serialized.Name); } }
-
-    void Awake()
+    public void InitFromFile(FieldDescription fieldDescription)
     {
-        Gamefield = GetComponent<Gamefield>();
-        Chuzzles = FindObjectOfType<TilesCollection>();
-        Cells = FindObjectOfType<CellCollection>();
+        Serialized = fieldDescription;
 
+        Chuzzles.DestroyChuzzles();
+        Cells.DestroyCells();
+        
+        Cells.Init(fieldDescription);
+        Chuzzles.NewTilesInColumns = new int[fieldDescription.Width];
+
+        Random.seed = fieldDescription.Seed == -1 ? Environment.TickCount : fieldDescription.Seed;
+        TilesFactory.Instance.NumberOfColors = fieldDescription.NumberOfColors;
     }
 
-    public void InitFromFile(SerializedLevel level)
+    public JSONObject Serialize()
     {
-        Serialized = level;
-
-        Cells.Clear();
-        Cells.Init(level);
-
-        Random.seed = level.Seed == -1 ? Environment.TickCount : level.Seed;
-        TilesFactory.Instance.NumberOfColors = level.NumberOfColors;
-
-        Gamefield.GetComponent<Gamefield>().GameMode = GameModeFactory.CreateGameMode(level.GameMode);
-        Gamefield.GetComponent<Gamefield>().GameMode.Init(Gamefield.GetComponent<Gamefield>());
+        //TODO make save
+        throw new NotImplementedException();
     }
 
-
-    public void OnChuzzleDeath(Chuzzle chuzzle)
+    public void Deserialize(JSONObject json)
     {
-        chuzzle.Died -= OnChuzzleDeath;
-
-        //remove chuzzle from game logic
-        Gamefield.RemoveChuzzle(chuzzle);
+        //Restore from save
+        throw new NotImplementedException();
     }
-
-    public void Reset()
-    {
-        Chuzzles.Clear();
-        Cells.Clear();
-    }
-   
-
-  
 }

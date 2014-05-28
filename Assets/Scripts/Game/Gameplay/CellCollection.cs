@@ -90,9 +90,9 @@ public class CellCollection : MonoBehaviour, IJsonSerializable
         }
     }
 
-    public void Clear()
+    public void DestroyCells()
     {
-        Debug.Log("Clear all cells");
+        Debug.Log("Destroy all cells");
         Cells.Clear();
         foreach (var cellSprite in CellSprites)
         {
@@ -101,12 +101,12 @@ public class CellCollection : MonoBehaviour, IJsonSerializable
         CellSprites.Clear();
     }
 
-    public void Init(SerializedLevel level)
+    public void Init(FieldDescription levelDescription)
     {
-        Width = level.Width;
-        Height = level.Height;
+        Width = levelDescription.Width;
+        Height = levelDescription.Height;
 
-        foreach (var newCell in level.SpecialCells)
+        foreach (var newCell in levelDescription.SpecialCells)
         {
             AddCell(newCell.x, newCell.y, newCell.Copy);
         }

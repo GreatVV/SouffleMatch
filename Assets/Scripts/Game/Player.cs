@@ -13,7 +13,7 @@ namespace Game
         public List<LevelInfo> Levels;
         public LifeSystem Lifes;
 
-        public SerializedLevel LastPlayedLevel;
+        public LevelDescription LastPlayedLevelDescription;
         public int LifePrice = 100;
         public int AddTurnsPrice = 70;
 

@@ -7,19 +7,18 @@ using UnityEngine;
 
 namespace GamefieldStates
 {
-    [RequireComponent(typeof(global::Gamefield))]
+    [RequireComponent(typeof(Gamefield))]
     public abstract class GamefieldState : MonoBehaviour
     {
-        public List<Chuzzle> AnimatedChuzzles = new List<Chuzzle>();  
+        public TilesCollection TilesCollection;
         protected virtual void Awake()
         {
-            Gamefield = GetComponent<global::Gamefield>();   
+            Gamefield = GetComponent<Gamefield>();   
         }                
   
-        public global::Gamefield Gamefield { get; private set; }
+        public Gamefield Gamefield { get; private set; }
 
         #region Event Handlers
-
         public abstract void OnEnter();
         public abstract void OnExit();
 

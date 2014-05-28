@@ -48,7 +48,7 @@ namespace Game
 
             levelManager = GetComponent<LevelManager>();
 
-            lastPlayedLevel = PlayerPrefs.GetInt("LastPlayedLevel", 0);
+            lastPlayedLevel = PlayerPrefs.GetInt("LastPlayedLevelDescription", 0);
 
             levelManager.LevelsAreReady += OnLevelsAreReady;
 
@@ -68,7 +68,7 @@ namespace Game
 
         private void OnApplicationPause()
         {
-            PlayerPrefs.SetInt("LastPlayedLevel", lastPlayedLevel);
+            PlayerPrefs.SetInt("LastPlayedLevelDescription", lastPlayedLevel);
             PlayerPrefs.Save();
         }
 

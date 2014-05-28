@@ -11,79 +11,49 @@ namespace GamefieldStates
     [Serializable]
     public class CreateNewChuzzlesState : GamefieldState
     {
-        public bool isAlreadyChangedState;
         #region Event Handlers
 
         public override void OnEnter()
         {
-            isAlreadyChangedState = false;
-            AnimatedChuzzles.Clear();
-            Chuzzle.DropEventHandlers();
-            Chuzzle.AnimationStarted += OnAnimationStarted;
+            TilesCollection = Gamefield.Chuzzles.GetTiles();
+            TilesCollection.AnimationFinished += OnAnimationFinished;
+            
             CreateNew();
-        }
-
-        private void OnAnimationStarted(Chuzzle chuzzle)
-        {
-            if (isAlreadyChangedState)
-            {
-                Debug.LogWarning("Already changed state create new chuzzle");
-                return;
-            }
-
-            if (!AnimatedChuzzles.Contains(chuzzle))
-            {
-                AnimatedChuzzles.Add(chuzzle);
-                chuzzle.AnimationFinished += OnAnimationFinished;
-            }
         }
 
         public override void OnExit()
         {
-            if (AnimatedChuzzles.Any())
+            if (TilesCollection.Any())
             {
-                Debug.LogError("FUCK YOU FROM CREATE NEW STATE: " + AnimatedChuzzles.Count);
+                Debug.LogError("FUCK YOU FROM CREATE NEW STATE: " + TilesCollection.Count);
             }
             Gamefield.NewTilesInColumns = new int[Gamefield.Level.Cells.Width];
         }
 
-        public void OnAnimationFinished(Chuzzle chuzzle)
+        public void OnAnimationFinished()
         {
-            chuzzle.Real = chuzzle.Current = chuzzle.MoveTo;
+            TilesCollection.SyncFromMoveTo();
 
-            chuzzle.AnimationFinished -= OnAnimationFinished;   
-            AnimatedChuzzles.Remove(chuzzle);
-
-            if (isAlreadyChangedState)
+            var combinations = GamefieldUtility.FindCombinations(Gamefield.Level.Chuzzles.GetTiles());
+            if (combinations.Count > 0)
             {
-                Debug.LogWarning("Finished in CRNC state ");
+                Gamefield.SwitchStateTo(Gamefield.CheckSpecialState);
             }
-
-            if (!AnimatedChuzzles.Any() && !isAlreadyChangedState)
+            else
             {
-                //Gamefield.Level.UpdateActive();
-
-                var combinations = GamefieldUtility.FindCombinations(Gamefield.Level.Chuzzles.GetTiles());
-                if (combinations.Count > 0) 
+                if (!Gamefield.GameMode.IsWin && !Gamefield.GameMode.IsGameOver)
                 {
-                    Gamefield.SwitchStateTo(Gamefield.CheckSpecialState);
+                    Gamefield.SwitchStateTo(Gamefield.FieldState);
                 }
                 else
                 {
-                    if (!Gamefield.GameMode.IsWin && !Gamefield.GameMode.IsGameOver)
-                    {
-                        Gamefield.SwitchStateTo(Gamefield.FieldState);
-                    }
-                    else 
-                    {
-                        Gamefield.GameMode.Check();
-                    }
+                    Gamefield.GameMode.Check();
                 }
-                isAlreadyChangedState = true;
             }
+
         }
 
-    
+
 
         #endregion
 
@@ -145,7 +115,7 @@ namespace GamefieldStates
                 }
             }
 
-            foreach (var c in Gamefield.Level.Chuzzles.GetTiles())
+            foreach (var c in TilesCollection)
             {
                 if (c.MoveTo.y != c.Current.y)
                 {   
