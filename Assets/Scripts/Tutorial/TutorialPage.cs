@@ -21,12 +21,12 @@ namespace TutorialSpace
         private void AddHandlers()
         {
             RemoveHandlers();
-            _gamefield.TileDestroyed += OnTileDestroyed;
+            _gamefield.Level.Chuzzles.TileDestroyed += OnTileDestroyed;
         }
 
         private void RemoveHandlers()
         {
-            _gamefield.TileDestroyed -= OnTileDestroyed;
+            _gamefield.Level.Chuzzles.TileDestroyed -= OnTileDestroyed;
         }
 
         #endregion
@@ -73,7 +73,7 @@ namespace TutorialSpace
 
             IntVector2 targetPosition;
             Chuzzle arrowChuzzle;
-            GamefieldUtility.Tip(Gamefield.Chuzzles, out targetPosition, out arrowChuzzle);
+            GamefieldUtility.Tip(_gamefield.Level.Chuzzles, out targetPosition, out arrowChuzzle);
             if (arrowChuzzle && arrowChuzzle.Current != null)
             {
                 fromFingerPosition = arrowChuzzle.Current.IntVector2Position;

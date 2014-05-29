@@ -57,7 +57,7 @@ namespace GamefieldStates
 
         public override void OnEnter()
         {
-            TilesCollection = Gamefield.Chuzzles.GetTiles();
+            TilesCollection = Gamefield.Level.Chuzzles.GetTiles();
             TilesCollection.AnimationFinished += OnAnimationFinished;
             //  if (!Tutorial.isActive)
             {
@@ -65,11 +65,11 @@ namespace GamefieldStates
             }
 
 
-            if (!Gamefield.InvaderWasDestroyed)
+            /*if (!Gamefield.InvaderWasDestroyed)
             {
                 InvaderChuzzle.Populate(Gamefield);
             }
-            Gamefield.InvaderWasDestroyed = false;
+            Gamefield.InvaderWasDestroyed = false;*/
         }
 
         private void CheckPossibleCombinations()
@@ -79,7 +79,7 @@ namespace GamefieldStates
             var numberOfTries = 0;
             do
             {
-                if (GamefieldUtility.Repaint(numberOfTries)) break;
+                if (GamefieldUtility.Repaint(Gamefield.Level.Chuzzles.GetTiles(), numberOfTries)) break;
 
                 _possibleCombination = GamefieldUtility.Tip(Gamefield.Level.Chuzzles.GetTiles(), out _targetPosition,
                     out _arrowChuzzle);
@@ -101,10 +101,10 @@ namespace GamefieldStates
 
         public void CheckCombinations()
         {
-            var combinations = GamefieldUtility.FindCombinations(Gamefield.Chuzzles);
+            var combinations = GamefieldUtility.FindCombinations(Gamefield.Level.Chuzzles);
             if (combinations.Any() /*&& (!Tutorial.isActive || (Tutorial.isActive && CurrentChuzzle!=null&& Tutorial.Instance.IsTargetCell(CurrentChuzzle.Real)))*/)
             {
-                foreach (var c in Gamefield.Chuzzles)
+                foreach (var c in Gamefield.Level.Chuzzles)
                 {
                     c.MoveTo = c.Current = c.Real;
                 }
@@ -671,7 +671,7 @@ namespace GamefieldStates
             if (SelectedChuzzles.Any())
             {
                 //drop shining
-                foreach (var chuzzle in Gamefield.Chuzzles)
+                foreach (var chuzzle in Gamefield.Level.Chuzzles)
                 {
                     chuzzle.Shine = false;
                     chuzzle.Teleportable.Hide();
@@ -683,12 +683,12 @@ namespace GamefieldStates
                     chuzzle.Real = Gamefield.Level.Cells.GetCellAt(GamefieldUtility.ToRealCoordinates(chuzzle),false);
                 }
 
-                foreach (var c in Gamefield.Chuzzles)
+                foreach (var c in Gamefield.Level.Chuzzles)
                 {
                     c.MoveTo = c.Real;
                 }
 
-                foreach (var chuzzle in Gamefield.Chuzzles)
+                foreach (var chuzzle in Gamefield.Level.Chuzzles)
                 {   
                     chuzzle.AnimateMoveTo(chuzzle.MoveTo.Position, 0.1f);
                 }
@@ -714,7 +714,7 @@ namespace GamefieldStates
         {
             if (!TilesCollection.Any())
             {
-                UpdateState(Gamefield.Chuzzles);
+                UpdateState(Gamefield.Level.Chuzzles);
             }
         }
 

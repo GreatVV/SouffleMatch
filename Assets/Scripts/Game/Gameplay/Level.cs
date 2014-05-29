@@ -25,6 +25,8 @@ public class Level : IJsonSerializable
     {
         Serialized = fieldDescription;
 
+        Cells.root = Object.FindObjectOfType<Gamefield>().transform;
+
         Chuzzles.DestroyChuzzles();
         Cells.DestroyCells();
         

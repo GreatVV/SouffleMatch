@@ -17,7 +17,6 @@ namespace Game.GameMode
 
         public override void OnDestroy()
         {
-            Gamefield.TileDestroyed -= OnTileDestroyed;
         }
 
         private void OnTileDestroyed(Chuzzle destroyedChuzzle)
@@ -51,8 +50,8 @@ namespace Game.GameMode
 
         protected override void OnInit()
         {
-            Gamefield.TileDestroyed -= OnTileDestroyed;
-            Gamefield.TileDestroyed += OnTileDestroyed;
+            Gamefield.Level.Chuzzles.TileDestroyed += OnTileDestroyed;
+            Gamefield.Level.Chuzzles.TileDestroyed += OnTileDestroyed;
 
             PlaceCoordinates.Clear();
             IEnumerable<Cell> placeCell = Gamefield.Level.Cells.GetCells(x => x.CreationType == CreationType.Place);
@@ -67,6 +66,7 @@ namespace Game.GameMode
 
         public override void OnReset()
         {
+            Gamefield.Level.Chuzzles.TileDestroyed -= OnTileDestroyed;
             CurrentPlaceCoordinates.Clear();
             CurrentPlaceCoordinates.AddRange(PlaceCoordinates);
         }

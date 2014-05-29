@@ -17,10 +17,10 @@ namespace GamefieldStates
 
         public override void OnEnter()
         {
-            TilesCollection = Gamefield.Chuzzles;
+            TilesCollection = Gamefield.Level.Chuzzles.GetTiles();
             TilesCollection.AnimationFinished += OnAnimationFinished;
 
-            var anyCombination = GamefieldUtility.FindOnlyOneCombination(Gamefield.Chuzzles);
+            var anyCombination = GamefieldUtility.FindOnlyOneCombination(TilesCollection);
             if (anyCombination.Any())
             {   
                 StartCoroutine(RemoveCombinations());
@@ -56,13 +56,13 @@ namespace GamefieldStates
 
         private IEnumerator RemoveCombinations()
         {
-            var powerUpCombination = GamefieldUtility.FindOnlyOneCombinationWithCondition(Gamefield.Chuzzles,GamefieldUtility.IsPowerUp);
+            var powerUpCombination = GamefieldUtility.FindOnlyOneCombinationWithCondition(TilesCollection,GamefieldUtility.IsPowerUp);
 
             //if has any powerups
             if (powerUpCombination.Any())
             {
                 //destroy step by step
-                PowerUpDestroyManager.Instance.Destroy(powerUpCombination);
+                //PowerUpDestroyManager.Instance.Destroy(powerUpCombination);
 
                 if (!TilesCollection.IsAnyAnimated)
                 {
@@ -72,7 +72,7 @@ namespace GamefieldStates
             else
             {
 
-                var combinations = GamefieldUtility.FindCombinations(Gamefield.Chuzzles);
+                var combinations = GamefieldUtility.FindCombinations(TilesCollection);
                 //remove combinations
                 foreach (var combination in combinations)
                 {

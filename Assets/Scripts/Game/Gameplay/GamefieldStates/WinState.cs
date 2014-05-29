@@ -16,6 +16,7 @@ namespace GamefieldStates
 
         public override void OnEnter()
         {
+            TilesCollection = Gamefield.Level.Chuzzles.GetTiles();
             winPopup.Init(Gamefield.PointSystem.CurrentPoints);
             PanelManager.Show(winPopup);
             /*if (Gamefield.GameMode.Turns > 0)
@@ -64,7 +65,7 @@ namespace GamefieldStates
         public void OnBomBomHided()
         {
             var newPowerUps = new List<Chuzzle>();
-            var usualChuzzles = Gamefield.Chuzzles.Where(ch => !GamefieldUtility.IsPowerUp(ch)).ToList();
+            var usualChuzzles = TilesCollection.Where(ch => !GamefieldUtility.IsPowerUp(ch)).ToList();
 
             for (var i = 0; i < Gamefield.GameMode.Turns; i++)
             {

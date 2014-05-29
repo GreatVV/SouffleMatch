@@ -10,6 +10,10 @@ public class BombChuzzle : Chuzzle, IPowerUp
 
     public IEnumerable<Chuzzle> ToDestroy
     {
-        get { return PowerUpDestroyManager.GetSquare(Current.x, Current.y); }
+        get
+        {
+            return new List<Chuzzle>();
+            //return PowerUpDestroyManager.GetSquare(Current.x, Current.y);
+        }
     }
 }

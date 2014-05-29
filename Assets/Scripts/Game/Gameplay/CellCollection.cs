@@ -3,12 +3,16 @@ using System.Collections.Generic;
 using System.Linq;
 using Game.Data;
 using UnityEngine;
+using Object = UnityEngine.Object;
 
-public class CellCollection : MonoBehaviour, IJsonSerializable
+[Serializable]
+public class CellCollection : IJsonSerializable
 {
     private List<Cell> Cells = new List<Cell>();
     private List<GameObject> CellSprites = new List<GameObject>();
 
+    public Transform root;
+    
     public JSONObject Serialize()
     {
         return new JSONObject();
@@ -23,7 +27,7 @@ public class CellCollection : MonoBehaviour, IJsonSerializable
     {
         var cellSprite = TilesFactory.Instance.CellSprite(cell);
 
-        cellSprite.transform.parent = gameObject.transform;
+        cellSprite.transform.parent = root;
         cellSprite.transform.position = cell.Position;
 
         cell.Sprite = cellSprite;
@@ -96,7 +100,7 @@ public class CellCollection : MonoBehaviour, IJsonSerializable
         Cells.Clear();
         foreach (var cellSprite in CellSprites)
         {
-            Destroy(cellSprite.gameObject);
+            Object.Destroy(cellSprite.gameObject);
         }
         CellSprites.Clear();
     }

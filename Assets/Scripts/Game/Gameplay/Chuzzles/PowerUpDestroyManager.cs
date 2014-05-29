@@ -29,7 +29,7 @@ public class PowerUpDestroyManager : MonoBehaviour
         var m = chuzzles.Aggregate("", (current, chuzzle) => current + (chuzzle + Environment.NewLine));
         Debug.Log(m);
     }
-
+    /*
     public void Destroy(IEnumerable<Chuzzle> chuzzlesToDestroy)
     {
         if (!IsInDestroyState)
@@ -120,13 +120,7 @@ public class PowerUpDestroyManager : MonoBehaviour
                 i++;
             } while (currentDistance.Any() || i < 10);
             
-/*
-            foreach (var order in destructionOrder)
-            {
-                Debug.Log("---: " + order.Count);
-                PrintCollection(order);
-            }
-            Debug.Log("_______");*/
+
 
             var s = destructionOrder.Sum(order => order.Count);
             if (s != tilesToDestroy.Count)
@@ -138,6 +132,8 @@ public class PowerUpDestroyManager : MonoBehaviour
         }
      
     }
+
+     */
 
     private IEnumerator DestroyCollection(List<List<Chuzzle>> chuzzleToDestroy)
     {
@@ -157,17 +153,8 @@ public class PowerUpDestroyManager : MonoBehaviour
         IsInDestroyState = false;
         yield return new object();
     }
-
-    public static IEnumerable<Chuzzle> GetColumn(int column)
-    {
-        return Gamefield.Chuzzles.Where(x => x.Current.x == column);
-    }
-
-    public static IEnumerable<Chuzzle> GetRow(int row)
-    {
-        return Gamefield.Chuzzles.Where(x => x.Current.y == row);
-    }
-
+    
+    /*
     public static IEnumerable<Chuzzle> GetSquare(int posX, int posY)
     {
         return Gamefield.Chuzzles.Where(
@@ -176,5 +163,5 @@ public class PowerUpDestroyManager : MonoBehaviour
                  x.Real.x == posX) &&
                 (x.Real.y == posY - 1 || x.Real.y == posY ||
                  x.Real.y == posY + 1));
-    }
+    }*/
 }

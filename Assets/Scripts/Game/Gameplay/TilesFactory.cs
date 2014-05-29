@@ -134,7 +134,7 @@ public class TilesFactory : MonoBehaviour
     {
         if (cell != null)
         {
-            Chuzzle chuzzle = GamefieldUtility.GetChuzzleInCell(cell, Gamefield.Chuzzles);
+            Chuzzle chuzzle = GamefieldUtility.GetChuzzleInCell(cell, Gamefield.Level.Chuzzles);
             if (chuzzle == null) return;
             GameObject possible = possiblePrefabs.FirstOrDefault(x => x.GetComponent<Chuzzle>().Color == chuzzle.Color);
             if (possible != null)
@@ -223,7 +223,7 @@ public class TilesFactory : MonoBehaviour
 
         Gamefield.Level.Chuzzles.Add(chuzzle);
 
-        chuzzle.Died += Gamefield.Level.OnChuzzleDeath;
+        chuzzle.Died += Gamefield.Level.Chuzzles.OnChuzzleDeath;
 
         //Debug.Log("Chuzzle created: " + chuzzle);
 

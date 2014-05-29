@@ -140,7 +140,11 @@ namespace Game
 
             Instance = this;
             previousNormalizedSize = normalizedSize;
+
+            Gamefield = FindObjectOfType<Gamefield>();
         }
+
+        public Gamefield Gamefield { get; set; }
 
         public void ToDefault()
         {
@@ -154,7 +158,7 @@ namespace Game
         {
             if (previousNormalizedSize != normalizedSize)
             {
-                Instance.CenterCameraOnChuzzles(Gamefield.Chuzzles, false);
+                Instance.CenterCameraOnChuzzles(Gamefield.Level.Chuzzles, false);
                 previousNormalizedSize = normalizedSize;
             }
         }

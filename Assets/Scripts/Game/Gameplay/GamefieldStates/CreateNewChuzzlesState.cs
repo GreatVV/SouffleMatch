@@ -15,7 +15,7 @@ namespace GamefieldStates
 
         public override void OnEnter()
         {
-            TilesCollection = Gamefield.Chuzzles.GetTiles();
+            TilesCollection = Gamefield.Level.Chuzzles.GetTiles();
             TilesCollection.AnimationFinished += OnAnimationFinished;
             
             CreateNew();
@@ -27,7 +27,7 @@ namespace GamefieldStates
             {
                 Debug.LogError("FUCK YOU FROM CREATE NEW STATE: " + TilesCollection.Count);
             }
-            Gamefield.NewTilesInColumns = new int[Gamefield.Level.Cells.Width];
+            Gamefield.Level.Chuzzles.NewTilesInColumns = new int[Gamefield.Level.Cells.Width];
         }
 
         public void OnAnimationFinished()
@@ -67,7 +67,7 @@ namespace GamefieldStates
 
         public bool CreateNew()
         {
-            var hasNew = Gamefield.NewTilesInColumns.Any(x => x > 0);
+            var hasNew = Gamefield.Level.Chuzzles.NewTilesInColumns.Any(x => x > 0);
             if (!hasNew)
             {
                 Gamefield.SwitchStateTo(Gamefield.CheckSpecialState);
@@ -75,9 +75,9 @@ namespace GamefieldStates
             }
 
             //check if need create new tiles
-            for (var x = 0; x < Gamefield.NewTilesInColumns.Length; x++)
+            for (var x = 0; x < Gamefield.Level.Chuzzles.NewTilesInColumns.Length; x++)
             {
-                var newInColumn = Gamefield.NewTilesInColumns[x];
+                var newInColumn = Gamefield.Level.Chuzzles.NewTilesInColumns[x];
                 if (newInColumn > 0)
                 {
                     for (var j = 0; j < newInColumn; j++)
@@ -90,9 +90,9 @@ namespace GamefieldStates
             }
 
             //move tiles to fill positions
-            for (var x = 0; x < Gamefield.NewTilesInColumns.Length; x++)
+            for (var x = 0; x < Gamefield.Level.Chuzzles.NewTilesInColumns.Length; x++)
             {
-                var newInColumn = Gamefield.NewTilesInColumns[x];
+                var newInColumn = Gamefield.Level.Chuzzles.NewTilesInColumns[x];
                 if (newInColumn > 0)
                 {
                     for (var y = 0; y < Gamefield.Level.Cells.Height; y++)

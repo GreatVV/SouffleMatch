@@ -1512,7 +1512,7 @@ public class GA_Inspector : Editor
 
 	private static void GetUserData (GA_Settings ga)
 	{
-		Hashtable headers = new Hashtable();
+		var headers = new Dictionary<string, string>();
 		headers.Add("X-Authorization", ga.TokenGA);
 		
 		WWW www = new WWW("https://go.gameanalytics.com/v1/user/data", null, headers);

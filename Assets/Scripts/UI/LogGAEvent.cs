@@ -8,7 +8,7 @@ public class LogGAEvent : MonoBehaviour
 
     public void Log()
     {
-        string eventName = AddLevelName ? string.Format("Game:{0}:{1}", SessionRestorer.Instance.Gamefield.Level.Serialized.Name, EventString) : EventString;
+        string eventName = AddLevelName ? string.Format("Game:{0}:{1}", SessionRestorer.Instance.Gamefield.LevelDescription.Name, EventString) : EventString;
 
         GA.API.Design.NewEvent(eventName);
     }

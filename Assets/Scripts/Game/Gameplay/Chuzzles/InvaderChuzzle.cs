@@ -57,7 +57,7 @@ public class InvaderChuzzle : Chuzzle
                 }
             }
         }
-        Gamefield.InvaderWasDestroyed |= invadersNear.Any();
+       // Gamefield.InvaderWasDestroyed |= invadersNear.Any();
 
         while (invadersNear.Any())
         {   

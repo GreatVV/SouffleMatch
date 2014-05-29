@@ -238,7 +238,7 @@ public class GamefieldUtility
     /// </summary>
     /// <param name="chuzzles">Список элементов в котором надо найти комбинацию</param>
     /// <returns>Список элементов которые составляют эту комбинацию</returns>
-    public static List<Chuzzle> Tip(IEnumerable<Chuzzle> chuzzles, out IntVector2 isHorizontalMove, out Chuzzle chuzzleToMove)
+    public static List<Chuzzle> Tip(TilesCollection chuzzles, out IntVector2 isHorizontalMove, out Chuzzle chuzzleToMove)
     {
         var bottom =
             chuzzles.FirstOrDefault(
@@ -479,7 +479,7 @@ public class GamefieldUtility
             }
         }
         Debug.Log("Combination NOOOOOOOOOO 11");
-        Repaint(100);
+        Repaint(chuzzles,100);
         Tip(chuzzles, out isHorizontalMove, out chuzzleToMove);
             
         isHorizontalMove = new IntVector2();
@@ -732,14 +732,13 @@ public class GamefieldUtility
         return chuzzles.FirstOrDefault(x => x.Current == cell);
     }
 
-    public static bool Repaint(int numberOfTries)
+    public static bool Repaint(TilesCollection tiles,int numberOfTries)
     {
         if (numberOfTries == 0)
         {
             return false;
         }
-
-        var possible = Gamefield.Chuzzles.Where(IsUsual);
+        var possible = tiles.GetTiles(IsUsual);
         //complex logic of repainting
 
         //check number of invaders
@@ -762,7 +761,7 @@ public class GamefieldUtility
         else
         {
             //try to find pair and repaint only one
-            var combinations = FindCombinations(Gamefield.Chuzzles, 2);
+            var combinations = FindCombinations(tiles, 2);
             if (combinations.Any())
             {
                 foreach (var comb in combinations)
@@ -778,7 +777,7 @@ public class GamefieldUtility
                         if (top.Current.Top != null && top.Current.Top.Type != CellTypes.Block)
                         {
                             var possibleAbove =
-                                Gamefield.Chuzzles.Where(
+                                tiles.GetTiles(
                                     x =>
                                         IsUsual(x) && x.Current.y == top.Current.Top.y &&
                                         x.Current != top.Current.Top)
@@ -797,7 +796,7 @@ public class GamefieldUtility
                             bottom.Current.Bottom.Type != CellTypes.Block && !repainted)
                         {
                             var possibleBellow =
-                                Gamefield.Chuzzles.Where(
+                                tiles.Where(
                                     x =>
                                         IsUsual(x) &&
                                         x.Current.y == bottom.Current.Bottom.y &&
@@ -833,7 +832,7 @@ public class GamefieldUtility
                         if (left.Current.Left != null && left.Current.Left.Type != CellTypes.Block)
                         {
                             var possibleLeft =
-                                Gamefield.Chuzzles.Where(
+                                tiles.Where(
                                     x =>
                                         IsUsual(x) &&
                                         x.Current.x == left.Current.Left.x &&
@@ -854,7 +853,7 @@ public class GamefieldUtility
                             !repainted)
                         {
                             var possibleRight =
-                                Gamefield.Chuzzles.Where(
+                                tiles.Where(
                                     x =>
                                         IsUsual(x) &&
                                         x.Current.x == right.Current.Right.x &&
@@ -891,19 +890,19 @@ public class GamefieldUtility
                             (cell.Left != null && cell.Left.Type == CellTypes.Usual &&
                              (cell.Left.Left != null && cell.Left.Left.Type == CellTypes.Usual &&
                               TilesFactory.Instance.Gamefield.Level.Cells.GetCells().Count(x => x.x == cell.Left.Left.x && x.Type == CellTypes.Usual) >
-                              1) && Gamefield.Chuzzles.FirstOrDefault(chuzzle => chuzzle.Current == cell) != null &&
-                             IsUsual(Gamefield.Chuzzles.FirstOrDefault(chuzzle => chuzzle.Current == cell)))
+                              1) && tiles.FirstOrDefault(chuzzle => chuzzle.Current == cell) != null &&
+                             IsUsual(tiles.FirstOrDefault(chuzzle => chuzzle.Current == cell)))
                         ).ToList();
                     if (possibleCellsLeftLeft.Any())
                     {
                         var randomLeftLeft = possibleCellsLeftLeft[Random.Range(0, possibleCellsLeftLeft.Count)];
                         var randomLeftLeftChuzzle = GetChuzzleInCell(randomLeftLeft,
-                            Gamefield.Chuzzles);
+                            tiles);
                         TilesFactory.Instance.ReplaceWithColor(
-                            GetChuzzleInCell(randomLeftLeft.Left, Gamefield.Chuzzles),
+                            GetChuzzleInCell(randomLeftLeft.Left, tiles),
                             randomLeftLeftChuzzle.Color);
                         var possibleLeftLeftLeft =
-                            Gamefield.Chuzzles.Where(
+                            tiles.Where(
                                 x =>
                                     x.Current != randomLeftLeft.Left.Left &&
                                     x.Current.x == randomLeftLeft.Left.Left.x &&
@@ -925,7 +924,7 @@ public class GamefieldUtility
                 }
                 else
                 {
-                    var possibleChuzzles = Gamefield.Chuzzles.Where(IsUsual).ToArray();
+                    var possibleChuzzles = tiles.Where(IsUsual).ToArray();
 
                     for (int index = 0; index < possibleChuzzles.Length; index++)
                     {
@@ -938,7 +937,7 @@ public class GamefieldUtility
 
 
         //if create combination - repaint random
-        var combination = FindOnlyOneCombination(Gamefield.Chuzzles);
+        var combination = FindOnlyOneCombination(tiles);
         if (combination.Any())
         {
             foreach (var chuzzle in combination)

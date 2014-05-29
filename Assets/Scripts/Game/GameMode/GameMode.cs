@@ -57,17 +57,17 @@ namespace Game.GameMode
         {
             if (IsGameOver)
             {
-                GA.API.Design.NewEvent(string.Format("Game:{0}:Lose:Time", Gamefield.Level.Serialized.Name), (float)(DateTime.UtcNow - Gamefield.GameStartTime).TotalSeconds);
-                GA.API.Design.NewEvent(string.Format("Game:{0}:Lose:Points", Gamefield.Level.Serialized.Name), PointSystem.CurrentPoints);
+                GA.API.Design.NewEvent(string.Format("Game:{0}:Lose:Time", Gamefield.LevelDescription.Name), (float)(DateTime.UtcNow - Gamefield.GameStartTime).TotalSeconds);
+                GA.API.Design.NewEvent(string.Format("Game:{0}:Lose:Points", Gamefield.LevelDescription.Name), PointSystem.CurrentPoints);
                 InvokeGameOver();
                 return true;
             }
 
             if (IsWin)
             {
-                GA.API.Design.NewEvent(string.Format("Game:{0}:Win:Time", Gamefield.Level.Serialized.Name), (float)(DateTime.UtcNow - Gamefield.GameStartTime).TotalSeconds);
-                GA.API.Design.NewEvent(string.Format("Game:{0}:Win:Points", Gamefield.Level.Serialized.Name), PointSystem.CurrentPoints);
-                GA.API.Design.NewEvent(string.Format("Game:{0}:Win:Turns", Gamefield.Level.Serialized.Name), PointSystem.CurrentPoints);
+                GA.API.Design.NewEvent(string.Format("Game:{0}:Win:Time", Gamefield.LevelDescription.Name), (float)(DateTime.UtcNow - Gamefield.GameStartTime).TotalSeconds);
+                GA.API.Design.NewEvent(string.Format("Game:{0}:Win:Points", Gamefield.LevelDescription.Name), PointSystem.CurrentPoints);
+                GA.API.Design.NewEvent(string.Format("Game:{0}:Win:Turns", Gamefield.LevelDescription.Name), PointSystem.CurrentPoints);
                 InvokeWin();
                 return true;
             }

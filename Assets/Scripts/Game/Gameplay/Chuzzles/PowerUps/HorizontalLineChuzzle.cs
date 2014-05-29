@@ -1,15 +1,25 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 
 public class HorizontalLineChuzzle : Chuzzle, IPowerUp
-{             
-    protected override void OnAwake()
-    {
-        
-    }
+{
+    #region IPowerUp Members
 
     public IEnumerable<Chuzzle> ToDestroy
     {
-        get { return PowerUpDestroyManager.GetRow(Current.y); }
+        get
+        {
+            //return PowerUpDestroyManager.GetRow(Current.y);
+            return new List<Chuzzle>();
+        }
     }
+
+    #endregion
+
+    #region Events Subscribers
+
+    protected override void OnAwake()
+    {
+    }
+
+    #endregion
 }
