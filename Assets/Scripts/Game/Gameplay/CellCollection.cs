@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Game.Data;
@@ -6,13 +7,17 @@ using UnityEngine;
 using Object = UnityEngine.Object;
 
 [Serializable]
-public class CellCollection : IJsonSerializable
+public class CellCollection : IJsonSerializable, IEnumerable<Cell>
 {
-    private List<Cell> Cells = new List<Cell>();
-    private List<GameObject> CellSprites = new List<GameObject>();
+    public List<GameObject> CellSprites = new List<GameObject>();
+    public List<Cell> Cells = new List<Cell>();
+    public int Height;
+    public int Width;
 
     public Transform root;
-    
+
+    #region IJsonSerializable Members
+
     public JSONObject Serialize()
     {
         return new JSONObject();
@@ -20,12 +25,13 @@ public class CellCollection : IJsonSerializable
 
     public void Deserialize(JSONObject json)
     {
-        
     }
+
+    #endregion
 
     private void CreateTileSprite(Cell cell)
     {
-        var cellSprite = TilesFactory.Instance.CellSprite(cell);
+        GameObject cellSprite = TilesFactory.Instance.CellSprite(cell);
 
         cellSprite.transform.parent = root;
         cellSprite.transform.position = cell.Position;
@@ -34,16 +40,14 @@ public class CellCollection : IJsonSerializable
         CellSprites.Add(cellSprite);
     }
 
-    public int Height { get; private set; }
-    public int Width {get; private set;}
-
     public Cell GetCellAt(IntVector2 pos, bool createIfNotFound = true)
     {
         return GetCellAt(pos.x, pos.y, createIfNotFound);
     }
+
     public Cell GetCellAt(int x, int y, bool createIfNotFound = true)
     {
-        var cell = GamefieldUtility.CellAt(Cells, x, y);
+        Cell cell = GamefieldUtility.CellAt(Cells, x, y);
         if (cell == null && createIfNotFound)
         {
             var newCell = new Cell(x, y);
@@ -57,7 +61,7 @@ public class CellCollection : IJsonSerializable
     {
         Cells.Add(newCell);
         //set left
-        var left = Cells.FirstOrDefault(c => c.x == x - 1 && c.y == y);
+        Cell left = Cells.FirstOrDefault(c => c.x == x - 1 && c.y == y);
         if (left != null)
         {
             newCell.Left = left;
@@ -65,7 +69,7 @@ public class CellCollection : IJsonSerializable
         }
 
         //set right
-        var right = Cells.FirstOrDefault(c => c.x == x + 1 && c.y == y);
+        Cell right = Cells.FirstOrDefault(c => c.x == x + 1 && c.y == y);
         if (right != null)
         {
             newCell.Right = right;
@@ -73,7 +77,7 @@ public class CellCollection : IJsonSerializable
         }
 
         //set top
-        var top = Cells.FirstOrDefault(c => c.x == x && c.y == y + 1);
+        Cell top = Cells.FirstOrDefault(c => c.x == x && c.y == y + 1);
         if (top != null)
         {
             newCell.Top = top;
@@ -81,7 +85,7 @@ public class CellCollection : IJsonSerializable
         }
 
         //set bottom
-        var bottom = Cells.FirstOrDefault(c => c.x == x && c.y == y - 1);
+        Cell bottom = Cells.FirstOrDefault(c => c.x == x && c.y == y - 1);
         if (bottom != null)
         {
             newCell.Bottom = bottom;
@@ -98,7 +102,7 @@ public class CellCollection : IJsonSerializable
     {
         Debug.Log("Destroy all cells");
         Cells.Clear();
-        foreach (var cellSprite in CellSprites)
+        foreach (GameObject cellSprite in CellSprites)
         {
             Object.Destroy(cellSprite.gameObject);
         }
@@ -110,9 +114,17 @@ public class CellCollection : IJsonSerializable
         Width = levelDescription.Width;
         Height = levelDescription.Height;
 
-        foreach (var newCell in levelDescription.SpecialCells)
+        foreach (Cell newCell in levelDescription.SpecialCells)
         {
             AddCell(newCell.x, newCell.y, newCell.Copy);
+        }
+
+        for (int i = 0; i < Width; i++)
+        {
+            for (int j = 0; j < Height; j++)
+            {
+                GetCellAt(i, j);
+            }
         }
     }
 
@@ -123,6 +135,16 @@ public class CellCollection : IJsonSerializable
             func = cell => true;
         }
         return Cells.Where(func);
+    }
+
+    IEnumerator<Cell> IEnumerable<Cell>.GetEnumerator()
+    {
+        return Cells.GetEnumerator();
+    }
+
+    public IEnumerator GetEnumerator()
+    {
+        return Cells.GetEnumerator();
     }
 }
 

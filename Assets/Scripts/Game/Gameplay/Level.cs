@@ -19,20 +19,22 @@ public class Level : IJsonSerializable
     public TilesCollection Chuzzles = new TilesCollection();
     public CellCollection Cells = new CellCollection();
    
-    public FieldDescription Serialized;
+    public FieldDescription InitDescription;
+    public Gamefield Gamefield;
 
     public void InitFromFile(FieldDescription fieldDescription)
     {
-        Serialized = fieldDescription;
+        InitDescription = fieldDescription;
 
-        Cells.root = Object.FindObjectOfType<Gamefield>().transform;
+        Cells.root = Gamefield.transform;
 
         Chuzzles.DestroyChuzzles();
-        Cells.DestroyCells();
-        
+        Cells.DestroyCells();   
         Cells.Init(fieldDescription);
-        Chuzzles.NewTilesInColumns = new int[fieldDescription.Width];
 
+        Chuzzles.InitInCells(Cells);
+
+        Chuzzles.NewTilesInColumns = new int[fieldDescription.Width];
         Random.seed = fieldDescription.Seed == -1 ? Environment.TickCount : fieldDescription.Seed;
         TilesFactory.Instance.NumberOfColors = fieldDescription.NumberOfColors;
     }

@@ -16,7 +16,7 @@ namespace GamefieldStates
 
         public override void OnEnter()
         {
-            TilesCollection = Gamefield.Level.Chuzzles.GetTiles();
+            TilesCollection = Gamefield.Level.Chuzzles;
             winPopup.Init(Gamefield.PointSystem.CurrentPoints);
             PanelManager.Show(winPopup);
             /*if (Gamefield.GameMode.Turns > 0)

@@ -133,6 +133,7 @@ namespace Game.Data
         }
     }
 
+    [Serializable]
     public class ConditionDescription
     {
         public GameModeDescription GameMode;
@@ -141,6 +142,7 @@ namespace Game.Data
         public int Star3Score;
     }
 
+    [Serializable]
     public class FieldDescription
     {
         public int Height;

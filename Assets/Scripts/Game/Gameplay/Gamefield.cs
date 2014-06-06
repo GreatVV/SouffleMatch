@@ -10,9 +10,6 @@ using UnityEngine;
 
 #endregion
 
-[RequireComponent(typeof (Level))]
-[RequireComponent(typeof (StageManager))]
-[RequireComponent(typeof (Points))]
 public class Gamefield : MonoBehaviour
 {
     public LayerMask ChuzzleMask;
@@ -20,17 +17,15 @@ public class Gamefield : MonoBehaviour
     public GameMode GameMode;
     public DateTime GameStartTime;
 
-    [HideInInspector] public Level Level;
-    [HideInInspector] public Points PointSystem;
+    public Level Level = new Level();
+    public Points PointSystem;
 
     #region State
 
     [HideInInspector] public CheckSpecialState CheckSpecialState = null;
-
     [HideInInspector] public CreateNewChuzzlesState CreateNewChuzzlesState = null;
     [HideInInspector] public FieldState FieldState = null;
     [HideInInspector] public GameOverState GameOverState = null;
-    [HideInInspector] public InitState InitState = null;
     [HideInInspector] public RemoveCombinationState RemoveState = null;
     [HideInInspector] public WinState WinState = null;
 
@@ -107,7 +102,7 @@ public class Gamefield : MonoBehaviour
 
     protected virtual void FirePaused()
     {
-        Action<bool> handler = Paused;
+        var handler = Paused;
         if (handler != null) handler(IsPause);
     }
 
@@ -128,13 +123,8 @@ public class Gamefield : MonoBehaviour
 
     #region Unity Methods
 
-    public void Awake()
+    public void Start()
     {
-        InitState = GetComponent<InitState>();
-       
-
-        Level = new Level();
-        PointSystem = GetComponent<Points>();
         CombinationDestroyed += PointSystem.CountForCombinations;
         if (!Application.isEditor)
         {
@@ -182,22 +172,79 @@ public class Gamefield : MonoBehaviour
 
     public void StartGame(LevelDescription levelDescription = null)
     {
-        Player.Instance.LastPlayedLevelDescription = levelDescription;
+        LevelDescription = Player.Instance.LastPlayedLevelDescription = levelDescription;
 
         GameStartTime = DateTime.UtcNow;
-        SwitchStateTo(InitState);
+        Init();
     }
 
 
     public void SwitchStateTo(GamefieldState newState)
     {
-        // Debug.Log("Old state: "+_currentState);
+         Debug.Log("Old state: "+_currentState);
         if (_currentState != null)
         {
             _currentState.OnExit();
         }
         _currentState = newState;
-        // Debug.Log("Switch to: " + _currentState);
+         Debug.Log("Switch to: " + _currentState);
         _currentState.OnEnter();
+    }
+
+    public void Init()
+    {
+        if (CheckSpecialState)
+        {
+            Destroy(CheckSpecialState);
+        }
+        CheckSpecialState = gameObject.AddComponent<CheckSpecialState>();
+
+        if (CreateNewChuzzlesState)
+        {
+            Destroy(CreateNewChuzzlesState);
+        }
+        CreateNewChuzzlesState = gameObject.AddComponent<CreateNewChuzzlesState>();
+
+        if (RemoveState)
+        {
+            Destroy(RemoveState);
+        }
+        RemoveState = gameObject.AddComponent<RemoveCombinationState>();
+
+        if (GameOverState)
+        {
+            Destroy(GameOverState); 
+        }
+        GameOverState = gameObject.AddComponent<GameOverState>();
+
+        if (WinState)
+        {
+            Destroy(WinState);
+        }
+        WinState = gameObject.AddComponent<WinState>();
+
+        if (FieldState)
+        {
+            Destroy(FieldState);
+        }
+
+        FieldState = gameObject.AddComponent<FieldState>();
+
+        GameMode = GameModeFactory.CreateGameMode(LevelDescription.Condition.GameMode);
+
+        PointSystem.Reset();
+        PointSystem.TargetPoints = GameMode.TargetPoints;
+
+       
+        GameMode.Init(this);
+
+        Level.Gamefield = this;
+        Level.InitFromFile(LevelDescription.Field);
+
+        AddEventHandlers();
+        InvokeGameStarted();
+        CenterCameraOnField.Instance.CenterCameraOnChuzzles(Level.Chuzzles,true);
+        
+        SwitchStateTo(CheckSpecialState);
     }
 }

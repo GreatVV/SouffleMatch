@@ -15,7 +15,7 @@ namespace GamefieldStates
 
         public override void OnEnter()
         {
-            TilesCollection = Gamefield.Level.Chuzzles.GetTiles();
+            TilesCollection = Gamefield.Level.Chuzzles;
             TilesCollection.AnimationFinished += OnAnimationFinished;
             
             CreateNew();
@@ -34,7 +34,7 @@ namespace GamefieldStates
         {
             TilesCollection.SyncFromMoveTo();
 
-            var combinations = GamefieldUtility.FindCombinations(Gamefield.Level.Chuzzles.GetTiles());
+            var combinations = GamefieldUtility.FindCombinations(Gamefield.Level.Chuzzles);
             if (combinations.Count > 0)
             {
                 Gamefield.SwitchStateTo(Gamefield.CheckSpecialState);

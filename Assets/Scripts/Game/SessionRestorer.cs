@@ -29,6 +29,7 @@ namespace Game
 
         private void OnLevelsAreReady()
         {
+            Debug.Log("Start: "+lastPlayedLevel);
             StartLevel(lastPlayedLevel);
         }
 

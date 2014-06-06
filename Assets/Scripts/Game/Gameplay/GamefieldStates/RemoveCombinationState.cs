@@ -17,7 +17,7 @@ namespace GamefieldStates
 
         public override void OnEnter()
         {
-            TilesCollection = Gamefield.Level.Chuzzles.GetTiles();
+            TilesCollection = Gamefield.Level.Chuzzles;
             TilesCollection.AnimationFinished += OnAnimationFinished;
 
             var anyCombination = GamefieldUtility.FindOnlyOneCombination(TilesCollection);

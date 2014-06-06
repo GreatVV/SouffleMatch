@@ -57,7 +57,7 @@ namespace GamefieldStates
 
         public override void OnEnter()
         {
-            TilesCollection = Gamefield.Level.Chuzzles.GetTiles();
+            TilesCollection = Gamefield.Level.Chuzzles;
             TilesCollection.AnimationFinished += OnAnimationFinished;
             //  if (!Tutorial.isActive)
             {
@@ -79,9 +79,9 @@ namespace GamefieldStates
             var numberOfTries = 0;
             do
             {
-                if (GamefieldUtility.Repaint(Gamefield.Level.Chuzzles.GetTiles(), numberOfTries)) break;
+                if (GamefieldUtility.Repaint(Gamefield.Level.Chuzzles, numberOfTries)) break;
 
-                _possibleCombination = GamefieldUtility.Tip(Gamefield.Level.Chuzzles.GetTiles(), out _targetPosition,
+                _possibleCombination = GamefieldUtility.Tip(Gamefield.Level.Chuzzles, out _targetPosition,
                     out _arrowChuzzle);
                 Debug.Log(string.Format("Tip. From: {0} To: {1}", _arrowChuzzle, _targetPosition));
                 numberOfTries++;

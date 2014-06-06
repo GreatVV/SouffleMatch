@@ -245,4 +245,12 @@ public class TilesCollection : IJsonSerializable, IEnumerable<Chuzzle>
         //TODO remove all tiles for logic and return to pool
         DestroyChuzzles();
     }
+
+    public void InitInCells(CellCollection cells)
+    {
+        foreach (Cell cell in cells)
+        {
+            TilesFactory.Instance.CreateRandomChuzzle(cell, true);
+        }
+    }
 }
