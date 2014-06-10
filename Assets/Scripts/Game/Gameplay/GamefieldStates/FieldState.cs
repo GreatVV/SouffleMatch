@@ -193,12 +193,13 @@ namespace GamefieldStates
             TimeFromTip = 0;
         }       
         */
+          //  Debug.Log("Update");
             #region Drag
 
             if (CurrentChuzzle == null && (Input.GetMouseButtonDown(0) || (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began)))
             {
                 _dragOrigin = Input.mousePosition;
-                // Debug.Log("Position: " + _dragOrigin);
+               //  Debug.Log("Position: " + _dragOrigin);
 
                 if (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began)
                 {
@@ -206,16 +207,18 @@ namespace GamefieldStates
                     _dragOrigin = new Vector3(Input.GetTouch(0).position.x, Input.GetTouch(0).position.y);
                 }
 
-                var ray = Camera.main.ScreenPointToRay(_dragOrigin);
-
-                //    Debug.Log("Ray: " + ray);
-                Debug.DrawRay(ray.origin, ray.direction*Single.MaxValue);
-                var hit = Physics2D.Raycast(ray.origin, ray.direction, Single.MaxValue, Gamefield.ChuzzleMask);
-                if (hit.transform != null)
+                var overlap = Physics2D.OverlapPoint(Camera.main.ScreenToWorldPoint(_dragOrigin));
+                
+                if (overlap != null && overlap.gameObject.transform.parent.GetComponent<Chuzzle>())
                 {
-                    //  Debug.Log("hit: " + hit.transform.gameObject);
                     var wasNull = CurrentChuzzle == null;
-                    CurrentChuzzle = hit.transform.gameObject.transform.parent.GetComponent<Chuzzle>();
+                    if (CurrentChuzzle)
+                    {
+                        CurrentChuzzle.Shine = false;
+                    }
+                    CurrentChuzzle = overlap.transform.parent.GetComponent<Chuzzle>();
+                    CurrentChuzzle.Shine = true;
+                    Debug.Log("CHuzzle: "+CurrentChuzzle);
                     if (wasNull)
                     { 
                         _minY = _minX = float.MinValue;
@@ -280,6 +283,11 @@ namespace GamefieldStates
                     {
                         SelectedChuzzles = draggableChuzzles.Where(x => x.Current.y == CurrentChuzzle.Current.y).ToList();
                         _isVerticalDrag = false;
+                    }
+
+                    foreach (var selectedChuzzle in SelectedChuzzles)
+                    {
+                        selectedChuzzle.Shine = true;
                     }
 
                     _hasLockedChuzzles = HasLockChuzzles;
@@ -701,6 +709,7 @@ namespace GamefieldStates
         {
             foreach (var selectedChuzzle in SelectedChuzzles)
             {
+                selectedChuzzle.Shine = false;
                 selectedChuzzle.Teleportable.Hide();
             }
             SelectedChuzzles.Clear();
@@ -712,7 +721,7 @@ namespace GamefieldStates
 
         public override void UpdateState()
         {
-            if (!TilesCollection.Any())
+            if (TilesCollection.Any())
             {
                 UpdateState(Gamefield.Level.Chuzzles);
             }
@@ -729,7 +738,7 @@ namespace GamefieldStates
 
         public override void LateUpdateState()
         {
-            if (!TilesCollection.Any())
+            if (TilesCollection.Any())
             {
                 LateUpdateState(Gamefield.Level.Cells.GetCells());
             }

@@ -28,6 +28,9 @@ public abstract class Chuzzle : MonoBehaviour
 
     public Vector3 Velocity;
 
+    private ParticleSystem _shineParticle;
+    public GameObject ShineParticlePrefab;
+
     public bool _shine;
 
     public bool Shine
@@ -36,7 +39,13 @@ public abstract class Chuzzle : MonoBehaviour
         set
         {
             _shine = value;
-            Alpha = 1;
+            if (!_shineParticle)
+            {
+                _shineParticle = ((GameObject) Instantiate(ShineParticlePrefab)).particleSystem;
+                _shineParticle.transform.parent = transform;
+                _shineParticle.transform.localPosition = Vector3.zero;
+            }
+            _shineParticle.gameObject.SetActive(value);
         }
     }
 

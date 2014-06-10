@@ -24,6 +24,7 @@ public class TilesFactory : MonoBehaviour
 
     public Gamefield Gamefield;
     public int NumberOfColors;
+    public GameObject ShineParticle;
 
     public GameObject CellSprite(Cell cell)
     {
@@ -216,6 +217,10 @@ public class TilesFactory : MonoBehaviour
         if (!chuzzle.Explosion)
         {
             chuzzle.Explosion = Explosion;
+        }
+        if (!chuzzle.ShineParticlePrefab)
+        {
+            chuzzle.ShineParticlePrefab = ShineParticle;
         }
 
         chuzzle.gameObject.transform.parent = Gamefield.transform;

@@ -4506,6 +4506,7 @@ MonoBehaviour:
   Explosion: {fileID: 100004, guid: c6adc1ad815f4574f9685fe727a7059d, type: 2}
   Gamefield: {fileID: 1498984091}
   NumberOfColors: 0
+  ShineParticle: {fileID: 100000, guid: 6c838ac7cb6d2a04c93b2e4d4fca260c, type: 2}
 --- !u!4 &1498693731
 Transform:
   m_ObjectHideFlags: 0
@@ -4527,7 +4528,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 1498984092}
   - 114: {fileID: 1498984091}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Gamefield
   m_TagString: Untagged
   m_Icon: {fileID: 0}
