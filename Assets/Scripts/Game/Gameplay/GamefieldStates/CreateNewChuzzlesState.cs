@@ -20,15 +20,15 @@ namespace GamefieldStates
 
             if (CreateNew())
             {
-                Debug.Log("Has new");
+               // Debug.Log("Has new");
                 if (!TilesCollection.IsAnyAnimated)
                 {
-                    Debug.Log("No Moving");
+                  //  Debug.Log("No Moving");
                     OnAnimationFinished();
                 }
                 else
                 {
-                    Debug.Log("Moving: "+TilesCollection.AnimatedCount);
+                   // Debug.Log("Moving: "+TilesCollection.AnimatedCount);
                 }
             }
         }

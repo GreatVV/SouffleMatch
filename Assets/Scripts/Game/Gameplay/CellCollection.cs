@@ -47,6 +47,7 @@ public class CellCollection : IJsonSerializable, IEnumerable<Cell>
 
     public Cell GetCellAt(int x, int y, bool createIfNotFound = true)
     {
+       // Debug.Log("Get at "+x+":"+ y);
         Cell cell = GamefieldUtility.CellAt(Cells, x, y);
         if (cell == null && createIfNotFound)
         {

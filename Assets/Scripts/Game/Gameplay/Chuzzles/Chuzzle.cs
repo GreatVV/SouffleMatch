@@ -39,13 +39,14 @@ public abstract class Chuzzle : MonoBehaviour
         set
         {
             _shine = value;
+            /*
             if (!_shineParticle)
             {
                 _shineParticle = ((GameObject) Instantiate(ShineParticlePrefab)).particleSystem;
                 _shineParticle.transform.parent = transform;
                 _shineParticle.transform.localPosition = Vector3.zero;
             }
-            _shineParticle.gameObject.SetActive(value);
+            _shineParticle.gameObject.SetActive(value);*/
         }
     }
 
@@ -68,11 +69,9 @@ public abstract class Chuzzle : MonoBehaviour
 
     private void OnDeathAnimationEnd()
     {
-        if (IsAnimationStarted)
-        {
-            InvokeAnimationFinished();
-        }
         ChuzzlePool.Instance.Release(Color, GetType(), gameObject);
+        InvokeAnimationFinished();
+        InvokeDied();
         // Object.Destroy(gameObject);
     }
 
@@ -92,7 +91,7 @@ public abstract class Chuzzle : MonoBehaviour
             Debug.LogError("Try to finish finished animation on " + name);
         }
         IsAnimationStarted = false;
-        Action<Chuzzle> handler = AnimationFinished;
+        var handler = AnimationFinished;
         if (handler != null) handler(this);
     }
 
@@ -153,19 +152,12 @@ public abstract class Chuzzle : MonoBehaviour
         {
             return;
         }
-
+        InvokeAnimationStarted();
         IsDead = true;
         // Debug.Log("Die: " + name + " " + GetInstanceID());
-        InvokeDied();
         //TODO Do Explosion
         if (Math.Abs(transform.localScale.x) > 0.01f && withAnimation)
         {
-            if (IsAnimationStarted)
-            {
-                return;
-            }
-            InvokeAnimationStarted();
-
             ExplosionPool.Explode(this);
 
             if (gameObject.activeSelf)
@@ -181,6 +173,10 @@ public abstract class Chuzzle : MonoBehaviour
 
     public void AnimateMoveTo(Vector3 targetPosition, float time = 0.3f)
     {
+        if (IsDead)
+        {
+            return;
+        }
         //Debug.Log("Move: "+name+" "+GetInstanceID());
 
         if (Vector3.Distance(targetPosition, transform.position) > 0.01f)

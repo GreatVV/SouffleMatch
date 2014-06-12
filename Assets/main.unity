@@ -4465,6 +4465,7 @@ MonoBehaviour:
     m_Bits: 512
   Level:
     Chuzzles:
+      _chuzzles: []
       NewTilesInColumns: 
     Cells:
       CellSprites: []

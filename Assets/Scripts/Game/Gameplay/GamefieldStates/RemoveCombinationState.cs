@@ -57,7 +57,7 @@ namespace GamefieldStates
 
         private IEnumerator RemoveCombinations()
         {
-            Debug.Log("Start remove combinations");
+           // Debug.Log("Start remove combinations");
             var powerUpCombination = GamefieldUtility.FindOnlyOneCombinationWithCondition(TilesCollection,GamefieldUtility.IsPowerUp);
 
             //if has any powerups

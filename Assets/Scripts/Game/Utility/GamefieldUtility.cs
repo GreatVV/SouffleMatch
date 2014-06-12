@@ -177,7 +177,7 @@ public class GamefieldUtility
     {
         if (a == null || b == null)
         {
-            Debug.LogError(String.Format("A or b is NULL. a: {0} b: {1}", a, b));
+            //Debug.LogError(String.Format("A or b is NULL. a: {0} b: {1}", a, b));
             return false;
         }
 
@@ -257,11 +257,11 @@ public class GamefieldUtility
             possibleCombination.AddRange(middlePart);
             possibleCombination.AddRange(topPart);
 
-            Debug.Log("Combination 1");
+            //Debug.Log("Combination 1");
             isHorizontalMove = new IntVector2(bottom.Current.x, bottom.Current.y + 1);
             chuzzleToMove = middlePart.First();
             var target = possibleCombination.Aggregate("", (current, chuzzle) => current + (chuzzle + Environment.NewLine));
-            Debug.Log(target);
+            //Debug.Log(target);
             return possibleCombination;
         }
 
@@ -282,9 +282,9 @@ public class GamefieldUtility
 
             isHorizontalMove = new IntVector2(left.Current.x + 1, left.Current.y);
             chuzzleToMove = middlePart.First();
-            Debug.Log("Combination 2: " + chuzzleToMove);
+            //Debug.Log("Combination 2: " + chuzzleToMove);
             var target = possibleCombination.Aggregate("", (current, chuzzle) => current + (chuzzle + Environment.NewLine));
-            Debug.Log(target);
+            //Debug.Log(target);
             return possibleCombination;
         }
 
@@ -312,9 +312,9 @@ public class GamefieldUtility
                         possibleCombination.AddRange(combination);
                         possibleCombination.AddRange(leftPart);
 
-                        Debug.Log("Combination 3");
+                        //Debug.Log("Combination 3");
                         var target = possibleCombination.Aggregate("", (current, chuzzle) => current + (chuzzle + Environment.NewLine));
-                        Debug.Log(target);
+                        //Debug.Log(target);
                         isHorizontalMove = new IntVector2(topChuzzle.Current.x - 1, topChuzzle.Current.y);
                         chuzzleToMove = leftPart.First();
                         return possibleCombination;
@@ -332,9 +332,9 @@ public class GamefieldUtility
                         possibleCombination.AddRange(combination);
                         possibleCombination.AddRange(rightPart);
 
-                        Debug.Log("Combination 4");
+                        //Debug.Log("Combination 4");
                         var target = possibleCombination.Aggregate("", (current, chuzzle) => current + (chuzzle + Environment.NewLine));
-                        Debug.Log(target);
+                        //Debug.Log(target);
                         isHorizontalMove = new IntVector2(topChuzzle.Current.x + 1, topChuzzle.Current.y);
                         chuzzleToMove = rightPart.First();
                         return possibleCombination;
@@ -352,9 +352,9 @@ public class GamefieldUtility
                         possibleCombination.AddRange(combination);
                         possibleCombination.AddRange(topPart);
 
-                        Debug.Log("Combination 5");
+                        //Debug.Log("Combination 5");
                         var target = possibleCombination.Aggregate("", (current, chuzzle) => current + (chuzzle + Environment.NewLine));
-                        Debug.Log(target);
+                        //Debug.Log(target);
                         isHorizontalMove = new IntVector2(bottomChuzzle.Current.x, bottomChuzzle.Current.Top.y);
                         chuzzleToMove = topPart.First();
                         return possibleCombination;
@@ -372,9 +372,9 @@ public class GamefieldUtility
                         possibleCombination.AddRange(combination);
                         possibleCombination.AddRange(bottomPart);
 
-                        Debug.Log("Combination 6");
+                        //Debug.Log("Combination 6");
                         var target = possibleCombination.Aggregate("", (current, chuzzle) => current + (chuzzle + Environment.NewLine));
-                        Debug.Log(target);
+                        //Debug.Log(target);
                         isHorizontalMove = new IntVector2(bottomChuzzle.Current.x, bottomChuzzle.Current.Bottom.y);
                         chuzzleToMove = bottomPart.First();
                         return possibleCombination;
@@ -398,12 +398,12 @@ public class GamefieldUtility
                         possibleCombination.AddRange(combination);
                         possibleCombination.AddRange(leftPart);
 
-                      //  Debug.Log("Left:"+leftChuzzle);
-                      //  Debug.Log("Right:"+rightChuzzle.ToString());
+                      //  //Debug.Log("Left:"+leftChuzzle);
+                      //  //Debug.Log("Right:"+rightChuzzle.ToString());
 
-                        Debug.Log("Combination 7");
+                        //Debug.Log("Combination 7");
                         var target = possibleCombination.Aggregate("", (current, chuzzle) => current + (chuzzle + Environment.NewLine));
-                        Debug.Log(target);
+                        //Debug.Log(target);
                         isHorizontalMove = new IntVector2(leftChuzzle.Current.Left.x, leftChuzzle.Current.y);
                         chuzzleToMove = leftPart.First();
                         return possibleCombination;
@@ -420,9 +420,9 @@ public class GamefieldUtility
                         possibleCombination.AddRange(combination);
                         possibleCombination.AddRange(rightPart);
 
-                        Debug.Log("Combination 8");
+                        //Debug.Log("Combination 8");
                         var target = possibleCombination.Aggregate("", (current, chuzzle) => current + (chuzzle + Environment.NewLine));
-                        Debug.Log(target);
+                        //Debug.Log(target);
                         isHorizontalMove = new IntVector2(rightChuzzle.Current.x + 1, rightChuzzle.Current.y);
                         chuzzleToMove = rightPart.First();
                         return possibleCombination;
@@ -444,9 +444,9 @@ public class GamefieldUtility
                         possibleCombination.AddRange(combination);
                         possibleCombination.AddRange(topPart);
 
-                        Debug.Log("Combination 9");
+                        //Debug.Log("Combination 9");
                         var target = possibleCombination.Aggregate("", (current, chuzzle) => current + (chuzzle + Environment.NewLine));
-                        Debug.Log(target);
+                        //Debug.Log(target);
                         isHorizontalMove = new IntVector2(rightChuzzle.Current.x, rightChuzzle.Current.y + 1);
                         chuzzleToMove = topPart.First();
                         return possibleCombination;
@@ -468,9 +468,9 @@ public class GamefieldUtility
                         possibleCombination.AddRange(combination);
                         possibleCombination.AddRange(bottomPart);
 
-                        Debug.Log("Combination 10");
+                        //Debug.Log("Combination 10");
                         var target = possibleCombination.Aggregate("", (current, chuzzle) => current + (chuzzle + Environment.NewLine));
-                        Debug.Log(target);
+                        //Debug.Log(target);
                         isHorizontalMove = new IntVector2(leftChuzzle.Current.x, leftChuzzle.Current.y - 1);
                         chuzzleToMove = bottomPart.First();
                         return possibleCombination;
@@ -478,7 +478,7 @@ public class GamefieldUtility
                 }
             }
         }
-        Debug.Log("Combination NOOOOOOOOOO 11");
+        //Debug.Log("Combination NOOOOOOOOOO 11");
         Repaint(chuzzles,100);
         Tip(chuzzles, out isHorizontalMove, out chuzzleToMove);
             
@@ -583,8 +583,8 @@ public class GamefieldUtility
         IEnumerable<Chuzzle> chuzzles)
     {
         var firstChuzzle = chuzzles.FirstOrDefault(c => c.Real.x == x && c.Color == chuzzleColor && !(c is InvaderChuzzle));
-        //Debug.Log(string.Format("fc:{0} |x: {1} Color: {2}", firstChuzzle, x, chuzzleColor));
-       // Debug.Log("Any is lock: "+chuzzles.FirstOrDefault(c=>c is LockChuzzle));
+        ////Debug.Log(string.Format("fc:{0} |x: {1} Color: {2}", firstChuzzle, x, chuzzleColor));
+       // //Debug.Log("Any is lock: "+chuzzles.FirstOrDefault(c=>c is LockChuzzle));
         if (firstChuzzle != null && !chuzzles.Any(c => c is LockChuzzle && c.Current.x == x))
         {
             var secondChuzzle = chuzzles.FirstOrDefault(c => IsSameColor(c, firstChuzzle) && (c.Current == firstChuzzle.Current.Top || c.Current == firstChuzzle.Current.Bottom));
@@ -617,7 +617,7 @@ public class GamefieldUtility
 
     public static void ShowArrow(Chuzzle from, IntVector2 to, TipArrow tipArrow)
     {
-        Debug.Log(string.Format("Arrow. From:{0} To:{1} ", from, to));
+        //Debug.Log(string.Format("Arrow. From:{0} To:{1} ", from, to));
         if (@from.Current.x == to.x)
         {
             //vertical
@@ -656,8 +656,8 @@ public class GamefieldUtility
     public static Cell MaxColumnAvailiablePosition(int column, IEnumerable<Cell> cells)
     {
         var enumerable = cells as Cell[] ?? cells.ToArray();
-        Debug.Log("Column: "+column);
-        Debug.Log("Cells NUmber: "+cells.Count());
+        //Debug.Log("Column: "+column);
+        //Debug.Log("Cells NUmber: "+cells.Count());
         var maxCell =  enumerable.First(cell => cell.x == column && !cell.IsTemporary && cell.y == enumerable.Where(c=>!c.IsTemporary).Max(y => y.y));
         if (maxCell.Type != CellTypes.Usual)
         {
@@ -738,14 +738,15 @@ public class GamefieldUtility
         {
             return false;
         }
-        var possible = tiles.GetTiles(IsUsual);
+        var possible = tiles.Where(IsUsual);
+            //.GetTiles(IsUsual);
         //complex logic of repainting
 
         //check number of invaders
         //if more then third of maximum and possible less then 10
         if (InvaderChuzzle.AllInvaderChuzzles.Count > InvaderChuzzle.MaxInvadersOnLevel/3 && possible.Count() < 10)
         {
-            //Debug.Log("Repaint invaders");
+            ////Debug.Log("Repaint invaders");
             var invadersForRepaint =
                 InvaderChuzzle.AllInvaderChuzzles.Where(
                     x =>
@@ -777,7 +778,7 @@ public class GamefieldUtility
                         if (top.Current.Top != null && top.Current.Top.Type != CellTypes.Block)
                         {
                             var possibleAbove =
-                                tiles.GetTiles(
+                                tiles.Where(
                                     x =>
                                         IsUsual(x) && x.Current.y == top.Current.Top.y &&
                                         x.Current != top.Current.Top)
@@ -787,7 +788,7 @@ public class GamefieldUtility
                             {
                                 Chuzzle toReplace = possibleAbove[Random.Range(0, possibleAbove.Length)];
                                 TilesFactory.Instance.ReplaceWithColor(toReplace, top.Color);
-                                //    Debug.Log("Repaint above pair");
+                                //    //Debug.Log("Repaint above pair");
                                 repainted = true;
                             }
                         }
@@ -810,7 +811,7 @@ public class GamefieldUtility
                                 TilesFactory.Instance.ReplaceWithColor(
                                     toReplace, bottom.Color);
                                 repainted = true;
-                                //      Debug.Log("Repaint bellow pair");
+                                //      //Debug.Log("Repaint bellow pair");
                             }
                         }
 
@@ -843,7 +844,7 @@ public class GamefieldUtility
                             {
                                 Chuzzle toReplace = possibleLeft[Random.Range(0, possibleLeft.Length)];
                                 TilesFactory.Instance.ReplaceWithColor(toReplace, left.Color);
-                                //        Debug.Log("Repaint left pair");
+                                //        //Debug.Log("Repaint left pair");
                                 repainted = true;
                             }
                         }
@@ -866,7 +867,7 @@ public class GamefieldUtility
                                 TilesFactory.Instance.ReplaceWithColor(
                                     toReplace, right.Color);
                                 repainted = true;
-                                //          Debug.Log("Repaint right pair");
+                                //          //Debug.Log("Repaint right pair");
                             }
                         }
 
@@ -911,11 +912,11 @@ public class GamefieldUtility
                         TilesFactory.Instance.ReplaceWithColor(
                             possibleLeftLeftLeft[Random.Range(0, possibleLeftLeftLeft.Count)],
                             randomLeftLeftChuzzle.Color);
-                        Debug.Log("Random left left");
+                        //Debug.Log("Random left left");
                     }
                     else
                     {
-                        Debug.LogWarning("All our life is a lie");
+                        //Debug.LogWarning("All our life is a lie");
                         return true;
                     }
                     //check if has free neighbour
@@ -944,7 +945,7 @@ public class GamefieldUtility
             {
                 if (IsUsual(chuzzle))
                 {
-                    //Debug.Log("Oops, combination. Repaint");
+                    ////Debug.Log("Oops, combination. Repaint");
                     TilesFactory.Instance.ReplaceWithOtherColor(chuzzle);
                     break;
                 }

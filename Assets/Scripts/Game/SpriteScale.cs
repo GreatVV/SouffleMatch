@@ -11,16 +11,18 @@ namespace Game
 
         public void Start()
         {
-#if !UNITY_EDITOR
+//#if !UNITY_EDITOR
         Zoom();
-#endif
+//#endif
         }
 
         public void Update()
         {
+            /*
 #if UNITY_EDITOR
             Zoom(); 
 #endif
+             * */
         }
 
         private void Zoom()

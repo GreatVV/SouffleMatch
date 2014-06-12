@@ -11,13 +11,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3d0c0342116464e26abb476a494c827a, type: 3}
   m_Name: GA_Settings
   m_EditorClassIdentifier: 
-  TotalMessagesSubmitted: 155
+  TotalMessagesSubmitted: 176
   TotalMessagesFailed: 0
-  DesignMessagesSubmitted: 50
+  DesignMessagesSubmitted: 60
   DesignMessagesFailed: 0
   QualityMessagesSubmitted: 0
   QualityMessagesFailed: 0
-  ErrorMessagesSubmitted: 105
+  ErrorMessagesSubmitted: 116
   ErrorMessagesFailed: 0
   BusinessMessagesSubmitted: 0
   BusinessMessagesFailed: 0
@@ -39,10 +39,10 @@ MonoBehaviour:
   EmailGA: marinegreatvv@yahoo.com
   PasswordGA: way580ten356
   IntroScreen: 0
-  DebugMode: 1
+  DebugMode: 0
   DebugAddEvent: 0
   SendExampleGameDataToMyGame: 0
-  RunInEditorPlayMode: 1
+  RunInEditorPlayMode: 0
   UseBundleVersion: 0
   AllowRoaming: 1
   ArchiveData: 1
@@ -72,7 +72,7 @@ MonoBehaviour:
   CB_foldout: 1
   CB_appID: 
   CB_appSig: 
-  CurrentInspectorState: 1
+  CurrentInspectorState: 3
   ClosedHints: 
   DisplayHints: 0
   DisplayHintsScrollState: {x: 0, y: 0}

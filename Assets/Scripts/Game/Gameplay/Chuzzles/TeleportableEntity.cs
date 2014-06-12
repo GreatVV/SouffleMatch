@@ -28,12 +28,9 @@ public class TeleportableEntity : MonoBehaviour
     {
         if (Copy == null)
         {
-            if (gameObject.GetComponent<iTween>())
-            {
-                Debug.Log("iTween on "+gameObject.name);
-            }
-
-            Copy = Instantiate(gameObject) as GameObject;
+            var chuzzle = gameObject.GetComponent<Chuzzle>();
+            var prefab = TilesFactory.Instance.PrefabOfColor(chuzzle.Color);
+            Copy = Instantiate(prefab) as GameObject;
             Copy.gameObject.name += " is copy";
             Copy.transform.parent = gameObject.transform;
             iTween.Stop(Copy);
