@@ -19,20 +19,19 @@ namespace GamefieldStates
         {
             TilesCollection = Gamefield.Level.Chuzzles;
             Gamefield.SwitchStateTo(Gamefield.RemoveState);
-
-            /*
-            var combinations = GamefieldUtility.FindCombinations(Gamefield.Level.Chuzzles.GetTiles());
+            return;
+            var combinations = GamefieldUtility.FindCombinations(TilesCollection);
             if (!CheckForSpecial(combinations))
             {
                 Gamefield.SwitchStateTo(Gamefield.RemoveState);
-            }*/
+            }
         }
 
         public override void OnExit()
         {
             if (TilesCollection.IsAnyAnimated)
             {
-                Debug.LogError("FUCK YOU: " + TilesCollection.Count);
+                Debug.LogError("FUCK YOU: " + TilesCollection.AnimatedCount);
             }
         }
 

@@ -9,6 +9,8 @@ public class PanelManager : MonoBehaviour
     public static PanelManager instance { get; private set; }
 
     public RuntimeAnimatorController windowAnimator;
+    public WinPopup WinPopup;
+    public LosePopup LosePopup;
 
     private void ShowWindow(Window newWindow)
     {

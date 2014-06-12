@@ -42,6 +42,11 @@ public class TilesCollection : IJsonSerializable, IEnumerable<Chuzzle>
         get { return chuzzles.Any(x => x.IsAnimationStarted); }
     }
 
+    public int AnimatedCount
+    {
+        get { return chuzzles.Count(x => x.IsAnimationStarted); }
+    }
+
     #region IEnumerable<Chuzzle> Members
 
     public IEnumerator<Chuzzle> GetEnumerator()
@@ -189,6 +194,8 @@ public class TilesCollection : IJsonSerializable, IEnumerable<Chuzzle>
             Debug.LogWarning("Already contains chuzzle: " + chuzzle);
             return;
         }
+        chuzzle.AnimationStarted += OnAnimationStarted;
+        chuzzle.AnimationFinished += OnAnimationFinished;
         chuzzles.Add(chuzzle);
     }
 
@@ -197,6 +204,8 @@ public class TilesCollection : IJsonSerializable, IEnumerable<Chuzzle>
         Debug.LogWarning("Remove all chuzzles from collection. Total: " + chuzzles.Count);
         foreach (Chuzzle chuzzle in chuzzles)
         {
+            chuzzle.AnimationStarted -= OnAnimationStarted;
+            chuzzle.AnimationFinished -= OnAnimationFinished;
             //ChuzzlePool.Instance.Release(chuzzle.Color, chuzzle.GetType(), chuzzle.gameObject);
             Object.Destroy(chuzzle.gameObject);
         }
@@ -211,6 +220,8 @@ public class TilesCollection : IJsonSerializable, IEnumerable<Chuzzle>
             Debug.LogWarning("Chuzzles dont contains chuzzle: " + chuzzle);
             return;
         }
+        chuzzle.AnimationStarted -= OnAnimationStarted;
+        chuzzle.AnimationFinished -= OnAnimationFinished;
         chuzzles.Remove(chuzzle);
     }
 

@@ -5,13 +5,11 @@ namespace GamefieldStates
     [Serializable]
     public class GameOverState : GamefieldState
     {
-        public LosePopup LosePopup;
-
         #region Event Handlers
 
         public override void OnEnter()
         {
-            PanelManager.Show(LosePopup);
+            PanelManager.Show(PanelManager.instance.LosePopup);
         }
 
         public override void OnExit()

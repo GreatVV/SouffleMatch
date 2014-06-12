@@ -33,9 +33,10 @@ namespace GamefieldStates
 
         public override void OnExit()
         {
+            TilesCollection.AnimationFinished -= OnAnimationFinished;
             if (TilesCollection.IsAnyAnimated)
             {
-                Debug.LogError("FUCK YOU FROM REMOVE COMBINATION: "+TilesCollection.Count);
+                Debug.LogError("FUCK YOU FROM REMOVE COMBINATION: "+TilesCollection.AnimatedCount);
             }
         }
 
@@ -56,6 +57,7 @@ namespace GamefieldStates
 
         private IEnumerator RemoveCombinations()
         {
+            Debug.Log("Start remove combinations");
             var powerUpCombination = GamefieldUtility.FindOnlyOneCombinationWithCondition(TilesCollection,GamefieldUtility.IsPowerUp);
 
             //if has any powerups

@@ -17,15 +17,28 @@ namespace GamefieldStates
         {
             TilesCollection = Gamefield.Level.Chuzzles;
             TilesCollection.AnimationFinished += OnAnimationFinished;
-            
-            CreateNew();
+
+            if (CreateNew())
+            {
+                Debug.Log("Has new");
+                if (!TilesCollection.IsAnyAnimated)
+                {
+                    Debug.Log("No Moving");
+                    OnAnimationFinished();
+                }
+                else
+                {
+                    Debug.Log("Moving: "+TilesCollection.AnimatedCount);
+                }
+            }
         }
 
         public override void OnExit()
         {
-            if (TilesCollection.Any())
+            TilesCollection.AnimationFinished -= OnAnimationFinished;
+            if (TilesCollection.IsAnyAnimated)
             {
-                Debug.LogError("FUCK YOU FROM CREATE NEW STATE: " + TilesCollection.Count);
+                Debug.LogError("FUCK YOU FROM CREATE NEW STATE: " + TilesCollection.AnimatedCount);
             }
             Gamefield.Level.Chuzzles.NewTilesInColumns = new int[Gamefield.Level.Cells.Width];
         }

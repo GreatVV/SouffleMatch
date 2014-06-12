@@ -27,10 +27,16 @@ public class TeleportableEntity : MonoBehaviour
     public void Show()
     {
         if (Copy == null)
-        {   
+        {
+            if (gameObject.GetComponent<iTween>())
+            {
+                Debug.Log("iTween on "+gameObject.name);
+            }
+
             Copy = Instantiate(gameObject) as GameObject;
             Copy.gameObject.name += " is copy";
             Copy.transform.parent = gameObject.transform;
+            iTween.Stop(Copy);
             Destroy(Copy.GetComponent<Chuzzle>());
         }
         

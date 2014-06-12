@@ -91,9 +91,10 @@ namespace GamefieldStates
 
         public override void OnExit()
         {
+            TilesCollection.AnimationFinished -= OnAnimationFinished;
             if (TilesCollection.IsAnyAnimated)
             {
-                Debug.LogError("FUCK you in field state: " + TilesCollection.Count);
+                Debug.LogError("FUCK you in field state: " + TilesCollection.AnimatedCount);
             }
             Gamefield.GameMode.HumanTurn();
             Reset();
@@ -102,7 +103,7 @@ namespace GamefieldStates
         public void CheckCombinations()
         {
             var combinations = GamefieldUtility.FindCombinations(Gamefield.Level.Chuzzles);
-            if (combinations.Any() /*&& (!Tutorial.isActive || (Tutorial.isActive && CurrentChuzzle!=null&& Tutorial.Instance.IsTargetCell(CurrentChuzzle.Real)))*/)
+            if (combinations.Any())
             {
                 foreach (var c in Gamefield.Level.Chuzzles)
                 {
@@ -176,79 +177,57 @@ namespace GamefieldStates
             {
                 return;
             }
-        
-            /*
-        TimeFromTip += Time.deltaTime;
-        if (TimeFromTip > 1)
-        {                        
-            if (_possibleCombination.Any() && _arrowChuzzle)
+
+            if (IsFingerDown)
             {
-                foreach (var chuzzle in _possibleCombination)
-                {
-                    chuzzle.Shine = true;
-                }
-                GamefieldUtility.ShowArrow(_arrowChuzzle, _targetPosition, tipArrow);
+                OnFingerDown();
             }
-
-            TimeFromTip = 0;
-        }       
-        */
-          //  Debug.Log("Update");
-            #region Drag
-
-            if (CurrentChuzzle == null && (Input.GetMouseButtonDown(0) || (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began)))
-            {
-                _dragOrigin = Input.mousePosition;
-               //  Debug.Log("Position: " + _dragOrigin);
-
-                if (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began)
-                {
-                    //   Debug.Log("is touch drag started");
-                    _dragOrigin = new Vector3(Input.GetTouch(0).position.x, Input.GetTouch(0).position.y);
-                }
-
-                var overlap = Physics2D.OverlapPoint(Camera.main.ScreenToWorldPoint(_dragOrigin));
-                
-                if (overlap != null && overlap.gameObject.transform.parent.GetComponent<Chuzzle>())
-                {
-                    var wasNull = CurrentChuzzle == null;
-                    if (CurrentChuzzle)
-                    {
-                        CurrentChuzzle.Shine = false;
-                    }
-                    CurrentChuzzle = overlap.transform.parent.GetComponent<Chuzzle>();
-                    CurrentChuzzle.Shine = true;
-                    Debug.Log("CHuzzle: "+CurrentChuzzle);
-                    if (wasNull)
-                    { 
-                        _minY = _minX = float.MinValue;
-                        _maxX = _maxY = float.MaxValue;
-                    }
-                }
-
-                return;
-            }
-
-            // CHECK DRAG STATE (Mouse or Touch)
-            if ((!Input.GetMouseButton(0) || Input.GetMouseButtonUp(0)) && 0 == Input.touchCount)
+            
+            if (IsFingerUp)
             {
                 DropDrag();
-                return;
             }
 
-            if (CurrentChuzzle == null)
+            if (!IsTouching)
             {
                 return;
             }
 
-            /*
-        if (CurrentChuzzle && !Tutorial.CanTakeOnlyThisChuzzle(CurrentChuzzle))
-        {
-            Reset();
-            return;
-        }
-        */
+            UpdateDelta();
+            
+            _delta = Vector3.ClampMagnitude(_delta, 0.45f*Chuzzle.Scale.x);
 
+            if (!_axisChozen)
+            {
+                ChoseAxis(draggableChuzzles);
+            }
+
+            if (_axisChozen)
+            {
+                ChoseDragDirection();
+            }
+
+            // RESET START POINT
+            _dragOrigin = Input.mousePosition;
+            if (Input.touchCount > 0)
+            {
+                _dragOrigin = Input.touches[0].position;
+            }
+            
+        }
+
+        public bool IsTouching
+        {
+            get { return Input.GetMouseButton(0) || Input.touchCount > 0; }
+        }
+
+        private void OnFingerDown()
+        {
+            FindCurrentChuzzle();
+        }
+
+        private void UpdateDelta()
+        {
             if (Input.GetMouseButton(0)) // Get Position Difference between Last and Current Touches
             {
                 // MOUSE
@@ -260,71 +239,118 @@ namespace GamefieldStates
                 {
                     // TOUCH
                     _deltaTouch =
-                        Camera.main.ScreenToWorldPoint(new Vector3(Input.GetTouch(0).position.x,
-                            Input.GetTouch(0).position.y, 0));
+                        Camera.main.ScreenToWorldPoint(new Vector3(Input.GetTouch(0).position.x, Input.GetTouch(0).position.y, 0));
                     _delta = _deltaTouch - Camera.main.ScreenToWorldPoint(_dragOrigin);
                 }
             }
+        }
 
-            //Debug.Log("Delta: " + _delta);
-            _delta = Vector3.ClampMagnitude(_delta, 0.45f*Chuzzle.Scale.x);
+        private static bool IsFingerUp
+        {
+            get { return (!Input.GetMouseButton(0) || Input.GetMouseButtonUp(0)) && 0 == Input.touchCount; }
+        }
 
-            if (!_axisChozen)
+        private bool IsFingerDown
+        {
+            get
             {
-                //chooze drag direction
-                if (Mathf.Abs(_delta.x) < 1.5*Mathf.Abs(_delta.y) || Mathf.Abs(_delta.x) > 1.5*Mathf.Abs(_delta.y))
+                if (Input.GetMouseButtonDown(0) || (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began))
                 {
-                    if (Mathf.Abs(_delta.x) < Mathf.Abs(_delta.y))
-                    {
-                        SelectedChuzzles = draggableChuzzles.Where(x => x.Current.x == CurrentChuzzle.Current.x).ToList();
-                        _isVerticalDrag = true;
-                    }
-                    else
-                    {
-                        SelectedChuzzles = draggableChuzzles.Where(x => x.Current.y == CurrentChuzzle.Current.y).ToList();
-                        _isVerticalDrag = false;
-                    }
+                    _dragOrigin = Input.mousePosition;
 
-                    foreach (var selectedChuzzle in SelectedChuzzles)
-                    {
-                        selectedChuzzle.Shine = true;
-                    }
 
-                    _hasLockedChuzzles = HasLockChuzzles;
-                    if (_hasLockedChuzzles)
+                    if (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began)
                     {
-                        _minX = CurrentChuzzle.Current.Position.x - Chuzzle.Scale.x*0.4f;
-                        _maxX = CurrentChuzzle.Current.Position.x + Chuzzle.Scale.x * 0.4f;
-                        _minY = CurrentChuzzle.Current.Position.y - Chuzzle.Scale.y * 0.4f;
-                        _maxY = CurrentChuzzle.Current.Position.y + Chuzzle.Scale.y * 0.4f;
+                        _dragOrigin = new Vector3(Input.GetTouch(0).position.x, Input.GetTouch(0).position.y);
                     }
-
-                    _axisChozen = true;
-                    //Debug.Log("Direction chozen. Vertical: " + _isVerticalDrag);
+                    return true;
                 }
+                return false;
             }
+        }
 
-            if (_axisChozen)
+        private void ChoseDragDirection()
+        {
+            if (_isVerticalDrag)
             {
-                if (_isVerticalDrag)
+                CurrentDirection = _delta.y > 0 ? Direction.Top : Direction.Bottom;
+                _delta.z = _delta.x = 0;
+            }
+            else
+            {
+                CurrentDirection = _delta.x > 0 ? Direction.Right : Direction.Left;
+                _delta.y = _delta.z = 0;
+            }
+        }
+
+        private void ChoseAxis(IEnumerable<Chuzzle> draggableChuzzles)
+        {
+//chooze drag direction
+            if (IsDelatEnough && CurrentChuzzle)
+            {
+                if (IsVerticalDelta)
                 {
-                    CurrentDirection = _delta.y > 0 ? Direction.Top : Direction.Bottom;
-                    _delta.z = _delta.x = 0;
+                    SelectedChuzzles = draggableChuzzles.Where(x => x.Current.x == CurrentChuzzle.Current.x).ToList();
+                    _isVerticalDrag = true;
                 }
                 else
                 {
-                    CurrentDirection = _delta.x > 0 ? Direction.Right : Direction.Left;
-                    _delta.y = _delta.z = 0;
+                    SelectedChuzzles = draggableChuzzles.Where(x => x.Current.y == CurrentChuzzle.Current.y).ToList();
+                    _isVerticalDrag = false;
                 }
+
+                foreach (var selectedChuzzle in SelectedChuzzles)
+                {
+                    selectedChuzzle.Shine = true;
+                }
+
+                _hasLockedChuzzles = HasLockChuzzles;
+
+                if (_hasLockedChuzzles)
+                {
+                    _minX = CurrentChuzzle.Current.Position.x - Chuzzle.Scale.x*0.4f;
+                    _maxX = CurrentChuzzle.Current.Position.x + Chuzzle.Scale.x*0.4f;
+                    _minY = CurrentChuzzle.Current.Position.y - Chuzzle.Scale.y*0.4f;
+                    _maxY = CurrentChuzzle.Current.Position.y + Chuzzle.Scale.y*0.4f;
+                }
+
+                _axisChozen = true;
             }
-
-            // RESET START POINT
-            _dragOrigin = Input.mousePosition;
-
-            #endregion
         }
 
-        public void LateUpdateState(IEnumerable<Cell> activeCells)
+        private bool IsVerticalDelta
+        {
+            get { return Mathf.Abs(_delta.x) < Mathf.Abs(_delta.y); }
+        }
+
+        private bool IsDelatEnough
+        {
+            get { return Mathf.Abs(_delta.x) < 1.5*Mathf.Abs(_delta.y) || Mathf.Abs(_delta.x) > 1.5*Mathf.Abs(_delta.y); }
+        }
+
+        private void FindCurrentChuzzle()
+        {
+            var overlap = Physics2D.OverlapPoint(Camera.main.ScreenToWorldPoint(_dragOrigin));
+
+            if (overlap != null && overlap.gameObject.transform.parent.GetComponent<Chuzzle>())
+            {
+                var wasNull = CurrentChuzzle == null;
+                if (CurrentChuzzle != null)
+                {
+                    CurrentChuzzle.Shine = false;
+                }
+                CurrentChuzzle = overlap.transform.parent.GetComponent<Chuzzle>();
+                CurrentChuzzle.Shine = true;
+                Debug.Log("CHuzzle: " + CurrentChuzzle);
+                if (wasNull)
+                {
+                    _minY = _minX = float.MinValue;
+                    _maxX = _maxY = float.MaxValue;
+                }
+            }
+        }
+
+        public void LateUpdateState(CellCollection activeCells)
         {
             //tipArrow.UpdateState();
             if (_isReturning)
@@ -448,7 +474,7 @@ namespace GamefieldStates
             }
         }
 
-        private void MoveChuzzles(IEnumerable<Cell> activeCells)
+        private void MoveChuzzles(CellCollection activeCells)
         {
             foreach (var c in SelectedChuzzles)
             {
@@ -729,7 +755,7 @@ namespace GamefieldStates
 
         public void CheckAnimationCompleted()
         {
-            if (!TilesCollection.Any()) 
+            if (!TilesCollection.IsAnyAnimated) 
             {
                 CheckCombinations();
             }
@@ -740,7 +766,7 @@ namespace GamefieldStates
         {
             if (TilesCollection.Any())
             {
-                LateUpdateState(Gamefield.Level.Cells.GetCells());
+                LateUpdateState(Gamefield.Level.Cells);
             }
         }
     
