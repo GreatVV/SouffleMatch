@@ -308,11 +308,13 @@ namespace GamefieldStates
                 if (IsVerticalDelta)
                 {
                     SelectedChuzzles = draggableChuzzles.Where(x => x.Current.x == CurrentChuzzle.Current.x).ToList();
+                    //LogChuzzles(SelectedChuzzles);
                     _isVerticalDrag = true;
                 }
                 else
                 {
                     SelectedChuzzles = draggableChuzzles.Where(x => x.Current.y == CurrentChuzzle.Current.y).ToList();
+                    //LogChuzzles(SelectedChuzzles);
                     _isVerticalDrag = false;
                 }
 
@@ -333,6 +335,12 @@ namespace GamefieldStates
 
                 _axisChozen = true;
             }
+        }
+
+        private void LogChuzzles(IEnumerable<Chuzzle> selectedChuzzles)
+        {
+            var s = selectedChuzzles.Aggregate(""+selectedChuzzles.Count()+Environment.NewLine, (current, selectedChuzzle) => current + (selectedChuzzle + Environment.NewLine));
+            Debug.Log(s);
         }
 
         private void FindCurrentChuzzle()

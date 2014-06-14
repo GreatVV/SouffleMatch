@@ -266,7 +266,10 @@ public class TilesCollection : IJsonSerializable, IEnumerable<Chuzzle>
     {
         foreach (Cell cell in cells)
         {
-            TilesFactory.Instance.CreateRandomChuzzle(cell, true);
+            if (cell.Type != CellTypes.Block)
+            {
+                TilesFactory.Instance.CreateRandomChuzzle(cell, true);
+            }
         }
     }
 }

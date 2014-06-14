@@ -65,6 +65,7 @@ public class Gamefield : MonoBehaviour
     public void AddEventHandlers()
     {
         RemoveEventHandlers();
+        CombinationDestroyed += PointSystem.CountForCombinations;
         GameMode.Win += OnWin;
         GameMode.GameOver += OnGameOver;
     }
@@ -85,15 +86,15 @@ public class Gamefield : MonoBehaviour
 
     private void OnGameOver()
     {
-        CombinationDestroyed -= PointSystem.CountForCombinations;
         SwitchStateTo(GameOverState);
         Player.Instance.Lifes.SpentLife();
+        RemoveEventHandlers();
     }
 
     private void OnWin()
     {
-        CombinationDestroyed -= PointSystem.CountForCombinations;
         SwitchStateTo(WinState);
+        RemoveEventHandlers();
     }
 
     #endregion
@@ -125,7 +126,6 @@ public class Gamefield : MonoBehaviour
 
     public void Start()
     {
-        CombinationDestroyed += PointSystem.CountForCombinations;
         if (!Application.isEditor)
         {
             switch (Application.systemLanguage)
@@ -234,7 +234,6 @@ public class Gamefield : MonoBehaviour
 
         PointSystem.Reset();
         PointSystem.TargetPoints = GameMode.TargetPoints;
-
        
         GameMode.Init(this);
 
