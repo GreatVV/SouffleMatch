@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using UnityEngine;
 using System.Collections;
@@ -6,37 +7,10 @@ using System.Collections;
 public class FlyingPoints : MonoBehaviour
 {
 
-    public Gamefield Gamefield;
-    public Camera UiCamera;
+    [SerializeField] private UILabel amountLabel;
 
-    public FlyingLabelPool Pool;
-
-	// Use this for initialization
-	void Start ()
-	{
-	    Gamefield.PointSystem.PointsForDestroy += OnPointsForDestroy;
-	}
-
-    private void OnPointsForDestroy(IEnumerable<Chuzzle> comb, int points)
+    public void Init(int points)
     {
-        var label = Pool.GetLabel;
-        label.gameObject.SetActive(true);
-        var minx = comb.Min(x => x.Current.Position.x);
-        var maxx = comb.Max(x => x.Current.Position.x);
-        var miny = comb.Min(x => x.Current.Position.y);
-        var maxy = comb.Max(x => x.Current.Position.y);
-        var center = new Vector2((minx + maxx) / 2f, (miny + maxy) / 2f);
-        label.transform.position = UiCamera.ScreenPointToRay(Camera.main.WorldToScreenPoint(center)).GetPoint(0);
-        label.text = string.Format("+{0}", points);
-        label.gameObject.GetComponent<TweenScale>().enabled = true;
-        label.gameObject.GetComponent<TweenScale>().Play(true);
-        label.gameObject.GetComponent<TweenAlpha>().enabled = true;
-        label.gameObject.GetComponent<TweenAlpha>().Play(true);
-        Debug.Log("Play: " + Camera.main.WorldToScreenPoint(center));
-    }
-
-    void OnDestroy()
-    {
-        Gamefield.PointSystem.PointsForDestroy -= OnPointsForDestroy;
+        amountLabel.text = points.ToString(CultureInfo.InvariantCulture);
     }
 }

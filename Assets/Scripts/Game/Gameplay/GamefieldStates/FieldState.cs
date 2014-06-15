@@ -320,7 +320,7 @@ namespace GamefieldStates
 
                 foreach (Chuzzle selectedChuzzle in SelectedChuzzles)
                 {
-                    selectedChuzzle.Shine = true;
+                   // selectedChuzzle.Tipping = true;
                 }
 
                 _hasLockedChuzzles = HasLockChuzzles;
@@ -350,12 +350,7 @@ namespace GamefieldStates
             if (overlap != null && overlap.gameObject.transform.parent.GetComponent<Chuzzle>())
             {
                 bool wasNull = CurrentChuzzle == null;
-                if (CurrentChuzzle != null)
-                {
-                    CurrentChuzzle.Shine = false;
-                }
                 CurrentChuzzle = overlap.transform.parent.GetComponent<Chuzzle>();
-                CurrentChuzzle.Shine = true;
                 if (wasNull)
                 {
                     _minY = _minX = float.MinValue;
@@ -477,6 +472,26 @@ namespace GamefieldStates
                 }
 
                 MoveChuzzles(activeCells);
+
+                //move all tiles to new real coordinates
+                foreach (Chuzzle chuzzle in SelectedChuzzles)
+                {
+                    chuzzle.Real = Gamefield.Level.Cells.GetCellAt(GamefieldUtility.ToRealCoordinates(chuzzle), false);
+                }
+                foreach (var chuzzle in Gamefield.Level.Chuzzles)
+                {
+                    chuzzle.Tipping = false;
+                }
+
+                var combs = GamefieldUtility.SelectedTips(Gamefield.Level.Chuzzles, SelectedChuzzles, 3);
+                //Debug.Log("Combs count: "+combs.Count);
+                foreach (var comb in combs)
+                {
+                    foreach (var chuzzle in comb)
+                    {
+                        chuzzle.Tipping = true;
+                    }
+                }
             }
         }
 
@@ -608,7 +623,7 @@ namespace GamefieldStates
                 //drop shining
                 foreach (Chuzzle chuzzle in Gamefield.Level.Chuzzles)
                 {
-                    chuzzle.Shine = false;
+                    chuzzle.Tipping = false;
                     chuzzle.Teleportable.Hide();
                 }
 
@@ -636,7 +651,7 @@ namespace GamefieldStates
         {
             foreach (Chuzzle selectedChuzzle in SelectedChuzzles)
             {
-                selectedChuzzle.Shine = false;
+                selectedChuzzle.Tipping = false;
                 selectedChuzzle.Teleportable.Hide();
             }
             SelectedChuzzles.Clear();

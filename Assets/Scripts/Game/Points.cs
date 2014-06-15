@@ -36,6 +36,7 @@ namespace Game
         public void AddPoints(int points)
         {
             CurrentPoints += points;
+            Economy.Instance.Add(points);
             InvokePointChanged();
         }
 

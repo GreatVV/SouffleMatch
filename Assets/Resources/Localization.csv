@@ -1,12 +1,12 @@
 KEY,English,Russian
-Gameplay_Points,{0} points of {1},Очки:{0}\nЦель: {1}
+Gameplay_Points,{0} mana of {1},Мана:{0}\nЦель: {1}
 Gameplay_Turns,Moves: {0},{0} ходов осталось
 FinalWindow_Restart,Restart,Заново
 FinalWindow_NextLevel,Next Level,Следующий уровень
 FinalWindow_ChoseLevel,Chose Level,Другие уровни
 FinalWindow_Win,Win,Уничтожено
 FinalWindow_Lose,Lose,Потрачено
-FinalWindow_Score,{0} points,Очки:{0}
+FinalWindow_Score,{0} mana,Мана:{0}
 LevelNumber,Level {0},Уровень {0}
 Tutorial_Drag,Drag to destroy zombie veggies.\n That's all,Тащи для уничтожения зомби-овощей
 Pause_Restart,Restart,Заново

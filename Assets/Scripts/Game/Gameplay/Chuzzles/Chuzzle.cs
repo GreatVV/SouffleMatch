@@ -31,22 +31,22 @@ public abstract class Chuzzle : MonoBehaviour
     private ParticleSystem _shineParticle;
     public GameObject ShineParticlePrefab;
 
-    public bool _shine;
+    public bool _tipping;
 
-    public bool Shine
+    public bool Tipping
     {
-        get { return _shine; }
+        get { return _tipping; }
         set
         {
-            _shine = value;
-            /*
+            _tipping = value;
+            
             if (!_shineParticle)
             {
                 _shineParticle = ((GameObject) Instantiate(ShineParticlePrefab)).particleSystem;
                 _shineParticle.transform.parent = transform;
                 _shineParticle.transform.localPosition = Vector3.zero;
             }
-            _shineParticle.gameObject.SetActive(value);*/
+            _shineParticle.gameObject.SetActive(value);
         }
     }
 
