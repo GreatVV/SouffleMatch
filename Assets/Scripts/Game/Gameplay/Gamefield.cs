@@ -10,6 +10,7 @@ using UnityEngine;
 
 #endregion
 
+[ExecuteInEditMode]
 public class Gamefield : MonoBehaviour
 {
     public LayerMask ChuzzleMask;
@@ -195,37 +196,37 @@ public class Gamefield : MonoBehaviour
     {
         if (CheckSpecialState)
         {
-            Destroy(CheckSpecialState);
+            DestroyImmediate(CheckSpecialState);
         }
         CheckSpecialState = gameObject.AddComponent<CheckSpecialState>();
 
         if (CreateNewChuzzlesState)
         {
-            Destroy(CreateNewChuzzlesState);
+            DestroyImmediate(CreateNewChuzzlesState);
         }
         CreateNewChuzzlesState = gameObject.AddComponent<CreateNewChuzzlesState>();
 
         if (RemoveState)
         {
-            Destroy(RemoveState);
+            DestroyImmediate(RemoveState);
         }
         RemoveState = gameObject.AddComponent<RemoveCombinationState>();
 
         if (GameOverState)
         {
-            Destroy(GameOverState); 
+            DestroyImmediate(GameOverState); 
         }
         GameOverState = gameObject.AddComponent<GameOverState>();
 
         if (WinState)
         {
-            Destroy(WinState);
+            DestroyImmediate(WinState);
         }
         WinState = gameObject.AddComponent<WinState>();
 
         if (FieldState)
         {
-            Destroy(FieldState);
+            DestroyImmediate(FieldState);
         }
 
         FieldState = gameObject.AddComponent<FieldState>();
@@ -242,7 +243,11 @@ public class Gamefield : MonoBehaviour
 
         AddEventHandlers();
         InvokeGameStarted();
-        CenterCameraOnField.Instance.CenterCameraOnChuzzles(Level.Chuzzles,true);
+
+        if (CenterCameraOnField.Instance)
+        {
+            CenterCameraOnField.Instance.CenterCameraOnChuzzles(Level.Chuzzles,true);
+        }
         
         SwitchStateTo(CheckSpecialState);
     }

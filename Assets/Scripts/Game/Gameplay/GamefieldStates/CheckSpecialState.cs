@@ -10,6 +10,7 @@ using Random = UnityEngine.Random;
 
 namespace GamefieldStates
 {
+    [ExecuteInEditMode]
     [Serializable]
     public class CheckSpecialState : GamefieldState
     {   
@@ -17,7 +18,6 @@ namespace GamefieldStates
 
         public override void OnEnter()
         {
-            TilesCollection = Gamefield.Level.Chuzzles;
             Gamefield.SwitchStateTo(Gamefield.RemoveState);
             return;
             var combinations = GamefieldUtility.FindCombinations(TilesCollection);

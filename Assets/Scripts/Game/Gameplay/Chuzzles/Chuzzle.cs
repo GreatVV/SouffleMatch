@@ -143,7 +143,7 @@ public abstract class Chuzzle : MonoBehaviour
 
     public override string ToString()
     {
-        return string.Format("{0} ({1},{2}) - {3}", Color, Current.x, Current.y, GetType());
+        return string.Format("{0} ({1},{2}) - {3}", Color, Current.X, Current.Y, GetType());
     }
 
     protected virtual void Die(bool withAnimation)

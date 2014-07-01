@@ -30,10 +30,10 @@ namespace Game.GameMode
 
             IntVector2 place =
                 CurrentPlaceCoordinates.FirstOrDefault(
-                    x => x.x == destroyedChuzzle.Current.x && x.y == destroyedChuzzle.Current.y);
+                    x => x.x == destroyedChuzzle.Current.X && x.y == destroyedChuzzle.Current.Y);
             if (place != null)
             {
-                NGUITools.Destroy(destroyedChuzzle.Current.PlaceSprite);
+                destroyedChuzzle.Current.IsPlace = false;
                 CurrentPlaceCoordinates.Remove(place);
             }
 
@@ -59,7 +59,7 @@ namespace Game.GameMode
             Debug.Log("Now of cells: " + enumerable.Count());
             foreach (Cell cell in enumerable)
             {
-                PlaceCoordinates.Add(new IntVector2(cell.x, cell.y));
+                PlaceCoordinates.Add(new IntVector2(cell.X, cell.Y));
             }
             OnReset();
         }

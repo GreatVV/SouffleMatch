@@ -1,4 +1,6 @@
 ﻿using System;
+using Game.Data;
+using UnityEditor;
 using UnityEngine;
 
 public enum CreationType
@@ -11,47 +13,67 @@ public enum CreationType
     Invader
 }
 
+[ExecuteInEditMode]
 [Serializable]
-public class Cell
-{   
-    public CellTypes Type;
+public class Cell : MonoBehaviour
+{
+    public CellDescription Description;
 
-    public GameObject Sprite;
-    public GameObject PlaceSprite;
+    public CellTypes Type
+    {
+        get { return Description.Type; }
+    }
 
-    public int x;
-    public int y;
+    public int X
+    {
+        get { return Description.X; }
+    }
+
+    public int Y
+    {
+        get { return Description.Y; }
+    }
 
     public Cell Left;
     public Cell Right;
     public Cell Top;
     public Cell Bottom;
 
-    public bool IsTemporary;
+    [NonSerialized]
+    public GameObject PlaceSpite;
 
-    public CreationType CreationType;
-
-    public Vector3 Position;
-
-    public Cell Copy
+    public bool IsTemporary
     {
-        get
+        get { return _isTemporary; }
+        set
         {
-            return new Cell(x,y,Type)
-            {
-                CreationType = CreationType
-            };
+            _isTemporary = value;
+            renderer.enabled = value;
         }
     }
 
-    
+    public CreationType CreationType { get; set; }
 
-    public Cell(int x, int y, CellTypes type = CellTypes.Usual)
+    public bool IsPlace
     {
-        this.x = x;
-        this.y = y;
-        this.Type = type;
-        Position = GamefieldUtility.ConvertXYToPosition(x, y, Chuzzle.Scale);
+        get { return Description.IsPlace; }
+        set
+        {
+            Description.IsPlace = value;
+            PlaceSpite.renderer.enabled = value;
+        }
+    }
+
+    public Vector3 Position;
+    private bool _isTemporary;
+    private bool _isPlace;
+
+    public void Init(CellDescription description)
+    {
+        Description = description;
+        Position = GamefieldUtility.ConvertXYToPosition(X, Y, Chuzzle.Scale);
+        CreationType = description.CreationType;
+        transform.position = Position;
     }
 
     public Cell GetBottomWithType(CellTypes type = CellTypes.Usual)
@@ -113,14 +135,14 @@ public class Cell
 
     public override string ToString()
     {
-        return string.Format("({0},{1}):{2} Temp:{3}", x,y, Type,IsTemporary);
+        return string.Format("({0},{1}):{2} Temp:{3}", X,Y, Type,IsTemporary);
     }
 
     public IntVector2 IntVector2Position
     {
         get
         {
-            return new IntVector2(x,y);
+            return new IntVector2(X,Y);
         }
     }
 }

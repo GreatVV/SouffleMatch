@@ -28,7 +28,7 @@ public class GuiLevelList : Window
 
     private void OnLevelsAreReady()
     {
-        foreach (var serializedLevel in levelManager.LoadedLevels)
+        foreach (var serializedLevel in levelManager.LevelPackManager.Packs[0].LoadedLevels)
         {
             var mapId = ((GameObject) Instantiate(mapIdPrefab.gameObject)).GetComponent<MapId>();
             mapId.transform.parent = grid.transform;
@@ -54,7 +54,7 @@ public class GuiLevelList : Window
 
         if (levelManager.IsLoaded)
         {
-            var level = levelManager[SessionRestorer.Instance.lastPlayedLevel];
+            var level = levelManager.LevelPackManager.Packs[0][SessionRestorer.Instance.lastPlayedLevel];
             mapItems[level.Name].ShowCurrent();
         }
     }

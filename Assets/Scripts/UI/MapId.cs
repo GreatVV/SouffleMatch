@@ -5,6 +5,7 @@ using UnityEngine;
 [ExecuteInEditMode]
 public class MapId : MonoBehaviour
 {
+    public int Pack;
     public int Index;
     public GameObject currentLevelParticle;
     private GameObject effect;
@@ -13,7 +14,7 @@ public class MapId : MonoBehaviour
 
     public void OnClick()
     {
-        SessionRestorer.Instance.StartLevel(Index);
+        SessionRestorer.Instance.StartLevel(Pack,Index);
     }
 
     #endregion

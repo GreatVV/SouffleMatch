@@ -6,11 +6,11 @@ namespace Game.GameMode
     [Serializable]
     public class GameModeDescription
     {
-        public string Mode; // TargetScore | TargetPlace | TargetChuzzle
-
-        public int Turns;
-        public int TargetScore;
         public int Amount;
+        public GameModes Mode;
+
+        public int TargetScore;
+        public int Turns;
 
 
         public static GameModeDescription CreateFromJson(JSONObject jsonObject)
@@ -18,9 +18,9 @@ namespace Game.GameMode
             if (jsonObject == null)
             {
                 Debug.LogWarning("There is no gameMode");
-                return new GameModeDescription()
+                return new GameModeDescription
                 {
-                    Mode = "TargetScore",
+                    Mode = GameModes.TargetScore,
                     TargetScore = 3000,
                     Turns = 40
                 };
@@ -40,13 +40,30 @@ namespace Game.GameMode
 
             var desc = new GameModeDescription
             {
-                Mode = jsonObject.GetField("Mode").str,
+                Mode = (GameModes) Enum.Parse(typeof (GameModes), jsonObject.GetField("Mode").str),
                 Turns = (int) jsonObject.GetField("Turns").n,
                 TargetScore = jsonObject.HasField("TargetScore") ? (int) jsonObject.GetField("TargetScore").n : 0,
                 Amount = jsonObject.HasField("Amount") ? (int) jsonObject.GetField("Amount").n : 0
             };
             return desc;
         }
+
+        public JSONObject Serialize()
+        {
+            var json = new JSONObject();
+            json.AddField("Mode", Mode.ToString());
+            json.AddField("Turns",Turns);
+            json.AddField("TargetScore",TargetScore);
+            json.AddField("Amount",Amount);
+            return json;
+        }
+    }
+
+    public enum GameModes
+    {
+        TargetScore,
+        TargetPlace,
+        TargetChuzzle
     }
 
     public class GameModeFactory
@@ -55,16 +72,15 @@ namespace Game.GameMode
         {
             switch (description.Mode)
             {
-                case ("TargetScore"):
+                case (GameModes.TargetScore):
                     return new TargetScoreGameMode(description);
-                case ("TargetPlace"):
+                case (GameModes.TargetPlace):
                     return new TargetPlaceGameMode(description);
-                case ("TargetChuzzle"):
+                case (GameModes.TargetChuzzle):
                     return new TargetChuzzleGameMode(description);
                 default:
                     throw new ArgumentOutOfRangeException("Not correct gammode" + description.Mode);
             }
         }
-
     }
 }

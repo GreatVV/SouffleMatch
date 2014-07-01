@@ -1,0 +1,23 @@
+[
+		{
+				"Name":"New pack",
+				"levelArray":[
+						{
+								"name":"New level",
+								"width":6,
+								"height":6,
+								"numberOfColors":6,
+								"seed":0,
+								"gameMode":{
+										"Mode":"TargetScore",
+										"Turns":0,
+										"TargetScore":0,
+										"Amount":0
+},
+								"Star1Score":0,
+								"Star2Score":0,
+								"Star3Score":0
+}
+]
+}
+]

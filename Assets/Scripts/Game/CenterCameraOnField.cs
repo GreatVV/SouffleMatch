@@ -8,6 +8,7 @@ using UnityEngine;
 
 namespace Game
 {
+    [ExecuteInEditMode]
     public class CenterCameraOnField : MonoBehaviour
     {
         public static CenterCameraOnField Instance;

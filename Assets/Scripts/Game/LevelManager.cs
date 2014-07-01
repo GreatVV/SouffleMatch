@@ -5,9 +5,10 @@ using UnityEngine;
 
 namespace Game
 {
-    public class LevelManager : MonoBehaviour {
+    public class LevelManager : MonoBehaviour
+    {
 
-        public List<LevelDescription> LoadedLevels = new List<LevelDescription>();
+        public LevelPackManager LevelPackManager;
 
         public TextAsset LevelFile;
         public event Action LevelsAreReady;
@@ -26,14 +27,66 @@ namespace Game
 
         public void LoadDefaultLevels()
         {
-            var jsonObject = new JSONObject(LevelFile.text);
-            var levelArray = jsonObject.GetField("levelArray").list;
-            foreach (var level in levelArray)
+            LevelPackManager = LevelPackManager.Deserialize(LevelFile.text);
+            FireLevelsAreReady();
+        }
+
+        public LevelDescription GetLevel(int pack, int index)
+        {
+            return LevelPackManager.Packs[pack].LoadedLevels[index];
+        }
+
+        public LevelDescription GetNextLevel(int lastPlayedPack, int lastPlayedLevel)
+        {
+            var count = LevelPackManager.Packs[lastPlayedPack].LoadedLevels.Count - 1;
+            if (lastPlayedPack < LevelPackManager.Packs.Count - 1 &&
+                lastPlayedLevel == count)
             {
-                LoadedLevels.Add(LevelDescription.FromJson(level));
+                lastPlayedLevel = 0;
+                lastPlayedPack++;
+            }
+            else
+            {
+                if (lastPlayedLevel < count)
+                {
+                    lastPlayedLevel++;
+                }
+                else
+                {
+                    lastPlayedPack = 0;
+                    lastPlayedLevel = 0;
+                }
             }
 
-            FireLevelsAreReady();
+            return GetLevel(lastPlayedPack, lastPlayedLevel);
+        }
+    }
+
+    public class LevelPack
+    {
+        public string Name;
+
+        public List<LevelDescription> LoadedLevels = new List<LevelDescription>();
+
+        public static LevelPack Deserialize(JSONObject json)
+        {
+            var levelDescription = new LevelPack();
+
+            if (json.HasField("Name"))
+            {
+                levelDescription.Name = json.GetStringField("Name");
+            }
+            else
+            {
+                levelDescription.Name = "Default";
+            }
+            var levelArray = json.GetField("levelArray").list;
+            foreach (var level in levelArray)
+            {
+                levelDescription.LoadedLevels.Add(LevelDescription.FromJson(level));
+            }
+
+            return levelDescription;
         }
 
         public LevelDescription this[int index]
@@ -42,6 +95,49 @@ namespace Game
             {
                 return LoadedLevels[index];
             }
+        }
+
+        public JSONObject Serialize()
+        {
+            var json = new JSONObject();
+            json.AddField("Name", Name);
+            var array = new JSONObject(JSONObject.Type.ARRAY);
+            foreach (var levelDescription in LoadedLevels)
+            {
+                array.Add(levelDescription.Serialize());
+            }
+
+            json.AddField("levelArray", array);
+            return json;
+        }
+    }
+
+    [Serializable]
+    public class LevelPackManager
+    {
+        public List<LevelPack> Packs = new List<LevelPack>();
+
+        public JSONObject Serialize()
+        {
+            var json = new JSONObject(JSONObject.Type.ARRAY);
+            foreach (var levelPack in Packs)
+            {
+                json.Add(levelPack.Serialize());
+            }
+            return json;
+        }
+
+        public static LevelPackManager Deserialize(string serialized)
+        {
+            var levelPackManager = new LevelPackManager();
+
+            var json = new JSONObject(serialized);
+            foreach (var jsonObject in json.list)
+            {
+                levelPackManager.Packs.Add(LevelPack.Deserialize(jsonObject));
+            }
+
+            return levelPackManager;
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Game.Data;
+using UnityEngine;
 
 namespace Game
 {
@@ -13,6 +14,7 @@ namespace Game
         public Tutorial tutorialPrefab;
 
         private LevelManager levelManager;
+        private int lastPlayedPack;
 
         #region Events Subscribers
 
@@ -30,7 +32,7 @@ namespace Game
         private void OnLevelsAreReady()
         {
             Debug.Log("Start: "+lastPlayedLevel);
-            StartLevel(lastPlayedLevel);
+            StartLevel(lastPlayedPack,lastPlayedLevel);
         }
 
         #endregion
@@ -75,11 +77,17 @@ namespace Game
 
         #endregion
 
-        public void StartLevel(int index)
+        public void StartLevel(LevelDescription description)
         {
-            lastPlayedLevel = index;
-            Gamefield.StartGame(levelManager[index]);
+            Gamefield.StartGame(description);
             PanelManager.Show(Gameplay, true);
+        }
+
+        public void StartLevel(int pack, int index)
+        {
+            lastPlayedPack = pack;
+            lastPlayedLevel = index;
+            StartLevel(levelManager.GetLevel(pack, index));
         
             /*
         if (index == 0)
@@ -101,17 +109,15 @@ namespace Game
 
         public void PlayNextLevel()
         {
-            if (lastPlayedLevel < levelManager.LoadedLevels.Count - 1)
-            {
-                lastPlayedLevel++;
-            }
-            StartLevel(lastPlayedLevel);
+            var nextLevel = levelManager.GetNextLevel(lastPlayedPack, lastPlayedLevel);
+            
+            StartLevel(nextLevel);
         }
 
         public void Restart()
         {
             iTween.Stop();
-            StartLevel(lastPlayedLevel);
+            StartLevel(lastPlayedPack,lastPlayedLevel);
         }
     }
 }

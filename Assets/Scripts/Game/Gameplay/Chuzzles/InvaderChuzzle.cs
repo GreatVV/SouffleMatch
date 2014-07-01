@@ -21,7 +21,7 @@ public class InvaderChuzzle : Chuzzle
 
     public override string ToString()
     {
-        return string.Format("Invader chuzzle: Current: ({0},{1}); Real: ({2},{3})", Current.x, Current.y, Real.x, Real.y);
+        return string.Format("Invader chuzzle: Current: ({0},{1}); Real: ({2},{3})", Current.X, Current.Y, Real.X, Real.Y);
     }
 
     public override void Destroy(bool needCreateNew, bool withAnimation = true, bool isReplacingOnDeath = false)

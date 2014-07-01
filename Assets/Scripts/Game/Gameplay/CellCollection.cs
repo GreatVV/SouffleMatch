@@ -9,7 +9,6 @@ using Object = UnityEngine.Object;
 [Serializable]
 public class CellCollection : IJsonSerializable, IEnumerable<Cell>
 {
-    public List<GameObject> CellSprites = new List<GameObject>();
     public List<Cell> Cells = new List<Cell>();
     public int Height;
     public int Width;
@@ -29,17 +28,6 @@ public class CellCollection : IJsonSerializable, IEnumerable<Cell>
 
     #endregion
 
-    private void CreateTileSprite(Cell cell)
-    {
-        GameObject cellSprite = TilesFactory.Instance.CellSprite(cell);
-
-        cellSprite.transform.parent = root;
-        cellSprite.transform.position = cell.Position;
-
-        cell.Sprite = cellSprite;
-        CellSprites.Add(cellSprite);
-    }
-
     public Cell GetCellAt(IntVector2 pos, bool createIfNotFound = true)
     {
         return GetCellAt(pos.x, pos.y, createIfNotFound);
@@ -51,7 +39,7 @@ public class CellCollection : IJsonSerializable, IEnumerable<Cell>
         Cell cell = GamefieldUtility.CellAt(Cells, x, y);
         if (cell == null && createIfNotFound)
         {
-            var newCell = new Cell(x, y);
+            var newCell = TilesFactory.Instance.Cell( new CellDescription(x, y, CellTypes.Usual, CreationType.Usual));
             AddCell(x, y, newCell);
             return newCell;
         }
@@ -62,7 +50,7 @@ public class CellCollection : IJsonSerializable, IEnumerable<Cell>
     {
         Cells.Add(newCell);
         //set left
-        Cell left = Cells.FirstOrDefault(c => c.x == x - 1 && c.y == y);
+        Cell left = Cells.FirstOrDefault(c => c.X == x - 1 && c.Y == y);
         if (left != null)
         {
             newCell.Left = left;
@@ -70,7 +58,7 @@ public class CellCollection : IJsonSerializable, IEnumerable<Cell>
         }
 
         //set right
-        Cell right = Cells.FirstOrDefault(c => c.x == x + 1 && c.y == y);
+        Cell right = Cells.FirstOrDefault(c => c.X == x + 1 && c.Y == y);
         if (right != null)
         {
             newCell.Right = right;
@@ -78,7 +66,7 @@ public class CellCollection : IJsonSerializable, IEnumerable<Cell>
         }
 
         //set top
-        Cell top = Cells.FirstOrDefault(c => c.x == x && c.y == y + 1);
+        Cell top = Cells.FirstOrDefault(c => c.X == x && c.Y == y + 1);
         if (top != null)
         {
             newCell.Top = top;
@@ -86,28 +74,38 @@ public class CellCollection : IJsonSerializable, IEnumerable<Cell>
         }
 
         //set bottom
-        Cell bottom = Cells.FirstOrDefault(c => c.x == x && c.y == y - 1);
+        Cell bottom = Cells.FirstOrDefault(c => c.X == x && c.Y == y - 1);
         if (bottom != null)
         {
             newCell.Bottom = bottom;
             bottom.Top = newCell;
         }
 
+        /*
         if (newCell.y < Height)
         {
-            CreateTileSprite(newCell);
-        }
+            
+        }*/
     }
 
     public void DestroyCells()
     {
-        Debug.Log("Destroy all cells");
-        Cells.Clear();
-        foreach (GameObject cellSprite in CellSprites)
+        //Debug.Log("Destroy all cells");
+        foreach (var cell in Cells)
         {
-            Object.Destroy(cellSprite.gameObject);
+            if (Application.isEditor)
+            {
+                if (cell)
+                {
+                    Object.DestroyImmediate(cell);
+                }
+            }
+            else
+            {
+                Object.Destroy(cell.gameObject);
+            }
         }
-        CellSprites.Clear();
+        Cells.Clear();
     }
 
     public void Init(FieldDescription levelDescription)
@@ -115,9 +113,10 @@ public class CellCollection : IJsonSerializable, IEnumerable<Cell>
         Width = levelDescription.Width;
         Height = levelDescription.Height;
 
-        foreach (Cell newCell in levelDescription.SpecialCells)
+        foreach (var cellDescription in levelDescription.SpecialCells)
         {
-            AddCell(newCell.x, newCell.y, newCell.Copy);
+            var cell = TilesFactory.Instance.Cell(cellDescription);
+            AddCell(cellDescription.X, cellDescription.Y, cell);
         }
 
         for (int i = 0; i < Width; i++)
@@ -147,11 +146,4 @@ public class CellCollection : IJsonSerializable, IEnumerable<Cell>
     {
         return Cells.GetEnumerator();
     }
-}
-
-[Serializable]
-public class CellSprite
-{
-    public GameObject CellPrefab;
-    public CellTypes Type;
 }

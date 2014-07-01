@@ -108,7 +108,6 @@ namespace GamefieldStates
 
         public override void OnEnter()
         {
-            TilesCollection = Gamefield.Level.Chuzzles;
             TilesCollection.AnimationFinished += OnAnimationFinished;
             //  if (!Tutorial.isActive)
             {
@@ -307,13 +306,13 @@ namespace GamefieldStates
             {
                 if (IsVerticalDelta)
                 {
-                    SelectedChuzzles = draggableChuzzles.Where(x => x.Current.x == CurrentChuzzle.Current.x).ToList();
+                    SelectedChuzzles = draggableChuzzles.Where(x => x.Current.X == CurrentChuzzle.Current.X).ToList();
                     //LogChuzzles(SelectedChuzzles);
                     _isVerticalDrag = true;
                 }
                 else
                 {
-                    SelectedChuzzles = draggableChuzzles.Where(x => x.Current.y == CurrentChuzzle.Current.y).ToList();
+                    SelectedChuzzles = draggableChuzzles.Where(x => x.Current.Y == CurrentChuzzle.Current.Y).ToList();
                     //LogChuzzles(SelectedChuzzles);
                     _isVerticalDrag = false;
                 }
@@ -693,8 +692,8 @@ namespace GamefieldStates
 //if border
             if (targetCell == null)
             {
-                targetCell = GamefieldUtility.CellAt(activeCells, c.Current.x,
-                    activeCells.Where(x => !x.IsTemporary).Max(x => x.y));
+                targetCell = GamefieldUtility.CellAt(activeCells, c.Current.X,
+                    activeCells.Where(x => !x.IsTemporary).Max(x => x.Y));
                 if (targetCell.Type == CellTypes.Block)
                 {
                     targetCell = targetCell.GetBottomWithType();
@@ -706,8 +705,8 @@ namespace GamefieldStates
 
                 if (targetCell == null)
                 {
-                    targetCell = GamefieldUtility.CellAt(activeCells, c.Current.x,
-                        activeCells.Where(x => !x.IsTemporary).Max(x => x.y));
+                    targetCell = GamefieldUtility.CellAt(activeCells, c.Current.X,
+                        activeCells.Where(x => !x.IsTemporary).Max(x => x.Y));
                     if (targetCell.Type == CellTypes.Block)
                     {
                         targetCell = targetCell.GetBottomWithType();
@@ -721,8 +720,8 @@ namespace GamefieldStates
         {
             if (targetCell == null || targetCell.IsTemporary)
             {
-                targetCell = GamefieldUtility.CellAt(activeCells, c.Current.x,
-                    activeCells.Where(x => !x.IsTemporary).Min(x => x.y));
+                targetCell = GamefieldUtility.CellAt(activeCells, c.Current.X,
+                    activeCells.Where(x => !x.IsTemporary).Min(x => x.Y));
                 if (targetCell.Type == CellTypes.Block)
                 {
                     targetCell = targetCell.GetTopWithType();
@@ -734,8 +733,8 @@ namespace GamefieldStates
 
                 if (targetCell == null)
                 {
-                    targetCell = GamefieldUtility.CellAt(activeCells, c.Current.x,
-                        activeCells.Where(x => !x.IsTemporary).Min(x => x.y));
+                    targetCell = GamefieldUtility.CellAt(activeCells, c.Current.X,
+                        activeCells.Where(x => !x.IsTemporary).Min(x => x.Y));
                     if (targetCell.Type == CellTypes.Block)
                     {
                         targetCell = targetCell.GetTopWithType();
@@ -750,7 +749,7 @@ namespace GamefieldStates
 //if border
             if (targetCell == null)
             {
-                targetCell = GamefieldUtility.CellAt(activeCells, activeCells.Min(x => x.x), c.Current.y);
+                targetCell = GamefieldUtility.CellAt(activeCells, activeCells.Min(x => x.X), c.Current.Y);
                 if (targetCell.Type == CellTypes.Block)
                 {
                     targetCell = targetCell.GetRightWithType();
@@ -761,8 +760,8 @@ namespace GamefieldStates
                 targetCell = targetCell.GetRightWithType();
                 if (targetCell == null)
                 {
-                    targetCell = GamefieldUtility.CellAt(activeCells, activeCells.Min(x => x.x),
-                        c.Current.y);
+                    targetCell = GamefieldUtility.CellAt(activeCells, activeCells.Min(x => x.X),
+                        c.Current.Y);
                     if (targetCell.Type == CellTypes.Block)
                     {
                         targetCell = targetCell.GetRightWithType();
@@ -776,7 +775,7 @@ namespace GamefieldStates
         {
             if (targetCell == null)
             {
-                targetCell = GamefieldUtility.CellAt(activeCells, activeCells.Max(x => x.x), c.Current.y);
+                targetCell = GamefieldUtility.CellAt(activeCells, activeCells.Max(x => x.X), c.Current.Y);
                 if (targetCell.Type == CellTypes.Block)
                 {
                     targetCell = targetCell.GetLeftWithType();
@@ -789,8 +788,8 @@ namespace GamefieldStates
 
                 if (targetCell == null)
                 {
-                    targetCell = GamefieldUtility.CellAt(activeCells, activeCells.Max(x => x.x),
-                        c.Current.y);
+                    targetCell = GamefieldUtility.CellAt(activeCells, activeCells.Max(x => x.X),
+                        c.Current.Y);
                     if (targetCell.Type == CellTypes.Block)
                     {
                         targetCell = targetCell.GetLeftWithType();

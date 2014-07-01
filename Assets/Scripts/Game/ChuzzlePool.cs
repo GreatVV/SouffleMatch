@@ -6,6 +6,7 @@ using Object = UnityEngine.Object;
 
 namespace Game
 {
+    [ExecuteInEditMode]
     public class ChuzzlePool
     {
         private static ChuzzlePool _instance;
@@ -35,10 +36,12 @@ namespace Game
 
         public GameObject Get(ChuzzleColor color, Type type)
         {
+            RegisterPrefabs();
+
             var holder = holders.FirstOrDefault(x => x.color == color && x.type == type);
             if (holder == null)
             {
-                //  Debug.LogError("Not registered prefab for: " + color + " of " + type);
+                //Debug.LogError("Not registered prefab for: " + color + " of " + type);
                 return null;
             }
             //Debug.Log("get: " + color + " of " + type );
@@ -71,12 +74,66 @@ namespace Game
         private List<Holder> holders = new List<Holder>();
 
         private Dictionary<Holder, List<GameObject>> freeObjects = new Dictionary<Holder, List<GameObject>>();
+        private bool registered;
 
         private class Holder
         {
             public ChuzzleColor color;
             public Type type;
             public GameObject prefab;
+        }
+
+        public void RegisterPrefabs()
+        {
+            if (registered)
+            {
+                return;
+            }
+            registered = true;
+
+            foreach (GameObject chuzzlePrefab in TilesFactory.Instance.ChuzzlePrefabs)
+            {
+                RegisterChuzzlePrefab(chuzzlePrefab.GetComponent<Chuzzle>().Color,
+                    typeof(ColorChuzzle), chuzzlePrefab);
+            }
+
+            foreach (GameObject chuzzlePrefab in TilesFactory.Instance.ChuzzleLockPrefabs)
+            {
+                RegisterChuzzlePrefab(chuzzlePrefab.GetComponent<Chuzzle>().Color, typeof(LockChuzzle),
+                    chuzzlePrefab);
+            }
+
+            foreach (GameObject chuzzlePrefab in TilesFactory.Instance.ChuzzleTwoTimesPrefabs)
+            {
+                RegisterChuzzlePrefab(chuzzlePrefab.GetComponent<Chuzzle>().Color,
+                    typeof(TwoTimeChuzzle), chuzzlePrefab);
+            }
+
+            foreach (GameObject chuzzlePrefab in TilesFactory.Instance.ChuzzleCounterPrefabs)
+            {
+                RegisterChuzzlePrefab(chuzzlePrefab.GetComponent<Chuzzle>().Color,
+                    typeof(CounterChuzzle), chuzzlePrefab);
+            }
+
+            foreach (GameObject chuzzlePrefab in TilesFactory.Instance.HorizontalLineChuzzlePrefabs)
+            {
+                RegisterChuzzlePrefab(chuzzlePrefab.GetComponent<Chuzzle>().Color,
+                    typeof(HorizontalLineChuzzle), chuzzlePrefab);
+            }
+
+            foreach (GameObject chuzzlePrefab in TilesFactory.Instance.VerticalLineChuzzlePrefabs)
+            {
+                RegisterChuzzlePrefab(chuzzlePrefab.GetComponent<Chuzzle>().Color,
+                    typeof(VerticalLineChuzzle), chuzzlePrefab);
+            }
+
+            foreach (GameObject chuzzlePrefab in TilesFactory.Instance.BombChuzzlePrefabs)
+            {
+                RegisterChuzzlePrefab(chuzzlePrefab.GetComponent<Chuzzle>().Color, typeof(BombChuzzle),
+                    chuzzlePrefab);
+            }
+
+            RegisterChuzzlePrefab(TilesFactory.Instance.InvaderPrefab.GetComponent<Chuzzle>().Color, typeof(InvaderChuzzle), TilesFactory.Instance.InvaderPrefab);
         }
     }
 }

@@ -15,7 +15,6 @@ namespace GamefieldStates
 
         public override void OnEnter()
         {
-            TilesCollection = Gamefield.Level.Chuzzles;
             TilesCollection.AnimationFinished += OnAnimationFinished;
 
             if (CreateNew())
@@ -130,7 +129,7 @@ namespace GamefieldStates
 
             foreach (var c in TilesCollection)
             {
-                if (c.MoveTo.y != c.Current.y)
+                if (c.MoveTo.Y != c.Current.Y)
                 {   
                     c.AnimateMoveTo(c.MoveTo.Position);
                 }

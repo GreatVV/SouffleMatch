@@ -163,12 +163,12 @@ public class TilesCollection : IJsonSerializable, IEnumerable<Chuzzle>
 
     public TilesCollection GetVerticalLine(int column)
     {
-        return GetTiles(x => x.Current.x == column);
+        return GetTiles(x => x.Current.X == column);
     }
 
     public TilesCollection GetHorizontalLine(int row)
     {
-        return GetTiles(x => x.Current.y == row);
+        return GetTiles(x => x.Current.Y == row);
     }
 
     public Chuzzle GetTile(Condition condition)
@@ -188,7 +188,7 @@ public class TilesCollection : IJsonSerializable, IEnumerable<Chuzzle>
 
     public Chuzzle GetTileAt(int x, int y)
     {
-        return GetTile(c => c.Current.x == x && c.Current.y == y);
+        return GetTile(c => c.Current.X == x && c.Current.Y == y);
     }
 
     public void Add(Chuzzle chuzzle)
@@ -205,13 +205,23 @@ public class TilesCollection : IJsonSerializable, IEnumerable<Chuzzle>
 
     public void DestroyChuzzles()
     {
-        Debug.LogWarning("Remove all chuzzles from collection. Total: " + _chuzzles.Count);
+      //  Debug.LogWarning("Remove all chuzzles from collection. Total: " + _chuzzles.Count);
         foreach (Chuzzle chuzzle in _chuzzles)
         {
-            chuzzle.AnimationStarted -= OnAnimationStarted;
-            chuzzle.AnimationFinished -= OnAnimationFinished;
-            //ChuzzlePool.Instance.Release(chuzzle.Color, chuzzle.GetType(), chuzzle.gameObject);
-            Object.Destroy(chuzzle.gameObject);
+            if (chuzzle)
+            {
+                chuzzle.AnimationStarted -= OnAnimationStarted;
+                chuzzle.AnimationFinished -= OnAnimationFinished;
+                //ChuzzlePool.Instance.Release(chuzzle.Color, chuzzle.GetType(), chuzzle.gameObject);
+                if (Application.isEditor)
+                {
+                    Object.DestroyImmediate(chuzzle.gameObject);
+                }
+                else
+                {
+                    Object.Destroy(chuzzle.gameObject);
+                }
+            }
         }
         _chuzzles.Clear();
     }
@@ -248,7 +258,7 @@ public class TilesCollection : IJsonSerializable, IEnumerable<Chuzzle>
             {
                 Debug.LogError("Error: Two time chuzzle creation!!");
             }
-            NewTilesInColumns[chuzzle.Current.x]++;
+            NewTilesInColumns[chuzzle.Current.X]++;
         }
         if (invokeEvent)
         {

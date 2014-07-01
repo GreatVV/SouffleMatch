@@ -7,10 +7,14 @@ using UnityEngine;
 
 namespace GamefieldStates
 {
+    [ExecuteInEditMode]
     [RequireComponent(typeof(Gamefield))]
     public abstract class GamefieldState : MonoBehaviour
     {
-        public TilesCollection TilesCollection;
+        public TilesCollection TilesCollection
+        {
+            get { return Gamefield.Level.Chuzzles; }
+        }
         protected virtual void Awake()
         {
             Gamefield = GetComponent<Gamefield>();   

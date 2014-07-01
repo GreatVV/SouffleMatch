@@ -2,14 +2,28 @@
 using System.Collections.Generic;
 using System.Linq;
 using Game;
+using Game.Data;
 using Game.GameMode;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
+[ExecuteInEditMode]
 public class TilesFactory : MonoBehaviour
 {
-    public static TilesFactory Instance;
-    public CellSprite[] CellPrefabs;
+    public static TilesFactory Instance
+    {
+        get
+        {
+            if (!instance)
+            {
+                instance = FindObjectOfType<TilesFactory>();
+            }
+            return instance;
+        }
+        set { instance = value; }
+    }
+
+    public GameObject[] CellPrefabs;
     public GameObject[] ChuzzlePrefabs;
     public GameObject[] ChuzzleLockPrefabs;
     public GameObject[] ChuzzleTwoTimesPrefabs;
@@ -25,29 +39,34 @@ public class TilesFactory : MonoBehaviour
     public Gamefield Gamefield;
     public int NumberOfColors;
     public GameObject ShineParticle;
+    private static TilesFactory instance;
 
-    public GameObject CellSprite(Cell cell)
+    public Cell Cell(CellDescription description)
     {
-        GameObject prefab = null;
-        CellSprite[] prefabs = CellPrefabs.Where(c => c.Type == cell.Type).ToArray();
+        var prefabs = CellPrefabs.Where(c => c.GetComponent<Cell>().Type == description.Type).ToArray();
 
-        if (cell.Type == CellTypes.Block)
+        /*
+        if (type == CellTypes.Block)
         {
-            prefab = prefabs[(Math.Abs(cell.x) + Math.Abs(cell.y))%2].CellPrefab;
+            prefab = prefabs[(Math.Abs(x) + Math.Abs(y))%2].CellPrefab;
         }
-
-        prefab = prefabs.First().CellPrefab;
-
-        var cellSprite = Instantiate(prefab) as GameObject;
-
+        */
+        var prefab = prefabs.First();
+        var cellGO = Instantiate(prefab) as GameObject;
+        var cell = cellGO.GetComponent<Cell>();
+        cell.Init(description);
+        
         if (cell.CreationType == CreationType.Place)
         {
-            GameObject place = NGUITools.AddChild(cellSprite, PlacePrefab);
+            GameObject place = NGUITools.AddChild(cellGO, PlacePrefab);
             place.transform.localPosition = Vector3.zero;
-            cell.PlaceSprite = place;
+            cell.PlaceSpite = place;
+            cell.IsPlace = true;
         }
 
-        return cellSprite;
+        cellGO.transform.parent = Gamefield.transform;
+
+        return cell;
     }
 
     private void Awake()
@@ -60,50 +79,7 @@ public class TilesFactory : MonoBehaviour
 
         Instance = this;
 
-        foreach (GameObject chuzzlePrefab in ChuzzlePrefabs)
-        {
-            ChuzzlePool.Instance.RegisterChuzzlePrefab(chuzzlePrefab.GetComponent<Chuzzle>().Color,
-                typeof (ColorChuzzle), chuzzlePrefab);
-        }
-
-        foreach (GameObject chuzzlePrefab in ChuzzleLockPrefabs)
-        {
-            ChuzzlePool.Instance.RegisterChuzzlePrefab(chuzzlePrefab.GetComponent<Chuzzle>().Color, typeof (LockChuzzle),
-                chuzzlePrefab);
-        }
-
-        foreach (GameObject chuzzlePrefab in ChuzzleTwoTimesPrefabs)
-        {
-            ChuzzlePool.Instance.RegisterChuzzlePrefab(chuzzlePrefab.GetComponent<Chuzzle>().Color,
-                typeof (TwoTimeChuzzle), chuzzlePrefab);
-        }
-
-        foreach (GameObject chuzzlePrefab in ChuzzleCounterPrefabs)
-        {
-            ChuzzlePool.Instance.RegisterChuzzlePrefab(chuzzlePrefab.GetComponent<Chuzzle>().Color,
-                typeof (CounterChuzzle), chuzzlePrefab);
-        }
-
-        foreach (GameObject chuzzlePrefab in HorizontalLineChuzzlePrefabs)
-        {
-            ChuzzlePool.Instance.RegisterChuzzlePrefab(chuzzlePrefab.GetComponent<Chuzzle>().Color,
-                typeof (HorizontalLineChuzzle), chuzzlePrefab);
-        }
-
-        foreach (GameObject chuzzlePrefab in VerticalLineChuzzlePrefabs)
-        {
-            ChuzzlePool.Instance.RegisterChuzzlePrefab(chuzzlePrefab.GetComponent<Chuzzle>().Color,
-                typeof (VerticalLineChuzzle), chuzzlePrefab);
-        }
-
-        foreach (GameObject chuzzlePrefab in BombChuzzlePrefabs)
-        {
-            ChuzzlePool.Instance.RegisterChuzzlePrefab(chuzzlePrefab.GetComponent<Chuzzle>().Color, typeof (BombChuzzle),
-                chuzzlePrefab);
-        }
-
-        ChuzzlePool.Instance.RegisterChuzzlePrefab(InvaderPrefab.GetComponent<Chuzzle>().Color, typeof (InvaderChuzzle),
-            InvaderPrefab);
+        ChuzzlePool.Instance.RegisterPrefabs();
     }
 
     public Chuzzle CreateRandomChuzzle(Cell cell, bool isUniq)
@@ -209,8 +185,8 @@ public class TilesFactory : MonoBehaviour
     public Chuzzle CreateChuzzle(Cell cell, GameObject prefab)
     {
         Type type = prefab.GetComponent<Chuzzle>().GetType();
-        var chuzzle = //((GameObject) Instantiate(prefab)).GetComponent<Chuzzle>();
-        ChuzzlePool.Instance.Get(prefab.GetComponent<Chuzzle>().Color, type).GetComponent<Chuzzle>();
+        var color = prefab.GetComponent<Chuzzle>().Color;
+        var chuzzle = ChuzzlePool.Instance.Get(color, type).GetComponent<Chuzzle>(); //((GameObject) Instantiate(prefab)).GetComponent<Chuzzle>();
 
         chuzzle.Real = chuzzle.MoveTo = chuzzle.Current = cell;
 
@@ -278,7 +254,8 @@ public class TilesFactory : MonoBehaviour
         var x = serialized["x"].integer;
         var y = serialized["y"].integer;
         var color = (ChuzzleColor) Enum.Parse(typeof (ColorChuzzle), serialized["color"].str);
-        return CreateChuzzle(new Cell(x, y), color);
+        var tile = Cell(new CellDescription(x, y, CellTypes.Usual, CreationType.Usual));
+        return CreateChuzzle(tile, color);
     }
 
     
@@ -286,8 +263,8 @@ public class TilesFactory : MonoBehaviour
     public static JSONObject Serialize(Chuzzle chuzzle)
     {
         var tile = new JSONObject();
-        tile.AddField("x", chuzzle.Current.x);
-        tile.AddField("y", chuzzle.Current.y);
+        tile.AddField("x", chuzzle.Current.X);
+        tile.AddField("y", chuzzle.Current.Y);
         tile.AddField("color", chuzzle.Color.ToString());
         tile.AddField("type", chuzzle.GetType().ToString());
         return tile;
