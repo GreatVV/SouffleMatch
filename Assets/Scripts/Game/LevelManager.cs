@@ -33,7 +33,13 @@ namespace Game
 
         public LevelDescription GetLevel(int pack, int index)
         {
-            return LevelPackManager.Packs[pack].LoadedLevels[index];
+            if (pack >= 0 && pack < LevelPackManager.Packs.Count && index >= 0 &&
+                index < LevelPackManager.Packs[pack].LoadedLevels.Count)
+            {
+                return LevelPackManager.Packs[pack].LoadedLevels[index];
+            }
+            Debug.LogWarning("Can't find level: "+pack+ " - "+index);
+            return LevelPackManager.Packs[0].LoadedLevels[0];
         }
 
         public LevelDescription GetNextLevel(int lastPlayedPack, int lastPlayedLevel)

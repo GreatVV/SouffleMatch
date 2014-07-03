@@ -10,8 +10,8 @@
 								"seed":0,
 								"gameMode":{
 										"Mode":"TargetScore",
-										"Turns":0,
-										"TargetScore":0,
+										"Turns":5,
+										"TargetScore":600,
 										"Amount":0
 },
 								"Star1Score":0,

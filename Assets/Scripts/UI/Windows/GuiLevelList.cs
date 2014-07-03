@@ -33,7 +33,8 @@ public class GuiLevelList : Window
             var mapId = ((GameObject) Instantiate(mapIdPrefab.gameObject)).GetComponent<MapId>();
             mapId.transform.parent = grid.transform;
             mapId.transform.localScale = Vector3.one;
-            mapId.name = string.Format("{0:00}", Convert.ToInt32(serializedLevel.Name));
+            mapId.name = serializedLevel.Name;
+                //string.Format("{0:00}", Convert.ToInt32(serializedLevel.Name));
             mapId.UpdateName();
             mapItems[serializedLevel.Name] = mapId;
         }

@@ -1,6 +1,5 @@
 ﻿using System;
 using Game.Data;
-using UnityEditor;
 using UnityEngine;
 
 public enum CreationType
@@ -48,7 +47,10 @@ public class Cell : MonoBehaviour
         set
         {
             _isTemporary = value;
-            renderer.enabled = value;
+            if (renderer)
+            {
+                renderer.enabled = value;
+            }
         }
     }
 

@@ -137,35 +137,53 @@ namespace Game.Data
 
             serializedLevel.Condition.GameMode = GameModeDescription.CreateFromJson(jsonObject.GetField("gameMode"));
 
-            List<JSONObject> array = jsonObject.GetField("map").list;
-            foreach (JSONObject tile in array)
+            if (jsonObject.HasField("map"))
             {
-                int x = array.IndexOf(tile)%serializedLevel.Field.Width;
-                int y = serializedLevel.Field.Height - (array.IndexOf(tile)/serializedLevel.Field.Width) - 1;
-
-                var tileType = (int) tile.n;
-                switch (tileType)
+                List<JSONObject> array = jsonObject.GetField("map").list;
+                foreach (JSONObject tile in array)
                 {
-                    case (0): //empty
-                        break;
-                    case (2): // place
-                        serializedLevel.Field.SpecialCells.Add(new CellDescription(x,y) {CreationType = CreationType.Place});
-                        break;
-                    case (3): //counter
-                        serializedLevel.Field.SpecialCells.Add(new CellDescription(x, y) { CreationType = CreationType.Counter });
-                        break;
-                    case (4): //lock
-                        serializedLevel.Field.SpecialCells.Add(new CellDescription(x, y) { CreationType = CreationType.Lock });
-                        break;
-                    case (5): //two time
-                        serializedLevel.Field.SpecialCells.Add(new CellDescription(x, y) { CreationType = CreationType.TwoTimes });
-                        break;
-                    case (6): //invader
-                        serializedLevel.Field.SpecialCells.Add(new CellDescription(x, y) { CreationType = CreationType.Invader });
-                        break;
-                    default: // block
-                        serializedLevel.Field.SpecialCells.Add(new CellDescription(x, y, CellTypes.Block));
-                        break;
+                    int x = array.IndexOf(tile)%serializedLevel.Field.Width;
+                    int y = serializedLevel.Field.Height - (array.IndexOf(tile)/serializedLevel.Field.Width) - 1;
+
+                    var tileType = (int) tile.n;
+                    switch (tileType)
+                    {
+                        case (0): //empty
+                            break;
+                        case (2): // place
+                            serializedLevel.Field.SpecialCells.Add(new CellDescription(x, y)
+                            {
+                                CreationType = CreationType.Place
+                            });
+                            break;
+                        case (3): //counter
+                            serializedLevel.Field.SpecialCells.Add(new CellDescription(x, y)
+                            {
+                                CreationType = CreationType.Counter
+                            });
+                            break;
+                        case (4): //lock
+                            serializedLevel.Field.SpecialCells.Add(new CellDescription(x, y)
+                            {
+                                CreationType = CreationType.Lock
+                            });
+                            break;
+                        case (5): //two time
+                            serializedLevel.Field.SpecialCells.Add(new CellDescription(x, y)
+                            {
+                                CreationType = CreationType.TwoTimes
+                            });
+                            break;
+                        case (6): //invader
+                            serializedLevel.Field.SpecialCells.Add(new CellDescription(x, y)
+                            {
+                                CreationType = CreationType.Invader
+                            });
+                            break;
+                        default: // block
+                            serializedLevel.Field.SpecialCells.Add(new CellDescription(x, y, CellTypes.Block));
+                            break;
+                    }
                 }
             }
 

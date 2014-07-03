@@ -39,7 +39,7 @@ public class MapId : MonoBehaviour
 
     public void UpdateName()
     {
-        Index = Convert.ToInt32(name) - 1;
+        Index = 0;//Convert.ToInt32(name) - 1;
         transform.Search("Label", gameObject).GetComponent<UILabel>().text = name;
     }
 
