@@ -67,7 +67,7 @@ namespace Game
             return GetLevel(lastPlayedPack, lastPlayedLevel);
         }
     }
-
+    [Serializable]
     public class LevelPack
     {
         public string Name;
@@ -99,6 +99,7 @@ namespace Game
         {
             get
             {
+             //   Debug.Log("I:"+index);
                 return LoadedLevels[index];
             }
         }

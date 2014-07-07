@@ -12,7 +12,10 @@ namespace GamefieldStates
     public class CreateNewChuzzlesState : GamefieldState
     {
         #region Event Handlers
-
+        void OnDestroy()
+        {
+            TilesCollection.AnimationFinished -= OnAnimationFinished;
+        }
         public override void OnEnter()
         {
             TilesCollection.AnimationFinished += OnAnimationFinished;

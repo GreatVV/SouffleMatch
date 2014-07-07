@@ -12,6 +12,11 @@ namespace GamefieldStates
     [Serializable]
     public class RemoveCombinationState : GamefieldState
     {
+        void OnDestroy()
+        {
+            TilesCollection.AnimationFinished -= OnAnimationFinished;
+        }
+
 
         #region Event Handlers
 

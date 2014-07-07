@@ -13,6 +13,11 @@ namespace GamefieldStates
     [Serializable]
     public class FieldState : GamefieldState
     {
+        void OnDestroy()
+        {
+            TilesCollection.AnimationFinished -= OnAnimationFinished;
+        }
+
         #region Direction enum
 
         public enum Direction

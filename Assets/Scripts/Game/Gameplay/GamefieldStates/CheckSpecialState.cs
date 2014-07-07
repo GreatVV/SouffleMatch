@@ -14,6 +14,7 @@ namespace GamefieldStates
     [Serializable]
     public class CheckSpecialState : GamefieldState
     {   
+
         #region Event Handlers
 
         public override void OnEnter()
