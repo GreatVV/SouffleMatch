@@ -68,7 +68,7 @@ public class GA_Request
 		
 		WWW www = null;
 		
-		#if !UNITY_WP8 && !UNITY_METRO
+		#if UNITY_FLASH
 		
 		//Set the authorization header to contain an MD5 hash of the JSON array string + the private key
 		Hashtable headers = new Hashtable();
@@ -80,8 +80,12 @@ public class GA_Request
 		#else
 		
 		//Set the authorization header to contain an MD5 hash of the JSON array string + the private key
+		#if UNITY_4_3 || UNITY_4_2 || UNITY_4_1 || UNITY_4_0_1 || UNITY_4_0
+		Hashtable headers = new Hashtable();
+		#else
 		Dictionary<string, string> headers = new Dictionary<string, string>();
-		headers.Add("Authorization", GA.API.Submit.CreateMD5Hash(requestInfo + GA.SettingsGA.ApiKey));
+		#endif
+		headers.Add("Authorization", GA_Submit.CreateMD5Hash(requestInfo + GA.SettingsGA.ApiKey));
 		
 		//Try to send the data
 		www = new WWW(url, new byte[] { 0 }, headers);
@@ -133,7 +137,7 @@ public class GA_Request
 		
 		WWW www = null;
 		
-		#if !UNITY_WP8 && !UNITY_METRO
+		#if UNITY_FLASH
 		
 		//Set the authorization header to contain an MD5 hash of the JSON array string + the private key
 		Hashtable headers = new Hashtable();
@@ -145,8 +149,12 @@ public class GA_Request
 		#else
 		
 		//Set the authorization header to contain an MD5 hash of the JSON array string + the private key
+		#if UNITY_4_3 || UNITY_4_2 || UNITY_4_1 || UNITY_4_0_1 || UNITY_4_0
+		Hashtable headers = new Hashtable();
+		#else
 		Dictionary<string, string> headers = new Dictionary<string, string>();
-		headers.Add("Authorization", GA.API.Submit.CreateMD5Hash(requestInfo + GA.SettingsGA.ApiKey));
+		#endif
+		headers.Add("Authorization", GA_Submit.CreateMD5Hash(requestInfo + GA.SettingsGA.ApiKey));
 		
 		//Try to send the data
 		www = new WWW(url, new byte[] { 0 }, headers);

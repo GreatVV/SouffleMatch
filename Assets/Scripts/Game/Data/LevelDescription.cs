@@ -85,39 +85,10 @@ namespace Game.Data
             var map = new JSONObject(JSONObject.Type.ARRAY);
             foreach (var cellDescription in Field.SpecialCells)
             {
-                JSONObject tile;
-                if (cellDescription.Type == CellTypes.Block)
-                {
-                    tile = new JSONObject(1);
-                }
-                else
-                {
-                    switch (cellDescription.CreationType)
-                    {
-                        case CreationType.Usual:
-                            tile = new JSONObject((float) 0);
-                            break;
-                        case CreationType.Place:
-                            tile = new JSONObject(2);
-                            break;
-                        case CreationType.Counter:
-                            tile = new JSONObject(3);
-                            break;
-                        case CreationType.Lock:
-                            tile = new JSONObject(4);
-                            break;
-                        case CreationType.TwoTimes:
-                            tile = new JSONObject(5);
-                            break;
-                        case CreationType.Invader:
-                            tile = new JSONObject(6);
-                            break;
-                        default:
-                            throw new ArgumentOutOfRangeException();
-                    }
-                }
+                JSONObject tile = cellDescription.Serialize();
                 map.Add(tile);
             }
+            json.AddField("map",map);
             return json;
         }
 
@@ -140,51 +111,17 @@ namespace Game.Data
             if (jsonObject.HasField("map"))
             {
                 List<JSONObject> array = jsonObject.GetField("map").list;
-                foreach (JSONObject tile in array)
+                try
                 {
-                    int x = array.IndexOf(tile)%serializedLevel.Field.Width;
-                    int y = serializedLevel.Field.Height - (array.IndexOf(tile)/serializedLevel.Field.Width) - 1;
-
-                    var tileType = (int) tile.n;
-                    switch (tileType)
+                    foreach (JSONObject tile in array)
                     {
-                        case (0): //empty
-                            break;
-                        case (2): // place
-                            serializedLevel.Field.SpecialCells.Add(new CellDescription(x, y)
-                            {
-                                CreationType = CreationType.Place
-                            });
-                            break;
-                        case (3): //counter
-                            serializedLevel.Field.SpecialCells.Add(new CellDescription(x, y)
-                            {
-                                CreationType = CreationType.Counter
-                            });
-                            break;
-                        case (4): //lock
-                            serializedLevel.Field.SpecialCells.Add(new CellDescription(x, y)
-                            {
-                                CreationType = CreationType.Lock
-                            });
-                            break;
-                        case (5): //two time
-                            serializedLevel.Field.SpecialCells.Add(new CellDescription(x, y)
-                            {
-                                CreationType = CreationType.TwoTimes
-                            });
-                            break;
-                        case (6): //invader
-                            serializedLevel.Field.SpecialCells.Add(new CellDescription(x, y)
-                            {
-                                CreationType = CreationType.Invader
-                            });
-                            break;
-                        default: // block
-                            serializedLevel.Field.SpecialCells.Add(new CellDescription(x, y, CellTypes.Block));
-                            break;
+                        serializedLevel.Field.SpecialCells.Add(CellDescription.Deserialize(tile));
                     }
                 }
+                catch (Exception)
+                {
+                }
+                
             }
 
             if (jsonObject.HasField("stages"))
@@ -272,6 +209,20 @@ namespace Game.Data
             json.AddField("IsPlace",IsPlace);
 
             return json;
+        }
+
+        public static CellDescription Deserialize(JSONObject jsonObject)
+        {
+            var cellDesc = new CellDescription
+            {
+                CreationType =
+                    (CreationType) Enum.Parse(typeof (CreationType), jsonObject.GetStringField("CreationType")),
+                Type = (CellTypes) Enum.Parse(typeof (CellTypes), jsonObject.GetStringField("Type")),
+                X = (int) jsonObject.GetField("X").n,
+                Y = (int) jsonObject.GetField("Y").n,
+                IsPlace = jsonObject.GetField("IsPlace").b
+            };
+            return cellDesc;
         }
     }
 }

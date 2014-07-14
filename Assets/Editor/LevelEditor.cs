@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
+using System.Linq;
 using Game;
 using Game.Data;
 using Game.GameMode;
@@ -10,18 +11,28 @@ using UnityEngine;
 
 public class LevelEditor : EditorWindow
 {
+    public Texture2D blockTexture;
+    public Texture2D usualTexture;
+
     public LevelPackManager LevelPackManager;
     private readonly Dictionary<string, bool> _foldouts = new Dictionary<string, bool>();
+    private Vector2 pos;
 
     #region Event Handlers
 
     private void OnGUI()
     {
+        GUILayout.BeginHorizontal();
+        usualTexture = (Texture2D) EditorGUILayout.ObjectField("Usual", usualTexture, typeof (Texture2D), true);
+        blockTexture = (Texture2D) EditorGUILayout.ObjectField("Block", blockTexture, typeof (Texture2D), true);
+        GUILayout.EndHorizontal();
+
+        pos = EditorGUILayout.BeginScrollView(pos);
 
         EditorGUILayout.BeginHorizontal();
         if (GUILayout.Button("Load pack"))
         {
-            var filepath = EditorUtility.OpenFilePanel("Open packed levels", "", ".json");
+            var filepath = EditorUtility.OpenFilePanel("Open packed levels", "", "json");
             var serialized = File.ReadAllText(filepath);
             LevelPackManager = LevelPackManager.Deserialize(serialized);
         }
@@ -57,6 +68,8 @@ public class LevelEditor : EditorWindow
                 File.WriteAllText(savePath, LevelPackManager.Serialize().ToString());
             }
         }
+
+        EditorGUILayout.EndScrollView();
     }
 
     private void DrawLevelPack(LevelPack levelPack)
@@ -144,6 +157,43 @@ public class LevelEditor : EditorWindow
             }
             EditorGUILayout.EndHorizontal();
         }
+        var prevRect = EditorGUILayout.GetControlRect();
+        for (int i = 0; i < field.Width; i++)
+        {
+            for (int j = 0; j < field.Height; j++)
+            {
+                var rect = new Rect(prevRect.xMin + i*50,prevRect.yMax + j * 50,50,50);
+                var cell = field.SpecialCells.FirstOrDefault(x => x.X == i && x.Y == j);   
+                if (cell != null)
+                {
+                    if (blockTexture)
+                    {
+                        EditorGUI.DrawPreviewTexture(rect, blockTexture);
+                    }
+                }
+                else
+                {
+                    if (usualTexture)
+                    {
+                        EditorGUI.DrawPreviewTexture(rect, usualTexture);
+                    }
+                }
+
+                if ((Event.current.type == EventType.MouseDown) && rect.Contains(Event.current.mousePosition))
+                {
+                    if (cell == null)
+                    {
+                        field.SpecialCells.Add(new CellDescription(i, j, CellTypes.Block));
+                    }
+                    else
+                    {
+                        field.SpecialCells.Remove(cell);
+                    }
+                }
+            }
+        }
+        GUILayout.Space(field.Height * 50);
+
         if (GUILayout.Button("Add cell"))
         {
             field.SpecialCells.Add(new CellDescription());

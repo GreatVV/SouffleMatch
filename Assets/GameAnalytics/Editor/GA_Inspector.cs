@@ -1114,7 +1114,7 @@ public class GA_Inspector : Editor
 
 					GUILayout.BeginHorizontal();
 					GUILayout.Label("", GUILayout.Width(-5));
-					EditorGUILayout.HelpBox("To setup Chartboost on Android please add your App ID and App Signature to the strings.xml file found in Plugins/Android/res/values/.", MessageType.Info);
+					EditorGUILayout.HelpBox("To setup Chartboost for Android please go to the Chartboost menu and select Android Setup (Chartboost SDK must be imported). For more information on Chartboost visit their online documentation at https://help.chartboost.com/documentation/unity.", MessageType.Info);
 					GUILayout.EndHorizontal();
 
 					#else
@@ -1326,7 +1326,11 @@ public class GA_Inspector : Editor
 
 	private static void GetGameInfo (GA_Settings ga)
 	{
+		#if UNITY_4_3 || UNITY_4_2 || UNITY_4_1 || UNITY_4_0_1 || UNITY_4_0
 		Hashtable headers = new Hashtable();
+		#else
+		Dictionary<string, string> headers = new Dictionary<string, string>();
+		#endif
 		headers.Add("X-Authorization", ga.TokenGA);
 
 		WWW www = new WWW("https://go.gameanalytics.com/v1/games/" + ga.Studios[ga.SelectedStudio-1].GameIDs[ga.SelectedGame-1], null, headers);
@@ -1512,7 +1516,11 @@ public class GA_Inspector : Editor
 
 	private static void GetUserData (GA_Settings ga)
 	{
-		var headers = new Dictionary<string, string>();
+		#if UNITY_4_3 || UNITY_4_2 || UNITY_4_1 || UNITY_4_0_1 || UNITY_4_0
+		Hashtable headers = new Hashtable();
+		#else
+		Dictionary<string, string> headers = new Dictionary<string, string>();
+		#endif
 		headers.Add("X-Authorization", ga.TokenGA);
 		
 		WWW www = new WWW("https://go.gameanalytics.com/v1/user/data", null, headers);
