@@ -53,11 +53,12 @@ namespace Game
                 }
                 else
                 {
-                    Debug.LogWarning("Incorrect packstatuses: "+packStatuses);
+                    Debug.LogWarning("Incorrect packstatuses: " + packStatuses);
                 }
 
                 Mana = Convert.ToInt32(json["mana"]);
             }
+            
 
         }
 
@@ -67,8 +68,10 @@ namespace Game
             json.AddField("mana", Mana);
             json.AddField("packStatuses", SerializePackStatuses());
             PlayerPrefs.SetString("gameStatus", json.ToString());
+            Debug.Log("Saved progress: "+json);
+            PlayerPrefs.Save();
         }
-
+        
         private static string SerializePackStatuses()
         {
             var json = new JSONObject();

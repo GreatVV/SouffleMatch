@@ -34,7 +34,7 @@ public abstract class Window : MonoBehaviour
 
     public void Activate()
     {
-        Debug.Log("Activate: "+gameObject.name);
+       // Debug.Log("Activate: "+gameObject.name);
         foreach (var currentCollider in _colliders)
         {
             currentCollider.enabled = true;
@@ -44,7 +44,7 @@ public abstract class Window : MonoBehaviour
 
     protected virtual void OnShowWindow()
     {
-        Debug.Log("On Activate");
+       // Debug.Log("On Activate");
     }
 
     public void Deactivate()

@@ -174,7 +174,7 @@ public class Gamefield : MonoBehaviour
     public void StartGame(LevelDescription levelDescription = null)
     {
         LevelDescription = Player.Instance.LastPlayedLevelDescription = levelDescription;
-
+        Debug.Log("Start level: "+LevelDescription);
         GameStartTime = DateTime.UtcNow;
         Init();
     }
@@ -194,6 +194,8 @@ public class Gamefield : MonoBehaviour
 
     public void Init()
     {
+        //Debug.Log("Init");
+
         if (CheckSpecialState)
         {
             DestroyImmediate(CheckSpecialState);

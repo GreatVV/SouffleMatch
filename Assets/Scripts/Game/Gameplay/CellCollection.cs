@@ -90,19 +90,30 @@ public class CellCollection : IJsonSerializable, IEnumerable<Cell>
 
     public void DestroyCells()
     {
-        //Debug.Log("Destroy all cells");
+        //Debug.Log("Destroy all cells:"+Cells.Count);
         foreach (var cell in Cells)
         {
-            if (Application.isEditor)
+            if (Application.isPlaying)
             {
                 if (cell)
                 {
-                    Object.DestroyImmediate(cell);
+                    Object.Destroy(cell.gameObject);
+                }
+                else
+                {
+                    Debug.Log("Cell is null");
                 }
             }
             else
             {
-                Object.Destroy(cell.gameObject);
+                if (cell)
+                {
+                    Object.DestroyImmediate(cell.gameObject);
+                }
+                else
+                {
+                    Debug.Log("Cell is null in destroyimmediate");
+                }
             }
         }
         Cells.Clear();

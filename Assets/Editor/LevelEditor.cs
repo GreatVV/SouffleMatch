@@ -157,40 +157,42 @@ public class LevelEditor : EditorWindow
             }
             EditorGUILayout.EndHorizontal();
         }
+        IntVector2 clickedOn = new IntVector2(-1,-1);
         var prevRect = EditorGUILayout.GetControlRect();
         for (int i = 0; i < field.Width; i++)
         {
             for (int j = 0; j < field.Height; j++)
             {
                 var rect = new Rect(prevRect.xMin + i*50,prevRect.yMax + j * 50,50,50);
-                var cell = field.SpecialCells.FirstOrDefault(x => x.X == i && x.Y == j);   
-                if (cell != null)
+                if (usualTexture)
                 {
-                    if (blockTexture)
-                    {
-                        EditorGUI.DrawPreviewTexture(rect, blockTexture);
-                    }
-                }
-                else
-                {
-                    if (usualTexture)
-                    {
-                        EditorGUI.DrawPreviewTexture(rect, usualTexture);
-                    }
+                    EditorGUI.DrawPreviewTexture(rect, usualTexture);
                 }
 
                 if ((Event.current.type == EventType.MouseDown) && rect.Contains(Event.current.mousePosition))
                 {
-                    if (cell == null)
-                    {
-                        field.SpecialCells.Add(new CellDescription(i, j, CellTypes.Block));
-                    }
-                    else
-                    {
-                        field.SpecialCells.Remove(cell);
-                    }
+                    clickedOn = new IntVector2(i,j);
                 }
             }
+        }
+
+        foreach (var cellDescription in field.SpecialCells)
+        {
+            var rect = new Rect(prevRect.xMin + cellDescription.X * 50, prevRect.yMax + cellDescription.Y * 50, 50, 50);
+            if (blockTexture)
+            {
+                EditorGUI.DrawPreviewTexture(rect, blockTexture);
+            }
+            if ((Event.current.type == EventType.MouseDown) && rect.Contains(Event.current.mousePosition))
+            {
+               // clickedOn = new IntVector2(cellDescription.X, cellDescription.Y);
+                field.SpecialCells.Remove(cellDescription);
+            }
+        }
+
+        if (clickedOn.x != -1)
+        {
+            field.SpecialCells.Add(new CellDescription(clickedOn.x, clickedOn.y, CellTypes.Block));
         }
         GUILayout.Space(field.Height * 50);
 

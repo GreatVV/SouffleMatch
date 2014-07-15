@@ -41,31 +41,6 @@ namespace Game
             Debug.LogWarning("Can't find level: "+pack+ " - "+index);
             return LevelPackManager.Packs[0].LoadedLevels[0];
         }
-
-        public LevelDescription GetNextLevel(int lastPlayedPack, int lastPlayedLevel)
-        {
-            var count = LevelPackManager.Packs[lastPlayedPack].LoadedLevels.Count - 1;
-            if (lastPlayedPack < LevelPackManager.Packs.Count - 1 &&
-                lastPlayedLevel == count)
-            {
-                lastPlayedLevel = 0;
-                lastPlayedPack++;
-            }
-            else
-            {
-                if (lastPlayedLevel < count)
-                {
-                    lastPlayedLevel++;
-                }
-                else
-                {
-                    lastPlayedPack = 0;
-                    lastPlayedLevel = 0;
-                }
-            }
-
-            return GetLevel(lastPlayedPack, lastPlayedLevel);
-        }
     }
     [Serializable]
     public class LevelPack

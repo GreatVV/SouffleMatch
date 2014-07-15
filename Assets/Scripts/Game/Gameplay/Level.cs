@@ -27,7 +27,7 @@ public class Level : IJsonSerializable
         InitDescription = fieldDescription;
 
         Cells.root = Gamefield.transform;
-
+        
         Chuzzles.DestroyChuzzles();
         Cells.DestroyCells();   
         Cells.Init(fieldDescription);

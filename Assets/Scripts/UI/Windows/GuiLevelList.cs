@@ -28,15 +28,23 @@ public class GuiLevelList : Window
 
     private void OnLevelsAreReady()
     {
-        foreach (var serializedLevel in levelManager.LevelPackManager.Packs[0].LoadedLevels)
+        var packs = levelManager.LevelPackManager.Packs;
+        for (int packIndex = 0; packIndex < packs.Count; packIndex++)
         {
-            var mapId = ((GameObject) Instantiate(mapIdPrefab.gameObject)).GetComponent<MapId>();
-            mapId.transform.parent = grid.transform;
-            mapId.transform.localScale = Vector3.one;
-            mapId.name = serializedLevel.Name;
-                //string.Format("{0:00}", Convert.ToInt32(serializedLevel.Name));
-            mapId.UpdateName();
-            mapItems[serializedLevel.Name] = mapId;
+            var levelPack = packs[packIndex];
+            for (int levelIndex = 0; levelIndex < levelPack.LoadedLevels.Count; levelIndex++)
+            {
+                var serializedLevel = levelManager.LevelPackManager.Packs[0].LoadedLevels[levelIndex];
+                var mapId = ((GameObject) Instantiate(mapIdPrefab.gameObject)).GetComponent<MapId>();
+                mapId.transform.parent = grid.transform;
+                mapId.transform.localScale = Vector3.one;
+                mapId.name = string.Format("{0:00}", Convert.ToInt32(serializedLevel.Name));
+                mapId.Pack = packIndex;
+                mapId.Index = levelIndex;
+                
+                mapId.UpdateName();
+                mapItems[serializedLevel.Name] = mapId;
+            }
         }
     }
 

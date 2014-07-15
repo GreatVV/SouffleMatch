@@ -20,7 +20,7 @@ namespace Game
 
         public void OnWindowChanged(Window currentActiveWindow)
         {
-            Debug.Log("Window changed: " + currentActiveWindow);
+            //Debug.Log("Window changed: " + currentActiveWindow);
             Gamefield.IsPause = !PanelManager.IsCurrent(Instance.Gameplay);
         }
 
@@ -73,11 +73,13 @@ namespace Game
         {
             PlayerPrefs.SetInt("LastPlayedLevelDescription", lastPlayedLevel);
             PlayerPrefs.Save();
+
+            ProgressionManager.SaveProgress();
         }
 
         #endregion
 
-        public void StartLevel(LevelDescription description)
+        private void StartLevel(LevelDescription description)
         {
             Gamefield.StartGame(description);
             PanelManager.Show(Gameplay, true);
@@ -109,9 +111,29 @@ namespace Game
 
         public void PlayNextLevel()
         {
-            var nextLevel = levelManager.GetNextLevel(lastPlayedPack, lastPlayedLevel);
-            
-            StartLevel(nextLevel);
+          
+            Debug.Log("Played Last played level:" + lastPlayedLevel);
+            var count = levelManager.LevelPackManager.Packs[lastPlayedPack].LoadedLevels.Count - 1;
+            if (lastPlayedPack < levelManager.LevelPackManager.Packs.Count - 1 &&
+                lastPlayedLevel == count)
+            {
+                lastPlayedLevel = 0;
+                lastPlayedPack++;
+            }
+            else
+            {
+                if (lastPlayedLevel < count)
+                {
+                    lastPlayedLevel++;
+                }
+                else
+                {
+                    lastPlayedPack = 0;
+                    lastPlayedLevel = 0;
+                }
+            }
+            Debug.Log("Last played level:" + lastPlayedLevel);
+            StartLevel(lastPlayedPack, lastPlayedLevel);
         }
 
         public void Restart()

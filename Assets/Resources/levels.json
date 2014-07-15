@@ -17,7 +17,232 @@
 								"Star1Score":0,
 								"Star2Score":0,
 								"Star3Score":0,
+								"map":
+},
+						{
+								"name":"1",
+								"width":6,
+								"height":6,
+								"numberOfColors":8,
+								"seed":0,
+								"gameMode":{
+										"Mode":"TargetScore",
+										"Turns":8,
+										"TargetScore":1200,
+										"Amount":0
+},
+								"Star1Score":0,
+								"Star2Score":0,
+								"Star3Score":0,
 								"map":[
+										{
+												"CreationType":"Usual",
+												"Type":"Block",
+												"X":5,
+												"Y":0,
+												"IsPlace":False
+},
+										{
+												"CreationType":"Usual",
+												"Type":"Block",
+												"X":0,
+												"Y":0,
+												"IsPlace":False
+},
+										{
+												"CreationType":"Usual",
+												"Type":"Block",
+												"X":5,
+												"Y":5,
+												"IsPlace":False
+},
+										{
+												"CreationType":"Usual",
+												"Type":"Block",
+												"X":0,
+												"Y":5,
+												"IsPlace":False
+}
+]
+},
+						{
+								"name":"2",
+								"width":6,
+								"height":6,
+								"numberOfColors":8,
+								"seed":0,
+								"gameMode":{
+										"Mode":"TargetScore",
+										"Turns":10,
+										"TargetScore":1300,
+										"Amount":0
+},
+								"Star1Score":0,
+								"Star2Score":0,
+								"Star3Score":0,
+								"map":[
+										{
+												"CreationType":"Usual",
+												"Type":"Block",
+												"X":5,
+												"Y":0,
+												"IsPlace":False
+},
+										{
+												"CreationType":"Usual",
+												"Type":"Block",
+												"X":0,
+												"Y":0,
+												"IsPlace":False
+},
+										{
+												"CreationType":"Usual",
+												"Type":"Block",
+												"X":0,
+												"Y":5,
+												"IsPlace":False
+},
+										{
+												"CreationType":"Usual",
+												"Type":"Block",
+												"X":5,
+												"Y":5,
+												"IsPlace":False
+},
+										{
+												"CreationType":"Usual",
+												"Type":"Block",
+												"X":2,
+												"Y":2,
+												"IsPlace":False
+},
+										{
+												"CreationType":"Usual",
+												"Type":"Block",
+												"X":2,
+												"Y":3,
+												"IsPlace":False
+},
+										{
+												"CreationType":"Usual",
+												"Type":"Block",
+												"X":3,
+												"Y":3,
+												"IsPlace":False
+},
+										{
+												"CreationType":"Usual",
+												"Type":"Block",
+												"X":3,
+												"Y":2,
+												"IsPlace":False
+}
+]
+},
+						{
+								"name":"3",
+								"width":6,
+								"height":6,
+								"numberOfColors":6,
+								"seed":0,
+								"gameMode":{
+										"Mode":"TargetScore",
+										"Turns":20,
+										"TargetScore":3000,
+										"Amount":0
+},
+								"Star1Score":0,
+								"Star2Score":0,
+								"Star3Score":0,
+								"map":[
+										{
+												"CreationType":"Usual",
+												"Type":"Block",
+												"X":2,
+												"Y":2,
+												"IsPlace":False
+},
+										{
+												"CreationType":"Usual",
+												"Type":"Block",
+												"X":2,
+												"Y":3,
+												"IsPlace":False
+},
+										{
+												"CreationType":"Usual",
+												"Type":"Block",
+												"X":2,
+												"Y":1,
+												"IsPlace":False
+},
+										{
+												"CreationType":"Usual",
+												"Type":"Block",
+												"X":3,
+												"Y":2,
+												"IsPlace":False
+},
+										{
+												"CreationType":"Usual",
+												"Type":"Block",
+												"X":3,
+												"Y":3,
+												"IsPlace":False
+},
+										{
+												"CreationType":"Usual",
+												"Type":"Block",
+												"X":3,
+												"Y":4,
+												"IsPlace":False
+}
+]
+},
+						{
+								"name":"4",
+								"width":6,
+								"height":6,
+								"numberOfColors":6,
+								"seed":0,
+								"gameMode":{
+										"Mode":"TargetScore",
+										"Turns":15,
+										"TargetScore":2250,
+										"Amount":0
+},
+								"Star1Score":0,
+								"Star2Score":0,
+								"Star3Score":0,
+								"map":[
+										{
+												"CreationType":"Usual",
+												"Type":"Block",
+												"X":1,
+												"Y":1,
+												"IsPlace":False
+},
+										{
+												"CreationType":"Usual",
+												"Type":"Block",
+												"X":4,
+												"Y":1,
+												"IsPlace":False
+},
+										{
+												"CreationType":"Usual",
+												"Type":"Block",
+												"X":4,
+												"Y":4,
+												"IsPlace":False
+},
+										{
+												"CreationType":"Usual",
+												"Type":"Block",
+												"X":1,
+												"Y":4,
+												"IsPlace":False
+},
 										{
 												"CreationType":"Usual",
 												"Type":"Block",
@@ -49,74 +274,6 @@
 ]
 },
 						{
-								"name":"1",
-								"width":6,
-								"height":7,
-								"numberOfColors":8,
-								"seed":0,
-								"gameMode":{
-										"Mode":"TargetScore",
-										"Turns":8,
-										"TargetScore":1000,
-										"Amount":0
-},
-								"Star1Score":0,
-								"Star2Score":0,
-								"Star3Score":0,
-								"map":
-},
-						{
-								"name":"2",
-								"width":6,
-								"height":8,
-								"numberOfColors":8,
-								"seed":0,
-								"gameMode":{
-										"Mode":"TargetScore",
-										"Turns":0,
-										"TargetScore":0,
-										"Amount":0
-},
-								"Star1Score":0,
-								"Star2Score":0,
-								"Star3Score":0,
-								"map":
-},
-						{
-								"name":"3",
-								"width":6,
-								"height":6,
-								"numberOfColors":6,
-								"seed":0,
-								"gameMode":{
-										"Mode":"TargetScore",
-										"Turns":0,
-										"TargetScore":0,
-										"Amount":0
-},
-								"Star1Score":0,
-								"Star2Score":0,
-								"Star3Score":0,
-								"map":
-},
-						{
-								"name":"4",
-								"width":6,
-								"height":8,
-								"numberOfColors":6,
-								"seed":0,
-								"gameMode":{
-										"Mode":"TargetScore",
-										"Turns":0,
-										"TargetScore":0,
-										"Amount":0
-},
-								"Star1Score":0,
-								"Star2Score":0,
-								"Star3Score":0,
-								"map":
-},
-						{
 								"name":"5",
 								"width":6,
 								"height":7,
@@ -124,31 +281,131 @@
 								"seed":0,
 								"gameMode":{
 										"Mode":"TargetScore",
-										"Turns":0,
-										"TargetScore":0,
+										"Turns":12,
+										"TargetScore":2100,
 										"Amount":0
 },
 								"Star1Score":0,
 								"Star2Score":0,
 								"Star3Score":0,
-								"map":
+								"map":[
+										{
+												"CreationType":"Usual",
+												"Type":"Block",
+												"X":1,
+												"Y":1,
+												"IsPlace":False
+},
+										{
+												"CreationType":"Usual",
+												"Type":"Block",
+												"X":1,
+												"Y":5,
+												"IsPlace":False
+},
+										{
+												"CreationType":"Usual",
+												"Type":"Block",
+												"X":4,
+												"Y":1,
+												"IsPlace":False
+},
+										{
+												"CreationType":"Usual",
+												"Type":"Block",
+												"X":4,
+												"Y":5,
+												"IsPlace":False
+},
+										{
+												"CreationType":"Usual",
+												"Type":"Block",
+												"X":1,
+												"Y":3,
+												"IsPlace":False
+},
+										{
+												"CreationType":"Usual",
+												"Type":"Block",
+												"X":4,
+												"Y":3,
+												"IsPlace":False
+}
+]
 },
 						{
 								"name":"6",
 								"width":6,
-								"height":9,
+								"height":7,
 								"numberOfColors":6,
 								"seed":0,
 								"gameMode":{
 										"Mode":"TargetScore",
-										"Turns":0,
-										"TargetScore":0,
+										"Turns":30,
+										"TargetScore":4500,
 										"Amount":0
 },
 								"Star1Score":0,
 								"Star2Score":0,
 								"Star3Score":0,
-								"map":
+								"map":[
+										{
+												"CreationType":"Usual",
+												"Type":"Block",
+												"X":0,
+												"Y":1,
+												"IsPlace":False
+},
+										{
+												"CreationType":"Usual",
+												"Type":"Block",
+												"X":0,
+												"Y":0,
+												"IsPlace":False
+},
+										{
+												"CreationType":"Usual",
+												"Type":"Block",
+												"X":0,
+												"Y":2,
+												"IsPlace":False
+},
+										{
+												"CreationType":"Usual",
+												"Type":"Block",
+												"X":5,
+												"Y":4,
+												"IsPlace":False
+},
+										{
+												"CreationType":"Usual",
+												"Type":"Block",
+												"X":5,
+												"Y":5,
+												"IsPlace":False
+},
+										{
+												"CreationType":"Usual",
+												"Type":"Block",
+												"X":5,
+												"Y":6,
+												"IsPlace":False
+},
+										{
+												"CreationType":"Usual",
+												"Type":"Block",
+												"X":2,
+												"Y":3,
+												"IsPlace":False
+},
+										{
+												"CreationType":"Usual",
+												"Type":"Block",
+												"X":3,
+												"Y":3,
+												"IsPlace":False
+}
+]
 },
 						{
 								"name":"7",
@@ -158,14 +415,71 @@
 								"seed":0,
 								"gameMode":{
 										"Mode":"TargetScore",
-										"Turns":0,
-										"TargetScore":0,
+										"Turns":40,
+										"TargetScore":6000,
 										"Amount":0
 },
 								"Star1Score":0,
 								"Star2Score":0,
 								"Star3Score":0,
-								"map":
+								"map":[
+										{
+												"CreationType":"Usual",
+												"Type":"Block",
+												"X":2,
+												"Y":2,
+												"IsPlace":False
+},
+										{
+												"CreationType":"Usual",
+												"Type":"Block",
+												"X":2,
+												"Y":4,
+												"IsPlace":False
+},
+										{
+												"CreationType":"Usual",
+												"Type":"Block",
+												"X":4,
+												"Y":2,
+												"IsPlace":False
+},
+										{
+												"CreationType":"Usual",
+												"Type":"Block",
+												"X":4,
+												"Y":4,
+												"IsPlace":False
+},
+										{
+												"CreationType":"Usual",
+												"Type":"Block",
+												"X":6,
+												"Y":0,
+												"IsPlace":False
+},
+										{
+												"CreationType":"Usual",
+												"Type":"Block",
+												"X":0,
+												"Y":0,
+												"IsPlace":False
+},
+										{
+												"CreationType":"Usual",
+												"Type":"Block",
+												"X":6,
+												"Y":6,
+												"IsPlace":False
+},
+										{
+												"CreationType":"Usual",
+												"Type":"Block",
+												"X":0,
+												"Y":6,
+												"IsPlace":False
+}
+]
 },
 						{
 								"name":"8",
@@ -175,14 +489,85 @@
 								"seed":0,
 								"gameMode":{
 										"Mode":"TargetScore",
-										"Turns":0,
-										"TargetScore":0,
+										"Turns":20,
+										"TargetScore":3000,
 										"Amount":0
 },
 								"Star1Score":0,
 								"Star2Score":0,
 								"Star3Score":0,
-								"map":
+								"map":[
+										{
+												"CreationType":"Usual",
+												"Type":"Block",
+												"X":3,
+												"Y":3,
+												"IsPlace":False
+},
+										{
+												"CreationType":"Usual",
+												"Type":"Block",
+												"X":1,
+												"Y":3,
+												"IsPlace":False
+},
+										{
+												"CreationType":"Usual",
+												"Type":"Block",
+												"X":5,
+												"Y":3,
+												"IsPlace":False
+},
+										{
+												"CreationType":"Usual",
+												"Type":"Block",
+												"X":2,
+												"Y":4,
+												"IsPlace":False
+},
+										{
+												"CreationType":"Usual",
+												"Type":"Block",
+												"X":4,
+												"Y":4,
+												"IsPlace":False
+},
+										{
+												"CreationType":"Usual",
+												"Type":"Block",
+												"X":3,
+												"Y":5,
+												"IsPlace":False
+},
+										{
+												"CreationType":"Usual",
+												"Type":"Block",
+												"X":2,
+												"Y":6,
+												"IsPlace":False
+},
+										{
+												"CreationType":"Usual",
+												"Type":"Block",
+												"X":4,
+												"Y":6,
+												"IsPlace":False
+},
+										{
+												"CreationType":"Usual",
+												"Type":"Block",
+												"X":4,
+												"Y":1,
+												"IsPlace":False
+},
+										{
+												"CreationType":"Usual",
+												"Type":"Block",
+												"X":2,
+												"Y":1,
+												"IsPlace":False
+}
+]
 },
 						{
 								"name":"9",
@@ -192,65 +577,447 @@
 								"seed":0,
 								"gameMode":{
 										"Mode":"TargetScore",
-										"Turns":0,
-										"TargetScore":0,
+										"Turns":20,
+										"TargetScore":3200,
 										"Amount":0
 },
 								"Star1Score":0,
 								"Star2Score":0,
 								"Star3Score":0,
-								"map":
+								"map":[
+										{
+												"CreationType":"Usual",
+												"Type":"Block",
+												"X":6,
+												"Y":0,
+												"IsPlace":False
+},
+										{
+												"CreationType":"Usual",
+												"Type":"Block",
+												"X":0,
+												"Y":6,
+												"IsPlace":False
+},
+										{
+												"CreationType":"Usual",
+												"Type":"Block",
+												"X":0,
+												"Y":0,
+												"IsPlace":False
+},
+										{
+												"CreationType":"Usual",
+												"Type":"Block",
+												"X":6,
+												"Y":6,
+												"IsPlace":False
+},
+										{
+												"CreationType":"Usual",
+												"Type":"Block",
+												"X":0,
+												"Y":2,
+												"IsPlace":False
+},
+										{
+												"CreationType":"Usual",
+												"Type":"Block",
+												"X":0,
+												"Y":4,
+												"IsPlace":False
+},
+										{
+												"CreationType":"Usual",
+												"Type":"Block",
+												"X":6,
+												"Y":2,
+												"IsPlace":False
+},
+										{
+												"CreationType":"Usual",
+												"Type":"Block",
+												"X":6,
+												"Y":4,
+												"IsPlace":False
+},
+										{
+												"CreationType":"Usual",
+												"Type":"Block",
+												"X":2,
+												"Y":2,
+												"IsPlace":False
+},
+										{
+												"CreationType":"Usual",
+												"Type":"Block",
+												"X":2,
+												"Y":4,
+												"IsPlace":False
+},
+										{
+												"CreationType":"Usual",
+												"Type":"Block",
+												"X":4,
+												"Y":2,
+												"IsPlace":False
+},
+										{
+												"CreationType":"Usual",
+												"Type":"Block",
+												"X":4,
+												"Y":4,
+												"IsPlace":False
+}
+]
 },
 						{
 								"name":"10",
 								"width":6,
-								"height":9,
+								"height":8,
 								"numberOfColors":6,
 								"seed":0,
 								"gameMode":{
 										"Mode":"TargetScore",
-										"Turns":0,
-										"TargetScore":0,
+										"Turns":15,
+										"TargetScore":2700,
 										"Amount":0
 },
 								"Star1Score":0,
 								"Star2Score":0,
 								"Star3Score":0,
-								"map":
+								"map":[
+										{
+												"CreationType":"Usual",
+												"Type":"Block",
+												"X":1,
+												"Y":0,
+												"IsPlace":False
+},
+										{
+												"CreationType":"Usual",
+												"Type":"Block",
+												"X":4,
+												"Y":0,
+												"IsPlace":False
+},
+										{
+												"CreationType":"Usual",
+												"Type":"Block",
+												"X":1,
+												"Y":7,
+												"IsPlace":False
+},
+										{
+												"CreationType":"Usual",
+												"Type":"Block",
+												"X":4,
+												"Y":7,
+												"IsPlace":False
+},
+										{
+												"CreationType":"Usual",
+												"Type":"Block",
+												"X":4,
+												"Y":4,
+												"IsPlace":False
+},
+										{
+												"CreationType":"Usual",
+												"Type":"Block",
+												"X":1,
+												"Y":4,
+												"IsPlace":False
+},
+										{
+												"CreationType":"Usual",
+												"Type":"Block",
+												"X":1,
+												"Y":3,
+												"IsPlace":False
+},
+										{
+												"CreationType":"Usual",
+												"Type":"Block",
+												"X":4,
+												"Y":3,
+												"IsPlace":False
+},
+										{
+												"CreationType":"Usual",
+												"Type":"Block",
+												"X":2,
+												"Y":2,
+												"IsPlace":False
+},
+										{
+												"CreationType":"Usual",
+												"Type":"Block",
+												"X":3,
+												"Y":5,
+												"IsPlace":False
+}
+]
 },
 						{
 								"name":"11",
-								"width":6,
-								"height":6,
+								"width":7,
+								"height":8,
 								"numberOfColors":6,
 								"seed":0,
 								"gameMode":{
 										"Mode":"TargetScore",
-										"Turns":0,
-										"TargetScore":0,
+										"Turns":18,
+										"TargetScore":2700,
 										"Amount":0
 },
 								"Star1Score":0,
 								"Star2Score":0,
 								"Star3Score":0,
-								"map":
+								"map":[
+										{
+												"CreationType":"Usual",
+												"Type":"Block",
+												"X":2,
+												"Y":3,
+												"IsPlace":False
+},
+										{
+												"CreationType":"Usual",
+												"Type":"Block",
+												"X":2,
+												"Y":2,
+												"IsPlace":False
+},
+										{
+												"CreationType":"Usual",
+												"Type":"Block",
+												"X":2,
+												"Y":4,
+												"IsPlace":False
+},
+										{
+												"CreationType":"Usual",
+												"Type":"Block",
+												"X":2,
+												"Y":5,
+												"IsPlace":False
+},
+										{
+												"CreationType":"Usual",
+												"Type":"Block",
+												"X":4,
+												"Y":2,
+												"IsPlace":False
+},
+										{
+												"CreationType":"Usual",
+												"Type":"Block",
+												"X":4,
+												"Y":4,
+												"IsPlace":False
+},
+										{
+												"CreationType":"Usual",
+												"Type":"Block",
+												"X":4,
+												"Y":3,
+												"IsPlace":False
+},
+										{
+												"CreationType":"Usual",
+												"Type":"Block",
+												"X":4,
+												"Y":5,
+												"IsPlace":False
+},
+										{
+												"CreationType":"Usual",
+												"Type":"Block",
+												"X":0,
+												"Y":3,
+												"IsPlace":False
+},
+										{
+												"CreationType":"Usual",
+												"Type":"Block",
+												"X":6,
+												"Y":3,
+												"IsPlace":False
+},
+										{
+												"CreationType":"Usual",
+												"Type":"Block",
+												"X":0,
+												"Y":4,
+												"IsPlace":False
+},
+										{
+												"CreationType":"Usual",
+												"Type":"Block",
+												"X":6,
+												"Y":4,
+												"IsPlace":False
+},
+										{
+												"CreationType":"Usual",
+												"Type":"Block",
+												"X":3,
+												"Y":7,
+												"IsPlace":False
+},
+										{
+												"CreationType":"Usual",
+												"Type":"Block",
+												"X":3,
+												"Y":0,
+												"IsPlace":False
+},
+										{
+												"CreationType":"Usual",
+												"Type":"Block",
+												"X":5,
+												"Y":1,
+												"IsPlace":False
+},
+										{
+												"CreationType":"Usual",
+												"Type":"Block",
+												"X":1,
+												"Y":1,
+												"IsPlace":False
+},
+										{
+												"CreationType":"Usual",
+												"Type":"Block",
+												"X":5,
+												"Y":6,
+												"IsPlace":False
+},
+										{
+												"CreationType":"Usual",
+												"Type":"Block",
+												"X":1,
+												"Y":6,
+												"IsPlace":False
+}
+]
 },
 						{
 								"name":"12",
-								"width":8,
-								"height":6,
+								"width":7,
+								"height":8,
 								"numberOfColors":6,
 								"seed":0,
 								"gameMode":{
 										"Mode":"TargetScore",
-										"Turns":0,
-										"TargetScore":0,
+										"Turns":20,
+										"TargetScore":3800,
 										"Amount":0
 },
 								"Star1Score":0,
 								"Star2Score":0,
 								"Star3Score":0,
-								"map":
+								"map":[
+										{
+												"CreationType":"Usual",
+												"Type":"Block",
+												"X":6,
+												"Y":7,
+												"IsPlace":False
+},
+										{
+												"CreationType":"Usual",
+												"Type":"Block",
+												"X":0,
+												"Y":0,
+												"IsPlace":False
+},
+										{
+												"CreationType":"Usual",
+												"Type":"Block",
+												"X":0,
+												"Y":7,
+												"IsPlace":False
+},
+										{
+												"CreationType":"Usual",
+												"Type":"Block",
+												"X":6,
+												"Y":0,
+												"IsPlace":False
+},
+										{
+												"CreationType":"Usual",
+												"Type":"Block",
+												"X":0,
+												"Y":3,
+												"IsPlace":False
+},
+										{
+												"CreationType":"Usual",
+												"Type":"Block",
+												"X":0,
+												"Y":4,
+												"IsPlace":False
+},
+										{
+												"CreationType":"Usual",
+												"Type":"Block",
+												"X":6,
+												"Y":3,
+												"IsPlace":False
+},
+										{
+												"CreationType":"Usual",
+												"Type":"Block",
+												"X":6,
+												"Y":4,
+												"IsPlace":False
+},
+										{
+												"CreationType":"Usual",
+												"Type":"Block",
+												"X":3,
+												"Y":4,
+												"IsPlace":False
+},
+										{
+												"CreationType":"Usual",
+												"Type":"Block",
+												"X":3,
+												"Y":3,
+												"IsPlace":False
+},
+										{
+												"CreationType":"Usual",
+												"Type":"Block",
+												"X":3,
+												"Y":6,
+												"IsPlace":False
+},
+										{
+												"CreationType":"Usual",
+												"Type":"Block",
+												"X":3,
+												"Y":1,
+												"IsPlace":False
+},
+										{
+												"CreationType":"Usual",
+												"Type":"Block",
+												"X":2,
+												"Y":6,
+												"IsPlace":False
+},
+										{
+												"CreationType":"Usual",
+												"Type":"Block",
+												"X":4,
+												"Y":6,
+												"IsPlace":False
+}
+]
 },
 						{
 								"name":"13",
@@ -260,14 +1027,99 @@
 								"seed":0,
 								"gameMode":{
 										"Mode":"TargetScore",
-										"Turns":0,
-										"TargetScore":0,
+										"Turns":17,
+										"TargetScore":2890,
 										"Amount":0
 },
 								"Star1Score":0,
 								"Star2Score":0,
 								"Star3Score":0,
-								"map":
+								"map":[
+										{
+												"CreationType":"Usual",
+												"Type":"Block",
+												"X":6,
+												"Y":0,
+												"IsPlace":False
+},
+										{
+												"CreationType":"Usual",
+												"Type":"Block",
+												"X":6,
+												"Y":7,
+												"IsPlace":False
+},
+										{
+												"CreationType":"Usual",
+												"Type":"Block",
+												"X":5,
+												"Y":1,
+												"IsPlace":False
+},
+										{
+												"CreationType":"Usual",
+												"Type":"Block",
+												"X":4,
+												"Y":2,
+												"IsPlace":False
+},
+										{
+												"CreationType":"Usual",
+												"Type":"Block",
+												"X":5,
+												"Y":6,
+												"IsPlace":False
+},
+										{
+												"CreationType":"Usual",
+												"Type":"Block",
+												"X":4,
+												"Y":5,
+												"IsPlace":False
+},
+										{
+												"CreationType":"Usual",
+												"Type":"Block",
+												"X":2,
+												"Y":4,
+												"IsPlace":False
+},
+										{
+												"CreationType":"Usual",
+												"Type":"Block",
+												"X":1,
+												"Y":3,
+												"IsPlace":False
+},
+										{
+												"CreationType":"Usual",
+												"Type":"Block",
+												"X":0,
+												"Y":2,
+												"IsPlace":False
+},
+										{
+												"CreationType":"Usual",
+												"Type":"Block",
+												"X":1,
+												"Y":1,
+												"IsPlace":False
+},
+										{
+												"CreationType":"Usual",
+												"Type":"Block",
+												"X":2,
+												"Y":6,
+												"IsPlace":False
+},
+										{
+												"CreationType":"Usual",
+												"Type":"Block",
+												"X":1,
+												"Y":7,
+												"IsPlace":False
+}
+]
 },
 						{
 								"name":"14",
@@ -277,14 +1129,106 @@
 								"seed":0,
 								"gameMode":{
 										"Mode":"TargetScore",
-										"Turns":0,
-										"TargetScore":0,
+										"Turns":25,
+										"TargetScore":4000,
 										"Amount":0
 },
 								"Star1Score":0,
 								"Star2Score":0,
 								"Star3Score":0,
-								"map":
+								"map":[
+										{
+												"CreationType":"Usual",
+												"Type":"Block",
+												"X":0,
+												"Y":7,
+												"IsPlace":False
+},
+										{
+												"CreationType":"Usual",
+												"Type":"Block",
+												"X":1,
+												"Y":5,
+												"IsPlace":False
+},
+										{
+												"CreationType":"Usual",
+												"Type":"Block",
+												"X":2,
+												"Y":4,
+												"IsPlace":False
+},
+										{
+												"CreationType":"Usual",
+												"Type":"Block",
+												"X":1,
+												"Y":2,
+												"IsPlace":False
+},
+										{
+												"CreationType":"Usual",
+												"Type":"Block",
+												"X":3,
+												"Y":1,
+												"IsPlace":False
+},
+										{
+												"CreationType":"Usual",
+												"Type":"Block",
+												"X":5,
+												"Y":3,
+												"IsPlace":False
+},
+										{
+												"CreationType":"Usual",
+												"Type":"Block",
+												"X":4,
+												"Y":6,
+												"IsPlace":False
+},
+										{
+												"CreationType":"Usual",
+												"Type":"Block",
+												"X":6,
+												"Y":6,
+												"IsPlace":False
+},
+										{
+												"CreationType":"Usual",
+												"Type":"Block",
+												"X":7,
+												"Y":1,
+												"IsPlace":False
+},
+										{
+												"CreationType":"Usual",
+												"Type":"Block",
+												"X":6,
+												"Y":0,
+												"IsPlace":False
+},
+										{
+												"CreationType":"Usual",
+												"Type":"Block",
+												"X":7,
+												"Y":5,
+												"IsPlace":False
+},
+										{
+												"CreationType":"Usual",
+												"Type":"Block",
+												"X":2,
+												"Y":7,
+												"IsPlace":False
+},
+										{
+												"CreationType":"Usual",
+												"Type":"Block",
+												"X":0,
+												"Y":0,
+												"IsPlace":False
+}
+]
 },
 						{
 								"name":"15",
@@ -294,31 +1238,159 @@
 								"seed":0,
 								"gameMode":{
 										"Mode":"TargetScore",
-										"Turns":0,
-										"TargetScore":0,
+										"Turns":22,
+										"TargetScore":3300,
 										"Amount":0
 },
 								"Star1Score":0,
 								"Star2Score":0,
 								"Star3Score":0,
-								"map":
+								"map":[
+										{
+												"CreationType":"Usual",
+												"Type":"Block",
+												"X":2,
+												"Y":4,
+												"IsPlace":False
+},
+										{
+												"CreationType":"Usual",
+												"Type":"Block",
+												"X":4,
+												"Y":4,
+												"IsPlace":False
+},
+										{
+												"CreationType":"Usual",
+												"Type":"Block",
+												"X":3,
+												"Y":3,
+												"IsPlace":False
+},
+										{
+												"CreationType":"Usual",
+												"Type":"Block",
+												"X":3,
+												"Y":5,
+												"IsPlace":False
+},
+										{
+												"CreationType":"Usual",
+												"Type":"Block",
+												"X":2,
+												"Y":6,
+												"IsPlace":False
+},
+										{
+												"CreationType":"Usual",
+												"Type":"Block",
+												"X":4,
+												"Y":6,
+												"IsPlace":False
+},
+										{
+												"CreationType":"Usual",
+												"Type":"Block",
+												"X":4,
+												"Y":2,
+												"IsPlace":False
+},
+										{
+												"CreationType":"Usual",
+												"Type":"Block",
+												"X":2,
+												"Y":2,
+												"IsPlace":False
+}
+]
 },
 						{
 								"name":"16",
 								"width":7,
-								"height":7,
+								"height":10,
 								"numberOfColors":6,
 								"seed":0,
 								"gameMode":{
 										"Mode":"TargetScore",
-										"Turns":0,
-										"TargetScore":0,
+										"Turns":20,
+										"TargetScore":3400,
 										"Amount":0
 },
 								"Star1Score":0,
 								"Star2Score":0,
 								"Star3Score":0,
-								"map":
+								"map":[
+										{
+												"CreationType":"Usual",
+												"Type":"Block",
+												"X":3,
+												"Y":5,
+												"IsPlace":False
+},
+										{
+												"CreationType":"Usual",
+												"Type":"Block",
+												"X":3,
+												"Y":0,
+												"IsPlace":False
+},
+										{
+												"CreationType":"Usual",
+												"Type":"Block",
+												"X":3,
+												"Y":1,
+												"IsPlace":False
+},
+										{
+												"CreationType":"Usual",
+												"Type":"Block",
+												"X":3,
+												"Y":2,
+												"IsPlace":False
+},
+										{
+												"CreationType":"Usual",
+												"Type":"Block",
+												"X":3,
+												"Y":3,
+												"IsPlace":False
+},
+										{
+												"CreationType":"Usual",
+												"Type":"Block",
+												"X":3,
+												"Y":6,
+												"IsPlace":False
+},
+										{
+												"CreationType":"Usual",
+												"Type":"Block",
+												"X":3,
+												"Y":7,
+												"IsPlace":False
+},
+										{
+												"CreationType":"Usual",
+												"Type":"Block",
+												"X":3,
+												"Y":4,
+												"IsPlace":False
+},
+										{
+												"CreationType":"Usual",
+												"Type":"Block",
+												"X":3,
+												"Y":8,
+												"IsPlace":False
+},
+										{
+												"CreationType":"Usual",
+												"Type":"Block",
+												"X":3,
+												"Y":9,
+												"IsPlace":False
+}
+]
 },
 						{
 								"name":"17",
@@ -328,31 +1400,257 @@
 								"seed":0,
 								"gameMode":{
 										"Mode":"TargetScore",
-										"Turns":0,
-										"TargetScore":0,
+										"Turns":22,
+										"TargetScore":4180,
 										"Amount":0
 },
 								"Star1Score":0,
 								"Star2Score":0,
 								"Star3Score":0,
-								"map":
+								"map":[
+										{
+												"CreationType":"Usual",
+												"Type":"Block",
+												"X":2,
+												"Y":3,
+												"IsPlace":False
+},
+										{
+												"CreationType":"Usual",
+												"Type":"Block",
+												"X":5,
+												"Y":3,
+												"IsPlace":False
+},
+										{
+												"CreationType":"Usual",
+												"Type":"Block",
+												"X":3,
+												"Y":2,
+												"IsPlace":False
+},
+										{
+												"CreationType":"Usual",
+												"Type":"Block",
+												"X":4,
+												"Y":2,
+												"IsPlace":False
+},
+										{
+												"CreationType":"Usual",
+												"Type":"Block",
+												"X":3,
+												"Y":4,
+												"IsPlace":False
+},
+										{
+												"CreationType":"Usual",
+												"Type":"Block",
+												"X":2,
+												"Y":5,
+												"IsPlace":False
+},
+										{
+												"CreationType":"Usual",
+												"Type":"Block",
+												"X":1,
+												"Y":6,
+												"IsPlace":False
+},
+										{
+												"CreationType":"Usual",
+												"Type":"Block",
+												"X":6,
+												"Y":2,
+												"IsPlace":False
+},
+										{
+												"CreationType":"Usual",
+												"Type":"Block",
+												"X":7,
+												"Y":1,
+												"IsPlace":False
+},
+										{
+												"CreationType":"Usual",
+												"Type":"Block",
+												"X":2,
+												"Y":7,
+												"IsPlace":False
+},
+										{
+												"CreationType":"Usual",
+												"Type":"Block",
+												"X":3,
+												"Y":8,
+												"IsPlace":False
+},
+										{
+												"CreationType":"Usual",
+												"Type":"Block",
+												"X":4,
+												"Y":9,
+												"IsPlace":False
+},
+										{
+												"CreationType":"Usual",
+												"Type":"Block",
+												"X":5,
+												"Y":8,
+												"IsPlace":False
+},
+										{
+												"CreationType":"Usual",
+												"Type":"Block",
+												"X":6,
+												"Y":7,
+												"IsPlace":False
+},
+										{
+												"CreationType":"Usual",
+												"Type":"Block",
+												"X":7,
+												"Y":6,
+												"IsPlace":False
+},
+										{
+												"CreationType":"Usual",
+												"Type":"Block",
+												"X":2,
+												"Y":1,
+												"IsPlace":False
+},
+										{
+												"CreationType":"Usual",
+												"Type":"Block",
+												"X":1,
+												"Y":0,
+												"IsPlace":False
+}
+]
 },
 						{
 								"name":"18",
-								"width":6,
-								"height":6,
+								"width":8,
+								"height":8,
 								"numberOfColors":6,
 								"seed":0,
 								"gameMode":{
 										"Mode":"TargetScore",
-										"Turns":0,
-										"TargetScore":0,
+										"Turns":28,
+										"TargetScore":3640,
 										"Amount":0
 },
 								"Star1Score":0,
 								"Star2Score":0,
 								"Star3Score":0,
-								"map":
+								"map":[
+										{
+												"CreationType":"Usual",
+												"Type":"Block",
+												"X":3,
+												"Y":2,
+												"IsPlace":False
+},
+										{
+												"CreationType":"Usual",
+												"Type":"Block",
+												"X":3,
+												"Y":3,
+												"IsPlace":False
+},
+										{
+												"CreationType":"Usual",
+												"Type":"Block",
+												"X":3,
+												"Y":4,
+												"IsPlace":False
+},
+										{
+												"CreationType":"Usual",
+												"Type":"Block",
+												"X":3,
+												"Y":5,
+												"IsPlace":False
+},
+										{
+												"CreationType":"Usual",
+												"Type":"Block",
+												"X":4,
+												"Y":5,
+												"IsPlace":False
+},
+										{
+												"CreationType":"Usual",
+												"Type":"Block",
+												"X":5,
+												"Y":5,
+												"IsPlace":False
+},
+										{
+												"CreationType":"Usual",
+												"Type":"Block",
+												"X":6,
+												"Y":5,
+												"IsPlace":False
+},
+										{
+												"CreationType":"Usual",
+												"Type":"Block",
+												"X":7,
+												"Y":5,
+												"IsPlace":False
+},
+										{
+												"CreationType":"Usual",
+												"Type":"Block",
+												"X":2,
+												"Y":2,
+												"IsPlace":False
+},
+										{
+												"CreationType":"Usual",
+												"Type":"Block",
+												"X":0,
+												"Y":2,
+												"IsPlace":False
+},
+										{
+												"CreationType":"Usual",
+												"Type":"Block",
+												"X":1,
+												"Y":2,
+												"IsPlace":False
+},
+										{
+												"CreationType":"Usual",
+												"Type":"Block",
+												"X":4,
+												"Y":6,
+												"IsPlace":False
+},
+										{
+												"CreationType":"Usual",
+												"Type":"Block",
+												"X":4,
+												"Y":7,
+												"IsPlace":False
+},
+										{
+												"CreationType":"Usual",
+												"Type":"Block",
+												"X":4,
+												"Y":0,
+												"IsPlace":False
+},
+										{
+												"CreationType":"Usual",
+												"Type":"Block",
+												"X":4,
+												"Y":1,
+												"IsPlace":False
+}
+]
 },
 						{
 								"name":"19",
@@ -362,14 +1660,92 @@
 								"seed":0,
 								"gameMode":{
 										"Mode":"TargetScore",
-										"Turns":0,
-										"TargetScore":0,
+										"Turns":21,
+										"TargetScore":3780,
 										"Amount":0
 },
 								"Star1Score":0,
 								"Star2Score":0,
 								"Star3Score":0,
-								"map":
+								"map":[
+										{
+												"CreationType":"Usual",
+												"Type":"Block",
+												"X":3,
+												"Y":3,
+												"IsPlace":False
+},
+										{
+												"CreationType":"Usual",
+												"Type":"Block",
+												"X":1,
+												"Y":5,
+												"IsPlace":False
+},
+										{
+												"CreationType":"Usual",
+												"Type":"Block",
+												"X":5,
+												"Y":5,
+												"IsPlace":False
+},
+										{
+												"CreationType":"Usual",
+												"Type":"Block",
+												"X":6,
+												"Y":6,
+												"IsPlace":False
+},
+										{
+												"CreationType":"Usual",
+												"Type":"Block",
+												"X":0,
+												"Y":6,
+												"IsPlace":False
+},
+										{
+												"CreationType":"Usual",
+												"Type":"Block",
+												"X":1,
+												"Y":7,
+												"IsPlace":False
+},
+										{
+												"CreationType":"Usual",
+												"Type":"Block",
+												"X":5,
+												"Y":7,
+												"IsPlace":False
+},
+										{
+												"CreationType":"Usual",
+												"Type":"Block",
+												"X":5,
+												"Y":1,
+												"IsPlace":False
+},
+										{
+												"CreationType":"Usual",
+												"Type":"Block",
+												"X":4,
+												"Y":0,
+												"IsPlace":False
+},
+										{
+												"CreationType":"Usual",
+												"Type":"Block",
+												"X":1,
+												"Y":1,
+												"IsPlace":False
+},
+										{
+												"CreationType":"Usual",
+												"Type":"Block",
+												"X":2,
+												"Y":0,
+												"IsPlace":False
+}
+]
 },
 						{
 								"name":"20",
@@ -379,31 +1755,215 @@
 								"seed":0,
 								"gameMode":{
 										"Mode":"TargetScore",
-										"Turns":0,
-										"TargetScore":0,
+										"Turns":25,
+										"TargetScore":4500,
 										"Amount":0
 },
 								"Star1Score":0,
 								"Star2Score":0,
 								"Star3Score":0,
-								"map":
+								"map":[
+										{
+												"CreationType":"Usual",
+												"Type":"Block",
+												"X":1,
+												"Y":1,
+												"IsPlace":False
+},
+										{
+												"CreationType":"Usual",
+												"Type":"Block",
+												"X":6,
+												"Y":8,
+												"IsPlace":False
+},
+										{
+												"CreationType":"Usual",
+												"Type":"Block",
+												"X":6,
+												"Y":1,
+												"IsPlace":False
+},
+										{
+												"CreationType":"Usual",
+												"Type":"Block",
+												"X":1,
+												"Y":8,
+												"IsPlace":False
+},
+										{
+												"CreationType":"Usual",
+												"Type":"Block",
+												"X":2,
+												"Y":5,
+												"IsPlace":False
+},
+										{
+												"CreationType":"Usual",
+												"Type":"Block",
+												"X":2,
+												"Y":4,
+												"IsPlace":False
+},
+										{
+												"CreationType":"Usual",
+												"Type":"Block",
+												"X":3,
+												"Y":4,
+												"IsPlace":False
+},
+										{
+												"CreationType":"Usual",
+												"Type":"Block",
+												"X":3,
+												"Y":5,
+												"IsPlace":False
+},
+										{
+												"CreationType":"Usual",
+												"Type":"Block",
+												"X":4,
+												"Y":4,
+												"IsPlace":False
+},
+										{
+												"CreationType":"Usual",
+												"Type":"Block",
+												"X":4,
+												"Y":5,
+												"IsPlace":False
+},
+										{
+												"CreationType":"Usual",
+												"Type":"Block",
+												"X":5,
+												"Y":4,
+												"IsPlace":False
+},
+										{
+												"CreationType":"Usual",
+												"Type":"Block",
+												"X":5,
+												"Y":5,
+												"IsPlace":False
+},
+										{
+												"CreationType":"Usual",
+												"Type":"Block",
+												"X":3,
+												"Y":2,
+												"IsPlace":False
+},
+										{
+												"CreationType":"Usual",
+												"Type":"Block",
+												"X":4,
+												"Y":2,
+												"IsPlace":False
+},
+										{
+												"CreationType":"Usual",
+												"Type":"Block",
+												"X":3,
+												"Y":7,
+												"IsPlace":False
+},
+										{
+												"CreationType":"Usual",
+												"Type":"Block",
+												"X":4,
+												"Y":7,
+												"IsPlace":False
+}
+]
 },
 						{
 								"name":"21",
-								"width":8,
-								"height":8,
+								"width":6,
+								"height":6,
 								"numberOfColors":6,
 								"seed":0,
 								"gameMode":{
 										"Mode":"TargetScore",
-										"Turns":0,
-										"TargetScore":0,
+										"Turns":30,
+										"TargetScore":4500,
 										"Amount":0
 },
 								"Star1Score":0,
 								"Star2Score":0,
 								"Star3Score":0,
-								"map":
+								"map":[
+										{
+												"CreationType":"Usual",
+												"Type":"Block",
+												"X":1,
+												"Y":2,
+												"IsPlace":False
+},
+										{
+												"CreationType":"Usual",
+												"Type":"Block",
+												"X":2,
+												"Y":1,
+												"IsPlace":False
+},
+										{
+												"CreationType":"Usual",
+												"Type":"Block",
+												"X":3,
+												"Y":0,
+												"IsPlace":False
+},
+										{
+												"CreationType":"Usual",
+												"Type":"Block",
+												"X":4,
+												"Y":1,
+												"IsPlace":False
+},
+										{
+												"CreationType":"Usual",
+												"Type":"Block",
+												"X":5,
+												"Y":2,
+												"IsPlace":False
+},
+										{
+												"CreationType":"Usual",
+												"Type":"Block",
+												"X":4,
+												"Y":3,
+												"IsPlace":False
+},
+										{
+												"CreationType":"Usual",
+												"Type":"Block",
+												"X":3,
+												"Y":4,
+												"IsPlace":False
+},
+										{
+												"CreationType":"Usual",
+												"Type":"Block",
+												"X":4,
+												"Y":5,
+												"IsPlace":False
+},
+										{
+												"CreationType":"Usual",
+												"Type":"Block",
+												"X":0,
+												"Y":3,
+												"IsPlace":False
+},
+										{
+												"CreationType":"Usual",
+												"Type":"Block",
+												"X":1,
+												"Y":4,
+												"IsPlace":False
+}
+]
 },
 						{
 								"name":"22",
@@ -413,14 +1973,106 @@
 								"seed":0,
 								"gameMode":{
 										"Mode":"TargetScore",
-										"Turns":0,
-										"TargetScore":0,
+										"Turns":29,
+										"TargetScore":5655,
 										"Amount":0
 },
 								"Star1Score":0,
 								"Star2Score":0,
 								"Star3Score":0,
-								"map":
+								"map":[
+										{
+												"CreationType":"Usual",
+												"Type":"Block",
+												"X":0,
+												"Y":9,
+												"IsPlace":False
+},
+										{
+												"CreationType":"Usual",
+												"Type":"Block",
+												"X":1,
+												"Y":8,
+												"IsPlace":False
+},
+										{
+												"CreationType":"Usual",
+												"Type":"Block",
+												"X":2,
+												"Y":7,
+												"IsPlace":False
+},
+										{
+												"CreationType":"Usual",
+												"Type":"Block",
+												"X":4,
+												"Y":5,
+												"IsPlace":False
+},
+										{
+												"CreationType":"Usual",
+												"Type":"Block",
+												"X":3,
+												"Y":8,
+												"IsPlace":False
+},
+										{
+												"CreationType":"Usual",
+												"Type":"Block",
+												"X":4,
+												"Y":7,
+												"IsPlace":False
+},
+										{
+												"CreationType":"Usual",
+												"Type":"Block",
+												"X":5,
+												"Y":6,
+												"IsPlace":False
+},
+										{
+												"CreationType":"Usual",
+												"Type":"Block",
+												"X":3,
+												"Y":4,
+												"IsPlace":False
+},
+										{
+												"CreationType":"Usual",
+												"Type":"Block",
+												"X":2,
+												"Y":3,
+												"IsPlace":False
+},
+										{
+												"CreationType":"Usual",
+												"Type":"Block",
+												"X":1,
+												"Y":4,
+												"IsPlace":False
+},
+										{
+												"CreationType":"Usual",
+												"Type":"Block",
+												"X":0,
+												"Y":3,
+												"IsPlace":False
+},
+										{
+												"CreationType":"Usual",
+												"Type":"Block",
+												"X":2,
+												"Y":0,
+												"IsPlace":False
+},
+										{
+												"CreationType":"Usual",
+												"Type":"Block",
+												"X":3,
+												"Y":1,
+												"IsPlace":False
+}
+]
 },
 						{
 								"name":"23",
@@ -430,31 +2082,334 @@
 								"seed":0,
 								"gameMode":{
 										"Mode":"TargetScore",
-										"Turns":0,
-										"TargetScore":0,
+										"Turns":40,
+										"TargetScore":6000,
 										"Amount":0
 },
 								"Star1Score":0,
 								"Star2Score":0,
 								"Star3Score":0,
-								"map":
+								"map":[
+										{
+												"CreationType":"Usual",
+												"Type":"Block",
+												"X":1,
+												"Y":8,
+												"IsPlace":False
+},
+										{
+												"CreationType":"Usual",
+												"Type":"Block",
+												"X":1,
+												"Y":6,
+												"IsPlace":False
+},
+										{
+												"CreationType":"Usual",
+												"Type":"Block",
+												"X":1,
+												"Y":5,
+												"IsPlace":False
+},
+										{
+												"CreationType":"Usual",
+												"Type":"Block",
+												"X":1,
+												"Y":4,
+												"IsPlace":False
+},
+										{
+												"CreationType":"Usual",
+												"Type":"Block",
+												"X":1,
+												"Y":2,
+												"IsPlace":False
+},
+										{
+												"CreationType":"Usual",
+												"Type":"Block",
+												"X":1,
+												"Y":1,
+												"IsPlace":False
+},
+										{
+												"CreationType":"Usual",
+												"Type":"Block",
+												"X":1,
+												"Y":3,
+												"IsPlace":False
+},
+										{
+												"CreationType":"Usual",
+												"Type":"Block",
+												"X":1,
+												"Y":7,
+												"IsPlace":False
+},
+										{
+												"CreationType":"Usual",
+												"Type":"Block",
+												"X":2,
+												"Y":1,
+												"IsPlace":False
+},
+										{
+												"CreationType":"Usual",
+												"Type":"Block",
+												"X":3,
+												"Y":1,
+												"IsPlace":False
+},
+										{
+												"CreationType":"Usual",
+												"Type":"Block",
+												"X":4,
+												"Y":1,
+												"IsPlace":False
+},
+										{
+												"CreationType":"Usual",
+												"Type":"Block",
+												"X":5,
+												"Y":1,
+												"IsPlace":False
+},
+										{
+												"CreationType":"Usual",
+												"Type":"Block",
+												"X":6,
+												"Y":1,
+												"IsPlace":False
+},
+										{
+												"CreationType":"Usual",
+												"Type":"Block",
+												"X":6,
+												"Y":2,
+												"IsPlace":False
+},
+										{
+												"CreationType":"Usual",
+												"Type":"Block",
+												"X":6,
+												"Y":3,
+												"IsPlace":False
+},
+										{
+												"CreationType":"Usual",
+												"Type":"Block",
+												"X":6,
+												"Y":4,
+												"IsPlace":False
+},
+										{
+												"CreationType":"Usual",
+												"Type":"Block",
+												"X":6,
+												"Y":5,
+												"IsPlace":False
+},
+										{
+												"CreationType":"Usual",
+												"Type":"Block",
+												"X":6,
+												"Y":6,
+												"IsPlace":False
+},
+										{
+												"CreationType":"Usual",
+												"Type":"Block",
+												"X":6,
+												"Y":7,
+												"IsPlace":False
+},
+										{
+												"CreationType":"Usual",
+												"Type":"Block",
+												"X":5,
+												"Y":7,
+												"IsPlace":False
+},
+										{
+												"CreationType":"Usual",
+												"Type":"Block",
+												"X":3,
+												"Y":6,
+												"IsPlace":False
+},
+										{
+												"CreationType":"Usual",
+												"Type":"Block",
+												"X":4,
+												"Y":7,
+												"IsPlace":False
+},
+										{
+												"CreationType":"Usual",
+												"Type":"Block",
+												"X":3,
+												"Y":7,
+												"IsPlace":False
+},
+										{
+												"CreationType":"Usual",
+												"Type":"Block",
+												"X":3,
+												"Y":5,
+												"IsPlace":False
+},
+										{
+												"CreationType":"Usual",
+												"Type":"Block",
+												"X":3,
+												"Y":4,
+												"IsPlace":False
+},
+										{
+												"CreationType":"Usual",
+												"Type":"Block",
+												"X":3,
+												"Y":3,
+												"IsPlace":False
+},
+										{
+												"CreationType":"Usual",
+												"Type":"Block",
+												"X":4,
+												"Y":3,
+												"IsPlace":False
+}
+]
 },
 						{
 								"name":"24",
 								"width":7,
-								"height":7,
+								"height":10,
 								"numberOfColors":6,
 								"seed":0,
 								"gameMode":{
 										"Mode":"TargetScore",
-										"Turns":0,
-										"TargetScore":0,
+										"Turns":25,
+										"TargetScore":4750,
 										"Amount":0
 },
 								"Star1Score":0,
 								"Star2Score":0,
 								"Star3Score":0,
-								"map":
+								"map":[
+										{
+												"CreationType":"Usual",
+												"Type":"Block",
+												"X":3,
+												"Y":9,
+												"IsPlace":False
+},
+										{
+												"CreationType":"Usual",
+												"Type":"Block",
+												"X":3,
+												"Y":8,
+												"IsPlace":False
+},
+										{
+												"CreationType":"Usual",
+												"Type":"Block",
+												"X":2,
+												"Y":7,
+												"IsPlace":False
+},
+										{
+												"CreationType":"Usual",
+												"Type":"Block",
+												"X":2,
+												"Y":6,
+												"IsPlace":False
+},
+										{
+												"CreationType":"Usual",
+												"Type":"Block",
+												"X":4,
+												"Y":7,
+												"IsPlace":False
+},
+										{
+												"CreationType":"Usual",
+												"Type":"Block",
+												"X":4,
+												"Y":6,
+												"IsPlace":False
+},
+										{
+												"CreationType":"Usual",
+												"Type":"Block",
+												"X":5,
+												"Y":5,
+												"IsPlace":False
+},
+										{
+												"CreationType":"Usual",
+												"Type":"Block",
+												"X":5,
+												"Y":4,
+												"IsPlace":False
+},
+										{
+												"CreationType":"Usual",
+												"Type":"Block",
+												"X":1,
+												"Y":5,
+												"IsPlace":False
+},
+										{
+												"CreationType":"Usual",
+												"Type":"Block",
+												"X":1,
+												"Y":4,
+												"IsPlace":False
+},
+										{
+												"CreationType":"Usual",
+												"Type":"Block",
+												"X":2,
+												"Y":3,
+												"IsPlace":False
+},
+										{
+												"CreationType":"Usual",
+												"Type":"Block",
+												"X":2,
+												"Y":2,
+												"IsPlace":False
+},
+										{
+												"CreationType":"Usual",
+												"Type":"Block",
+												"X":4,
+												"Y":3,
+												"IsPlace":False
+},
+										{
+												"CreationType":"Usual",
+												"Type":"Block",
+												"X":4,
+												"Y":2,
+												"IsPlace":False
+},
+										{
+												"CreationType":"Usual",
+												"Type":"Block",
+												"X":3,
+												"Y":1,
+												"IsPlace":False
+},
+										{
+												"CreationType":"Usual",
+												"Type":"Block",
+												"X":3,
+												"Y":0,
+												"IsPlace":False
+}
+]
 }
 ]
 }

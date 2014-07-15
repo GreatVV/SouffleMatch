@@ -18,6 +18,6 @@ public class PauseButton : MonoBehaviour
 
     public void OnClick()
     {
-        Debug.Log("Toogle pause");
+      //  Debug.Log("Toogle pause");
     }
 }
