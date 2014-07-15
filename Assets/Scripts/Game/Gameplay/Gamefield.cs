@@ -94,6 +94,7 @@ public class Gamefield : MonoBehaviour
 
     private void OnWin()
     {
+        
         SwitchStateTo(WinState);
         RemoveEventHandlers();
     }
@@ -146,6 +147,8 @@ public class Gamefield : MonoBehaviour
 
         GA.API.Design.NewEvent("Game:Localization:" + Localization.language);
         GA.API.Design.NewEvent("Game:SystemLocalization:" + Application.systemLanguage);
+
+        ProgressionManager.Init();
     }
 
     private void LateUpdate()

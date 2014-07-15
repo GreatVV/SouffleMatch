@@ -46,6 +46,7 @@ namespace Game
 
         public void Add(int amount)
         {
+            //ProgressionManager.Mana += amount;
             CurrentMoney += amount;
         }
 

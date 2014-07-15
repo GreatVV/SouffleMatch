@@ -4,7 +4,7 @@ namespace Game.Data
 {
     public class LevelStatus : IJsonSerializable
     {
-        public string LevelId;
+        public int LevelId;
 
         public int NumberOfWin;
         public int WinAmount;
@@ -16,6 +16,7 @@ namespace Game.Data
         public JSONObject Serialize()
         {
             var jsonObject = new JSONObject();
+            jsonObject.AddField("LevelId", LevelId);
             jsonObject.AddField("IsUnlocked", IsUnlocked);
             jsonObject.AddField("MinimumTurns",MinimumTurns);
             jsonObject.AddField("BestScore", BestScore);
@@ -29,6 +30,7 @@ namespace Game.Data
         {
             IsUnlocked = Convert.ToBoolean(json["IsUnlocked"]);
             HasWin = Convert.ToBoolean(json["HasWin"]);
+            LevelId = Convert.ToInt32(json["LevelId"]);
             MinimumTurns = Convert.ToInt32(json["MinimumTurns"]);
             BestScore = Convert.ToInt32(json["BestScore"]);
             LoseAmount = Convert.ToInt32(json["LoseAmount"]);

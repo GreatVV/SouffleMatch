@@ -13,7 +13,7 @@ namespace Game.Data
             UnlockedByMana
         }
 
-        public string PackId;
+        public int PackId;
 
         public PackStatus Status;
 
@@ -45,13 +45,19 @@ namespace Game.Data
 
         public void Deserialize(JSONObject json)
         {
-            PackId = json["PackId"].str;
+            PackId = (int) json["PackId"].n;
             Status = (PackStatus) Enum.Parse(typeof (PackStatus), json["Status"].str);
         }
 
-        public LevelStatus GetLevelById(string levelId)
+        public LevelStatus GetLevelById(int levelId)
         {
-            return LevelStatuses.FirstOrDefault(x => x.LevelId == levelId);
+            var level =  LevelStatuses.FirstOrDefault(x => x.LevelId == levelId);
+            if (level == null)
+            {
+                level = new LevelStatus() {LevelId = levelId};
+                LevelStatuses.Add(level);
+            }
+            return level;
         }
     }
 }

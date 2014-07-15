@@ -1,4 +1,5 @@
 ﻿using System;
+using Game;
 using UnityEngine;
 
 namespace GamefieldStates
@@ -12,6 +13,7 @@ namespace GamefieldStates
 
         public override void OnEnter()
         {
+            
             PanelManager.instance.WinPopup.Init(Gamefield.PointSystem.CurrentPoints);
             PanelManager.Show(PanelManager.instance.WinPopup);
         }

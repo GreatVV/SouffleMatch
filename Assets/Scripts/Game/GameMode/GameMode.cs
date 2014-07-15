@@ -55,6 +55,7 @@ namespace Game.GameMode
 
         public bool Check()
         {
+            ProgressionManager.RegisterLevelFinish(SessionRestorer.Instance.lastPlayedPack, SessionRestorer.Instance.lastPlayedLevel, PointSystem.CurrentPoints, Turns, IsWin);
             if (IsGameOver)
             {
                 GA.API.Design.NewEvent(string.Format("Game:{0}:Lose:Time", Gamefield.LevelDescription.Name), (float)(DateTime.UtcNow - Gamefield.GameStartTime).TotalSeconds);
@@ -68,6 +69,7 @@ namespace Game.GameMode
                 GA.API.Design.NewEvent(string.Format("Game:{0}:Win:Time", Gamefield.LevelDescription.Name), (float)(DateTime.UtcNow - Gamefield.GameStartTime).TotalSeconds);
                 GA.API.Design.NewEvent(string.Format("Game:{0}:Win:Points", Gamefield.LevelDescription.Name), PointSystem.CurrentPoints);
                 GA.API.Design.NewEvent(string.Format("Game:{0}:Win:Turns", Gamefield.LevelDescription.Name), PointSystem.CurrentPoints);
+               
                 InvokeWin();
                 return true;
             }

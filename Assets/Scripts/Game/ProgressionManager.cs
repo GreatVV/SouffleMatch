@@ -11,12 +11,12 @@ namespace Game
     {
         private static int _mana;
 
-        public static Action<int> ManaChanged;
+        public static event Action<int> ManaChanged;
 
         public static int Mana
         {
             get { return _mana; }
-            private set
+            set
             {
                 _mana = value;
                 if (ManaChanged != null)
@@ -41,6 +41,9 @@ namespace Game
             if (!string.IsNullOrEmpty(gameStatus))
             {
                 var json = new JSONObject(gameStatus);
+                Debug.Log("S:"+gameStatus);
+                Mana = (int)json["mana"].n;
+                
                 var packStatuses = json["packStatuses"];
                 if (packStatuses.type == JSONObject.Type.ARRAY)
                 {
@@ -56,7 +59,7 @@ namespace Game
                     Debug.LogWarning("Incorrect packstatuses: " + packStatuses);
                 }
 
-                Mana = Convert.ToInt32(json["mana"]);
+                
             }
             
 
@@ -74,22 +77,22 @@ namespace Game
         
         private static string SerializePackStatuses()
         {
-            var json = new JSONObject();
+            var json = new JSONObject(JSONObject.Type.ARRAY);
             foreach (var status in PackStatuses)
             {
-                json.Add(new JSONObject(status.Serialize()));
+                json.Add(status.Serialize());
             }
             return json.ToString();
         }
 
-        public static void RegisterLevelFinish(string packId, string levelId, int score, int turns, bool isWin)
+        public static void RegisterLevelFinish(int packId, int levelId, int score, int turns, bool isWin)
         {
             var pack = GetPackStatusById(packId);
             var level = pack.GetLevelById(levelId);
             level.Register(score, turns, isWin);
         }
 
-        private static LevelPackStatus GetPackStatusById(string packId)
+        private static LevelPackStatus GetPackStatusById(int packId)
         {
             var pack = PackStatuses.FirstOrDefault(x => x.PackId == packId);
             if (pack == null)
@@ -110,12 +113,14 @@ namespace Game
             var points = Object.FindObjectOfType<Points>();
             if (points)
             {
+                points.PointChangeDelta -= OnPointChangeDelta;
                 points.PointChangeDelta += OnPointChangeDelta;
             }
         }
 
         private static void OnPointChangeDelta(int delta)
         {
+            //Debug.Log("Changed: "+delta);
             Mana += delta;
         }
     }

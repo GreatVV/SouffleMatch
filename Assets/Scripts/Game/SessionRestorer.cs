@@ -14,7 +14,7 @@ namespace Game
         public Tutorial tutorialPrefab;
 
         private LevelManager levelManager;
-        private int lastPlayedPack;
+        public int lastPlayedPack;
 
         #region Events Subscribers
 
@@ -31,7 +31,7 @@ namespace Game
 
         private void OnLevelsAreReady()
         {
-            Debug.Log("Start: "+lastPlayedLevel);
+         //   Debug.Log("Start: "+lastPlayedLevel);
             StartLevel(lastPlayedPack,lastPlayedLevel);
         }
 

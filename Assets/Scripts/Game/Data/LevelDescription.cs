@@ -94,7 +94,7 @@ namespace Game.Data
 
         public static LevelDescription FromJson(JSONObject jsonObject)
         {
-            Debug.Log("Print: \n" + jsonObject);
+           // Debug.Log("Print: \n" + jsonObject);
             var serializedLevel = new LevelDescription();
             serializedLevel.Name = jsonObject.GetField("name").str;
 
