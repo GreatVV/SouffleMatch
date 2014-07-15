@@ -35,7 +35,7 @@ namespace Game.Data
 
         private JSONObject SerializeLevels()
         {
-            var j = new JSONObject();
+            var j = new JSONObject(JSONObject.Type.ARRAY);
             foreach (var levelStatus in LevelStatuses)
             {
                 j.Add(levelStatus.Serialize());

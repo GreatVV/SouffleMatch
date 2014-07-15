@@ -59,16 +59,16 @@ namespace Game
             return string.Format("profile_{0}_", profileName);
         }
 
+        public static string CurrentPrefix
+        {
+            get { return Instance == null? GetPrefix(defaultProfileName) : GetPrefix(Instance.Current); }
+        }
+
         public void Save()
         {
-            // Set current user profile
-            var prefix = string.Format("profile_{0}_", Current);
-
-            Debug.Log("Save Profile");
-
-            PlayerPrefs.SetString(string.Format("{0}_profile", prefix), Current);
-            SaveEconomy(prefix);
-            SavePlayer(prefix, Player.Instance.Serialize());
+            PlayerPrefs.SetString(CurrentPrefix+"_profile", Current);
+            SaveEconomy(CurrentPrefix);
+            SavePlayer(CurrentPrefix,Player.Instance.Serialize());
 
             PlayerPrefs.GetString("lastUsedProfile", Current);
 
@@ -85,15 +85,9 @@ namespace Game
             PlayerPrefs.SetString(string.Format("{0}_economy", prefix), Economy.Instance.Serialize().ToString());
         }
 
-        void OnApplicationQuit()
+        private void OnApplicationQuit()
         {
             Save();
-        }
-
-//    [MenuItem("Utils/Reset")]
-        public static void Reset()
-        {
-            PlayerPrefs.DeleteAll();
         }
     }
 }

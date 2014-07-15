@@ -51,7 +51,7 @@ namespace Game
 
             levelManager = GetComponent<LevelManager>();
 
-            lastPlayedLevel = PlayerPrefs.GetInt("LastPlayedLevelDescription", 0);
+            lastPlayedLevel = PlayerPrefs.GetInt(Profile.CurrentPrefix+"LastPlayedLevelDescription", 0);
 
             levelManager.LevelsAreReady += OnLevelsAreReady;
 
@@ -71,10 +71,13 @@ namespace Game
 
         private void OnApplicationPause()
         {
-            PlayerPrefs.SetInt("LastPlayedLevelDescription", lastPlayedLevel);
-            PlayerPrefs.Save();
+            if (ProgressionManager.Instance)
+            {
+                PlayerPrefs.SetInt(Profile.CurrentPrefix + "LastPlayedLevelDescription", lastPlayedLevel);
+                PlayerPrefs.Save();
 
-            ProgressionManager.SaveProgress();
+                ProgressionManager.Instance.SaveProgress();
+            }
         }
 
         #endregion

@@ -7,13 +7,13 @@ using Object = UnityEngine.Object;
 
 namespace Game
 {
-    public static class ProgressionManager
+    public class ProgressionManager : MonoBehaviour
     {
-        private static int _mana;
+        private int _mana;
 
-        public static event Action<int> ManaChanged;
+        public event Action<int> ManaChanged;
 
-        public static int Mana
+        public int Mana
         {
             get { return _mana; }
             set
@@ -26,17 +26,29 @@ namespace Game
             }
         }
 
-        public readonly static List<LevelPackStatus> PackStatuses;
+        public List<LevelPackStatus> PackStatuses;
+        public static ProgressionManager Instance;
 
-        static ProgressionManager()
+        void Awake()
         {
+            if (Instance)
+            {
+                Debug.Log("Instance of Progress manager already created");
+                Destroy(this);
+                return;
+            }
+
+            Instance = this;
             PackStatuses = new List<LevelPackStatus>();
+        }
+        void Start()
+        {
             LoadGameProgress();
         }
 
-        private static void LoadGameProgress()
+        private void LoadGameProgress()
         {
-            var gameStatus = PlayerPrefs.GetString("gameStatus", null);
+            var gameStatus = PlayerPrefs.GetString(Profile.CurrentPrefix+"gameStatus", null);
 
             if (!string.IsNullOrEmpty(gameStatus))
             {
@@ -65,39 +77,39 @@ namespace Game
 
         }
 
-        public static void SaveProgress()
+        public void SaveProgress()
         {
             var json = new JSONObject();
             json.AddField("mana", Mana);
             json.AddField("packStatuses", SerializePackStatuses());
-            PlayerPrefs.SetString("gameStatus", json.ToString());
-            Debug.Log("Saved progress: "+json);
+            PlayerPrefs.SetString(Profile.CurrentPrefix+"gameStatus", json.ToString());
+            Debug.Log("Saved progress: "+json.ToString());
             PlayerPrefs.Save();
         }
         
-        private static string SerializePackStatuses()
+        private JSONObject SerializePackStatuses()
         {
             var json = new JSONObject(JSONObject.Type.ARRAY);
             foreach (var status in PackStatuses)
             {
                 json.Add(status.Serialize());
             }
-            return json.ToString();
+            return json;
         }
 
-        public static void RegisterLevelFinish(int packId, int levelId, int score, int turns, bool isWin)
+        public void RegisterLevelFinish(int packId, int levelId, int score, int turns, bool isWin)
         {
             var pack = GetPackStatusById(packId);
             var level = pack.GetLevelById(levelId);
             level.Register(score, turns, isWin);
         }
 
-        private static LevelPackStatus GetPackStatusById(int packId)
+        private LevelPackStatus GetPackStatusById(int packId)
         {
             var pack = PackStatuses.FirstOrDefault(x => x.PackId == packId);
             if (pack == null)
             {
-                Debug.LogWarning("Can't find pack with id: "+packId);
+               // Debug.LogWarning("Can't find pack with id: "+packId);
                 var newPack = new LevelPackStatus()
                 {
                     PackId = packId
@@ -108,7 +120,7 @@ namespace Game
             return pack;
         }
 
-        public static void Init()
+        public void Init()
         {
             var points = Object.FindObjectOfType<Points>();
             if (points)
@@ -118,7 +130,7 @@ namespace Game
             }
         }
 
-        private static void OnPointChangeDelta(int delta)
+        private void OnPointChangeDelta(int delta)
         {
             //Debug.Log("Changed: "+delta);
             Mana += delta;

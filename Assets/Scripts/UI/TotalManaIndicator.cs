@@ -9,13 +9,13 @@ public class TotalManaIndicator : MonoBehaviour
 
 	void Start ()
 	{
-	    ProgressionManager.ManaChanged += OnMoneyChanged;
-        OnMoneyChanged(ProgressionManager.Mana);
+	    ProgressionManager.Instance.ManaChanged += OnMoneyChanged;
+        OnMoneyChanged(ProgressionManager.Instance.Mana);
 	}
 
     void OnDestroy()
     {
-        ProgressionManager.ManaChanged -= OnMoneyChanged;
+        ProgressionManager.Instance.ManaChanged -= OnMoneyChanged;
     }
 
     private void OnMoneyChanged(int money)

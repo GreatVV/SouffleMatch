@@ -55,7 +55,7 @@ namespace Game.GameMode
 
         public bool Check()
         {
-            ProgressionManager.RegisterLevelFinish(SessionRestorer.Instance.lastPlayedPack, SessionRestorer.Instance.lastPlayedLevel, PointSystem.CurrentPoints, Turns, IsWin);
+            ProgressionManager.Instance.RegisterLevelFinish(SessionRestorer.Instance.lastPlayedPack, SessionRestorer.Instance.lastPlayedLevel, PointSystem.CurrentPoints, Turns, IsWin);
             if (IsGameOver)
             {
                 GA.API.Design.NewEvent(string.Format("Game:{0}:Lose:Time", Gamefield.LevelDescription.Name), (float)(DateTime.UtcNow - Gamefield.GameStartTime).TotalSeconds);
