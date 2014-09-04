@@ -1,6 +1,5 @@
 ﻿using UnityEngine;
 
-[RequireComponent(typeof(Animator))]
 [RequireComponent(typeof(UIPanel))]
 public abstract class Window : MonoBehaviour
 {
@@ -8,7 +7,6 @@ public abstract class Window : MonoBehaviour
 
     private UIPanel _panel;
 
-    public Animator Animator;
     public int Depth
     {
         get { return _panel.depth; }
@@ -23,7 +21,6 @@ public abstract class Window : MonoBehaviour
     {
         _colliders = GetComponentsInChildren<Collider>();
         _panel = GetComponent<UIPanel>();
-        Animator = GetComponent<Animator>();
         OnAwake();
     }
 

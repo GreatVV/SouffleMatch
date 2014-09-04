@@ -1,13 +1,15 @@
 ﻿
+using UnityEngine.UI;
+
 public class Gameplay : Window
 {
     public Gamefield gamefield;
 
-    public UILabel PointsLabel;
+    public Text PointsLabel;
     // public UILabel TargetScoreLabel;
-    public UILabel TurnsLabel;
+    public Text TurnsLabel;
 
-    public TweenPosition pauseButtonTween;
+    //public TweenPosition pauseButtonTween;
 
     public void AddEventHandlers(Gamefield gamefield)
     {
@@ -65,13 +67,13 @@ public class Gameplay : Window
     protected override void OnHideWindow()
     {
         gamefield.IsPause = false;
-        pauseButtonTween.PlayForward();
+   //     pauseButtonTween.PlayForward();
     }
 
     protected override void OnShowWindow()
     {
         base.OnShowWindow();
-        pauseButtonTween.PlayReverse();
+      //  pauseButtonTween.PlayReverse();
         gamefield.IsPause = false;
     }
 }

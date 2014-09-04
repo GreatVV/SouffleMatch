@@ -1,6 +1,8 @@
 fileFormatVersion: 2
 guid: 3171465110427de4784a5235b3c3382a
 TextureImporter:
+  fileIDToRecycleName:
+    21300000: ekran_pobedy_shlyapa
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0

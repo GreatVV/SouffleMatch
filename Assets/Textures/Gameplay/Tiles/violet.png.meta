@@ -3,6 +3,8 @@ guid: 4d067ddd57d16e34daf69538671894c3
 labels:
 - Character
 TextureImporter:
+  fileIDToRecycleName:
+    21300000: violet
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0

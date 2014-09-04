@@ -1,6 +1,8 @@
 fileFormatVersion: 2
 guid: 06902f532a663bf448d1d27c79e743ed
 TextureImporter:
+  fileIDToRecycleName:
+    21300000: karp_bright
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0

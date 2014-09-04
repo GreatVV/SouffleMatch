@@ -148,7 +148,14 @@ public class Gamefield : MonoBehaviour
         GA.API.Design.NewEvent("Game:Localization:" + Localization.language);
         GA.API.Design.NewEvent("Game:SystemLocalization:" + Application.systemLanguage);
 
-        ProgressionManager.Instance.Init();
+        if (ProgressionManager.Instance)
+        {
+            ProgressionManager.Instance.Init();
+        }
+        else
+        {
+            Debug.LogWarning("Progress manager is null");
+        }
     }
 
     private void LateUpdate()

@@ -29,12 +29,6 @@ public class PanelManager : MonoBehaviour
         newWindow.Activate();
 
         FireWindowChanged(newWindow);
-
-        if (windowAnimator)
-        {
-            newWindow.Animator.runtimeAnimatorController = windowAnimator;
-            newWindow.Animator.SetBool("Close", false);
-        }
     }
 
     public static void Show(Window window, bool dropAllOtherWindows = false)

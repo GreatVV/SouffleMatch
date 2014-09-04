@@ -1,6 +1,8 @@
 fileFormatVersion: 2
 guid: 390b3aa195cd4ee4db92a90058a24ce9
 TextureImporter:
+  fileIDToRecycleName:
+    21300000: cherep
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0

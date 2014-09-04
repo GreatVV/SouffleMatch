@@ -7,6 +7,7 @@ using Object = UnityEngine.Object;
 
 namespace Game
 {
+    [ExecuteInEditMode]
     public class ProgressionManager : MonoBehaviour
     {
         private int _mana;

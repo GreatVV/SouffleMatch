@@ -1,13 +1,10 @@
-﻿using System.Collections.Generic;
-using System.Globalization;
-using System.Linq;
+﻿using System.Globalization;
 using UnityEngine;
-using System.Collections;
+using UnityEngine.UI;
 
 public class FlyingPoints : MonoBehaviour
 {
-
-    [SerializeField] private UILabel amountLabel;
+    [SerializeField] private Text amountLabel;
 
     public void Init(int points)
     {

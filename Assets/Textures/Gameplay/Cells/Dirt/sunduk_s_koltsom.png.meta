@@ -1,6 +1,8 @@
 fileFormatVersion: 2
 guid: abd1b5f98c0d84c4f8fd58bbe3e69472
 TextureImporter:
+  fileIDToRecycleName:
+    21300000: sunduk_s_koltsom
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0

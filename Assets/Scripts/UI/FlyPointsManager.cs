@@ -16,7 +16,7 @@ public class FlyPointsManager : MonoBehaviour
     [SerializeField] private List<Transform> _targets = new List<Transform>();
     [SerializeField] private Gamefield gamefield = null;
 
-    public Camera UiCamera;
+    public Canvas Canvas;
 
     public FlyingLabelPool Pool;
 
@@ -43,7 +43,14 @@ public class FlyPointsManager : MonoBehaviour
             var center = new Vector2((minx + maxx)/2f, (miny + maxy)/2f);
             label.transform.position = UiCamera.ScreenPointToRay(Camera.main.WorldToScreenPoint(center)).GetPoint(0);
             */
-            label.transform.position = UiCamera.ScreenPointToRay(Camera.main.WorldToScreenPoint(comb.First().transform.position)).GetPoint(0);
+            var rectTransform = label.GetComponent<RectTransform>();
+            var screenPos = Camera.main.WorldToScreenPoint(comb.First().transform.position);
+            var size = rectTransform.anchorMax - rectTransform.anchorMin;
+            //label.transform.position = Camera.main.WorldToScreenPoint(comb.First().transform.position);
+            //rectTransform.anchorMin = new Vector2(screenPos.x/Screen.width, screenPos.y/Screen.height);
+            //rectTransform.anchorMax = rectTransform.anchorMin + size;
+            rectTransform.position = screenPos;
+            rectTransform.sizeDelta = Vector2.zero;
             label.gameObject.SetActive(true);
             label.Init(points);
             iTween.MoveTo(label.gameObject,

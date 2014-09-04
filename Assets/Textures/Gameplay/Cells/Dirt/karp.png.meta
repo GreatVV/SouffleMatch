@@ -1,6 +1,8 @@
 fileFormatVersion: 2
 guid: 8ec827dd08e88ce4fb976cfdba9d10d0
 TextureImporter:
+  fileIDToRecycleName:
+    21300000: karp
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0

@@ -1,6 +1,8 @@
 fileFormatVersion: 2
 guid: cfa836aa211cde64ebcacc97dda2021b
 TextureImporter:
+  fileIDToRecycleName:
+    21300000: pergament_2
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0

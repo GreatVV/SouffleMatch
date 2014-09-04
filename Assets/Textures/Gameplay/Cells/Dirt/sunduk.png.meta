@@ -1,6 +1,8 @@
 fileFormatVersion: 2
 guid: 1e20adb9b6b8f4946bb96f6ed3efe195
 TextureImporter:
+  fileIDToRecycleName:
+    21300000: sunduk
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0

@@ -1,11 +1,12 @@
 ﻿using System.Globalization;
 using Game;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class TotalManaIndicator : MonoBehaviour
 {
     [SerializeField]
-    private UILabel label;
+    private Text label;
 
 	void Start ()
 	{

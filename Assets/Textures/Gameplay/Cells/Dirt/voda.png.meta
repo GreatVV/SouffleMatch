@@ -1,6 +1,8 @@
 fileFormatVersion: 2
 guid: 5dd182c1c97da89468577413ffc6d684
 TextureImporter:
+  fileIDToRecycleName:
+    21300000: voda
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0

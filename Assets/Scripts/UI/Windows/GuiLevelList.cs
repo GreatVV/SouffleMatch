@@ -10,7 +10,7 @@ public class GuiLevelList : Window
 
     public MapId mapIdPrefab;
 
-    public UITable grid;
+   // public UITable grid;
 
     public Dictionary<string, MapId> mapItems = new Dictionary<string, MapId>();
 
@@ -28,6 +28,11 @@ public class GuiLevelList : Window
 
     private void OnLevelsAreReady()
     {
+        if (!mapIdPrefab)
+        {
+            return;
+        }
+
         var packs = levelManager.LevelPackManager.Packs;
         for (int packIndex = 0; packIndex < packs.Count; packIndex++)
         {
@@ -36,7 +41,7 @@ public class GuiLevelList : Window
             {
                 var serializedLevel = levelManager.LevelPackManager.Packs[0].LoadedLevels[levelIndex];
                 var mapId = ((GameObject) Instantiate(mapIdPrefab.gameObject)).GetComponent<MapId>();
-                mapId.transform.parent = grid.transform;
+             //   mapId.transform.parent = grid.transform;
                 mapId.transform.localScale = Vector3.one;
                 mapId.name = string.Format("{0:00}", Convert.ToInt32(serializedLevel.Name));
                 mapId.Pack = packIndex;
@@ -50,14 +55,14 @@ public class GuiLevelList : Window
 
     void OnEnable()
     {
-        grid.Reposition();
+      //  grid.Reposition();
 
-        var size = NGUIMath.CalculateRelativeWidgetBounds(grid.transform);
+       // var size = NGUIMath.CalculateRelativeWidgetBounds(grid.transform);
             //((BoxCollider) mapIdPrefab.collider).size;
         //var rows = grid.children.Count / grid.columns;
 
         //Debug.Log("Box collider: " + size + "grid.columns: " + grid.columns + " scale: " + grid.transform.localScale);
-        transform.localPosition = new Vector3(-size.extents.x, size.extents.y, grid.transform.localPosition.z);
+     //   transform.localPosition = new Vector3(-size.extents.x, size.extents.y, grid.transform.localPosition.z);
         //Debug.Log("Transform: " + grid.transform.localPosition);
 
 

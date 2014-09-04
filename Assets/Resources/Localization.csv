@@ -1,5 +1,5 @@
 KEY,English,Russian
-Gameplay_Points,{0} mana of {1},Мана:{0}\nЦель: {1}
+Gameplay_Points,{0} mana of {1},Мана:  {0} из {1}
 Gameplay_Turns,Moves: {0},{0} ходов осталось
 FinalWindow_Restart,Restart,Заново
 FinalWindow_NextLevel,Next Level,Следующий уровень

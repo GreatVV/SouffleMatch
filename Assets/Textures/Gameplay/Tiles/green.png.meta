@@ -3,6 +3,8 @@ guid: f21cf4e0a64326c469feb060f1e9802f
 labels:
 - Character
 TextureImporter:
+  fileIDToRecycleName:
+    21300000: green
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0

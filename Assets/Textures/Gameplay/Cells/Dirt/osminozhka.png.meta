@@ -1,6 +1,8 @@
 fileFormatVersion: 2
 guid: 44f4d7cc7944fa244b4ee7c81ebfcf44
 TextureImporter:
+  fileIDToRecycleName:
+    21300000: osminozhka
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0

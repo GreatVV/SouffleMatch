@@ -1,6 +1,8 @@
-﻿public class WinPopup : Window
+﻿using UnityEngine.UI;
+
+public class WinPopup : Window
 {
-    public UILabel pointLabel;
+    public Text pointLabel;
 
     void OnMapClick()
     {
