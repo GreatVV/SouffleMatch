@@ -25,7 +25,6 @@ public class PanelManager : MonoBehaviour
         }
         windows.Add(newWindow);
         newWindow.gameObject.SetActive(true);
-        newWindow.Depth = windows.Count;
         newWindow.Activate();
 
         FireWindowChanged(newWindow);

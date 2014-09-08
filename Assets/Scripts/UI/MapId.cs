@@ -1,12 +1,12 @@
-﻿using System;
-using Game;
+﻿using Game;
 using UnityEngine;
+using UnityEngine.UI;
 
 [ExecuteInEditMode]
 public class MapId : MonoBehaviour
 {
-    public int Pack;
     public int Index;
+    public int Pack;
     public GameObject currentLevelParticle;
     private GameObject effect;
 
@@ -14,7 +14,7 @@ public class MapId : MonoBehaviour
 
     public void OnClick()
     {
-        SessionRestorer.Instance.StartLevel(Pack,Index);
+        SessionRestorer.Instance.StartLevel(Pack, Index);
     }
 
     #endregion
@@ -24,7 +24,11 @@ public class MapId : MonoBehaviour
     public void Awake()
     {
         name = "0";
-        //UpdateName();
+    }
+
+    void Start()
+    {
+        GetComponent<Button>().onClick.AddListener(OnClick);
     }
 
     private void OnDisable()
@@ -39,7 +43,7 @@ public class MapId : MonoBehaviour
 
     public void UpdateName()
     {
-        transform.Search("Label", gameObject).GetComponent<UILabel>().text = name;
+        transform.GetComponentInChildren<Text>().text = name;
     }
 
     public void ShowCurrent()
@@ -48,5 +52,6 @@ public class MapId : MonoBehaviour
         effect.transform.parent = transform;
         effect.transform.localPosition = Vector3.zero;
         effect.transform.localScale = Vector3.one;
+        effect.particleSystem.renderer.sortingLayerName = LayerMask.LayerToName(5);
     }
 }

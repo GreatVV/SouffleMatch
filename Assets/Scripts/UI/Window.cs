@@ -1,26 +1,14 @@
 ﻿using UnityEngine;
 
-[RequireComponent(typeof(UIPanel))]
 public abstract class Window : MonoBehaviour
 {
     private Collider[] _colliders;
 
-    private UIPanel _panel;
-
-    public int Depth
-    {
-        get { return _panel.depth; }
-        set
-        {
-            _panel.depth = value;
-         //   Debug.Log("Set depth: "+value);
-        }
-    }
+    private RectTransform _panel;
 
     protected void Awake()
     {
         _colliders = GetComponentsInChildren<Collider>();
-        _panel = GetComponent<UIPanel>();
         OnAwake();
     }
 

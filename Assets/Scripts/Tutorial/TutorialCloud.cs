@@ -1,15 +1,16 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 
 namespace TutorialSpace
 {
     internal class TutorialCloud : MonoBehaviour
     {
         [SerializeField]
-        private UILabel label;
+        private Text label;
 
         [SerializeField] private Camera currentCamera;
 
-        [SerializeField] private UI2DSprite cloudSprite;
+        [SerializeField] private Image cloudSprite;
 
 
         public void SetText(string text)
@@ -19,8 +20,8 @@ namespace TutorialSpace
 
         public void SetPosition(Vector3 positionInScreenCoordinate)
         {
-            var width = cloudSprite.width;
-            var height = cloudSprite.height;
+            var width = cloudSprite.rectTransform.rect.width;
+            var height = cloudSprite.rectTransform.rect.height;
 
             var targetPosition = currentCamera.ScreenToWorldPoint(positionInScreenCoordinate);
 

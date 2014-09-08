@@ -29,10 +29,17 @@ public class Gamefield : MonoBehaviour
     [HideInInspector] public GameOverState GameOverState = null;
     [HideInInspector] public RemoveCombinationState RemoveState = null;
     [HideInInspector] public WinState WinState = null;
+    [HideInInspector] public PauseState PauseState = null;
 
     private GamefieldState _currentState;
     private bool _isPause;
+    public static Gamefield Instance;
 
+
+    public GamefieldState CurrentState
+    {
+        get { return _currentState; }
+    }
     #endregion
 
     public string LevelName
@@ -158,6 +165,16 @@ public class Gamefield : MonoBehaviour
         }
     }
 
+    void Awake()
+    {
+        if (Instance)
+        {
+            Destroy(gameObject);
+            return;
+        }
+        Instance = this;
+    }
+
     private void LateUpdate()
     {
         if (_currentState != null && !IsPause)
@@ -169,6 +186,10 @@ public class Gamefield : MonoBehaviour
     private void OnDestroy()
     {
         RemoveEventHandlers();
+        if (Instance == this)
+        {
+            Instance = null;
+        }
     }
 
     private void Update()
@@ -243,6 +264,12 @@ public class Gamefield : MonoBehaviour
 
         FieldState = gameObject.AddComponent<FieldState>();
 
+        if (PauseState)
+        {
+            DestroyImmediate(PauseState);
+        }
+        PauseState = gameObject.AddComponent<PauseState>();
+
         GameMode = GameModeFactory.CreateGameMode(LevelDescription.Condition.GameMode);
 
         PointSystem.Reset();
@@ -252,6 +279,9 @@ public class Gamefield : MonoBehaviour
 
         Level.Gamefield = this;
         Level.InitFromFile(LevelDescription.Field);
+
+        //Level.Gamefield.transform.localScale = Vector3.zero;
+        //iTween.ScaleTo(Level.Gamefield.gameObject, Vector3.one, 0.5f);
 
         AddEventHandlers();
         InvokeGameStarted();

@@ -1,13 +1,14 @@
 ﻿#region
 
 using UnityEngine;
+using UnityEngine.UI;
 
 #endregion
 
 public class PopupStar : MonoBehaviour
 {
-    public UISprite Active;
-    public UISprite InActive;
+    public Image Active;
+    public Image InActive;
 
     public bool IsActive;
 

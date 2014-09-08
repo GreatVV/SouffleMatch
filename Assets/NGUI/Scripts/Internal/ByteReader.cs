@@ -173,13 +173,13 @@ public class ByteReader
 		return dict;
 	}
 
-	static BetterList<string> mTemp = new BetterList<string>();
+	static List<string> mTemp = new List<string>();
 
 	/// <summary>
 	/// Read a single line of Comma-Separated Values from the file.
 	/// </summary>
 
-	public BetterList<string> ReadCSV ()
+	public List<string> ReadCSV ()
 	{
 		mTemp.Clear();
 		string line = "";

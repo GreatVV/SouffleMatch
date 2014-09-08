@@ -1,21 +1,19 @@
 ﻿using UnityEngine;
-using System.Collections;
+using UnityEngine.UI;
 
-[RequireComponent(typeof(UILabel))]
+[RequireComponent(typeof (Text))]
 public class CurrentLevelLabel : MonoBehaviour
 {
+    [SerializeField] private Gamefield gamefield;
+    private Text label;
 
-    private UILabel label;
-    [SerializeField]
-    private Gamefield gamefield;
-
-    void Awake()
+    private void Awake()
     {
-        label = GetComponent<UILabel>();
+        label = GetComponent<Text>();
         gamefield.GameStarted += OnGameStarted;
     }
 
-    void OnDestroy()
+    private void OnDestroy()
     {
         gamefield.GameStarted -= OnGameStarted;
     }

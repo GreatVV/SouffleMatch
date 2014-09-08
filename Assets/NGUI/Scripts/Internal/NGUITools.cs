@@ -180,7 +180,7 @@ static public class NGUITools
 		return GameObject.FindObjectsOfType(typeof(T)) as T[];
 #endif
 	}
-
+    /*
 	/// <summary>
 	/// Find the camera responsible for drawing the objects on the specified layer.
 	/// </summary>
@@ -248,7 +248,7 @@ static public class NGUITools
 		}
 		return null;
 	}
-
+    
 	/// <summary>
 	/// Adjust the widget's collider based on the depth of the widgets, as well as the widget's dimensions.
 	/// </summary>
@@ -307,7 +307,7 @@ static public class NGUITools
 #endif
 		}
 	}
-
+    */
 	/// <summary>
 	/// Helper function that returns the string name of the type.
 	/// </summary>
@@ -417,7 +417,7 @@ static public class NGUITools
 		}
 		return go;
 	}
-
+    /*
 	/// <summary>
 	/// Calculate the game object's depth based on the widgets within, and also taking panel depth into consideration.
 	/// </summary>
@@ -439,7 +439,7 @@ static public class NGUITools
 		}
 		return depth;
 	}
-
+    
 	/// <summary>
 	/// Gathers all widgets and calculates the depth for the next widget.
 	/// </summary>
@@ -474,7 +474,7 @@ static public class NGUITools
 		}
 		return CalculateNextDepth(go);
 	}
-
+    
 	/// <summary>
 	/// Adjust the widgets' depth by the specified value.
 	/// Returns '0' if nothing was adjusted, '1' if panels were adjusted, and '2' if widgets were adjusted.
@@ -517,7 +517,7 @@ static public class NGUITools
 		}
 		return 0;
 	}
-
+    
 	/// <summary>
 	/// Bring all of the widgets on the specified object forward.
 	/// </summary>
@@ -528,7 +528,7 @@ static public class NGUITools
 		if (val == 1) NormalizePanelDepths();
 		else if (val == 2) NormalizeWidgetDepths();
 	}
-
+    
 	/// <summary>
 	/// Push all of the widgets on the specified object back, making them appear behind everything else.
 	/// </summary>
@@ -539,7 +539,7 @@ static public class NGUITools
 		if (val == 1) NormalizePanelDepths();
 		else if (val == 2) NormalizeWidgetDepths();
 	}
-
+    
 	/// <summary>
 	/// Normalize the depths of all the widgets and panels in the scene, making them start from 0 and remain in order.
 	/// </summary>
@@ -615,7 +615,7 @@ static public class NGUITools
 			}
 		}
 	}
-
+    
 	/// <summary>
 	/// Create a new UI.
 	/// </summary>
@@ -745,7 +745,7 @@ static public class NGUITools
 		}
 		return panel;
 	}
-
+    */
 	/// <summary>
 	/// Helper function that recursively sets all children with widgets' game objects layers to the specified value.
 	/// </summary>
@@ -781,7 +781,7 @@ static public class NGUITools
 		go.name = GetTypeName<T>();
 		return go.AddComponent<T>();
 	}
-
+    /*
 	/// <summary>
 	/// Add a new widget of specified type.
 	/// </summary>
@@ -798,7 +798,7 @@ static public class NGUITools
 		widget.gameObject.layer = go.layer;
 		return widget;
 	}
-
+    
 	/// <summary>
 	/// Add a sprite appropriate for the specified atlas sprite.
 	/// It will be sliced if the sprite has an inner rect, and a regular sprite otherwise.
@@ -813,7 +813,7 @@ static public class NGUITools
 		sprite.spriteName = spriteName;
 		return sprite;
 	}
-
+    */
 	/// <summary>
 	/// Get the rootmost object of the specified game object.
 	/// </summary>
@@ -1022,9 +1022,9 @@ static public class NGUITools
 	/// SetActiveRecursively enables children before parents. This is a problem when a widget gets re-enabled
 	/// and it tries to find a panel on its parent.
 	/// </summary>
-
+    /*
 	static public void SetActive (GameObject go, bool state) { SetActive(go, state, true); }
-
+    
 	/// <summary>
 	/// SetActiveRecursively enables children before parents. This is a problem when a widget gets re-enabled
 	/// and it tries to find a panel on its parent.
@@ -1045,7 +1045,7 @@ static public class NGUITools
 			else Deactivate(go.transform);
 		}
 	}
-
+    
 	/// <summary>
 	/// Ensure that all widgets have had their panels created, forcing the update right away rather than on the following frame.
 	/// </summary>
@@ -1059,7 +1059,7 @@ static public class NGUITools
 		for (int i = 0, imax = t.childCount; i < imax; ++i)
 			CallCreatePanel(t.GetChild(i));
 	}
-
+    */
 	/// <summary>
 	/// Activate or deactivate children of the specified game object without changing the active state of the object itself.
 	/// </summary>
@@ -1167,7 +1167,7 @@ static public class NGUITools
 		v.z = Mathf.Round(v.z);
 		return v;
 	}
-
+    /*
 	/// <summary>
 	/// Make the specified selection pixel-perfect.
 	/// </summary>
@@ -1190,7 +1190,7 @@ static public class NGUITools
 		for (int i = 0, imax = t.childCount; i < imax; ++i)
 			MakePixelPerfect(t.GetChild(i));
 	}
-
+    
 	/// <summary>
 	/// Save the specified binary data into the specified file.
 	/// </summary>
@@ -1227,7 +1227,7 @@ static public class NGUITools
 		return true;
 #endif
 	}
-
+    */
 	/// <summary>
 	/// Load all binary data from the specified file.
 	/// </summary>
@@ -1263,7 +1263,7 @@ static public class NGUITools
 		}
 		return c;
 	}
-
+    /*
 	/// <summary>
 	/// Inform all widgets underneath the specified object that the parent has changed.
 	/// </summary>
@@ -1274,7 +1274,7 @@ static public class NGUITools
 		for (int i = 0, imax = rects.Length; i < imax; ++i)
 			rects[i].ParentHasChanged();
 	}
-
+    */
 	/// <summary>
 	/// Access to the clipboard via undocumented APIs.
 	/// </summary>
@@ -1295,15 +1295,6 @@ static public class NGUITools
 			te.Copy();
 		}
 	}
-
-	[System.Obsolete("Use NGUIText.EncodeColor instead")]
-	static public string EncodeColor (Color c) { return NGUIText.EncodeColor(c); }
-
-	[System.Obsolete("Use NGUIText.ParseColor instead")]
-	static public Color ParseColor (string text, int offset) { return NGUIText.ParseColor(text, offset); }
-
-	[System.Obsolete("Use NGUIText.StripSymbols instead")]
-	static public string StripSymbols (string text) { return NGUIText.StripSymbols(text); }
 
 	/// <summary>
 	/// Extension for the game object that checks to see if the component already exists before adding a new one.

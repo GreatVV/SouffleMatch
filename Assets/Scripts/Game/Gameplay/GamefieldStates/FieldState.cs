@@ -11,6 +11,32 @@ using UnityEngine;
 namespace GamefieldStates
 {
     [Serializable]
+    public class PauseState : GamefieldState
+    {
+        public GamefieldState PreviousState;
+
+        public override void OnEnter()
+        {
+            
+        }
+
+        public override void OnExit()
+        {
+            
+        }
+
+        public override void UpdateState()
+        {
+            
+        }
+
+        public override void LateUpdateState()
+        {
+            
+        }
+    }
+
+    [Serializable]
     public class FieldState : GamefieldState
     {
         void OnDestroy()
@@ -57,6 +83,8 @@ namespace GamefieldStates
         public float returnSpeed = 12f;
         public TipArrow tipArrow;
 
+        public bool IsWorking = true;
+        
         public bool IsTouching
         {
             get { return Input.GetMouseButton(0) || Input.touchCount > 0; }
@@ -227,6 +255,11 @@ namespace GamefieldStates
 
         public void UpdateState(IEnumerable<Chuzzle> draggableChuzzles)
         {
+            if (!IsWorking)
+            {
+                return;
+            }
+
             if (_isReturning)
             {
                 return;

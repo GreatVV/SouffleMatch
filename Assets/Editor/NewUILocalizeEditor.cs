@@ -15,7 +15,7 @@ using System.Collections.Generic;
 #endif
 public class NewUILocalizeEditor : Editor
 {
-	BetterList<string> mKeys;
+	List<string> mKeys;
 
 	void OnEnable ()
 	{
@@ -23,7 +23,7 @@ public class NewUILocalizeEditor : Editor
 
 		if (dict.Count > 0)
 		{
-			mKeys = new BetterList<string>();
+			mKeys = new List<string>();
 
 			foreach (KeyValuePair<string, string[]> pair in dict)
 			{
@@ -39,11 +39,11 @@ public class NewUILocalizeEditor : Editor
 		serializedObject.Update();
 		
 		GUILayout.Space(6f);
-		NGUIEditorTools.SetLabelWidth(80f);
+		EditorGUIUtility.labelWidth = 80f;
 
 		GUILayout.BeginHorizontal();
 		// Key not found in the localization file -- draw it as a text field
-		SerializedProperty sp = NGUIEditorTools.DrawProperty("Key", serializedObject, "key");
+        SerializedProperty sp = EditorUtils.DrawProperty("Key", serializedObject, "key");
 
 		string myKey = sp.stringValue;
 		bool isPresent = (mKeys != null) && mKeys.Contains(myKey);
@@ -61,9 +61,9 @@ public class NewUILocalizeEditor : Editor
 
 		if (isPresent)
 		{
-			if (NGUIEditorTools.DrawHeader("Preview"))
+            if (EditorUtils.DrawHeader("Preview"))
 			{
-				NGUIEditorTools.BeginContents();
+                EditorUtils.BeginContents();
 
 				string[] keys;
 				string[] values;
@@ -77,7 +77,7 @@ public class NewUILocalizeEditor : Editor
 
 						if (GUILayout.Button(values[i], "AS TextArea", GUILayout.MinWidth(80f), GUILayout.MaxWidth(Screen.width - 110f)))
 						{
-							(target as UILocalize).value = values[i];
+							(target as NewUILocalize).value = values[i];
 							GUIUtility.hotControl = 0;
 							GUIUtility.keyboardControl = 0;
 						}
@@ -89,7 +89,7 @@ public class NewUILocalizeEditor : Editor
 					GUILayout.Label("No preview available");
 				}
 
-				NGUIEditorTools.EndContents();
+                EditorUtils.EndContents();
 			}
 		}
 		else if (mKeys != null && !string.IsNullOrEmpty(myKey))
@@ -101,7 +101,7 @@ public class NewUILocalizeEditor : Editor
 
 			int matches = 0;
 
-			for (int i = 0; i < mKeys.size; ++i)
+			for (int i = 0; i < mKeys.Count; ++i)
 			{
 				if (mKeys[i].StartsWith(myKey, System.StringComparison.OrdinalIgnoreCase) || mKeys[i].Contains(myKey))
 				{
@@ -131,4 +131,175 @@ public class NewUILocalizeEditor : Editor
 		
 		serializedObject.ApplyModifiedProperties();
 	}
+}
+
+public class EditorUtils
+{
+    /// <summary>
+    /// Helper function that draws a serialized property.
+    /// </summary>
+
+    static public SerializedProperty DrawProperty(SerializedObject serializedObject, string property, params GUILayoutOption[] options)
+    {
+        return DrawProperty(null, serializedObject, property, false, options);
+    }
+
+    /// <summary>
+    /// Helper function that draws a serialized property.
+    /// </summary>
+
+    static public SerializedProperty DrawProperty(string label, SerializedObject serializedObject, string property, params GUILayoutOption[] options)
+    {
+        return DrawProperty(label, serializedObject, property, false, options);
+    }
+
+    /// <summary>
+    /// Helper function that draws a serialized property.
+    /// </summary>
+
+    static public SerializedProperty DrawPaddedProperty(SerializedObject serializedObject, string property, params GUILayoutOption[] options)
+    {
+        return DrawProperty(null, serializedObject, property, true, options);
+    }
+
+    /// <summary>
+    /// Helper function that draws a serialized property.
+    /// </summary>
+
+    static public SerializedProperty DrawPaddedProperty(string label, SerializedObject serializedObject, string property, params GUILayoutOption[] options)
+    {
+        return DrawProperty(label, serializedObject, property, true, options);
+    }
+
+    /// <summary>
+    /// Helper function that draws a serialized property.
+    /// </summary>
+
+    static public SerializedProperty DrawProperty(string label, SerializedObject serializedObject, string property, bool padding, params GUILayoutOption[] options)
+    {
+        SerializedProperty sp = serializedObject.FindProperty(property);
+
+        if (sp != null)
+        {
+            if (padding) EditorGUILayout.BeginHorizontal();
+
+            if (label != null) EditorGUILayout.PropertyField(sp, new GUIContent(label), options);
+            else EditorGUILayout.PropertyField(sp, options);
+
+            if (padding)
+            {
+                GUILayout.Space(18f);
+                EditorGUILayout.EndHorizontal();
+            }
+        }
+        return sp;
+    }
+
+    /// <summary>
+    /// Helper function that draws a serialized property.
+    /// </summary>
+
+    static public void DrawProperty(string label, SerializedProperty sp, params GUILayoutOption[] options)
+    {
+        DrawProperty(label, sp, true, options);
+    }
+
+    /// <summary>
+    /// Helper function that draws a serialized property.
+    /// </summary>
+
+    static public void DrawProperty(string label, SerializedProperty sp, bool padding, params GUILayoutOption[] options)
+    {
+        if (sp != null)
+        {
+            if (padding) EditorGUILayout.BeginHorizontal();
+
+            if (label != null) EditorGUILayout.PropertyField(sp, new GUIContent(label), options);
+            else EditorGUILayout.PropertyField(sp, options);
+
+            if (padding)
+            {
+                GUILayout.Space(18f);
+                EditorGUILayout.EndHorizontal();
+            }
+        }
+    }
+
+    /// <summary>
+    /// Draw a distinctly different looking header label
+    /// </summary>
+
+    static public bool DrawHeader(string text) { return DrawHeader(text, text, false); }
+
+    /// <summary>
+    /// Draw a distinctly different looking header label
+    /// </summary>
+
+    static public bool DrawHeader(string text, string key) { return DrawHeader(text, key, false); }
+
+    /// <summary>
+    /// Draw a distinctly different looking header label
+    /// </summary>
+
+    static public bool DrawHeader(string text, bool forceOn) { return DrawHeader(text, text, forceOn); }
+
+    /// <summary>
+    /// Draw a distinctly different looking header label
+    /// </summary>
+
+    static public bool DrawHeader(string text, string key, bool forceOn)
+    {
+        bool state = EditorPrefs.GetBool(key, true);
+
+        GUILayout.Space(3f);
+        if (!forceOn && !state) GUI.backgroundColor = new Color(0.8f, 0.8f, 0.8f);
+        GUILayout.BeginHorizontal();
+        GUILayout.Space(3f);
+
+        GUI.changed = false;
+#if UNITY_3_5
+		if (state) text = "\u25B2 " + text;
+		else text = "\u25BC " + text;
+		if (!GUILayout.Toggle(true, text, "dragtab", GUILayout.MinWidth(20f))) state = !state;
+#else
+        text = "<b><size=11>" + text + "</size></b>";
+        if (state) text = "\u25B2 " + text;
+        else text = "\u25BC " + text;
+        if (!GUILayout.Toggle(true, text, "dragtab", GUILayout.MinWidth(20f))) state = !state;
+#endif
+        if (GUI.changed) EditorPrefs.SetBool(key, state);
+
+        GUILayout.Space(2f);
+        GUILayout.EndHorizontal();
+        GUI.backgroundColor = Color.white;
+        if (!forceOn && !state) GUILayout.Space(3f);
+        return state;
+    }
+
+    /// <summary>
+    /// Begin drawing the content area.
+    /// </summary>
+
+    static public void BeginContents()
+    {
+        GUILayout.BeginHorizontal();
+        GUILayout.Space(4f);
+        EditorGUILayout.BeginHorizontal("AS TextArea", GUILayout.MinHeight(10f));
+        GUILayout.BeginVertical();
+        GUILayout.Space(2f);
+    }
+
+    /// <summary>
+    /// End drawing the content area.
+    /// </summary>
+
+    static public void EndContents()
+    {
+        GUILayout.Space(3f);
+        GUILayout.EndVertical();
+        EditorGUILayout.EndHorizontal();
+        GUILayout.Space(3f);
+        GUILayout.EndHorizontal();
+        GUILayout.Space(3f);
+    }
 }

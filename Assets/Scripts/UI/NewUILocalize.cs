@@ -83,10 +83,26 @@ public class NewUILocalize : MonoBehaviour
         if (string.IsNullOrEmpty(key))
         {
             var lbl = GetComponent<Text>();
-            if (lbl != null) key = lbl.text;
+            if (lbl != null)
+            {
+                key = lbl.text;
+            }
         }
 
         // If we still don't have a key, leave the value as blank
-        if (!string.IsNullOrEmpty(key)) value = Localization.Get(key);
+        if (!string.IsNullOrEmpty(key))
+        {
+            value = Localization.Get(key);
+        }
+    }
+
+    void Update()
+    {
+#if UNITY_EDITOR
+        if (!Application.isPlaying)
+        {
+            OnLocalize();
+        }
+#endif
     }
 }

@@ -278,10 +278,10 @@ public class Localization : MonoBehaviour
 		ByteReader reader = new ByteReader(asset);
 
 		// The first line should contain "KEY", followed by languages.
-		BetterList<string> temp = reader.ReadCSV();
+		List<string> temp = reader.ReadCSV();
 
 		// There must be at least two columns in a valid CSV file
-		if (temp.size < 2) return false;
+		if (temp.Count < 2) return false;
 
 		// The first entry must be 'KEY', capitalized
 		temp[0] = "KEY";
@@ -297,7 +297,7 @@ public class Localization : MonoBehaviour
 		else
 #endif
 		{
-			knownLanguages = new string[temp.size - 1];
+			knownLanguages = new string[temp.Count - 1];
 			for (int i = 0; i < knownLanguages.Length; ++i)
 				knownLanguages[i] = temp[i + 1];
 		}
@@ -335,7 +335,7 @@ public class Localization : MonoBehaviour
 					mLanguageIndex = i;
 					mLanguage = language;
 					PlayerPrefs.SetString("Language", mLanguage);
-					UIRoot.Broadcast("OnLocalize");
+					//UIRoot.Broadcast("OnLocalize");
 					return true;
 				}
 			}
@@ -347,11 +347,11 @@ public class Localization : MonoBehaviour
 	/// Helper function that adds a single line from a CSV file to the localization list.
 	/// </summary>
 
-	static void AddCSV (BetterList<string> values)
+	static void AddCSV (List<string> values)
 	{
-		if (values.size < 2) return;
-		string[] temp = new string[values.size - 1];
-		for (int i = 1; i < values.size; ++i) temp[i - 1] = values[i];
+		if (values.Count < 2) return;
+		string[] temp = new string[values.Count - 1];
+		for (int i = 1; i < values.Count; ++i) temp[i - 1] = values[i];
 		mDictionary.Add(values[0], temp);
 	}
 
@@ -370,7 +370,7 @@ public class Localization : MonoBehaviour
 		localizationHasBeenSet = false;
 		mLanguageIndex = -1;
 		knownLanguages = new string[] { languageName };
-		UIRoot.Broadcast("OnLocalize");
+	//	UIRoot.Broadcast("OnLocalize");
 	}
 
 	/// <summary>
