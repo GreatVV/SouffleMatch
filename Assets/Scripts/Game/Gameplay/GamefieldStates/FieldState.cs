@@ -11,34 +11,12 @@ using UnityEngine;
 namespace GamefieldStates
 {
     [Serializable]
-    public class PauseState : GamefieldState
+    public class FieldState : GameState
     {
-        public GamefieldState PreviousState;
-
-        public override void OnEnter()
+        public FieldState(Gamefield gamefield) : base(gamefield)
         {
-            
         }
 
-        public override void OnExit()
-        {
-            
-        }
-
-        public override void UpdateState()
-        {
-            
-        }
-
-        public override void LateUpdateState()
-        {
-            
-        }
-    }
-
-    [Serializable]
-    public class FieldState : GamefieldState
-    {
         void OnDestroy()
         {
             TilesCollection.AnimationFinished -= OnAnimationFinished;
@@ -198,7 +176,7 @@ namespace GamefieldStates
                 {
                     c.MoveTo = c.Current = c.Real;
                 }
-                Gamefield.SwitchStateTo(Gamefield.CheckSpecialState);
+                Gamefield.SwitchStateTo(Gamefield.PowerUpAnalyzeState);
                 Reset();
             }
             else
@@ -677,7 +655,7 @@ namespace GamefieldStates
 
                 foreach (Chuzzle chuzzle in Gamefield.Level.Chuzzles)
                 {
-                    chuzzle.AnimateMoveTo(chuzzle.MoveTo.Position, 0.1f);
+                    ChuzzleMover.Instance.MoveTo(chuzzle, chuzzle.transform.position,chuzzle.MoveTo.Position, 0.1f);
                 }
 
                 CheckAnimationCompleted();

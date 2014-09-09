@@ -24,20 +24,19 @@ public class Gamefield : MonoBehaviour
 
     #region State
 
-    [HideInInspector] public CheckSpecialState CheckSpecialState = null;
-    [HideInInspector] public CreateNewChuzzlesState CreateNewChuzzlesState = null;
-    [HideInInspector] public FieldState FieldState = null;
-    [HideInInspector] public GameOverState GameOverState = null;
-    [HideInInspector] public RemoveCombinationState RemoveState = null;
-    [HideInInspector] public WinState WinState = null;
-    [HideInInspector] public PauseState PauseState = null;
+    public PowerUpAnalyzeState PowerUpAnalyzeState = null;
+    public CreateState CreateState = null;
+    public FieldState FieldState = null;
+    public GameOverState GameOverState = null;
+    public DeleteState RemoveState = null;
+    public WinState WinState = null;
 
-    private GamefieldState _currentState;
+    private GameState _currentState;
     private bool _isPause;
     public static Gamefield Instance;
 
 
-    public GamefieldState CurrentState
+    public GameState CurrentState
     {
         get { return _currentState; }
     }
@@ -209,7 +208,7 @@ public class Gamefield : MonoBehaviour
     }
 
 
-    public void SwitchStateTo(GamefieldState newState)
+    public void SwitchStateTo(GameState newState)
     {
         //Debug.Log("Old state: "+_currentState);
         if (_currentState != null)
@@ -224,75 +223,37 @@ public class Gamefield : MonoBehaviour
     public void Init()
     {
         //Debug.Log("Init");
+        
+        ChuzzleMover.Instance = new ChuzzleMover();
 
-        if (CheckSpecialState)
-        {
-            DestroyImmediate(CheckSpecialState);
-        }
-        CheckSpecialState = gameObject.AddComponent<CheckSpecialState>();
-
-        if (CreateNewChuzzlesState)
-        {
-            DestroyImmediate(CreateNewChuzzlesState);
-        }
-        CreateNewChuzzlesState = gameObject.AddComponent<CreateNewChuzzlesState>();
-
-        if (RemoveState)
-        {
-            DestroyImmediate(RemoveState);
-        }
-        RemoveState = gameObject.AddComponent<RemoveCombinationState>();
-
-        if (GameOverState)
-        {
-            DestroyImmediate(GameOverState); 
-        }
-        GameOverState = gameObject.AddComponent<GameOverState>();
-
-        if (WinState)
-        {
-            DestroyImmediate(WinState);
-        }
-        WinState = gameObject.AddComponent<WinState>();
-
-        if (FieldState)
-        {
-            DestroyImmediate(FieldState);
-        }
-
-        FieldState = gameObject.AddComponent<FieldState>();
-
-        if (PauseState)
-        {
-            DestroyImmediate(PauseState);
-        }
-        PauseState = gameObject.AddComponent<PauseState>();
-        Debug.Log("All ok 1");
+        PowerUpAnalyzeState = new PowerUpAnalyzeState(this);
+        CreateState = new CreateState(this);
+        RemoveState = new DeleteState(this);
+        GameOverState = new GameOverState(this);
+        WinState = new WinState(this);
+        FieldState = new FieldState(this);
         GameMode = GameModeFactory.CreateGameMode(LevelDescription.Condition.GameMode);
-        Debug.Log("All ok 2: "+ManaManagerSystem+":LOL");
         if (!ManaManagerSystem)
         {
             ManaManagerSystem = FindObjectOfType<ManaManager>();
         }
         ManaManagerSystem.Reset();
         ManaManagerSystem.TargetPoints = GameMode.TargetPoints;
-        Debug.Log("All ok 3");
         GameMode.Init(this);
-        Debug.Log("All ok 4");
+
         Level.Gamefield = this;
         Level.InitFromFile(LevelDescription.Field);
-        Debug.Log("All ok 5");
         //Level.Gamefield.transform.localScale = Vector3.zero;
         //iTween.ScaleTo(Level.Gamefield.gameObject, Vector3.one, 0.5f);
 
         AddEventHandlers();
         InvokeGameStarted();
-        Debug.Log("All ok 6");
+
         if (CenterCameraOnField.Instance)
         {
             CenterCameraOnField.Instance.CenterCameraOnChuzzles(Level.Chuzzles,true);
         }
         
-        SwitchStateTo(CheckSpecialState);
+        SwitchStateTo(PowerUpAnalyzeState);
     }
 }

@@ -37,12 +37,11 @@ MonoBehaviour:
   PasswordConfirm: 
   EmailOptIn: 1
   EmailGA: marinegreatvv@yahoo.com
-  PasswordGA: way580ten356
   IntroScreen: 0
   DebugMode: 0
   DebugAddEvent: 0
   SendExampleGameDataToMyGame: 0
-  RunInEditorPlayMode: 0
+  RunInEditorPlayMode: 1
   UseBundleVersion: 0
   AllowRoaming: 1
   ArchiveData: 1
@@ -59,9 +58,9 @@ MonoBehaviour:
   TimePlayed: 300
   Sessions: 1
   Trigger_AdsEnabled: 0
-  Trigger_AdsEnabled_network: 0
+  Trigger_AdsEnabled_network: 1
   Trigger_SceneChange: 1
-  Trigger_SceneChange_network: 0
+  Trigger_SceneChange_network: 1
   IAD_foldout: 1
   IAD_enabled: 1
   CB_enabled: 0
@@ -72,7 +71,7 @@ MonoBehaviour:
   CB_foldout: 1
   CB_appID: 
   CB_appSig: 
-  CurrentInspectorState: 3
+  CurrentInspectorState: 1
   ClosedHints: 
   DisplayHints: 0
   DisplayHintsScrollState: {x: 0, y: 0}

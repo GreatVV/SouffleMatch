@@ -5,11 +5,15 @@ using UnityEngine;
 namespace GamefieldStates
 {
     [Serializable]
-    public class WinState : GamefieldState
+    public class WinState : GameState
     {
         public GameObject TileReplaceEffect;
 
         #region Event Handlers
+
+        public WinState(Gamefield gamefield) : base(gamefield)
+        {
+        }
 
         public override void OnEnter()
         {

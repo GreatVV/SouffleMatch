@@ -3,9 +3,13 @@
 namespace GamefieldStates
 {
     [Serializable]
-    public class GameOverState : GamefieldState
+    public class GameOverState : GameState
     {
         #region Event Handlers
+
+        public GameOverState(Gamefield gamefield) : base(gamefield)
+        {
+        }
 
         public override void OnEnter()
         {

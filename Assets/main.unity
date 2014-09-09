@@ -2580,9 +2580,6 @@ GameObject:
   - 114: {fileID: 1498984098}
   - 114: {fileID: 1498984097}
   - 114: {fileID: 1498984094}
-  - 114: {fileID: 1498984095}
-  - 114: {fileID: 1498984093}
-  - 114: {fileID: 1498984096}
   m_Layer: 9
   m_Name: Gamefield
   m_TagString: Untagged
@@ -2622,13 +2619,18 @@ MonoBehaviour:
       Width: 6
     Gamefield: {fileID: 1498984091}
   ManaManagerSystem: {fileID: 1218990283}
-  CheckSpecialState: {fileID: 1498984098}
-  CreateNewChuzzlesState: {fileID: 1498984097}
-  FieldState: {fileID: 1498984096}
-  GameOverState: {fileID: 1498984095}
-  RemoveState: {fileID: 1498984094}
-  WinState: {fileID: 1498984093}
-  PauseState: {fileID: 0}
+  FieldState:
+    CurrentChuzzle: {fileID: 0}
+    CurrentChuzzlePrevPosition: {x: 0, y: 0, z: 0}
+    CurrentDirection: 0
+    IsTurn: 0
+    SelectedChuzzles: []
+    TimeFromTip: 0
+    returnSpeed: 0
+    tipArrow: {fileID: 0}
+    IsWorking: 0
+  WinState:
+    TileReplaceEffect: {fileID: 0}
 --- !u!4 &1498984092
 Transform:
   m_ObjectHideFlags: 0
@@ -2641,18 +2643,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 1
---- !u!114 &1498984093
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1498984090}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e2129197b241f704bba552cf501ce826, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  TileReplaceEffect: {fileID: 0}
 --- !u!114 &1498984094
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2664,37 +2654,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 29ac15c63fd54fc40816eb526ffa7bff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &1498984095
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1498984090}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3cf7f6fdbc160e042af6e4d416764c0b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &1498984096
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1498984090}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c8631569470d8a04fb479acfa40b728c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  CurrentChuzzle: {fileID: 0}
-  CurrentChuzzlePrevPosition: {x: 0, y: 0, z: 0}
-  CurrentDirection: 0
-  IsTurn: 0
-  SelectedChuzzles: []
-  TimeFromTip: 0
-  returnSpeed: 12
-  tipArrow: {fileID: 0}
-  IsWorking: 1
+  <Gamefield>k__BackingField: {fileID: 1498984091}
 --- !u!114 &1498984097
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2706,6 +2666,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a8b40fae3c9db2a4f96149d5be755539, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  <Gamefield>k__BackingField: {fileID: 1498984091}
 --- !u!114 &1498984098
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2717,6 +2678,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 521f4b41fb844c442a6222c0e29ab426, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  <Gamefield>k__BackingField: {fileID: 1498984091}
 --- !u!1 &1519213008
 GameObject:
   m_ObjectHideFlags: 0

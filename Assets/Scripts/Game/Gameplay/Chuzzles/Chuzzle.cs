@@ -75,16 +75,11 @@ public abstract class Chuzzle : MonoBehaviour
         // Object.Destroy(gameObject);
     }
 
-    private void OnAnimateMoveEnd(object obj)
-    {
-        InvokeAnimationFinished();
-    }
-
     #endregion
 
     #region Event Invokators
 
-    protected virtual void InvokeAnimationFinished()
+    public virtual void InvokeAnimationFinished()
     {
         if (IsAnimationStarted == false)
         {
@@ -101,7 +96,7 @@ public abstract class Chuzzle : MonoBehaviour
         if (handler != null) handler(this);
     }
 
-    protected void InvokeAnimationStarted()
+    public void InvokeAnimationStarted()
     {
         if (IsAnimationStarted)
         {
@@ -171,37 +166,7 @@ public abstract class Chuzzle : MonoBehaviour
         }
     }
 
-    public void AnimateMoveTo(Vector3 targetPosition, float time = 0.3f)
-    {
-        if (IsDead)
-        {
-            return;
-        }
-        //Debug.Log("Move: "+name+" "+GetInstanceID());
-
-        if (Vector3.Distance(targetPosition, transform.position) > 0.01f)
-        {
-            if (IsAnimationStarted)
-            {
-                return;
-            }
-            InvokeAnimationStarted();
-            iTween.MoveTo(gameObject,
-                iTween.Hash(
-                    "x", targetPosition.x,
-                    "y", targetPosition.y,
-                    "z", targetPosition.z,
-                    "time", time,
-                    "easetype", iTween.EaseType.easeInOutQuad,
-                    "oncomplete", new Action<object>(OnAnimateMoveEnd),
-                    "oncompleteparams", gameObject
-                    ));
-        }
-        else
-        {
-            transform.position = targetPosition;
-        }
-    }
+    
 
     public virtual void Destroy(bool needCreateNew, bool withAnimation = true, bool isReplacingOnDeath = false)
     {
