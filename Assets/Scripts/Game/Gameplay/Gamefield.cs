@@ -19,7 +19,8 @@ public class Gamefield : MonoBehaviour
     public DateTime GameStartTime;
 
     public Level Level = new Level();
-    public Points PointSystem;
+    [SerializeField]
+    public ManaManager ManaManagerSystem;
 
     #region State
 
@@ -73,14 +74,14 @@ public class Gamefield : MonoBehaviour
     public void AddEventHandlers()
     {
         RemoveEventHandlers();
-        CombinationDestroyed += PointSystem.CountForCombinations;
+        CombinationDestroyed += ManaManagerSystem.CountForCombinations;
         GameMode.Win += OnWin;
         GameMode.GameOver += OnGameOver;
     }
 
     private void RemoveEventHandlers()
     {
-        CombinationDestroyed -= PointSystem.CountForCombinations;
+        CombinationDestroyed -= ManaManagerSystem.CountForCombinations;
         if (GameMode != null)
         {
             GameMode.Win -= OnWin;
@@ -151,9 +152,6 @@ public class Gamefield : MonoBehaviour
         {
             Localization.language = "Russian";
         }
-
-        GA.API.Design.NewEvent("Game:Localization:" + Localization.language);
-        GA.API.Design.NewEvent("Game:SystemLocalization:" + Application.systemLanguage);
 
         if (ProgressionManager.Instance)
         {
@@ -269,23 +267,27 @@ public class Gamefield : MonoBehaviour
             DestroyImmediate(PauseState);
         }
         PauseState = gameObject.AddComponent<PauseState>();
-
+        Debug.Log("All ok 1");
         GameMode = GameModeFactory.CreateGameMode(LevelDescription.Condition.GameMode);
-
-        PointSystem.Reset();
-        PointSystem.TargetPoints = GameMode.TargetPoints;
-       
+        Debug.Log("All ok 2: "+ManaManagerSystem+":LOL");
+        if (!ManaManagerSystem)
+        {
+            ManaManagerSystem = FindObjectOfType<ManaManager>();
+        }
+        ManaManagerSystem.Reset();
+        ManaManagerSystem.TargetPoints = GameMode.TargetPoints;
+        Debug.Log("All ok 3");
         GameMode.Init(this);
-
+        Debug.Log("All ok 4");
         Level.Gamefield = this;
         Level.InitFromFile(LevelDescription.Field);
-
+        Debug.Log("All ok 5");
         //Level.Gamefield.transform.localScale = Vector3.zero;
         //iTween.ScaleTo(Level.Gamefield.gameObject, Vector3.one, 0.5f);
 
         AddEventHandlers();
         InvokeGameStarted();
-
+        Debug.Log("All ok 6");
         if (CenterCameraOnField.Instance)
         {
             CenterCameraOnField.Instance.CenterCameraOnChuzzles(Level.Chuzzles,true);

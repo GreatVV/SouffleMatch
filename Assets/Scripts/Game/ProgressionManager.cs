@@ -123,7 +123,7 @@ namespace Game
 
         public void Init()
         {
-            var points = Object.FindObjectOfType<Points>();
+            var points = Object.FindObjectOfType<ManaManager>();
             if (points)
             {
                 points.PointChangeDelta -= OnPointChangeDelta;

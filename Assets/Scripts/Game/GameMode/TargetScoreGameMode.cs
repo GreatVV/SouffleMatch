@@ -17,10 +17,10 @@ namespace Game.GameMode
 
         public override void OnDestroy()
         {
-            PointSystem.PointChanged -= OnPointChanged;
+            ManaManagerSystem.PointChanged -= OnManaManagerChanged;
         }
 
-        public void OnPointChanged(int points, int i)
+        public void OnManaManagerChanged(int points, int i)
         {
             if (points >= TargetScore)
             {
@@ -30,8 +30,8 @@ namespace Game.GameMode
 
         protected override void OnInit()
         {
-            PointSystem = Gamefield.PointSystem;
-            PointSystem.PointChanged += OnPointChanged;
+            ManaManagerSystem = Gamefield.ManaManagerSystem;
+            ManaManagerSystem.PointChanged += OnManaManagerChanged;
         }
 
         public override void OnReset()

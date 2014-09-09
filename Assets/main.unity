@@ -326,85 +326,6 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 37043663}
---- !u!1 &111951563
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 4
-  m_Component:
-  - 4: {fileID: 111951567}
-  - 114: {fileID: 111951566}
-  - 114: {fileID: 111951565}
-  - 114: {fileID: 111951564}
-  m_Layer: 0
-  m_Name: GA_SystemTracker
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &111951564
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 111951563}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6843408d815954fbe96fefa8cca63818, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  UseForSubsequentLevels: 1
-  IncludeSystemSpecs: 1
-  IncludeSceneChange: 1
-  SubmitErrors: 1
-  MaxErrorCount: 10
-  SubmitErrorStackTrace: 1
-  SubmitErrorSystemInfo: 1
-  SubmitFpsAverage: 1
-  SubmitFpsCritical: 1
-  FpsCriticalThreshold: 30
-  FpsCirticalSubmitInterval: 10
-  GuiEnabled: 0
-  GuiAllowScreenshot: 0
-  ErrorFoldOut: 0
---- !u!114 &111951565
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 111951563}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: adefe18d2f40dd84c8666cc766d5de82, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &111951566
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 111951563}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5bbc8ccc3079da149b67d1660115a829, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  GuiEnabled: 0
-  GuiAllowScreenshot: 0
---- !u!4 &111951567
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 111951563}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 13
 --- !u!1001 &180654986
 Prefab:
   m_ObjectHideFlags: 0
@@ -523,7 +444,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 14
+  m_RootOrder: 13
 --- !u!1 &252129921
 GameObject:
   m_ObjectHideFlags: 0
@@ -1435,7 +1356,7 @@ SpriteRenderer:
   m_ScaleInLightmap: 1
   m_SortingLayerID: 0
   m_SortingOrder: -5
-  m_Sprite: {fileID: 21300000, guid: 09c5402ef5364144b9042612add70913, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 26435fae5685f1c42a1cdf591ee1f59d, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
 --- !u!4 &830175136
 Transform:
@@ -1753,7 +1674,6 @@ GameObject:
   - 222: {fileID: 984409798}
   - 114: {fileID: 984409797}
   - 114: {fileID: 984409796}
-  - 114: {fileID: 984409795}
   m_Layer: 5
   m_Name: Restart
   m_TagString: Untagged
@@ -1779,19 +1699,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: .5, y: .5}
---- !u!114 &984409795
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 984409793}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 831c15894f3a6af44b1a88695d7414a2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  AddLevelName: 1
-  EventString: Restart:WinScreen
 --- !u!114 &984409796
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1843,7 +1750,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_Enabled: 1
-      - m_Target: {fileID: 984409795}
+      - m_Target: {fileID: 0}
         m_MethodName: Log
         m_Mode: 1
         m_Arguments:
@@ -1895,7 +1802,6 @@ GameObject:
   - 222: {fileID: 985647783}
   - 114: {fileID: 985647782}
   - 114: {fileID: 985647781}
-  - 114: {fileID: 985647780}
   m_Layer: 5
   m_Name: Restart
   m_TagString: Untagged
@@ -1921,19 +1827,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: .5, y: .5}
---- !u!114 &985647780
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 985647778}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 831c15894f3a6af44b1a88695d7414a2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  AddLevelName: 1
-  EventString: Restart:LoseScreen
 --- !u!114 &985647781
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1985,7 +1878,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_Enabled: 1
-      - m_Target: {fileID: 985647780}
+      - m_Target: {fileID: 0}
         m_MethodName: Log
         m_Mode: 1
         m_Arguments:
@@ -2207,7 +2100,7 @@ GameObject:
   - 4: {fileID: 1218990284}
   - 114: {fileID: 1218990283}
   m_Layer: 0
-  m_Name: Points
+  m_Name: ManaManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2221,7 +2114,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1218990282}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4777f7dfb27bcee4292bdb41394210fe, type: 3}
+  m_Script: {fileID: 11500000, guid: 507d18c2d36a3524a87a814ff9e5c6d4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   CurrentPoints: 0
@@ -2312,7 +2205,7 @@ Prefab:
     - target: {fileID: 11400000, guid: 7ffea8f6587dfb743bff319cae63d0d4, type: 2}
       propertyPath: Lifes
       value: 
-      objectReference: {fileID: 1410374272}
+      objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 7ffea8f6587dfb743bff319cae63d0d4, type: 2}
       propertyPath: m_RootOrder
       value: 2
@@ -2728,7 +2621,7 @@ MonoBehaviour:
       Stages: []
       Width: 6
     Gamefield: {fileID: 1498984091}
-  PointSystem: {fileID: 1218990283}
+  ManaManagerSystem: {fileID: 1218990283}
   CheckSpecialState: {fileID: 1498984098}
   CreateNewChuzzlesState: {fileID: 1498984097}
   FieldState: {fileID: 1498984096}
@@ -2835,7 +2728,6 @@ GameObject:
   - 222: {fileID: 1519213013}
   - 114: {fileID: 1519213012}
   - 114: {fileID: 1519213011}
-  - 114: {fileID: 1519213010}
   m_Layer: 5
   m_Name: NextLevel
   m_TagString: Untagged
@@ -2861,19 +2753,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: .5, y: .5}
---- !u!114 &1519213010
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1519213008}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 831c15894f3a6af44b1a88695d7414a2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  AddLevelName: 1
-  EventString: WinScreen:NextLevel
 --- !u!114 &1519213011
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2925,7 +2804,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_Enabled: 1
-      - m_Target: {fileID: 1519213010}
+      - m_Target: {fileID: 0}
         m_MethodName: Log
         m_Mode: 1
         m_Arguments:
@@ -3154,7 +3033,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Levels: []
-  Lifes: {fileID: 1410374272}
+  Lifes: {fileID: 0}
   LastPlayedLevelDescription:
     Condition:
       GameMode:
@@ -4227,7 +4106,6 @@ GameObject:
   - 222: {fileID: 2003662797}
   - 114: {fileID: 2003662796}
   - 114: {fileID: 2003662795}
-  - 114: {fileID: 2003662794}
   - 114: {fileID: 2003662793}
   m_Layer: 5
   m_Name: ChoseLevel
@@ -4267,19 +4145,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pauseButton: {fileID: 332023724}
   levelList: {fileID: 320090483}
---- !u!114 &2003662794
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 2003662791}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 831c15894f3a6af44b1a88695d7414a2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  AddLevelName: 1
-  EventString: ChoseLevel:LoseScreen
 --- !u!114 &2003662795
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4321,18 +4186,6 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 2003662793}
         m_MethodName: OnPress
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine, Version=0.0.0.0,
-            Culture=neutral, PublicKeyToken=null
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_Enabled: 1
-      - m_Target: {fileID: 2003662794}
-        m_MethodName: Log
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -4482,7 +4335,7 @@ MonoBehaviour:
   GoalTarget: {fileID: 927613987}
   TotalManaTarget: {fileID: 1533612677}
   flyTime: 1
-  pointSystem: {fileID: 1218990283}
+  _manaManagerSystem: {fileID: 1218990283}
   _targets: []
   gamefield: {fileID: 1498984091}
   Canvas: {fileID: 1914033202}

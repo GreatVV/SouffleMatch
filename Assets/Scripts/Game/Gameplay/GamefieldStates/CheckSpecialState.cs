@@ -20,12 +20,12 @@ namespace GamefieldStates
         public override void OnEnter()
         {
             Gamefield.SwitchStateTo(Gamefield.RemoveState);
-            return;
+            return;/*
             var combinations = GamefieldUtility.FindCombinations(TilesCollection);
             if (!CheckForSpecial(combinations))
             {
                 Gamefield.SwitchStateTo(Gamefield.RemoveState);
-            }
+            }*/
         }
 
         public override void OnExit()

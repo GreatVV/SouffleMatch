@@ -354,12 +354,12 @@ namespace GamefieldStates
                     //LogChuzzles(SelectedChuzzles);
                     _isVerticalDrag = false;
                 }
-
+                /*
                 foreach (Chuzzle selectedChuzzle in SelectedChuzzles)
                 {
-                   // selectedChuzzle.Tipping = true;
+                   selectedChuzzle.Tipping = true;
                 }
-
+                */
                 _hasLockedChuzzles = HasLockChuzzles;
 
                 if (_hasLockedChuzzles)

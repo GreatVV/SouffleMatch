@@ -14,7 +14,7 @@ public class Gameplay : Window
     public void AddEventHandlers(Gamefield gamefield)
     {
         RemoveEventHandlers(gamefield);
-        gamefield.PointSystem.PointChanged += OnPointsChanged;
+        gamefield.ManaManagerSystem.PointChanged += OnManaManagersChanged;
         gamefield.GameMode.GameOver += OnGameOver;
         //gamefield.GameMode.Win += OnWin;
         gamefield.GameMode.TurnsChanged += OnTurnsChanged;
@@ -22,7 +22,7 @@ public class Gameplay : Window
 
     private void RemoveEventHandlers(Gamefield gamefield)
     {
-        gamefield.PointSystem.PointChanged -= OnPointsChanged;
+        gamefield.ManaManagerSystem.PointChanged -= OnManaManagersChanged;
         gamefield.GameMode.GameOver -= OnGameOver;
         //  gamefield.GameMode.Win -= OnWin;
         gamefield.GameMode.TurnsChanged -= OnTurnsChanged;
@@ -45,11 +45,11 @@ public class Gameplay : Window
         //TargetScoreLabel.text = LocalizationStrings.GetString(TargetString, GameModeToString.GetString(gamefield.GameMode));
        // UI.Instance.TaskPopup.Show(gamefield.GameMode);
         OnTurnsChanged(gamefield.GameMode.Turns, gamefield.GameMode.StartTurns);
-        OnPointsChanged(gamefield.PointSystem.CurrentPoints, gamefield.GameMode.TargetPoints);
+        OnManaManagersChanged(gamefield.ManaManagerSystem.CurrentPoints, gamefield.GameMode.TargetPoints);
         //  Camera.main.orthographicSize = gamefield.Level.Width;
     }
 
-    private void OnPointsChanged(int points, int targetPoints)
+    private void OnManaManagersChanged(int points, int targetPoints)
     {
         PointsLabel.text = string.Format(Localization.Get("Gameplay_Points"), points,targetPoints);
     }

@@ -11,7 +11,7 @@ public class BackgroundChanger : MonoBehaviour
 
     #region Unity Methods
 
-    private void Awake()
+    private void Start()
     {
         if (DateTime.Now.Hour > 6 && DateTime.Now.Hour < 18)
         {

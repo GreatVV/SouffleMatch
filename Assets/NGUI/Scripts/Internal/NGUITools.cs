@@ -174,11 +174,7 @@ static public class NGUITools
 
 	static public T[] FindActive<T> () where T : Component
 	{
-#if UNITY_3_5 || UNITY_4_0
-		return GameObject.FindSceneObjectsOfType(typeof(T)) as T[];
-#else
 		return GameObject.FindObjectsOfType(typeof(T)) as T[];
-#endif
 	}
     /*
 	/// <summary>
@@ -1093,11 +1089,7 @@ static public class NGUITools
 	[System.Obsolete("Use NGUITools.GetActive instead")]
 	static public bool IsActive (Behaviour mb)
 	{
-#if UNITY_3_5
-		return mb != null && mb.enabled && mb.gameObject.active;
-#else
 		return mb != null && mb.enabled && mb.gameObject.activeInHierarchy;
-#endif
 	}
 
 	/// <summary>
@@ -1106,11 +1098,7 @@ static public class NGUITools
 
 	static public bool GetActive (Behaviour mb)
 	{
-#if UNITY_3_5
-		return mb != null && mb.enabled && mb.gameObject.active;
-#else
 		return mb != null && mb.enabled && mb.gameObject.activeInHierarchy;
-#endif
 	}
 
 	/// <summary>
@@ -1119,11 +1107,7 @@ static public class NGUITools
 
 	static public bool GetActive (GameObject go)
 	{
-#if UNITY_3_5
-		return go && go.active;
-#else
 		return go && go.activeInHierarchy;
-#endif
 	}
 
 	/// <summary>
@@ -1132,11 +1116,7 @@ static public class NGUITools
 
 	static public void SetActiveSelf (GameObject go, bool state)
 	{
-#if UNITY_3_5
-		go.active = state;
-#else
 		go.SetActive(state);
-#endif
 	}
 
 	/// <summary>
@@ -1167,67 +1147,7 @@ static public class NGUITools
 		v.z = Mathf.Round(v.z);
 		return v;
 	}
-    /*
-	/// <summary>
-	/// Make the specified selection pixel-perfect.
-	/// </summary>
-
-	static public void MakePixelPerfect (Transform t)
-	{
-		UIWidget w = t.GetComponent<UIWidget>();
-		if (w != null) w.MakePixelPerfect();
-
-		if (t.GetComponent<UIAnchor>() == null && t.GetComponent<UIRoot>() == null)
-		{
-#if UNITY_EDITOR
-			RegisterUndo(t, "Make Pixel-Perfect");
-#endif
-			t.localPosition = Round(t.localPosition);
-			t.localScale = Round(t.localScale);
-		}
-
-		// Recurse into children
-		for (int i = 0, imax = t.childCount; i < imax; ++i)
-			MakePixelPerfect(t.GetChild(i));
-	}
-    
-	/// <summary>
-	/// Save the specified binary data into the specified file.
-	/// </summary>
-
-	static public bool Save (string fileName, byte[] bytes)
-	{
-#if UNITY_WEBPLAYER || UNITY_FLASH || UNITY_METRO || UNITY_WP8
-		return false;
-#else
-		if (!NGUITools.fileAccess) return false;
-
-		string path = Application.persistentDataPath + "/" + fileName;
-
-		if (bytes == null)
-		{
-			if (File.Exists(path)) File.Delete(path);
-			return true;
-		}
-
-		FileStream file = null;
-
-		try
-		{
-			file = File.Create(path);
-		}
-		catch (System.Exception ex)
-		{
-			NGUIDebug.Log(ex.Message);
-			return false;
-		}
-
-		file.Write(bytes, 0, bytes.Length);
-		file.Close();
-		return true;
-#endif
-	}
-    */
+   
 	/// <summary>
 	/// Load all binary data from the specified file.
 	/// </summary>

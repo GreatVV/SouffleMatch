@@ -12,7 +12,7 @@ public class PowerUpDestroyManager : MonoBehaviour
     private Chuzzle _firstPowerUp;
     public static PowerUpDestroyManager Instance { get; private set; }
 
-    private Gamefield _gamefield;
+   // private Gamefield _gamefield;
     private void Awake()
     {
         if (Instance != null)
@@ -21,7 +21,7 @@ public class PowerUpDestroyManager : MonoBehaviour
             return;
         }
         Instance = this;
-        _gamefield = GetComponent<Gamefield>();
+     //   _gamefield = GetComponent<Gamefield>();
     }
 
     public void PrintCollection(IEnumerable<Chuzzle> chuzzles)

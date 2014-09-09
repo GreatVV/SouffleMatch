@@ -93,7 +93,7 @@ public class TilesFactory : MonoBehaviour
 
     private GameObject GetUniqRandomPrefabForCell(Cell cell, List<GameObject> possiblePrefabs)
     {
-        GameObject prefab;
+       // GameObject prefab;
         Cell leftCell = cell.Left;
         Cell rightCell = cell.Right;
         Cell topCell = cell.Top;

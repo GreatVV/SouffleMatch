@@ -25,7 +25,7 @@ public class Stage
         if (handler != null) handler();
     }
 
-    public void OnPointsChanged(int points, int i)
+    public void OnManaManagersChanged(int points, int i)
     {
         if (Condition.IsScore)
         {
@@ -61,7 +61,7 @@ public class StageManager : MonoBehaviour
         {
             if (CurrentStage != null)
             {
-                Gamefield.PointSystem.PointChanged -= CurrentStage.OnPointsChanged;
+                Gamefield.ManaManagerSystem.PointChanged -= CurrentStage.OnManaManagersChanged;
                 CurrentStage.StageComplete -= OnStageComplete;
                 CurrentStage = null;
             }
@@ -78,7 +78,7 @@ public class StageManager : MonoBehaviour
   
     private void OnStageComplete()
     {
-        Gamefield.PointSystem.PointChanged -= CurrentStage.OnPointsChanged;
+        Gamefield.ManaManagerSystem.PointChanged -= CurrentStage.OnManaManagersChanged;
         CurrentStage.StageComplete -= OnStageComplete;
         if (CurrentStage.NextStage == -1 )
         {
@@ -98,7 +98,7 @@ public class StageManager : MonoBehaviour
         CurrentStage = Stages.First(x => x.Id == id);
 
         CurrentStage.StageComplete += OnStageComplete;
-        Gamefield.PointSystem.PointChanged += CurrentStage.OnPointsChanged;
+        Gamefield.ManaManagerSystem.PointChanged += CurrentStage.OnManaManagersChanged;
 
     //    Gamefield.Level.ChoseFor(CurrentStage.MinY, CurrentStage.MaxY);
         

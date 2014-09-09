@@ -12,7 +12,7 @@ public class FlyPointsManager : MonoBehaviour
 
     public float flyTime = 1f;
 
-    [SerializeField] private Points pointSystem = null;
+    [SerializeField] private ManaManager _manaManagerSystem = null;
     [SerializeField] private List<Transform> _targets = new List<Transform>();
     [SerializeField] private Gamefield gamefield = null;
 
@@ -23,10 +23,10 @@ public class FlyPointsManager : MonoBehaviour
 	void Awake ()
 	{
 	    gamefield.GameStarted += OnGameStarted;
-	    pointSystem.PointsForDestroy += OnPointsForDestroy;
+	    _manaManagerSystem.PointsForDestroy += OnManaManagersForDestroy;
 	}
 
-    private void OnPointsForDestroy(IEnumerable<Chuzzle> comb, int points)
+    private void OnManaManagersForDestroy(IEnumerable<Chuzzle> comb, int points)
     {
         if (!comb.Any())
         {
@@ -45,7 +45,7 @@ public class FlyPointsManager : MonoBehaviour
             */
             var rectTransform = label.GetComponent<RectTransform>();
             var screenPos = Camera.main.WorldToScreenPoint(comb.First().transform.position);
-            var size = rectTransform.anchorMax - rectTransform.anchorMin;
+         //   var size = rectTransform.anchorMax - rectTransform.anchorMin;
             //label.transform.position = Camera.main.WorldToScreenPoint(comb.First().transform.position);
             //rectTransform.anchorMin = new Vector2(screenPos.x/Screen.width, screenPos.y/Screen.height);
             //rectTransform.anchorMax = rectTransform.anchorMin + size;
@@ -73,9 +73,9 @@ public class FlyPointsManager : MonoBehaviour
             gamefield.GameStarted -= OnGameStarted;
         }
 
-        if (pointSystem)
+        if (_manaManagerSystem)
         {
-            pointSystem.PointsForDestroy -= OnPointsForDestroy;
+            _manaManagerSystem.PointsForDestroy -= OnManaManagersForDestroy;
         }
     }
 

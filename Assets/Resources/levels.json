@@ -1968,7 +1968,7 @@
 						{
 								"name":"22",
 								"width":6,
-								"height":10,
+								"height":8,
 								"numberOfColors":6,
 								"seed":0,
 								"gameMode":{
@@ -1985,14 +1985,14 @@
 												"CreationType":"Usual",
 												"Type":"Block",
 												"X":0,
-												"Y":9,
+												"Y":7,
 												"IsPlace":False
 },
 										{
 												"CreationType":"Usual",
 												"Type":"Block",
 												"X":1,
-												"Y":8,
+												"Y":7,
 												"IsPlace":False
 },
 										{
@@ -2013,7 +2013,7 @@
 												"CreationType":"Usual",
 												"Type":"Block",
 												"X":3,
-												"Y":8,
+												"Y":7,
 												"IsPlace":False
 },
 										{
@@ -2042,13 +2042,6 @@
 												"Type":"Block",
 												"X":2,
 												"Y":3,
-												"IsPlace":False
-},
-										{
-												"CreationType":"Usual",
-												"Type":"Block",
-												"X":1,
-												"Y":4,
 												"IsPlace":False
 },
 										{

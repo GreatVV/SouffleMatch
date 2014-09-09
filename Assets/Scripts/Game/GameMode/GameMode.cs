@@ -8,7 +8,7 @@ namespace Game.GameMode
         public int Turns;
         public bool IsGameOver;
         public bool IsWin;
-        public Points PointSystem;
+        public ManaManager ManaManagerSystem;
 
         public GameModeDescription Description;
 
@@ -55,21 +55,15 @@ namespace Game.GameMode
 
         public bool Check()
         {
-            ProgressionManager.Instance.RegisterLevelFinish(SessionRestorer.Instance.lastPlayedPack, SessionRestorer.Instance.lastPlayedLevel, PointSystem.CurrentPoints, Turns, IsWin);
+            ProgressionManager.Instance.RegisterLevelFinish(SessionRestorer.Instance.lastPlayedPack, SessionRestorer.Instance.lastPlayedLevel, ManaManagerSystem.CurrentPoints, Turns, IsWin);
             if (IsGameOver)
             {
-                GA.API.Design.NewEvent(string.Format("Game:{0}:Lose:Time", Gamefield.LevelDescription.Name), (float)(DateTime.UtcNow - Gamefield.GameStartTime).TotalSeconds);
-                GA.API.Design.NewEvent(string.Format("Game:{0}:Lose:Points", Gamefield.LevelDescription.Name), PointSystem.CurrentPoints);
                 InvokeGameOver();
                 return true;
             }
 
             if (IsWin)
             {
-                GA.API.Design.NewEvent(string.Format("Game:{0}:Win:Time", Gamefield.LevelDescription.Name), (float)(DateTime.UtcNow - Gamefield.GameStartTime).TotalSeconds);
-                GA.API.Design.NewEvent(string.Format("Game:{0}:Win:Points", Gamefield.LevelDescription.Name), PointSystem.CurrentPoints);
-                GA.API.Design.NewEvent(string.Format("Game:{0}:Win:Turns", Gamefield.LevelDescription.Name), PointSystem.CurrentPoints);
-               
                 InvokeWin();
                 return true;
             }
@@ -111,7 +105,7 @@ namespace Game.GameMode
         public void Init(Gamefield gamefield)
         {   
             this.Gamefield = gamefield;
-            PointSystem = Gamefield.PointSystem;
+            ManaManagerSystem = Gamefield.ManaManagerSystem;
             Reset();
             OnDestroy();
             OnInit();
