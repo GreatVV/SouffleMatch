@@ -43,10 +43,6 @@ namespace GamefieldStates
         private Chuzzle _arrowChuzzle;
         private bool _axisChozen;
 
-        private Vector3 _delta;
-        private Vector3 _deltaTouch;
-        private Vector3 _dragOrigin;
-        private Chuzzle _draggable;
         private bool _hasLockedChuzzles;
         private bool _isReturning;
         private bool _isVerticalDrag;
@@ -62,47 +58,16 @@ namespace GamefieldStates
         public TipArrow tipArrow;
 
         public bool IsWorking = true;
-        
-        public bool IsTouching
+
+
+        private bool IsVerticalDelta(Vector2 delta)
         {
-            get { return Input.GetMouseButton(0) || Input.touchCount > 0; }
+            return Mathf.Abs(delta.x) < Mathf.Abs(delta.y);
         }
 
-        private static bool IsFingerUp
+        private bool IsDeltaEnough(Vector2 delta)
         {
-            get { return (!Input.GetMouseButton(0) || Input.GetMouseButtonUp(0)) && 0 == Input.touchCount; }
-        }
-
-        private bool IsFingerDown
-        {
-            get
-            {
-                if (Input.GetMouseButtonDown(0) || (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began))
-                {
-                    _dragOrigin = Input.mousePosition;
-
-
-                    if (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began)
-                    {
-                        _dragOrigin = new Vector3(Input.GetTouch(0).position.x, Input.GetTouch(0).position.y);
-                    }
-                    return true;
-                }
-                return false;
-            }
-        }
-
-        private bool IsVerticalDelta
-        {
-            get { return Mathf.Abs(_delta.x) < Mathf.Abs(_delta.y); }
-        }
-
-        private bool IsDelatEnough
-        {
-            get
-            {
-                return Mathf.Abs(_delta.x) < 1.5*Mathf.Abs(_delta.y) || Mathf.Abs(_delta.x) > 1.5*Mathf.Abs(_delta.y);
-            }
+            return Mathf.Abs(delta.x) < 1.5*Mathf.Abs(delta.y) || Mathf.Abs(delta.x) > 1.5*Mathf.Abs(delta.y);
         }
 
         public bool HasLockChuzzles
@@ -142,11 +107,6 @@ namespace GamefieldStates
             }
             Gamefield.GameMode.HumanTurn();
             Reset();
-        }
-
-        private void OnFingerDown()
-        {
-            FindCurrentChuzzle();
         }
 
         #endregion
@@ -230,9 +190,12 @@ namespace GamefieldStates
 
             _isReturning = true;
         }
-
-        public void UpdateState(IEnumerable<Chuzzle> draggableChuzzles)
+        
+        public void OnPointerDown(Chuzzle chuzzle)
         {
+            if (Gamefield.CurrentState != this)
+                return;
+
             if (!IsWorking)
             {
                 return;
@@ -243,92 +206,123 @@ namespace GamefieldStates
                 return;
             }
 
-            if (IsFingerDown)
-            {
-                OnFingerDown();
-            }
+            CurrentChuzzle = chuzzle;
+        }
 
-            if (IsFingerUp)
-            {
-                DropDrag();
-            }
+        private Vector3 ConvertDeltaFromScreenSpaceToWorld(Vector3 delta)
+        {
+            var viewportWidth = Camera.main.pixelRect.width;
+            var chuzzleWidthInPixel = viewportWidth/Gamefield.LevelDescription.Field.Width;
+            var chuzzleWidthInUnits = Chuzzle.Scale.x;
+            var width = chuzzleWidthInPixel/chuzzleWidthInUnits;
+            return delta/width;
+        }
 
-            if (!IsTouching)
+        public void OnDrag(Vector2 delta)
+        {
+          //  Debug.Log("move On chuzzle: " + delta);
+            if (!IsWorking)
             {
                 return;
             }
 
-            UpdateDelta();
+            if (Gamefield.CurrentState != this)
+                return;
 
-            _delta = Vector3.ClampMagnitude(_delta, 0.45f*Chuzzle.Scale.x);
+            var clampedDelta = ConvertDeltaFromScreenSpaceToWorld(delta);
+            clampedDelta = Vector3.ClampMagnitude(clampedDelta, 0.45f * Chuzzle.Scale.x);
+
+            //Debug.Log("Converted delta: " + clampedDelta);
 
             if (!_axisChozen)
             {
-                ChoseAxis(draggableChuzzles);
+                ChoseAxis(clampedDelta);
             }
 
             if (_axisChozen)
             {
-                ChoseDragDirection();
+                ChoseDragDirection(clampedDelta);
             }
 
-            // RESET START POINT
-            _dragOrigin = Input.mousePosition;
-            if (Input.touchCount > 0)
+            if (SelectedChuzzles.Any() && _axisChozen && clampedDelta.magnitude >= 0.01f)
             {
-                _dragOrigin = Input.touches[0].position;
-            }
-        }
-
-        private void UpdateDelta()
-        {
-            if (Input.GetMouseButton(0)) // Get Position Difference between Last and Current Touches
-            {
-                // MOUSE
-                _delta = Camera.main.ScreenToWorldPoint(Input.mousePosition) -
-                         Camera.main.ScreenToWorldPoint(_dragOrigin);
-            }
-            else
-            {
-                if (Input.touchCount > 0)
+                
+                //clamp drag
+                if (_isVerticalDrag)
                 {
-                    // TOUCH
-                    _deltaTouch =
-                        Camera.main.ScreenToWorldPoint(new Vector3(Input.GetTouch(0).position.x,
-                            Input.GetTouch(0).position.y, 0));
-                    _delta = _deltaTouch - Camera.main.ScreenToWorldPoint(_dragOrigin);
+                    clampedDelta.x = 0;
+                }
+                else
+                {
+                    clampedDelta.y = 0;
+                }
+                
+                foreach (Chuzzle c in SelectedChuzzles)
+                {
+                    c.transform.position += clampedDelta;
+                }
+
+                MoveChuzzles(Gamefield.Level.Cells);
+
+                //move all tiles to new real coordinates
+                foreach (Chuzzle chuzzle in SelectedChuzzles)
+                {
+                    chuzzle.Real = Gamefield.Level.Cells.GetCellAt(GamefieldUtility.ToRealCoordinates(chuzzle), false);
+                }
+
+                foreach (var chuzzle in Gamefield.Level.Chuzzles)
+                {
+                    chuzzle.Tipping = false;
+                }
+
+                var combs = GamefieldUtility.SelectedTips(Gamefield.Level.Chuzzles, SelectedChuzzles, 3);
+                //Debug.Log("Combs count: "+combs.Count);
+                foreach (var comb in combs)
+                {
+                    foreach (var chuzzle in comb)
+                    {
+                        chuzzle.Tipping = true;
+                    }
                 }
             }
         }
 
-        private void ChoseDragDirection()
+        public void OnPointerUp(Chuzzle chuzzle)
+        {
+            if (Gamefield.CurrentState != this)
+                return;
+
+            DropDrag();
+        }
+
+        private void ChoseDragDirection(Vector3 delta)
         {
             if (_isVerticalDrag)
             {
-                CurrentDirection = _delta.y > 0 ? Direction.Top : Direction.Bottom;
-                _delta.z = _delta.x = 0;
+                CurrentDirection = delta.y > 0 ? Direction.Top : Direction.Bottom;
+                delta.z = delta.x = 0;
             }
             else
             {
-                CurrentDirection = _delta.x > 0 ? Direction.Right : Direction.Left;
-                _delta.y = _delta.z = 0;
+                CurrentDirection = delta.x > 0 ? Direction.Right : Direction.Left;
+                delta.y = delta.z = 0;
             }
         }
 
-        private void ChoseAxis(IEnumerable<Chuzzle> draggableChuzzles)
+        private void ChoseAxis(Vector3 delta)
         {
-//chooze drag direction
-            if (IsDelatEnough && CurrentChuzzle)
+            //chooze drag direction
+            if (IsDeltaEnough(delta) && CurrentChuzzle)
             {
-                if (IsVerticalDelta)
+                if (IsVerticalDelta(delta))
                 {
-                    SelectedChuzzles = draggableChuzzles.Where(x => x.Current.X == CurrentChuzzle.Current.X).ToList();
+                    SelectedChuzzles = Gamefield.Level.Chuzzles.Where(x => x.Current.X == CurrentChuzzle.Current.X).ToList();
                     //LogChuzzles(SelectedChuzzles);
                     _isVerticalDrag = true;
                 }
                 else
                 {
-                    SelectedChuzzles = draggableChuzzles.Where(x => x.Current.Y == CurrentChuzzle.Current.Y).ToList();
+                    SelectedChuzzles = Gamefield.Level.Chuzzles.Where(x => x.Current.Y == CurrentChuzzle.Current.Y).ToList();
                     //LogChuzzles(SelectedChuzzles);
                     _isVerticalDrag = false;
                 }
@@ -356,22 +350,6 @@ namespace GamefieldStates
         {
             var s = selectedChuzzles.Aggregate(""+selectedChuzzles.Count()+Environment.NewLine, (current, selectedChuzzle) => current + (selectedChuzzle + Environment.NewLine));
             Debug.Log(s);
-        }
-
-        private void FindCurrentChuzzle()
-        {
-            Collider2D overlap = Physics2D.OverlapPoint(Camera.main.ScreenToWorldPoint(_dragOrigin));
-
-            if (overlap != null && overlap.gameObject.transform.parent.GetComponent<Chuzzle>())
-            {
-                bool wasNull = CurrentChuzzle == null;
-                CurrentChuzzle = overlap.transform.parent.GetComponent<Chuzzle>();
-                if (wasNull)
-                {
-                    _minY = _minX = float.MinValue;
-                    _maxX = _maxY = float.MaxValue;
-                }
-            }
         }
 
         public void LateUpdateState(CellCollection activeCells)
@@ -432,81 +410,6 @@ namespace GamefieldStates
                     Reset();
                 }
                 return;
-            }
-
-            if (SelectedChuzzles.Any() && _axisChozen && _delta.magnitude >= 0.01f)
-            {
-                Vector3 pos = CurrentChuzzle.transform.position;
-
-                //clamp drag
-                if (_isVerticalDrag)
-                {
-                    if (CurrentDirection == Direction.Top && Math.Abs(pos.y - _maxY) < 0.01f)
-                    {
-                        return;
-                    }
-
-                    if (CurrentDirection == Direction.Bottom && Math.Abs(pos.y - _minY) < 0.01f)
-                    {
-                        return;
-                    }
-
-
-                    float maybePosition = CurrentChuzzle.transform.position.y + _delta.y;
-                    float clampPosition = Mathf.Clamp(maybePosition, _minY, _maxY);
-
-                    if (Math.Abs(maybePosition - clampPosition) > 0.001f)
-                    {
-                        _delta.y = clampPosition - maybePosition;
-                    }
-                }
-                else
-                {
-                    if (CurrentDirection == Direction.Right && Math.Abs(pos.x - _maxX) < 0.01f)
-                    {
-                        return;
-                    }
-
-                    if (CurrentDirection == Direction.Left && Math.Abs(pos.x - _minX) < 0.01f)
-                    {
-                        return;
-                    }
-
-                    float maybePosition = CurrentChuzzle.transform.position.x + _delta.x;
-                    float clampPosition = Mathf.Clamp(maybePosition, _minX, _maxX);
-
-                    if (Math.Abs(maybePosition - clampPosition) > 0.001f)
-                    {
-                        _delta.x = clampPosition - maybePosition;
-                    }
-                }
-
-                foreach (Chuzzle c in SelectedChuzzles)
-                {
-                    c.transform.position += _delta;
-                }
-
-                MoveChuzzles(activeCells);
-
-                //move all tiles to new real coordinates
-                foreach (Chuzzle chuzzle in SelectedChuzzles)
-                {
-                    chuzzle.Real = Gamefield.Level.Cells.GetCellAt(GamefieldUtility.ToRealCoordinates(chuzzle), false);
-                }
-                foreach (var chuzzle in Gamefield.Level.Chuzzles)
-                {
-                    chuzzle.Tipping = false;
-                }
-
-                var combs = GamefieldUtility.SelectedTips(Gamefield.Level.Chuzzles, SelectedChuzzles, 3);
-                //Debug.Log("Combs count: "+combs.Count);
-                foreach (var comb in combs)
-                {
-                    foreach (var chuzzle in comb)
-                    {
-                        chuzzle.Tipping = true;
-                    }
-                }
             }
         }
 
@@ -678,10 +581,6 @@ namespace GamefieldStates
 
         public override void UpdateState()
         {
-            if (TilesCollection.Any())
-            {
-                UpdateState(Gamefield.Level.Chuzzles);
-            }
         }
 
         public void CheckAnimationCompleted()

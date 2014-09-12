@@ -7,6 +7,7 @@ using Game.Data;
 using Game.GameMode;
 using GamefieldStates;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 #endregion
 
@@ -255,5 +256,24 @@ public class Gamefield : MonoBehaviour
         }
         
         SwitchStateTo(PowerUpAnalyzeState);
+    }
+
+    public void OnDrag(BaseEventData eventData)
+    {
+        var pointerEventData = eventData as PointerEventData;
+        if (pointerEventData != null)
+        {
+            FieldState.OnDrag(pointerEventData.delta);
+        }
+    }
+
+    public void OnPointerDown(Chuzzle chuzzle)
+    {
+        FieldState.OnPointerDown(chuzzle);
+    }
+
+    public void OnPointerUp(Chuzzle chuzzle)
+    {
+        FieldState.OnPointerUp(chuzzle);
     }
 }

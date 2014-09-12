@@ -205,7 +205,8 @@ public class TilesFactory : MonoBehaviour
         Gamefield.Level.Chuzzles.Add(chuzzle);
 
         chuzzle.Died += Gamefield.Level.Chuzzles.OnChuzzleDeath;
-
+        chuzzle.PointerDown += Gamefield.OnPointerDown;
+        chuzzle.PointerUp += Gamefield.OnPointerUp;
         //Debug.Log("Chuzzle created: " + chuzzle);
 
         return chuzzle;

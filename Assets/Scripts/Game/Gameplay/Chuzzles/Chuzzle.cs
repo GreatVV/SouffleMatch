@@ -2,8 +2,10 @@
 
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using Game;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 #endregion
 
@@ -124,9 +126,75 @@ public abstract class Chuzzle : MonoBehaviour
             ExplosionPool = FindObjectOfType<ExplosionPool>();
         }
 
+        if (!EventTrigger)
+        {
+            EventTrigger = gameObject.AddComponent<EventTrigger>();
+        }
+        var onPointerDownCallback = new EventTrigger.TriggerEvent();
+        onPointerDownCallback.AddListener(OnPointerDown);
+
+         var onPointerUpCallback = new EventTrigger.TriggerEvent();
+        onPointerUpCallback.AddListener(OnPointerUp);
+
+        var onMoveCallback = new EventTrigger.TriggerEvent();
+        onMoveCallback.AddListener(OnMove);
+
+        EventTrigger.delegates = new List<EventTrigger.Entry>()
+        {
+            new EventTrigger.Entry()
+            {
+                eventID = EventTriggerType.PointerDown,
+                callback = onPointerDownCallback
+            },
+            new EventTrigger.Entry()
+            {
+                eventID = EventTriggerType.PointerUp,
+                callback = onPointerUpCallback
+            },
+            new EventTrigger.Entry()
+            {
+                eventID = EventTriggerType.Drag,
+                callback = onMoveCallback
+            }
+        };
+
+
         Teleportable = GetComponent<TeleportableEntity>();
         OnAwake();
     }
+
+    public void OnMove(BaseEventData eventData)
+    {
+        Gamefield.Instance.OnDrag(eventData);
+    }
+
+    private void OnPointerUp(BaseEventData arg0)
+    {
+        FirePointerUp();
+    }
+
+    private void OnPointerDown(BaseEventData arg0)
+    {
+        FirePointerDown();
+    }
+
+    public event Action<Chuzzle> PointerDown;
+
+    protected virtual void FirePointerDown()
+    {
+        var handler = PointerDown;
+        if (handler != null) handler(this);
+    }
+
+    public event Action<Chuzzle> PointerUp;
+
+    protected virtual void FirePointerUp()
+    {
+        var handler = PointerUp;
+        if (handler != null) handler(this);
+    }
+
+    public EventTrigger EventTrigger;
 
     private void OnEnable()
     {
