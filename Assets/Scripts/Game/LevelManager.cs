@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Game.Data;
+using Tower;
 using UnityEngine;
 
 namespace Game
@@ -40,6 +41,11 @@ namespace Game
             }
             Debug.LogWarning("Can't find level: "+pack+ " - "+index);
             return LevelPackManager.Packs[0].LoadedLevels[0];
+        }
+
+        public LevelDescription GetLevel(TowerDescription towerDesc)
+        {
+            throw new NotImplementedException();
         }
     }
     [Serializable]

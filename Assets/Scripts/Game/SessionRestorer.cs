@@ -47,6 +47,8 @@ namespace Game
                 return;
             }
 
+            DontDestroyOnLoad(gameObject);
+
             Instance = this;
 
             levelManager = GetComponent<LevelManager>();
