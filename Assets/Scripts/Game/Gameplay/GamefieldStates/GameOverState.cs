@@ -1,4 +1,5 @@
 ﻿using System;
+using Utils;
 
 namespace GamefieldStates
 {
@@ -13,7 +14,6 @@ namespace GamefieldStates
 
         public override void OnEnter()
         {
-            PanelManager.Show(PanelManager.instance.LosePopup);
         }
 
         public override void OnExit()

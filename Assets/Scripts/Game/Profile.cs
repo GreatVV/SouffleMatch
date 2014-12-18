@@ -1,26 +1,14 @@
 ﻿//using UnityEditor;
 using UnityEngine;
+using Utils;
 
 namespace Game
 {
     public class Profile : MonoBehaviour
     {
         public const string defaultProfileName = "default";
-        public static Profile Instance;
 
         public string Current;
-
-        private void Awake()
-        {
-            if (Instance != null)
-            {
-                Destroy(gameObject);
-                return;
-            }
-
-            DontDestroyOnLoad(this);
-            Instance = this;
-        }
 
         private void Start()
         {
@@ -47,7 +35,7 @@ namespace Game
             if (!string.IsNullOrEmpty(player))
             {
                 Debug.Log("Unserialize player: "+player);
-                Player.Instance.Unserialize(new JSONObject(player));
+                Instance.Player.Unserialize(new JSONObject(player));
             }
 
             // Is profile exists?
@@ -59,16 +47,16 @@ namespace Game
             return string.Format("profile_{0}_", profileName);
         }
 
-        public static string CurrentPrefix
+        public string CurrentPrefix
         {
-            get { return Instance == null? GetPrefix(defaultProfileName) : GetPrefix(Instance.Current); }
+            get { return GetPrefix(Current); }
         }
 
         public void Save()
         {
             PlayerPrefs.SetString(CurrentPrefix+"_profile", Current);
             SaveEconomy(CurrentPrefix);
-            SavePlayer(CurrentPrefix,Player.Instance.Serialize());
+            SavePlayer(CurrentPrefix, Instance.Player.Serialize());
 
             PlayerPrefs.GetString("lastUsedProfile", Current);
 

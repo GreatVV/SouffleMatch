@@ -9,23 +9,11 @@ namespace Game
 {
     public class Player : MonoBehaviour
     {
-        public static Player Instance { get; private set; }
         public List<LevelInfo> Levels;
-        public LifeSystem Lifes;
 
         public LevelDescription LastPlayedLevelDescription;
         public int LifePrice = 100;
         public int AddTurnsPrice = 70;
-
-        private void Awake()
-        {
-            if (Instance != null)
-            {
-                Destroy(this);
-                return;
-            }
-            Instance = this;
-        }
 
         public LevelInfo GetLevelInfo(string levelName)
         {
@@ -43,7 +31,6 @@ namespace Game
         {
             var jsonObject = new JSONObject(JSONObject.Type.OBJECT);
             SerializeLevelInfo(jsonObject, Levels);
-            jsonObject.AddField("Lifes", Lifes.Serialize());
             return jsonObject;
         }
 
@@ -67,7 +54,6 @@ namespace Game
                 Levels.Add(LevelInfo.Unserialize(o));
             }
             Levels.Sort(LevelInfo.Comparer);
-            Lifes = LifeSystem.Unserialize(jsonObject.GetField("Lifes"));
         }
 
         // [MenuItem("Utils/Unlock All Levels")]

@@ -1,15 +1,16 @@
 ﻿using UnityEngine;
 using System.Collections;
+using Utils;
 
 public class PauseStateOnEnable : MonoBehaviour {
 
     void OnEnable()
     {
-        Gamefield.Instance.FieldState.IsWorking = false;
+        Instance.Gamefield.FieldState.IsWorking = false;
     }
 
     void OnDisable()
     {
-        Gamefield.Instance.FieldState.IsWorking = true;
+        Instance.Gamefield.FieldState.IsWorking = true;
     }
 }

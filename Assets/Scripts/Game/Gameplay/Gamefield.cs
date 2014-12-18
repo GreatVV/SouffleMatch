@@ -8,6 +8,7 @@ using Game.GameMode;
 using GamefieldStates;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using Utils;
 
 #endregion
 
@@ -32,9 +33,12 @@ public class Gamefield : MonoBehaviour
     public DeleteState RemoveState = null;
     public WinState WinState = null;
 
+    [SerializeField]
+    private string _currentStateName;
+
+    [SerializeField]
     private GameState _currentState;
     private bool _isPause;
-    public static Gamefield Instance;
 
 
     public GameState CurrentState
@@ -96,7 +100,6 @@ public class Gamefield : MonoBehaviour
     private void OnGameOver()
     {
         SwitchStateTo(GameOverState);
-        Player.Instance.Lifes.SpentLife();
         RemoveEventHandlers();
     }
 
@@ -152,25 +155,8 @@ public class Gamefield : MonoBehaviour
         {
             Localization.language = "Russian";
         }
-
-        if (ProgressionManager.Instance)
-        {
-            ProgressionManager.Instance.Init();
-        }
-        else
-        {
-            Debug.LogWarning("Progress manager is null");
-        }
-    }
-
-    void Awake()
-    {
-        if (Instance)
-        {
-            Destroy(gameObject);
-            return;
-        }
-        Instance = this;
+        
+        Instance.ProgressionManager.Init();
     }
 
     private void LateUpdate()
@@ -184,10 +170,6 @@ public class Gamefield : MonoBehaviour
     private void OnDestroy()
     {
         RemoveEventHandlers();
-        if (Instance == this)
-        {
-            Instance = null;
-        }
     }
 
     private void Update()
@@ -202,7 +184,7 @@ public class Gamefield : MonoBehaviour
 
     public void StartGame(LevelDescription levelDescription = null)
     {
-        LevelDescription = Player.Instance.LastPlayedLevelDescription = levelDescription;
+        LevelDescription = Instance.Player.LastPlayedLevelDescription = levelDescription;
         Debug.Log("Start level: "+LevelDescription);
         GameStartTime = DateTime.UtcNow;
         Init();
@@ -217,6 +199,7 @@ public class Gamefield : MonoBehaviour
             _currentState.OnExit();
         }
         _currentState = newState;
+        _currentStateName = newState.ToString();
          //Debug.Log("Switch to: " + _currentState);
         _currentState.OnEnter();
     }

@@ -1,14 +1,13 @@
 ﻿using Game.Data;
 using UnityEngine;
+using Utils;
 
 namespace Game
 {
     [RequireComponent(typeof (LevelManager))]
     public class SessionRestorer : MonoBehaviour
     {
-        public static SessionRestorer Instance;
         public Gamefield Gamefield;
-        public Gameplay Gameplay;
         public int lastPlayedLevel;
 
         public Tutorial tutorialPrefab;
@@ -17,12 +16,6 @@ namespace Game
         public int lastPlayedPack;
 
         #region Events Subscribers
-
-        public void OnWindowChanged(Window currentActiveWindow)
-        {
-            //Debug.Log("Window changed: " + currentActiveWindow);
-            Gamefield.IsPause = !PanelManager.IsCurrent(Instance.Gameplay);
-        }
 
         private void OnPause(bool pause)
         {
@@ -41,44 +34,31 @@ namespace Game
 
         private void Awake()
         {
-            if (Instance != null)
-            {
-                Destroy(this);
-                return;
-            }
 
             DontDestroyOnLoad(gameObject);
 
-            Instance = this;
-
             levelManager = GetComponent<LevelManager>();
 
-            lastPlayedLevel = PlayerPrefs.GetInt(Profile.CurrentPrefix+"LastPlayedLevelDescription", 0);
+            lastPlayedLevel = PlayerPrefs.GetInt(Instance.Profile.CurrentPrefix+"LastPlayedLevelDescription", 0);
 
             levelManager.LevelsAreReady += OnLevelsAreReady;
-
-            PanelManager.WindowChanged += OnWindowChanged;
-
 
             Gamefield.Paused += OnPause;
         }
 
         private void OnDestroy()
         {
-            if (Instance == this)
-            {
-                levelManager.LevelsAreReady -= OnLevelsAreReady;
-            }
+            levelManager.LevelsAreReady -= OnLevelsAreReady;
         }
 
         private void OnApplicationPause()
         {
-            if (ProgressionManager.Instance)
+            if (Instance.ProgressionManager)
             {
-                PlayerPrefs.SetInt(Profile.CurrentPrefix + "LastPlayedLevelDescription", lastPlayedLevel);
+                PlayerPrefs.SetInt(Instance.Profile.CurrentPrefix + "LastPlayedLevelDescription", lastPlayedLevel);
                 PlayerPrefs.Save();
 
-                ProgressionManager.Instance.SaveProgress();
+                Instance.ProgressionManager.SaveProgress();
             }
         }
 
@@ -87,7 +67,6 @@ namespace Game
         private void StartLevel(LevelDescription description)
         {
             Gamefield.StartGame(description);
-            PanelManager.Show(Gameplay, true);
         }
 
         public void StartLevel(int pack, int index)

@@ -1,6 +1,7 @@
 ﻿using Game;
 using UnityEngine;
 using UnityEngine.UI;
+using Utils;
 
 [ExecuteInEditMode]
 public class MapId : MonoBehaviour
@@ -14,7 +15,7 @@ public class MapId : MonoBehaviour
 
     public void OnClick()
     {
-        SessionRestorer.Instance.StartLevel(Pack, Index);
+        Instance.SessionRestorer.StartLevel(Pack, Index);
     }
 
     #endregion

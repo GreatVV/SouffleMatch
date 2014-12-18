@@ -2,6 +2,7 @@
 using Game;
 using UnityEngine;
 using UnityEngine.UI;
+using Utils;
 
 public class TotalManaIndicator : MonoBehaviour
 {
@@ -10,13 +11,13 @@ public class TotalManaIndicator : MonoBehaviour
 
 	void Start ()
 	{
-	    ProgressionManager.Instance.ManaChanged += OnMoneyChanged;
-        OnMoneyChanged(ProgressionManager.Instance.Mana);
+        Instance.ProgressionManager.ManaChanged += OnMoneyChanged;
+        OnMoneyChanged(Instance.ProgressionManager.Mana);
 	}
 
     void OnDestroy()
     {
-        ProgressionManager.Instance.ManaChanged -= OnMoneyChanged;
+        Instance.ProgressionManager.ManaChanged -= OnMoneyChanged;
     }
 
     private void OnMoneyChanged(int money)

@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using Game;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using Utils;
 
 #endregion
 
@@ -165,7 +166,7 @@ public abstract class Chuzzle : MonoBehaviour
 
     public void OnMove(BaseEventData eventData)
     {
-        Gamefield.Instance.OnDrag(eventData);
+        Instance.Gamefield.OnDrag(eventData);
     }
 
     private void OnPointerUp(BaseEventData arg0)

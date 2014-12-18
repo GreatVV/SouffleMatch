@@ -1,4 +1,5 @@
 ﻿using System;
+using Utils;
 
 namespace Game.GameMode
 {
@@ -55,7 +56,8 @@ namespace Game.GameMode
 
         public bool Check()
         {
-            ProgressionManager.Instance.RegisterLevelFinish(SessionRestorer.Instance.lastPlayedPack, SessionRestorer.Instance.lastPlayedLevel, ManaManagerSystem.CurrentPoints, Turns, IsWin);
+            var sessionRestorer = Instance.SessionRestorer;
+            Instance.ProgressionManager.RegisterLevelFinish(sessionRestorer.lastPlayedPack, sessionRestorer.lastPlayedLevel, ManaManagerSystem.CurrentPoints, Turns, IsWin);
             if (IsGameOver)
             {
                 InvokeGameOver();

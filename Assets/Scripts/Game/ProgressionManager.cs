@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Game.Data;
 using UnityEngine;
+using Utils;
 using Object = UnityEngine.Object;
 
 namespace Game
@@ -28,18 +29,9 @@ namespace Game
         }
 
         public List<LevelPackStatus> PackStatuses;
-        public static ProgressionManager Instance;
 
         void Awake()
         {
-            if (Instance)
-            {
-                Debug.Log("Instance of Progress manager already created");
-                Destroy(this);
-                return;
-            }
-
-            Instance = this;
             PackStatuses = new List<LevelPackStatus>();
         }
         void Start()
@@ -49,7 +41,7 @@ namespace Game
 
         private void LoadGameProgress()
         {
-            var gameStatus = PlayerPrefs.GetString(Profile.CurrentPrefix+"gameStatus", null);
+            var gameStatus = PlayerPrefs.GetString(Instance.Profile.CurrentPrefix+"gameStatus", null);
 
             if (!string.IsNullOrEmpty(gameStatus))
             {
@@ -83,7 +75,7 @@ namespace Game
             var json = new JSONObject();
             json.AddField("mana", Mana);
             json.AddField("packStatuses", SerializePackStatuses());
-            PlayerPrefs.SetString(Profile.CurrentPrefix+"gameStatus", json.ToString());
+            PlayerPrefs.SetString(Instance.Profile.CurrentPrefix+"gameStatus", json.ToString());
             Debug.Log("Saved progress: "+json.ToString());
             PlayerPrefs.Save();
         }
