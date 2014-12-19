@@ -1,11 +1,14 @@
-﻿public enum ChuzzleColor
+﻿namespace Assets.Game.Gameplay.Chuzzles
 {
-    Blue,
-    Green,
-    LightBlue,
-    Orange,
-    Pink,
-    Red,
-    Violet,
-    Yellow
+    public enum ChuzzleColor
+    {
+        Blue,
+        Green,
+        LightBlue,
+        Orange,
+        Pink,
+        Red,
+        Violet,
+        Yellow
+    }
 }

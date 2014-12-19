@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Tower
+namespace Assets.Tower
 {
     [Serializable]
     public class TowerDescription

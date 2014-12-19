@@ -1,6 +1,7 @@
 ﻿using System;
+using Assets.Game.Utility;
 
-namespace Game.Data
+namespace Assets.Game.Data
 {
     public class LevelStatus : IJsonSerializable
     {

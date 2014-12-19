@@ -1,16 +1,18 @@
-﻿using UnityEngine;
-using System.Collections;
-using Utils;
+﻿using Assets.Utils;
+using UnityEngine;
 
-public class PauseStateOnEnable : MonoBehaviour {
+namespace Assets.UI
+{
+    public class PauseStateOnEnable : MonoBehaviour {
 
-    void OnEnable()
-    {
-        Instance.Gamefield.FieldState.IsWorking = false;
-    }
+        void OnEnable()
+        {
+            Instance.Gamefield.FieldState.IsWorking = false;
+        }
 
-    void OnDisable()
-    {
-        Instance.Gamefield.FieldState.IsWorking = true;
+        void OnDisable()
+        {
+            Instance.Gamefield.FieldState.IsWorking = true;
+        }
     }
 }

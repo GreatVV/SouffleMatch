@@ -1,4 +1,4 @@
-namespace Game.Data
+namespace Assets.Game.Data
 {
     public class Nullable
     {

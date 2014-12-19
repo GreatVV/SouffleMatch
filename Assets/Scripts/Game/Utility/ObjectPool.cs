@@ -3,56 +3,59 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class ObjectPool
+namespace Assets.Game.Utility
 {
-    private static ObjectPool _instance;
-
-    public static ObjectPool Instance
+    public class ObjectPool
     {
-        get
+        private static ObjectPool _instance;
+
+        public static ObjectPool Instance
         {
-            if (_instance == null)
+            get
             {
-                _instance = new ObjectPool();
+                if (_instance == null)
+                {
+                    _instance = new ObjectPool();
+                }
+                return _instance;
             }
-            return _instance;
         }
-    }
 
-    public static GameObject Get<T>()
-    {
-        if (FreeGameObjects[typeof (T)].Any())
+        public static GameObject Get<T>()
         {
-            return FreeGameObjects[typeof (T)].First();
+            if (FreeGameObjects[typeof (T)].Any())
+            {
+                return FreeGameObjects[typeof (T)].First();
+            }
+            var newGameObject = GameObject.Instantiate(RegisterdPrefabs[typeof (T)]) as GameObject;
+            return newGameObject;
         }
-        var newGameObject = GameObject.Instantiate(RegisterdPrefabs[typeof (T)]) as GameObject;
-        return newGameObject;
-    }
 
-    public static void Release<T>(GameObject gameObject)
-    {
-        gameObject.SetActive(false);
-        FreeGameObjects[typeof(T)].Add(gameObject);
-    }
-
-    private static readonly Dictionary<Type, GameObject> RegisterdPrefabs = new Dictionary<Type, GameObject>();
-
-    public static void Register(Type type, GameObject prefab)
-    {
-        if (RegisterdPrefabs.ContainsKey(type))
+        public static void Release<T>(GameObject gameObject)
         {
-            Debug.LogWarning(type + " is already registerd");
-            return;
+            gameObject.SetActive(false);
+            FreeGameObjects[typeof(T)].Add(gameObject);
         }
 
-        RegisterdPrefabs[type] = prefab;
-        FreeGameObjects[type] = new List<GameObject>();
-    }
+        private static readonly Dictionary<Type, GameObject> RegisterdPrefabs = new Dictionary<Type, GameObject>();
 
-    static readonly Dictionary<Type, List<GameObject>> FreeGameObjects = new Dictionary<Type, List<GameObject>>();
+        public static void Register(Type type, GameObject prefab)
+        {
+            if (RegisterdPrefabs.ContainsKey(type))
+            {
+                Debug.LogWarning(type + " is already registerd");
+                return;
+            }
 
-    private ObjectPool()
-    {
+            RegisterdPrefabs[type] = prefab;
+            FreeGameObjects[type] = new List<GameObject>();
+        }
+
+        static readonly Dictionary<Type, List<GameObject>> FreeGameObjects = new Dictionary<Type, List<GameObject>>();
+
+        private ObjectPool()
+        {
         
+        }
     }
 }

@@ -3,12 +3,14 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Assets.Game.Gameplay.Chuzzles;
+using Assets.Utils;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
 #endregion
 
-namespace GamefieldStates
+namespace Assets.Game.Gameplay.GamefieldStates
 {
     [Serializable]
     public class PowerUpAnalyzeState : GameState
@@ -80,7 +82,7 @@ namespace GamefieldStates
 
         private bool CreateBomb(List<Chuzzle> comb)
         {
-            return CreateSpecialWithType(comb, TilesFactory.Instance.BombChuzzlePrefabs);
+            return CreateSpecialWithType(comb, Instance.TilesFactory.BombChuzzlePrefabs);
         }
 
         public bool CreateSpecialWithType(List<Chuzzle> ordered, GameObject[] prefabs)
@@ -96,7 +98,7 @@ namespace GamefieldStates
             }                               
 
             var powerUp = prefabs.First(x => x.GetComponent<Chuzzle>().Color == targetTile.Color);
-            TilesFactory.Instance.CreateChuzzle(targetTile.Current, powerUp);
+            Instance.TilesFactory.CreateChuzzle(targetTile.Current, powerUp);
             targetTile.Destroy(false, false);
             ordered.Remove(targetTile);
             return true;
@@ -105,7 +107,7 @@ namespace GamefieldStates
         private bool CreateLine(List<Chuzzle> comb)
         {
             return CreateSpecialWithType(comb,
-                Random.Range(0, 100) > 50 ? TilesFactory.Instance.HorizontalLineChuzzlePrefabs : TilesFactory.Instance.VerticalLineChuzzlePrefabs);
+                Random.Range(0, 100) > 50 ? Instance.TilesFactory.HorizontalLineChuzzlePrefabs : Instance.TilesFactory.VerticalLineChuzzlePrefabs);
         }
     }
 }

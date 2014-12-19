@@ -1,150 +1,145 @@
 ﻿using System;
-using Game.Data;
+using Assets.Game.Data;
+using Assets.Game.Gameplay.Chuzzles;
+using Assets.Game.Utility;
 using UnityEngine;
 
-public enum CreationType
+namespace Assets.Game.Gameplay.Cells
 {
-    Usual,
-    Place,
-    Counter,
-    Lock,
-    TwoTimes,
-    Invader
-}
-
-[ExecuteInEditMode]
-[Serializable]
-public class Cell : MonoBehaviour
-{
-    public CellDescription Description;
-
-    public CellTypes Type
+    [ExecuteInEditMode]
+    [Serializable]
+    public class Cell : MonoBehaviour
     {
-        get { return Description.Type; }
-    }
+        public CellDescription Description;
 
-    public int X
-    {
-        get { return Description.X; }
-    }
-
-    public int Y
-    {
-        get { return Description.Y; }
-    }
-
-    public Cell Left;
-    public Cell Right;
-    public Cell Top;
-    public Cell Bottom;
-
-    [NonSerialized]
-    public GameObject PlaceSpite;
-
-    public bool IsTemporary
-    {
-        get { return _isTemporary; }
-        set
+        public CellTypes Type
         {
-            _isTemporary = value;
-            if (renderer)
+            get { return Description.Type; }
+        }
+
+        public int X
+        {
+            get { return Description.X; }
+        }
+
+        public int Y
+        {
+            get { return Description.Y; }
+        }
+
+        public Cell Left;
+        public Cell Right;
+        public Cell Top;
+        public Cell Bottom;
+
+        [NonSerialized]
+        public GameObject PlaceSpite;
+
+        public bool IsTemporary
+        {
+            get { return _isTemporary; }
+            set
             {
-                renderer.enabled = value;
+                _isTemporary = value;
+                if (renderer)
+                {
+                    renderer.enabled = value;
+                }
             }
         }
-    }
 
-    public CreationType CreationType { get; set; }
+        public CreationType CreationType { get; set; }
 
-    public bool IsPlace
-    {
-        get { return Description.IsPlace; }
-        set
+        public bool IsPlace
         {
-            Description.IsPlace = value;
-            PlaceSpite.renderer.enabled = value;
-        }
-    }
-
-    public Vector3 Position;
-    private bool _isTemporary;
-    private bool _isPlace;
-
-    public void Init(CellDescription description)
-    {
-        Description = description;
-        Position = GamefieldUtility.ConvertXYToPosition(X, Y, Chuzzle.Scale);
-        CreationType = description.CreationType;
-        transform.position = Position;
-    }
-
-    public Cell GetBottomWithType(CellTypes type = CellTypes.Usual)
-    {
-        var bottom = Bottom;
-        while (bottom != null)
-        {
-            if (bottom.Type == type)
+            get { return Description.IsPlace; }
+            set
             {
-                return bottom;
+                Description.IsPlace = value;
+                PlaceSpite.renderer.enabled = value;
             }
-            bottom = bottom.Bottom;
         }
-        return null;
-    }
 
-    public Cell GetLeftWithType(CellTypes type = CellTypes.Usual)
-    {
-        var left = Left;
-        while (left != null)
+        public Vector3 Position;
+        private bool _isTemporary;
+        private bool _isPlace;
+
+        public void Init(CellDescription description)
         {
-            if (left.Type == type )
+            Description = description;
+            Position = GamefieldUtility.ConvertXYToPosition(X, Y, Chuzzle.Scale);
+            CreationType = description.CreationType;
+            transform.position = Position;
+        }
+
+        public Cell GetBottomWithType(CellTypes type = CellTypes.Usual)
+        {
+            var bottom = Bottom;
+            while (bottom != null)
             {
-                return left;
+                if (bottom.Type == type)
+                {
+                    return bottom;
+                }
+                bottom = bottom.Bottom;
             }
-            left = left.Left;
+            return null;
         }
-        return null;
-    }
 
-    public Cell GetRightWithType(CellTypes type = CellTypes.Usual)
-    {
-        var right = Right;
-        while (right != null)
+        public Cell GetLeftWithType(CellTypes type = CellTypes.Usual)
         {
-            //Debug.Log("Right" + right.ToString());
-            if (right.Type == type)
+            var left = Left;
+            while (left != null)
             {
-                return right;
+                if (left.Type == type )
+                {
+                    return left;
+                }
+                left = left.Left;
             }
-            right = right.Right;
+            return null;
         }
-        return null;
-    }
 
-    public Cell GetTopWithType(CellTypes type = CellTypes.Usual)
-    {
-        var top = Top;
-        while (top != null && !top.IsTemporary)
+        public Cell GetRightWithType(CellTypes type = CellTypes.Usual)
         {
-            if (top.Type == type)
+            var right = Right;
+            while (right != null)
             {
-                return top;
+                //Debug.Log("Right" + right.ToString());
+                if (right.Type == type)
+                {
+                    return right;
+                }
+                right = right.Right;
             }
-            top = top.Top;
+            return null;
         }
-        return null;
-    }
 
-    public override string ToString()
-    {
-        return string.Format("({0},{1}):{2} Temp:{3}", X,Y, Type,IsTemporary);
-    }
-
-    public IntVector2 IntVector2Position
-    {
-        get
+        public Cell GetTopWithType(CellTypes type = CellTypes.Usual)
         {
-            return new IntVector2(X,Y);
+            var top = Top;
+            while (top != null && !top.IsTemporary)
+            {
+                if (top.Type == type)
+                {
+                    return top;
+                }
+                top = top.Top;
+            }
+            return null;
+        }
+
+        public override string ToString()
+        {
+            return string.Format("({0},{1}):{2} Temp:{3}", X,Y, Type,IsTemporary);
+        }
+
+        public IntVector2 IntVector2Position
+        {
+            get
+            {
+                return new IntVector2(X,Y);
+            }
         }
     }
 }

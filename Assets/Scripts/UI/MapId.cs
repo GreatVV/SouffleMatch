@@ -1,58 +1,60 @@
-﻿using Game;
+﻿using Assets.Utils;
 using UnityEngine;
 using UnityEngine.UI;
-using Utils;
 
-[ExecuteInEditMode]
-public class MapId : MonoBehaviour
+namespace Assets.UI
 {
-    public int Index;
-    public int Pack;
-    public GameObject currentLevelParticle;
-    private GameObject effect;
-
-    #region Events Subscribers
-
-    public void OnClick()
+    [ExecuteInEditMode]
+    public class MapId : MonoBehaviour
     {
-        Instance.SessionRestorer.StartLevel(Pack, Index);
-    }
+        public int Index;
+        public int Pack;
+        public GameObject currentLevelParticle;
+        private GameObject effect;
 
-    #endregion
+        #region Events Subscribers
 
-    #region Unity Methods
-
-    public void Awake()
-    {
-        name = "0";
-    }
-
-    void Start()
-    {
-        GetComponent<Button>().onClick.AddListener(OnClick);
-    }
-
-    private void OnDisable()
-    {
-        if (effect)
+        public void OnClick()
         {
-            Destroy(effect);
+            Instance.SessionRestorer.StartLevel(Pack, Index);
         }
-    }
 
-    #endregion
+        #endregion
 
-    public void UpdateName()
-    {
-        transform.GetComponentInChildren<Text>().text = name;
-    }
+        #region Unity Methods
 
-    public void ShowCurrent()
-    {
-        effect = (GameObject) Instantiate(currentLevelParticle);
-        effect.transform.parent = transform;
-        effect.transform.localPosition = Vector3.zero;
-        effect.transform.localScale = Vector3.one;
-        effect.particleSystem.renderer.sortingLayerName = LayerMask.LayerToName(5);
+        public void Awake()
+        {
+            name = "0";
+        }
+
+        void Start()
+        {
+            GetComponent<Button>().onClick.AddListener(OnClick);
+        }
+
+        private void OnDisable()
+        {
+            if (effect)
+            {
+                Destroy(effect);
+            }
+        }
+
+        #endregion
+
+        public void UpdateName()
+        {
+            transform.GetComponentInChildren<Text>().text = name;
+        }
+
+        public void ShowCurrent()
+        {
+            effect = (GameObject) Instantiate(currentLevelParticle);
+            effect.transform.parent = transform;
+            effect.transform.localPosition = Vector3.zero;
+            effect.transform.localScale = Vector3.one;
+            effect.particleSystem.renderer.sortingLayerName = LayerMask.LayerToName(5);
+        }
     }
 }

@@ -1,7 +1,12 @@
 ﻿using System;
+using Assets.Game.Gameplay;
+using Assets.Game.Gameplay.Chuzzles;
+using Assets.Game.Utility;
+using Assets.iTweenEditor;
+using Assets.UI.Localization;
 using UnityEngine;
 
-namespace TutorialSpace
+namespace Assets.Tutorial
 {
     internal class TutorialPage : MonoBehaviour
     {

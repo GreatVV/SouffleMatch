@@ -1,5 +1,6 @@
 //by Bob Berkebile : Pixelplacement : http://www.pixelplacement.com
 
+using Assets.iTweenEditor;
 using UnityEngine;
 using UnityEditor;
 using System.Collections;

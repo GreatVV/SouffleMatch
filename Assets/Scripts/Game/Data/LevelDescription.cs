@@ -3,12 +3,13 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Game.GameMode;
-using UnityEngine;
+using Assets.Game.GameMode;
+using Assets.Game.Gameplay.Conditions;
+using Assets.Game.Utility;
 
 #endregion
 
-namespace Game.Data
+namespace Assets.Game.Data
 {
     [Serializable]
     public class LevelDescription
@@ -146,83 +147,6 @@ namespace Game.Data
         public override string ToString()
         {
             return string.Format("Name: {0} Width:{1} Height: {2}", Name, Field.Width, Field.Height);
-        }
-    }
-
-    [Serializable]
-    public class ConditionDescription
-    {
-        public GameModeDescription GameMode = new GameModeDescription();
-        public int Star1Score;
-        public int Star2Score;
-        public int Star3Score;
-    }
-
-    [Serializable]
-    public class FieldDescription
-    {
-        public int Height;
-        public int NumberOfColors = -1;
-        public int Seed;
-        public List<CellDescription> SpecialCells = new List<CellDescription>();
-        public List<Stage> Stages = new List<Stage>();
-        public int Width;
-    }
-
-    [Serializable]
-    public class CellDescription
-    {
-        public CreationType CreationType;
-        public int X;
-        public int Y;
-        public CellTypes Type;
-        public bool IsPlace;
-
-        public CellDescription()
-        {
-            
-        }
-
-        public CellDescription(int x, int y)
-        {
-            X = x;
-            Y = y;
-        }
-
-        public CellDescription(int x, int y, CellTypes type) : this (x,y)
-        {
-            Type = type;
-        }
-
-        public CellDescription(int x, int y, CellTypes type, CreationType creationType) : this(x,y,type)
-        {
-            CreationType = creationType;
-        }
-
-        public JSONObject Serialize()
-        {
-            var json = new JSONObject();
-            json.AddField("CreationType",CreationType.ToString());
-            json.AddField("Type", Type.ToString());
-            json.AddField("X",X);
-            json.AddField("Y",Y);
-            json.AddField("IsPlace",IsPlace);
-
-            return json;
-        }
-
-        public static CellDescription Deserialize(JSONObject jsonObject)
-        {
-            var cellDesc = new CellDescription
-            {
-                CreationType =
-                    (CreationType) Enum.Parse(typeof (CreationType), jsonObject.GetStringField("CreationType")),
-                Type = (CellTypes) Enum.Parse(typeof (CellTypes), jsonObject.GetStringField("Type")),
-                X = (int) jsonObject.GetField("X").n,
-                Y = (int) jsonObject.GetField("Y").n,
-                IsPlace = jsonObject.GetField("IsPlace").b
-            };
-            return cellDesc;
         }
     }
 }

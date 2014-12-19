@@ -1,7 +1,9 @@
 ﻿using System;
-using Utils;
+using Assets.Game.Gameplay;
+using Assets.Game.Player;
+using Assets.Utils;
 
-namespace Game.GameMode
+namespace Assets.Game.GameMode
 {
     [Serializable]
     public abstract class GameMode

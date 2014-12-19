@@ -1,14 +1,12 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
-using Random = UnityEngine.Random;
 
-internal class ChuzzleExplosion : MonoBehaviour
+namespace Assets.Game.Gameplay.Chuzzles
 {
-   // public List<ExplosionDesc> explosionColors;
+    internal class ChuzzleExplosion : MonoBehaviour
+    {
+        // public List<ExplosionDesc> explosionColors;
 
-    public ParticleSystem ps;
+        public ParticleSystem ps;
         /*
     [Serializable]
     internal class ExplosionDesc
@@ -17,18 +15,19 @@ internal class ChuzzleExplosion : MonoBehaviour
         public Color[] possibleColors;
     }
     */
-    void Awake()
-    {
-        if (!ps)
+        void Awake()
         {
-            ps = particleSystem;
+            if (!ps)
+            {
+                ps = particleSystem;
+            }
         }
-    }
 
-    public void Init(ChuzzleColor color)
-    {
-        //var posibleColors = explosionColors.FirstOrDefault(x => x.color == color).possibleColors;
-    //   ps.startColor = posibleColors[Random.Range(0, posibleColors.Length)];
-        ps.Play(true);
+        public void Init(ChuzzleColor color)
+        {
+            //var posibleColors = explosionColors.FirstOrDefault(x => x.color == color).possibleColors;
+            //   ps.startColor = posibleColors[Random.Range(0, posibleColors.Length)];
+            ps.Play(true);
+        }
     }
 }

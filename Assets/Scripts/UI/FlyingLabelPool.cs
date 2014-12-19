@@ -1,32 +1,36 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using Assets.Utils;
 using UnityEngine;
 
-public class FlyingLabelPool : MonoBehaviour
+namespace Assets.UI
 {
-    public FlyingPoints Prefab;
-    public List<FlyingPoints> CurrentLabels = new List<FlyingPoints>();
-
-    public FlyingPoints GetLabel
+    public class FlyingLabelPool : MonoBehaviour
     {
-        get
+        public FlyingPoints Prefab;
+        public List<FlyingPoints> CurrentLabels = new List<FlyingPoints>();
+
+        public FlyingPoints GetLabel
         {
-            var label = CurrentLabels.FirstOrDefault(x => !x.gameObject.activeInHierarchy);
-            if (label)
+            get
             {
-                //Debug.Log("Label: "+label.GetInstanceID());
-                //label.gameObject.SetActive(true);
+                var label = CurrentLabels.FirstOrDefault(x => !x.gameObject.activeInHierarchy);
+                if (label)
+                {
+                    //Debug.Log("Label: "+label.GetInstanceID());
+                    //label.gameObject.SetActive(true);
+                    return label;
+                }
+                label = NGUITools.AddChild(gameObject,Prefab.gameObject).GetComponent<FlyingPoints>();
+                label.transform.localPosition = Vector3.zero;
+                CurrentLabels.Add(label);
                 return label;
             }
-            label = NGUITools.AddChild(gameObject,Prefab.gameObject).GetComponent<FlyingPoints>();
-            label.transform.localPosition = Vector3.zero;
-            CurrentLabels.Add(label);
-            return label;
         }
-    }
 
-    public void Return(object label)
-    {
-        (label as GameObject).gameObject.SetActive(false);
+        public void Return(object label)
+        {
+            (label as GameObject).gameObject.SetActive(false);
+        }
     }
 }

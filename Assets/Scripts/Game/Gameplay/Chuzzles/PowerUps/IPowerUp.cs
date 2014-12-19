@@ -1,6 +1,9 @@
 ﻿using System.Collections.Generic;
 
-public interface IPowerUp
+namespace Assets.Game.Gameplay.Chuzzles.PowerUps
 {
-    IEnumerable<Chuzzle> ToDestroy { get; }
+    public interface IPowerUp
+    {
+        IEnumerable<Chuzzle> ToDestroy { get; }
+    }
 }

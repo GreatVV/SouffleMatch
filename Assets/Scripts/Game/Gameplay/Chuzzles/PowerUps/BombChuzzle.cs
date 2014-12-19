@@ -1,19 +1,22 @@
 ﻿using System.Collections.Generic;
 
-public class BombChuzzle : Chuzzle, IPowerUp
-{      
-    protected override void OnAwake()
-    {
-        
-    }
-
-
-    public IEnumerable<Chuzzle> ToDestroy
-    {
-        get
+namespace Assets.Game.Gameplay.Chuzzles.PowerUps
+{
+    public class BombChuzzle : Chuzzle, IPowerUp
+    {      
+        protected override void OnAwake()
         {
-            return new List<Chuzzle>();
-            //return PowerUpDestroyManager.GetSquare(Current.x, Current.y);
+        
+        }
+
+
+        public IEnumerable<Chuzzle> ToDestroy
+        {
+            get
+            {
+                return new List<Chuzzle>();
+                //return PowerUpDestroyManager.GetSquare(Current.x, Current.y);
+            }
         }
     }
 }

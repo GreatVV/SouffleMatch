@@ -1,8 +1,11 @@
 ﻿using System;
 
-[Serializable]
-public enum CellTypes
+namespace Assets.Game.Gameplay.Cells
 {
-    Usual,
-    Block
+    [Serializable]
+    public enum CellTypes
+    {
+        Usual,
+        Block
+    }
 }

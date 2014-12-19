@@ -19,7 +19,7 @@
 	<DebugType>full</DebugType>
 	<Optimize>false</Optimize>
 	<OutputPath>Temp\bin\Debug\</OutputPath>
-	<DefineConstants>DEBUG;TRACE;UNITY_4_6_0;UNITY_4_6;UNITY_STANDALONE_WIN;ENABLE_MICROPHONE;ENABLE_TEXTUREID_MAP;ENABLE_UNITYEVENTS;ENABLE_NEW_HIERARCHY ;ENABLE_AUDIO_FMOD;UNITY_STANDALONE;ENABLE_MONO;ENABLE_TERRAIN;ENABLE_SUBSTANCE;ENABLE_GENERICS;INCLUDE_WP8SUPPORT;ENABLE_MOVIES;ENABLE_WWW;ENABLE_IMAGEEFFECTS;ENABLE_4_6_FEATURES;INCLUDE_WP_BLUE_SUPPORT;ENABLE_WEBCAM;INCLUDE_METROSUPPORT;RENDER_SOFTWARE_CURSOR;ENABLE_NETWORK;ENABLE_PHYSICS;ENABLE_CACHING;ENABLE_CLOTH;ENABLE_2D_PHYSICS;ENABLE_SHADOWS;ENABLE_AUDIO;ENABLE_NAVMESH_CARVING;ENABLE_DUCK_TYPING;ENABLE_SINGLE_INSTANCE_BUILD_SETTING;ENABLE_PROFILER;UNITY_EDITOR;UNITY_EDITOR_WIN</DefineConstants>
+	<DefineConstants>DEBUG;TRACE;UNITY_4_6_0;UNITY_4_6;UNITY_WP8;ENABLE_MICROPHONE;ENABLE_TEXTUREID_MAP;ENABLE_UNITYEVENTS;ENABLE_NEW_HIERARCHY ;ENABLE_LAZY_METHOD_CACHING;ENABLE_AUDIO_FMOD;ENABLE_TERRAIN;ENABLE_GENERICS;INCLUDE_WP8SUPPORT;ENABLE_MOVIES;ENABLE_WWW;ENABLE_IMAGEEFFECTS;ENABLE_4_6_FEATURES;UNITY_WINRT;INCLUDE_WP_BLUE_SUPPORT;ENABLE_WEBCAM;INCLUDE_METROSUPPORT;RENDER_SOFTWARE_CURSOR;ENABLE_PHYSICS;ENABLE_CACHING;ENABLE_SERIALIZATION_BY_CODEGENERATION;ENABLE_CLOTH;ENABLE_2D_PHYSICS;ENABLE_SHADOWS;ENABLE_AUDIO;ENABLE_NAVMESH_CARVING;ENABLE_SINGLE_INSTANCE_BUILD_SETTING;DEVELOPMENT_BUILD;ENABLE_PROFILER;DEBUG;TRACE;UNITY_EDITOR;UNITY_EDITOR_WIN;UNITY_TEAM_LICENSE;UNITY_PRO_LICENSE</DefineConstants>
 	<ErrorReport>prompt</ErrorReport>
 	<WarningLevel>4</WarningLevel>
 	<NoWarn>0169</NoWarn>
@@ -39,46 +39,55 @@
 	<Reference Include="System.Core" />
 	<Reference Include="System.Xml.Linq" />
 	<Reference Include="UnityEngine">
-	  <HintPath>C:/Program Files (x86)/Unity/Editor/Data/Managed/UnityEngine.dll</HintPath>
+	  <HintPath>C:/Program Files (x86)/Unity/Editor/Data/PlaybackEngines/WP8Support/Tools/UnityEngine.dll</HintPath>
 	</Reference>
 	<Reference Include="UnityEditor">
 	  <HintPath>C:/Program Files (x86)/Unity/Editor/Data/Managed/UnityEditor.dll</HintPath>
 	</Reference>
   </ItemGroup>
   <ItemGroup>
-     <Compile Include="Assets\Scripts\Game\CenterCameraOnField.cs" />
-     <Compile Include="Assets\Scripts\Game\ChuzzlePool.cs" />
+     <Compile Include="Assets\Scripts\Game\Data\CellDescription.cs" />
      <Compile Include="Assets\Scripts\Game\Data\Condition.cs" />
+     <Compile Include="Assets\Scripts\Game\Data\ConditionDescription.cs" />
+     <Compile Include="Assets\Scripts\Game\Data\FieldDescription.cs" />
      <Compile Include="Assets\Scripts\Game\Data\IJsonSerializable.cs" />
      <Compile Include="Assets\Scripts\Game\Data\LevelDescription.cs" />
      <Compile Include="Assets\Scripts\Game\Data\LevelInfo.cs" />
      <Compile Include="Assets\Scripts\Game\Data\LevelPackStatus.cs" />
      <Compile Include="Assets\Scripts\Game\Data\LevelStatus.cs" />
      <Compile Include="Assets\Scripts\Game\Data\Nullable.cs" />
-     <Compile Include="Assets\Scripts\Game\Economy.cs" />
      <Compile Include="Assets\Scripts\Game\GameMode\GameMode.cs" />
+     <Compile Include="Assets\Scripts\Game\GameMode\GameModeDescription.cs" />
      <Compile Include="Assets\Scripts\Game\GameMode\GameModeFactory.cs" />
+     <Compile Include="Assets\Scripts\Game\GameMode\GameModes.cs" />
      <Compile Include="Assets\Scripts\Game\GameMode\TargetChuzzleGameMode.cs" />
      <Compile Include="Assets\Scripts\Game\GameMode\TargetPlaceGameMode.cs" />
      <Compile Include="Assets\Scripts\Game\GameMode\TargetScoreGameMode.cs" />
      <Compile Include="Assets\Scripts\Game\Gameplay\CellCollection.cs" />
      <Compile Include="Assets\Scripts\Game\Gameplay\Cells\Cell.cs" />
      <Compile Include="Assets\Scripts\Game\Gameplay\Cells\CellTypes.cs" />
+     <Compile Include="Assets\Scripts\Game\Gameplay\Cells\CreationType.cs" />
      <Compile Include="Assets\Scripts\Game\Gameplay\Chuzzles\Chuzzle.cs" />
      <Compile Include="Assets\Scripts\Game\Gameplay\Chuzzles\ChuzzleColor.cs" />
      <Compile Include="Assets\Scripts\Game\Gameplay\Chuzzles\ChuzzleExplosion.cs" />
-     <Compile Include="Assets\Scripts\Game\Gameplay\Chuzzles\ColorChuzzle.cs" />
-     <Compile Include="Assets\Scripts\Game\Gameplay\Chuzzles\CounterChuzzle.cs" />
-     <Compile Include="Assets\Scripts\Game\Gameplay\Chuzzles\ExplosionPool.cs" />
-     <Compile Include="Assets\Scripts\Game\Gameplay\Chuzzles\InvaderChuzzle.cs" />
-     <Compile Include="Assets\Scripts\Game\Gameplay\Chuzzles\LockChuzzle.cs" />
      <Compile Include="Assets\Scripts\Game\Gameplay\Chuzzles\PowerUpDestroyManager.cs" />
      <Compile Include="Assets\Scripts\Game\Gameplay\Chuzzles\PowerUps\BombChuzzle.cs" />
      <Compile Include="Assets\Scripts\Game\Gameplay\Chuzzles\PowerUps\HorizontalLineChuzzle.cs" />
      <Compile Include="Assets\Scripts\Game\Gameplay\Chuzzles\PowerUps\IPowerUp.cs" />
      <Compile Include="Assets\Scripts\Game\Gameplay\Chuzzles\PowerUps\VerticalLineChuzzle.cs" />
+     <Compile Include="Assets\Scripts\Game\Gameplay\Chuzzles\PrimeSearch.cs" />
      <Compile Include="Assets\Scripts\Game\Gameplay\Chuzzles\TeleportableEntity.cs" />
-     <Compile Include="Assets\Scripts\Game\Gameplay\Chuzzles\TwoTimeChuzzle.cs" />
+     <Compile Include="Assets\Scripts\Game\Gameplay\Chuzzles\Types\ColorChuzzle.cs" />
+     <Compile Include="Assets\Scripts\Game\Gameplay\Chuzzles\Types\CounterChuzzle.cs" />
+     <Compile Include="Assets\Scripts\Game\Gameplay\Chuzzles\Types\InvaderChuzzle.cs" />
+     <Compile Include="Assets\Scripts\Game\Gameplay\Chuzzles\Types\LockChuzzle.cs" />
+     <Compile Include="Assets\Scripts\Game\Gameplay\Chuzzles\Types\TwoTimeChuzzle.cs" />
+     <Compile Include="Assets\Scripts\Game\Gameplay\Chuzzles\Utils\ChuzzlePool.cs" />
+     <Compile Include="Assets\Scripts\Game\Gameplay\Chuzzles\Utils\ExplosionPool.cs" />
+     <Compile Include="Assets\Scripts\Game\Gameplay\Chuzzles\Utils\RandomSprite.cs" />
+     <Compile Include="Assets\Scripts\Game\Gameplay\Chuzzles\Utils\SpriteScale.cs" />
+     <Compile Include="Assets\Scripts\Game\Gameplay\Chuzzles\Utils\TipArrow.cs" />
+     <Compile Include="Assets\Scripts\Game\Gameplay\Conditions\Stage.cs" />
      <Compile Include="Assets\Scripts\Game\Gameplay\Conditions\StageManager.cs" />
      <Compile Include="Assets\Scripts\Game\Gameplay\Gamefield.cs" />
      <Compile Include="Assets\Scripts\Game\Gameplay\GamefieldStates\ChuzzleMover.cs" />
@@ -92,22 +101,23 @@
      <Compile Include="Assets\Scripts\Game\Gameplay\Level.cs" />
      <Compile Include="Assets\Scripts\Game\Gameplay\TilesCollection.cs" />
      <Compile Include="Assets\Scripts\Game\Gameplay\TilesFactory.cs" />
-     <Compile Include="Assets\Scripts\Game\LevelManager.cs" />
-     <Compile Include="Assets\Scripts\Game\ManaManager.cs" />
-     <Compile Include="Assets\Scripts\Game\Player.cs" />
-     <Compile Include="Assets\Scripts\Game\Profile.cs" />
-     <Compile Include="Assets\Scripts\Game\ProgressionManager.cs" />
-     <Compile Include="Assets\Scripts\Game\RandomSprite.cs" />
-     <Compile Include="Assets\Scripts\Game\SessionRestorer.cs" />
-     <Compile Include="Assets\Scripts\Game\SpriteScale.cs" />
-     <Compile Include="Assets\Scripts\Game\TipArrow.cs" />
-     <Compile Include="Assets\Scripts\Game\Utility\CameraBounds.cs" />
+     <Compile Include="Assets\Scripts\Game\Levels\LevelManager.cs" />
+     <Compile Include="Assets\Scripts\Game\Levels\LevelPack.cs" />
+     <Compile Include="Assets\Scripts\Game\Levels\LevelPackManager.cs" />
+     <Compile Include="Assets\Scripts\Game\Player\Economy.cs" />
+     <Compile Include="Assets\Scripts\Game\Player\ManaManager.cs" />
+     <Compile Include="Assets\Scripts\Game\Player\Player.cs" />
+     <Compile Include="Assets\Scripts\Game\Player\Profile.cs" />
+     <Compile Include="Assets\Scripts\Game\Player\ProgressionManager.cs" />
+     <Compile Include="Assets\Scripts\Game\Player\SessionRestorer.cs" />
      <Compile Include="Assets\Scripts\Game\Utility\Extensions.cs" />
      <Compile Include="Assets\Scripts\Game\Utility\GamefieldUtility.cs" />
      <Compile Include="Assets\Scripts\Game\Utility\IntVector2.cs" />
      <Compile Include="Assets\Scripts\Game\Utility\JSONObject.cs" />
      <Compile Include="Assets\Scripts\Game\Utility\ObjectPool.cs" />
-     <Compile Include="Assets\Scripts\Game\Utility\ParticleSystemAutoDestruct.cs" />
+     <Compile Include="Assets\Scripts\Game\Visual\CameraBounds.cs" />
+     <Compile Include="Assets\Scripts\Game\Visual\CenterCameraOnField.cs" />
+     <Compile Include="Assets\Scripts\Game\Visual\ParticleSystemAutoDestruct.cs" />
      <Compile Include="Assets\Scripts\Tower\Floor.cs" />
      <Compile Include="Assets\Scripts\Tower\FloorDesc.cs" />
      <Compile Include="Assets\Scripts\Tower\GameFloorDesc.cs" />
@@ -135,14 +145,57 @@
      <Compile Include="Assets\Scripts\Utils\IClearable.cs" />
      <Compile Include="Assets\Scripts\Utils\Instance.cs" />
      <Compile Include="Assets\Scripts\Utils\NGUITools.cs" />
+     <Compile Include="Assets\UnityTestTools\Assertions\AssertionComponent.cs" />
+     <Compile Include="Assets\UnityTestTools\Assertions\AssertionException.cs" />
+     <Compile Include="Assets\UnityTestTools\Assertions\Assertions.cs" />
+     <Compile Include="Assets\UnityTestTools\Assertions\CheckMethod.cs" />
+     <Compile Include="Assets\UnityTestTools\Assertions\Comparers\ActionBase.cs" />
+     <Compile Include="Assets\UnityTestTools\Assertions\Comparers\ActionBaseGeneric.cs" />
+     <Compile Include="Assets\UnityTestTools\Assertions\Comparers\BoolComparer.cs" />
+     <Compile Include="Assets\UnityTestTools\Assertions\Comparers\ColliderComparer.cs" />
+     <Compile Include="Assets\UnityTestTools\Assertions\Comparers\ComparerBase.cs" />
+     <Compile Include="Assets\UnityTestTools\Assertions\Comparers\ComparerBaseGeneric.cs" />
+     <Compile Include="Assets\UnityTestTools\Assertions\Comparers\FloatComparer.cs" />
+     <Compile Include="Assets\UnityTestTools\Assertions\Comparers\GeneralComparer.cs" />
+     <Compile Include="Assets\UnityTestTools\Assertions\Comparers\IntComparer.cs" />
+     <Compile Include="Assets\UnityTestTools\Assertions\Comparers\IsRenderedByCamera.cs" />
+     <Compile Include="Assets\UnityTestTools\Assertions\Comparers\StringComparer.cs" />
+     <Compile Include="Assets\UnityTestTools\Assertions\Comparers\TransformComparer.cs" />
+     <Compile Include="Assets\UnityTestTools\Assertions\Comparers\ValueDoesNotChange.cs" />
+     <Compile Include="Assets\UnityTestTools\Assertions\Comparers\Vector2Comparer.cs" />
+     <Compile Include="Assets\UnityTestTools\Assertions\Comparers\Vector3Comparer.cs" />
+     <Compile Include="Assets\UnityTestTools\Assertions\Comparers\Vector4Comparer.cs" />
+     <Compile Include="Assets\UnityTestTools\Assertions\Comparers\VectorComparerBase.cs" />
+     <Compile Include="Assets\UnityTestTools\Assertions\IAssertionComponentConfigurator.cs" />
+     <Compile Include="Assets\UnityTestTools\Assertions\InvalidPathException.cs" />
+     <Compile Include="Assets\UnityTestTools\Assertions\MemberResolver.cs" />
+     <Compile Include="Assets\UnityTestTools\Common\ITestResult.cs" />
+     <Compile Include="Assets\UnityTestTools\Common\TestResultState.cs" />
+     <Compile Include="Assets\UnityTestTools\IntegrationTestsFramework\TestRunner\ITestComponent.cs" />
+     <Compile Include="Assets\UnityTestTools\IntegrationTestsFramework\TestRunner\ITestRunnerCallback.cs" />
+     <Compile Include="Assets\UnityTestTools\IntegrationTestsFramework\TestRunner\IntegrationTest.cs" />
+     <Compile Include="Assets\UnityTestTools\IntegrationTestsFramework\TestRunner\IntegrationTestAttribute.cs" />
+     <Compile Include="Assets\UnityTestTools\IntegrationTestsFramework\TestRunner\IntegrationTestsProvider.cs" />
+     <Compile Include="Assets\UnityTestTools\IntegrationTestsFramework\TestRunner\NetworkResultSender.cs" />
+     <Compile Include="Assets\UnityTestTools\IntegrationTestsFramework\TestRunner\ResultDTO.cs" />
+     <Compile Include="Assets\UnityTestTools\IntegrationTestsFramework\TestRunner\SerializableTestResult.cs" />
+     <Compile Include="Assets\UnityTestTools\IntegrationTestsFramework\TestRunner\TestComponent.cs" />
+     <Compile Include="Assets\UnityTestTools\IntegrationTestsFramework\TestRunner\TestResult.cs" />
+     <Compile Include="Assets\UnityTestTools\IntegrationTestsFramework\TestRunner\TestResultRenderer.cs" />
+     <Compile Include="Assets\UnityTestTools\IntegrationTestsFramework\TestRunner\TestRunner.cs" />
+     <Compile Include="Assets\UnityTestTools\IntegrationTestsFramework\TestRunner\TestRunnerCallbackList.cs" />
+     <Compile Include="Assets\UnityTestTools\IntegrationTestsFramework\TestRunner\TestRunnerConfigurator.cs" />
+     <Compile Include="Assets\UnityTestTools\IntegrationTestsFramework\TestingAssets\CallTesting.cs" />
      <Compile Include="Assets\iTween\Plugins\iTween.cs" />
-     <Compile Include="Assets\iTweenEditor\Examples\StartAndStopTween.cs" />
+     <Compile Include="Assets\iTweenEditor\ArrayIndexes.cs" />
      <Compile Include="Assets\iTweenEditor\Helper Classes\EventParamMappings.cs" />
      <Compile Include="Assets\iTweenEditor\Helper Classes\Vector3OrTransform.cs" />
      <Compile Include="Assets\iTweenEditor\Helper Classes\Vector3OrTransformArray.cs" />
      <Compile Include="Assets\iTweenEditor\iTweenEvent.cs" />
      <Compile Include="Assets\iTweenEditor\iTweenPath.cs" />
+     <None Include="Assets\UnityTestTools\LICENSE.txt" />
      <None Include="Assets\iTweenEditor\README.txt" />
+     <None Include="Assets\UnityTestTools\changelog.txt" />
  <Reference Include="UnityEngine.UI">
  <HintPath>C:/Program Files (x86)/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/4.6.0/UnityEngine.UI.dll</HintPath>
  </Reference>

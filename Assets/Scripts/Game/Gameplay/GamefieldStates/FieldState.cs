@@ -3,12 +3,16 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Game;
+using Assets.Game.Gameplay.Cells;
+using Assets.Game.Gameplay.Chuzzles;
+using Assets.Game.Gameplay.Chuzzles.Types;
+using Assets.Game.Gameplay.Chuzzles.Utils;
+using Assets.Game.Utility;
 using UnityEngine;
 
 #endregion
 
-namespace GamefieldStates
+namespace Assets.Game.Gameplay.GamefieldStates
 {
     [Serializable]
     public class FieldState : GameState

@@ -1,55 +1,60 @@
-﻿#region
+﻿using Assets.Plugins;
+using Assets.Utils;
 
-using System.Runtime.InteropServices;
+#region
+
 using UnityEngine;
 
 #endregion
 
 //[RequireComponent(typeof (Chuzzle))]
-public class TeleportableEntity : MonoBehaviour
+namespace Assets.Game.Gameplay.Chuzzles
 {
-    public GameObject Copy;
-
-    #region Event Handlers
-
-    public void OnDestroy()
+    public class TeleportableEntity : MonoBehaviour
     {
-        Destroy(Copy);
-    }
+        public GameObject Copy;
 
-    #endregion
+        #region Event Handlers
 
-    public bool HasCopy
-    {
-        get { return Copy != null && Copy.activeSelf; }
-    }
-
-    public void Show()
-    {
-        if (Copy == null)
+        public void OnDestroy()
         {
-            var chuzzle = gameObject.GetComponent<Chuzzle>();
-            var prefab = TilesFactory.Instance.PrefabOfColor(chuzzle.Color);
-            Copy = Instantiate(prefab) as GameObject;
-            Copy.gameObject.name += " is copy";
-            Copy.transform.parent = gameObject.transform;
-            iTween.Stop(Copy);
-            Destroy(Copy.GetComponent<Chuzzle>());
+            Destroy(Copy);
         }
+
+        #endregion
+
+        public bool HasCopy
+        {
+            get { return Copy != null && Copy.activeSelf; }
+        }
+
+        public void Show()
+        {
+            if (Copy == null)
+            {
+                var chuzzle = gameObject.GetComponent<Chuzzle>();
+                var prefab = Instance.TilesFactory.PrefabOfColor(chuzzle.Color);
+                Copy = Instantiate(prefab) as GameObject;
+                Copy.gameObject.name += " is copy";
+                Copy.transform.parent = gameObject.transform;
+                iTween.Stop(Copy);
+                Destroy(Copy.GetComponent<Chuzzle>());
+            }
         
 
-        if (!Copy.activeSelf)
-        {
-            Copy.SetActive(true);
-        }
+            if (!Copy.activeSelf)
+            {
+                Copy.SetActive(true);
+            }
         
-    }
+        }
 
-    public void Hide()
-    {
-        if (HasCopy)
+        public void Hide()
         {
-            Copy.SetActive(false);
+            if (HasCopy)
+            {
+                Copy.SetActive(false);
+            }
         }
     }
 }

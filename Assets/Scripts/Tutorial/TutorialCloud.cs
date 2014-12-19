@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 
-namespace TutorialSpace
+namespace Assets.Tutorial
 {
     internal class TutorialCloud : MonoBehaviour
     {

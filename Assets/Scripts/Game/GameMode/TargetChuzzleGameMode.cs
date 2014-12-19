@@ -2,8 +2,10 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using Assets.Game.Gameplay.Chuzzles;
+using Assets.Game.Gameplay.Chuzzles.Types;
 
-namespace Game.GameMode
+namespace Assets.Game.GameMode
 {
     [Serializable]
     public class TargetChuzzleGameMode : GameMode

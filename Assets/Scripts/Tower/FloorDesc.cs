@@ -1,7 +1,6 @@
 ﻿using System;
-using UnityEngine;
 
-namespace Tower
+namespace Assets.Tower
 {
     [Serializable]
     public class FloorDesc

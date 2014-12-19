@@ -1,14 +1,17 @@
 ﻿using UnityEngine;
 
-public class Hide : MonoBehaviour {
+namespace Assets.UI
+{
+    public class Hide : MonoBehaviour {
 
-    public void SetInActive()
-    {
-        gameObject.SetActive(false);
-    }
+        public void SetInActive()
+        {
+            gameObject.SetActive(false);
+        }
 
-    public void SetActive()
-    {
-        gameObject.SetActive(true);
+        public void SetActive()
+        {
+            gameObject.SetActive(true);
+        }
     }
 }

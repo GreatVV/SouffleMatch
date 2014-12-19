@@ -1,20 +1,22 @@
-﻿using Game;
+﻿using Assets.Game;
+using Assets.Game.Levels;
 using UnityEngine;
-using System.Collections;
-using Tower;
 
-public class Menu : MonoBehaviour
+namespace Assets.Tower
 {
-    public LevelManager LevelManager;
-    public Tower.Tower tower;
-
-    public void OnPlayClick()
+    public class Menu : MonoBehaviour
     {
-        var towerDesc = tower.GetTowerDescription();
-        var level = LevelManager.GetLevel(towerDesc);
+        public LevelManager LevelManager;
+        public Tower tower;
+
+        public void OnPlayClick()
+        {
+            var towerDesc = tower.GetTowerDescription();
+            var level = LevelManager.GetLevel(towerDesc);
+
+        }
 
     }
-
 }
 
 

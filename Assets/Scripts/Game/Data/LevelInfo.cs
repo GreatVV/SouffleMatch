@@ -1,6 +1,7 @@
 ﻿using System;
+using Assets.Game.Utility;
 
-namespace Game.Data
+namespace Assets.Game.Data
 {
     [Serializable]
     public class LevelInfo

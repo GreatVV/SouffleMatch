@@ -2,11 +2,14 @@
 
 using System;
 using System.Linq;
+using Assets.Game.Gameplay.Cells;
+using Assets.Game.Utility;
+using Assets.Utils;
 using UnityEngine;
 
 #endregion
 
-namespace GamefieldStates
+namespace Assets.Game.Gameplay.GamefieldStates
 {
     [Serializable]
     public class CreateState : GameState
@@ -103,7 +106,7 @@ namespace GamefieldStates
                     for (var j = 0; j < newInColumn; j++)
                     {
                         //create new tiles
-                        var chuzzle = TilesFactory.Instance.CreateChuzzle(Gamefield.Level.Cells.GetCellAt(x, Gamefield.Level.Cells.Height + j));
+                        var chuzzle = Instance.TilesFactory.CreateChuzzle(Gamefield.Level.Cells.GetCellAt(x, Gamefield.Level.Cells.Height + j));
                         chuzzle.Current.IsTemporary = true;
                     }
                 }

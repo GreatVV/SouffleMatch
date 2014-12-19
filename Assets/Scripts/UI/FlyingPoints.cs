@@ -2,12 +2,15 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public class FlyingPoints : MonoBehaviour
+namespace Assets.UI
 {
-    [SerializeField] private Text amountLabel;
-
-    public void Init(int points)
+    public class FlyingPoints : MonoBehaviour
     {
-        amountLabel.text = points.ToString(CultureInfo.InvariantCulture);
+        [SerializeField] private Text amountLabel;
+
+        public void Init(int points)
+        {
+            amountLabel.text = points.ToString(CultureInfo.InvariantCulture);
+        }
     }
 }

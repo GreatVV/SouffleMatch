@@ -2,261 +2,267 @@
 
 using System;
 using System.Collections.Generic;
-using Game;
-using Game.Data;
-using Game.GameMode;
-using GamefieldStates;
+using Assets.Game.Data;
+using Assets.Game.GameMode;
+using Assets.Game.Gameplay.Chuzzles;
+using Assets.Game.Gameplay.GamefieldStates;
+using Assets.Game.Player;
+using Assets.Game.Visual;
+using Assets.UI.Localization;
+using Assets.Utils;
 using UnityEngine;
 using UnityEngine.EventSystems;
-using Utils;
 
 #endregion
 
-[ExecuteInEditMode]
-public class Gamefield : MonoBehaviour
+namespace Assets.Game.Gameplay
 {
-    public LayerMask ChuzzleMask;
-
-    public GameMode GameMode;
-    public DateTime GameStartTime;
-
-    public Level Level = new Level();
-    [SerializeField]
-    public ManaManager ManaManagerSystem;
-
-    #region State
-
-    public PowerUpAnalyzeState PowerUpAnalyzeState = null;
-    public CreateState CreateState = null;
-    public FieldState FieldState = null;
-    public GameOverState GameOverState = null;
-    public DeleteState RemoveState = null;
-    public WinState WinState = null;
-
-    [SerializeField]
-    private string _currentStateName;
-
-    [SerializeField]
-    private GameState _currentState;
-    private bool _isPause;
-
-
-    public GameState CurrentState
+    [ExecuteInEditMode]
+    public class Gamefield : MonoBehaviour
     {
-        get { return _currentState; }
-    }
-    #endregion
+        public LayerMask ChuzzleMask;
 
-    public string LevelName
-    {
-        get { return string.Format(Localization.Get("LevelNumber"), LevelDescription.Name); }
-    }
+        public GameMode.GameMode GameMode;
+        public DateTime GameStartTime;
 
-    public bool IsPause
-    {
-        get { return _isPause; }
-        set
+        public Level Level = new Level();
+        [SerializeField]
+        public ManaManager ManaManagerSystem;
+
+        #region State
+
+        public PowerUpAnalyzeState PowerUpAnalyzeState = null;
+        public CreateState CreateState = null;
+        public FieldState FieldState = null;
+        public GameOverState GameOverState = null;
+        public DeleteState RemoveState = null;
+        public WinState WinState = null;
+
+        [SerializeField]
+        private string _currentStateName;
+
+        [SerializeField]
+        private GameState _currentState;
+        private bool _isPause;
+
+
+        public GameState CurrentState
         {
-            if (_isPause != value)
+            get { return _currentState; }
+        }
+        #endregion
+
+        public string LevelName
+        {
+            get { return string.Format(Localization.Get("LevelNumber"), LevelDescription.Name); }
+        }
+
+        public bool IsPause
+        {
+            get { return _isPause; }
+            set
             {
-                _isPause = value;
-                FirePaused();
+                if (_isPause != value)
+                {
+                    _isPause = value;
+                    FirePaused();
+                }
             }
         }
-    }
 
-    public LevelDescription LevelDescription { get; set; }
+        public LevelDescription LevelDescription { get; set; }
 
-    #region Events
+        #region Events
 
-    public event Action<List<Chuzzle>> CombinationDestroyed;
+        public event Action<List<Chuzzle>> CombinationDestroyed;
 
-    public event Action<Gamefield> GameStarted;
+        public event Action<Gamefield> GameStarted;
 
-    public event Action<bool> Paused;
+        public event Action<bool> Paused;
 
-    public void AddEventHandlers()
-    {
-        RemoveEventHandlers();
-        CombinationDestroyed += ManaManagerSystem.CountForCombinations;
-        GameMode.Win += OnWin;
-        GameMode.GameOver += OnGameOver;
-    }
-
-    private void RemoveEventHandlers()
-    {
-        CombinationDestroyed -= ManaManagerSystem.CountForCombinations;
-        if (GameMode != null)
+        public void AddEventHandlers()
         {
-            GameMode.Win -= OnWin;
-            GameMode.GameOver -= OnGameOver;
+            RemoveEventHandlers();
+            CombinationDestroyed += ManaManagerSystem.CountForCombinations;
+            GameMode.Win += OnWin;
+            GameMode.GameOver += OnGameOver;
         }
-    }
 
-    #endregion
-
-    #region Event Handlers
-
-    private void OnGameOver()
-    {
-        SwitchStateTo(GameOverState);
-        RemoveEventHandlers();
-    }
-
-    private void OnWin()
-    {
-        
-        SwitchStateTo(WinState);
-        RemoveEventHandlers();
-    }
-
-    #endregion
-
-    #region Event Invokators
-
-    protected virtual void FirePaused()
-    {
-        var handler = Paused;
-        if (handler != null) handler(IsPause);
-    }
-
-    public virtual void InvokeCombinationDestroyed(List<Chuzzle> combination)
-    {
-        Action<List<Chuzzle>> handler = CombinationDestroyed;
-        if (handler != null) handler(combination);
-    }
-
-
-    public virtual void InvokeGameStarted()
-    {
-        Action<Gamefield> handler = GameStarted;
-        if (handler != null) handler(this);
-    }
-
-    #endregion
-
-    #region Unity Methods
-
-    public void Start()
-    {
-        if (!Application.isEditor)
+        private void RemoveEventHandlers()
         {
-            switch (Application.systemLanguage)
+            CombinationDestroyed -= ManaManagerSystem.CountForCombinations;
+            if (GameMode != null)
             {
-                case SystemLanguage.Russian:
-                    Localization.language = "Russian";
-                    break;
-                default:
-                    Localization.language = "English";
-                    break;
+                GameMode.Win -= OnWin;
+                GameMode.GameOver -= OnGameOver;
             }
         }
-        else
+
+        #endregion
+
+        #region Event Handlers
+
+        private void OnGameOver()
         {
-            Localization.language = "Russian";
+            SwitchStateTo(GameOverState);
+            RemoveEventHandlers();
         }
+
+        private void OnWin()
+        {
         
-        Instance.ProgressionManager.Init();
-    }
-
-    private void LateUpdate()
-    {
-        if (_currentState != null && !IsPause)
-        {
-            _currentState.LateUpdateState();
+            SwitchStateTo(WinState);
+            RemoveEventHandlers();
         }
-    }
 
-    private void OnDestroy()
-    {
-        RemoveEventHandlers();
-    }
+        #endregion
 
-    private void Update()
-    {
-        if (_currentState != null && !IsPause)
+        #region Event Invokators
+
+        protected virtual void FirePaused()
         {
-            _currentState.UpdateState();
+            var handler = Paused;
+            if (handler != null) handler(IsPause);
         }
-    }
 
-    #endregion
-
-    public void StartGame(LevelDescription levelDescription = null)
-    {
-        LevelDescription = Instance.Player.LastPlayedLevelDescription = levelDescription;
-        Debug.Log("Start level: "+LevelDescription);
-        GameStartTime = DateTime.UtcNow;
-        Init();
-    }
-
-
-    public void SwitchStateTo(GameState newState)
-    {
-        //Debug.Log("Old state: "+_currentState);
-        if (_currentState != null)
+        public virtual void InvokeCombinationDestroyed(List<Chuzzle> combination)
         {
-            _currentState.OnExit();
+            Action<List<Chuzzle>> handler = CombinationDestroyed;
+            if (handler != null) handler(combination);
         }
-        _currentState = newState;
-        _currentStateName = newState.ToString();
-         //Debug.Log("Switch to: " + _currentState);
-        _currentState.OnEnter();
-    }
 
-    public void Init()
-    {
-        //Debug.Log("Init");
+
+        public virtual void InvokeGameStarted()
+        {
+            Action<Gamefield> handler = GameStarted;
+            if (handler != null) handler(this);
+        }
+
+        #endregion
+
+        #region Unity Methods
+
+        public void Start()
+        {
+            if (!Application.isEditor)
+            {
+                switch (Application.systemLanguage)
+                {
+                    case SystemLanguage.Russian:
+                        Localization.language = "Russian";
+                        break;
+                    default:
+                        Localization.language = "English";
+                        break;
+                }
+            }
+            else
+            {
+                Localization.language = "Russian";
+            }
         
-        ChuzzleMover.Instance = new ChuzzleMover();
-
-        PowerUpAnalyzeState = new PowerUpAnalyzeState(this);
-        CreateState = new CreateState(this);
-        RemoveState = new DeleteState(this);
-        GameOverState = new GameOverState(this);
-        WinState = new WinState(this);
-        FieldState = new FieldState(this);
-        GameMode = GameModeFactory.CreateGameMode(LevelDescription.Condition.GameMode);
-        if (!ManaManagerSystem)
-        {
-            ManaManagerSystem = FindObjectOfType<ManaManager>();
+            Instance.ProgressionManager.Init();
         }
-        ManaManagerSystem.Reset();
-        ManaManagerSystem.TargetPoints = GameMode.TargetPoints;
-        GameMode.Init(this);
 
-        Level.Gamefield = this;
-        Level.InitFromFile(LevelDescription.Field);
-        //Level.Gamefield.transform.localScale = Vector3.zero;
-        //iTween.ScaleTo(Level.Gamefield.gameObject, Vector3.one, 0.5f);
-
-        AddEventHandlers();
-        InvokeGameStarted();
-
-        if (CenterCameraOnField.Instance)
+        private void LateUpdate()
         {
-            CenterCameraOnField.Instance.CenterCameraOnChuzzles(Level.Chuzzles,true);
+            if (_currentState != null && !IsPause)
+            {
+                _currentState.LateUpdateState();
+            }
         }
+
+        private void OnDestroy()
+        {
+            RemoveEventHandlers();
+        }
+
+        private void Update()
+        {
+            if (_currentState != null && !IsPause)
+            {
+                _currentState.UpdateState();
+            }
+        }
+
+        #endregion
+
+        public void StartGame(LevelDescription levelDescription = null)
+        {
+            LevelDescription = Instance.Player.LastPlayedLevelDescription = levelDescription;
+            Debug.Log("Start level: "+LevelDescription);
+            GameStartTime = DateTime.UtcNow;
+            Init();
+        }
+
+
+        public void SwitchStateTo(GameState newState)
+        {
+            //Debug.Log("Old state: "+_currentState);
+            if (_currentState != null)
+            {
+                _currentState.OnExit();
+            }
+            _currentState = newState;
+            _currentStateName = newState.ToString();
+            //Debug.Log("Switch to: " + _currentState);
+            _currentState.OnEnter();
+        }
+
+        public void Init()
+        {
+            //Debug.Log("Init");
         
-        SwitchStateTo(PowerUpAnalyzeState);
-    }
+            ChuzzleMover.Instance = new ChuzzleMover();
 
-    public void OnDrag(BaseEventData eventData)
-    {
-        var pointerEventData = eventData as PointerEventData;
-        if (pointerEventData != null)
-        {
-            FieldState.OnDrag(pointerEventData.delta);
+            PowerUpAnalyzeState = new PowerUpAnalyzeState(this);
+            CreateState = new CreateState(this);
+            RemoveState = new DeleteState(this);
+            GameOverState = new GameOverState(this);
+            WinState = new WinState(this);
+            FieldState = new FieldState(this);
+            GameMode = GameModeFactory.CreateGameMode(LevelDescription.Condition.GameMode);
+            if (!ManaManagerSystem)
+            {
+                ManaManagerSystem = FindObjectOfType<ManaManager>();
+            }
+            ManaManagerSystem.Reset();
+            ManaManagerSystem.TargetPoints = GameMode.TargetPoints;
+            GameMode.Init(this);
+
+            Level.Gamefield = this;
+            Level.InitFromFile(LevelDescription.Field);
+            //Level.Gamefield.transform.localScale = Vector3.zero;
+            //iTween.ScaleTo(Level.Gamefield.gameObject, Vector3.one, 0.5f);
+
+            AddEventHandlers();
+            InvokeGameStarted();
+
+            if (CenterCameraOnField.Instance)
+            {
+                CenterCameraOnField.Instance.CenterCameraOnChuzzles(Level.Chuzzles,true);
+            }
+        
+            SwitchStateTo(PowerUpAnalyzeState);
         }
-    }
 
-    public void OnPointerDown(Chuzzle chuzzle)
-    {
-        FieldState.OnPointerDown(chuzzle);
-    }
+        public void OnDrag(BaseEventData eventData)
+        {
+            var pointerEventData = eventData as PointerEventData;
+            if (pointerEventData != null)
+            {
+                FieldState.OnDrag(pointerEventData.delta);
+            }
+        }
 
-    public void OnPointerUp(Chuzzle chuzzle)
-    {
-        FieldState.OnPointerUp(chuzzle);
+        public void OnPointerDown(Chuzzle chuzzle)
+        {
+            FieldState.OnPointerDown(chuzzle);
+        }
+
+        public void OnPointerUp(Chuzzle chuzzle)
+        {
+            FieldState.OnPointerUp(chuzzle);
+        }
     }
 }

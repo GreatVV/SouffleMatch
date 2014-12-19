@@ -1,8 +1,11 @@
 ﻿using System.Collections.Generic;
-using Game;
+using Assets.Game;
+using Assets.Game.Gameplay;
+using Assets.Game.Gameplay.Chuzzles.Utils;
+using Assets.Game.Player;
 using UnityEngine;
 
-namespace Utils
+namespace Assets.Utils
 {
     public static class Instance
     {
@@ -22,6 +25,8 @@ namespace Utils
         private static void Find()
         {
             //Find Assets
+            TilesFactory = SafeLoadAsset<TilesFactory>("TileFactory");
+            ChuzzlePool.RegisterPrefabs();
         }
 
         public static SessionRestorer SessionRestorer
@@ -84,6 +89,8 @@ namespace Utils
             }
         }
 
+        public static TilesFactory TilesFactory;
+        public static ChuzzlePool ChuzzlePool = new ChuzzlePool();
 
         private static T SafeLoadAsset<T>(string fileName) where T : ScriptableObject
         {

@@ -1,25 +1,29 @@
-﻿using UnityEngine;
+﻿using Assets.Game.Gameplay;
+using UnityEngine;
 using UnityEngine.UI;
 
-[RequireComponent(typeof (Text))]
-public class CurrentLevelLabel : MonoBehaviour
+namespace Assets.UI
 {
-    [SerializeField] private Gamefield gamefield;
-    private Text label;
-
-    private void Awake()
+    [RequireComponent(typeof (Text))]
+    public class CurrentLevelLabel : MonoBehaviour
     {
-        label = GetComponent<Text>();
-        gamefield.GameStarted += OnGameStarted;
-    }
+        [SerializeField] private Gamefield gamefield;
+        private Text label;
 
-    private void OnDestroy()
-    {
-        gamefield.GameStarted -= OnGameStarted;
-    }
+        private void Awake()
+        {
+            label = GetComponent<Text>();
+            gamefield.GameStarted += OnGameStarted;
+        }
 
-    private void OnGameStarted(Gamefield gamefield)
-    {
-        label.text = gamefield.LevelName;
+        private void OnDestroy()
+        {
+            gamefield.GameStarted -= OnGameStarted;
+        }
+
+        private void OnGameStarted(Gamefield gamefield)
+        {
+            label.text = gamefield.LevelName;
+        }
     }
 }

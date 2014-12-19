@@ -1,9 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Assets.Game.Gameplay.Cells;
+using Assets.Game.Gameplay.Chuzzles;
+using Assets.Game.Utility;
 using UnityEngine;
 
-namespace Game.GameMode
+namespace Assets.Game.GameMode
 {
     [Serializable]
     public class TargetPlaceGameMode : GameMode

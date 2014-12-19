@@ -4,32 +4,33 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-
-[RequireComponent(typeof(Gamefield))]
-public class PowerUpDestroyManager : MonoBehaviour
+namespace Assets.Game.Gameplay.Chuzzles
 {
-    public bool IsInDestroyState;
-    private Chuzzle _firstPowerUp;
-    public static PowerUpDestroyManager Instance { get; private set; }
-
-   // private Gamefield _gamefield;
-    private void Awake()
+    [RequireComponent(typeof(Gamefield))]
+    public class PowerUpDestroyManager : MonoBehaviour
     {
-        if (Instance != null)
+        public bool IsInDestroyState;
+        private Chuzzle _firstPowerUp;
+        public static PowerUpDestroyManager Instance { get; private set; }
+
+        // private Gamefield _gamefield;
+        private void Awake()
         {
-            Destroy(Instance.gameObject);
-            return;
+            if (Instance != null)
+            {
+                Destroy(Instance.gameObject);
+                return;
+            }
+            Instance = this;
+            //   _gamefield = GetComponent<Gamefield>();
         }
-        Instance = this;
-     //   _gamefield = GetComponent<Gamefield>();
-    }
 
-    public void PrintCollection(IEnumerable<Chuzzle> chuzzles)
-    {
-        var m = chuzzles.Aggregate("", (current, chuzzle) => current + (chuzzle + Environment.NewLine));
-        Debug.Log(m);
-    }
-    /*
+        public void PrintCollection(IEnumerable<Chuzzle> chuzzles)
+        {
+            var m = chuzzles.Aggregate("", (current, chuzzle) => current + (chuzzle + Environment.NewLine));
+            Debug.Log(m);
+        }
+        /*
     public void Destroy(IEnumerable<Chuzzle> chuzzlesToDestroy)
     {
         if (!IsInDestroyState)
@@ -135,26 +136,26 @@ public class PowerUpDestroyManager : MonoBehaviour
 
      */
 
-    private IEnumerator DestroyCollection(List<List<Chuzzle>> chuzzleToDestroy)
-    {
-        foreach (var listChuzzle in chuzzleToDestroy.ToArray())
+        private IEnumerator DestroyCollection(List<List<Chuzzle>> chuzzleToDestroy)
         {
-            if (listChuzzle.Count == 0)
+            foreach (var listChuzzle in chuzzleToDestroy.ToArray())
             {
-                continue;
-            }
+                if (listChuzzle.Count == 0)
+                {
+                    continue;
+                }
 
-            foreach (var chuzzle in listChuzzle)
-            {
-                chuzzle.Destroy(true);
+                foreach (var chuzzle in listChuzzle)
+                {
+                    chuzzle.Destroy(true);
+                }
+                yield return new WaitForSeconds(0.05f);
             }
-            yield return new WaitForSeconds(0.05f);
+            IsInDestroyState = false;
+            yield return new object();
         }
-        IsInDestroyState = false;
-        yield return new object();
-    }
     
-    /*
+        /*
     public static IEnumerable<Chuzzle> GetSquare(int posX, int posY)
     {
         return Gamefield.Chuzzles.Where(
@@ -164,4 +165,5 @@ public class PowerUpDestroyManager : MonoBehaviour
                 (x.Real.y == posY - 1 || x.Real.y == posY ||
                  x.Real.y == posY + 1));
     }*/
+    }
 }

@@ -1,9 +1,7 @@
 ﻿using System;
-using Game;
 using UnityEngine;
-using Utils;
 
-namespace GamefieldStates
+namespace Assets.Game.Gameplay.GamefieldStates
 {
     [Serializable]
     public class WinState : GameState

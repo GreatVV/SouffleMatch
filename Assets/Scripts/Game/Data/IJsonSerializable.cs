@@ -1,4 +1,6 @@
-﻿namespace Game.Data
+﻿using Assets.Game.Utility;
+
+namespace Assets.Game.Data
 {
     public interface IJsonSerializable
     {

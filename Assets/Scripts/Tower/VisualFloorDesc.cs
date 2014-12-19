@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Tower
+namespace Assets.Tower
 {
     public class VisualFloorDesc
     {

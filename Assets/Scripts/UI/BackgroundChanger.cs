@@ -1,27 +1,30 @@
 ﻿using System;
 using UnityEngine;
 
-public class BackgroundChanger : MonoBehaviour
+namespace Assets.UI
 {
-    [SerializeField] private Sprite DaySprite;
-    [SerializeField] private Sprite NightSprite;
-    [SerializeField] private SpriteRenderer spriteRenderer;
-
-    // Use this for initialization
-
-    #region Unity Methods
-
-    private void Start()
+    public class BackgroundChanger : MonoBehaviour
     {
-        if (DateTime.Now.Hour > 6 && DateTime.Now.Hour < 18)
-        {
-            spriteRenderer.sprite = DaySprite;
-        }
-        else
-        {
-            spriteRenderer.sprite = NightSprite;
-        }
-    }
+        [SerializeField] private Sprite DaySprite;
+        [SerializeField] private Sprite NightSprite;
+        [SerializeField] private SpriteRenderer spriteRenderer;
 
-    #endregion
+        // Use this for initialization
+
+        #region Unity Methods
+
+        private void Start()
+        {
+            if (DateTime.Now.Hour > 6 && DateTime.Now.Hour < 18)
+            {
+                spriteRenderer.sprite = DaySprite;
+            }
+            else
+            {
+                spriteRenderer.sprite = NightSprite;
+            }
+        }
+
+        #endregion
+    }
 }

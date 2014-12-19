@@ -1,25 +1,28 @@
 ﻿using System.Collections.Generic;
 
-public class VerticalLineChuzzle : Chuzzle, IPowerUp
+namespace Assets.Game.Gameplay.Chuzzles.PowerUps
 {
-    #region IPowerUp Members
-
-    public IEnumerable<Chuzzle> ToDestroy
+    public class VerticalLineChuzzle : Chuzzle, IPowerUp
     {
-        get
+        #region IPowerUp Members
+
+        public IEnumerable<Chuzzle> ToDestroy
         {
-            //return PowerUpDestroyManager.GetColumn(Current.x);
-            return new List<Chuzzle>();
+            get
+            {
+                //return PowerUpDestroyManager.GetColumn(Current.x);
+                return new List<Chuzzle>();
+            }
         }
+
+        #endregion
+
+        #region Events Subscribers
+
+        protected override void OnAwake()
+        {
+        }
+
+        #endregion
     }
-
-    #endregion
-
-    #region Events Subscribers
-
-    protected override void OnAwake()
-    {
-    }
-
-    #endregion
 }

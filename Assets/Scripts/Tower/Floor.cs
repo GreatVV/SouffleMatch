@@ -1,8 +1,8 @@
-﻿using Game.Data;
+﻿using Assets.Game.Data;
+using Assets.Game.Utility;
 using UnityEngine;
-using System.Collections;
 
-namespace Tower
+namespace Assets.Tower
 {
     public class Floor : MonoBehaviour, IJsonSerializable
     {

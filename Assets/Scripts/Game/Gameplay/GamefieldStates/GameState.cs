@@ -1,12 +1,10 @@
 ﻿#region
 
 using System;
-using System.Collections.Generic;
-using Object = UnityEngine.Object;
 
 #endregion
 
-namespace GamefieldStates
+namespace Assets.Game.Gameplay.GamefieldStates
 {
     [Serializable]
     public abstract class GameState

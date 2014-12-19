@@ -3,9 +3,13 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Linq;
-using Game;
-using Game.Data;
-using Game.GameMode;
+using Assets.Game;
+using Assets.Game.Data;
+using Assets.Game.GameMode;
+using Assets.Game.Gameplay;
+using Assets.Game.Gameplay.Cells;
+using Assets.Game.Levels;
+using Assets.Game.Utility;
 using UnityEditor;
 using UnityEngine;
 

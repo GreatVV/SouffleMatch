@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Game.Data;
+using Assets.Game.Data;
+using Assets.Game.Utility;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
-namespace Tower
+namespace Assets.Tower
 {
     public class Tower : MonoBehaviour, IJsonSerializable
     {
