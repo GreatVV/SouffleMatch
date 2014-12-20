@@ -25,7 +25,7 @@ namespace Assets.Utils
         private static void Find()
         {
             //Find Assets
-            TilesFactory = SafeLoadAsset<TilesFactory>("TileFactory");
+            TilesFactory = SafeLoadAsset<TilesFactory>("TilesFactory");
             ChuzzlePool.RegisterPrefabs();
         }
 

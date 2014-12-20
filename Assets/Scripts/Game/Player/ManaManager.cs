@@ -9,23 +9,33 @@ namespace Assets.Game.Player
     public class ManaManager : MonoBehaviour
     {
         public int CurrentPoints;
+
+        #region Events
+
         public event Action<int> PointChangeDelta;
+        public event Action<int, int> PointChanged;
+        public event Action<IEnumerable<Chuzzle>, int> PointsForDestroy;
+
+        #endregion
+
+        public int TargetPoints { get; set; }
 
         protected virtual void InvokePointChangeDelta(int delta)
         {
             Action<int> handler = PointChangeDelta;
-            if (handler != null) handler(delta);
+            if (handler != null)
+            {
+                handler(delta);
+            }
         }
-
-        public event Action<int, int> PointChanged;
-        public event Action<IEnumerable<Chuzzle>, int> PointsForDestroy;
-
-        public int TargetPoints { get; set; }
 
         protected virtual void InvokePointsForDestroy(IEnumerable<Chuzzle> comb, int pointsForComb)
         {
             Action<IEnumerable<Chuzzle>, int> handler = PointsForDestroy;
-            if (handler != null) handler(comb, pointsForComb);
+            if (handler != null)
+            {
+                handler(comb, pointsForComb);
+            }
         }
 
         public void Reset()
@@ -41,7 +51,6 @@ namespace Assets.Game.Player
             InvokePointChanged();
         }
 
-
         public void InvokePointChanged()
         {
             if (PointChanged != null)
@@ -52,7 +61,7 @@ namespace Assets.Game.Player
 
         public void CountForCombinations(IEnumerable<Chuzzle> combination)
         {
-            var newPoints = combination.Count()*25;
+            int newPoints = combination.Count() * 25;
             InvokePointChangeDelta(newPoints);
             AddPoints(newPoints);
             InvokePointsForDestroy(combination, newPoints);

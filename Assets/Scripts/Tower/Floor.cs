@@ -9,6 +9,14 @@ namespace Assets.Tower
         [SerializeField]
         private FloorDesc floorDescription;
 
+        public FloorDesc FloorDescription
+        {
+            get
+            {
+                return floorDescription;
+            }
+        }
+
         public JSONObject Serialize()
         {
             throw new System.NotImplementedException();
@@ -23,11 +31,9 @@ namespace Assets.Tower
         {
             floorDescription = floorDesc;
             var spriteGO = new GameObject("Sprite", typeof(SpriteRenderer));
-            spriteGO.transform.parent = transform;
-            spriteGO.transform.localPosition = Vector3.zero;
-            spriteGO.transform.localScale = Vector3.one;
+            spriteGO.transform.SetParent(transform, false);
             var sprite = spriteGO.GetComponent<SpriteRenderer>();
-            sprite.sprite = floorDesc.Visual.sprite;
+            sprite.sprite = floorDescription.Visual.sprite;
         }
     }
 }

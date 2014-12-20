@@ -1,5 +1,6 @@
 ﻿using Assets.Game;
 using Assets.Game.Levels;
+using Assets.Utils;
 using UnityEngine;
 
 namespace Assets.Tower
@@ -13,7 +14,7 @@ namespace Assets.Tower
         {
             var towerDesc = tower.GetTowerDescription();
             var level = LevelManager.GetLevel(towerDesc);
-
+            Instance.SessionRestorer.CurrentLevel = level;
         }
 
     }

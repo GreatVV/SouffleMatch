@@ -17,6 +17,8 @@ namespace Assets.Game.Data
         public ConditionDescription Condition = new ConditionDescription();
         public FieldDescription Field = new FieldDescription();
         public string Name;
+        public int PointsPerTile;
+        public bool IsCoinsDoubled;
 
         #region Event Handlers
 

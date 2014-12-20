@@ -1,19 +1,28 @@
 ﻿using System;
 using Assets.Game.Gameplay;
 using Assets.Game.Player;
-using Assets.Utils;
 
 namespace Assets.Game.GameMode
 {
     [Serializable]
     public abstract class GameMode
     {
-        public int Turns;
+        public GameModeDescription Description;
+        public Gamefield Gamefield;
         public bool IsGameOver;
         public bool IsWin;
         public ManaManager ManaManagerSystem;
 
-        public GameModeDescription Description;
+        public int StartTurns;
+        public int Turns;
+
+        #region Events
+
+        public event Action GameOver;
+        public event Action<int, int> TurnsChanged;
+        public event Action Win;
+
+        #endregion
 
         protected GameMode(GameModeDescription description)
         {
@@ -21,10 +30,9 @@ namespace Assets.Game.GameMode
             Turns = StartTurns = description.Turns;
         }
 
-        public int StartTurns;
         public virtual int TargetPoints { get; protected set; }
 
-        public abstract void HumanTurn();                              
+        public abstract void HumanTurn();
 
         public virtual void Reset()
         {
@@ -35,10 +43,6 @@ namespace Assets.Game.GameMode
         }
 
         public abstract void OnReset();
-
-        public event Action GameOver;
-        public event Action Win;
-        public event Action<int, int> TurnsChanged;
 
         public void InvokeWin()
         {
@@ -58,8 +62,6 @@ namespace Assets.Game.GameMode
 
         public bool Check()
         {
-            var sessionRestorer = Instance.SessionRestorer;
-            Instance.ProgressionManager.RegisterLevelFinish(sessionRestorer.lastPlayedPack, sessionRestorer.lastPlayedLevel, ManaManagerSystem.CurrentPoints, Turns, IsWin);
             if (IsGameOver)
             {
                 InvokeGameOver();
@@ -86,9 +88,7 @@ namespace Assets.Game.GameMode
         }
 
         public virtual void OnDestroy()
-        {
-        
-        }
+        {}
 
         public void InvokeTurnsChanged()
         {
@@ -103,12 +103,10 @@ namespace Assets.Game.GameMode
             Turns += additionalTurns;
             InvokeTurnsChanged();
         }
-    
-        public Gamefield Gamefield;
 
         public void Init(Gamefield gamefield)
-        {   
-            this.Gamefield = gamefield;
+        {
+            Gamefield = gamefield;
             ManaManagerSystem = Gamefield.ManaManagerSystem;
             Reset();
             OnDestroy();

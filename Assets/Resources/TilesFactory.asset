@@ -1,0 +1,85 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2d58ef48f79650443a91e70b150d6cc3, type: 3}
+  m_Name: TilesFactory
+  m_EditorClassIdentifier: 
+  CellPrefabs:
+  - {fileID: 100000, guid: 21b805cd0d251a5408ecf02a8e4eee82, type: 2}
+  - {fileID: 100000, guid: 6c55c3af4464f9c448fd9bd261321aca, type: 2}
+  ChuzzlePrefabs:
+  - {fileID: 100002, guid: 958f23f42e6c3e1458e26b72d8e487dd, type: 2}
+  - {fileID: 100002, guid: 5c019f85e8a1e5745bcd1519a1c77775, type: 2}
+  - {fileID: 100002, guid: 0b0402371db1038448f73d9036016b04, type: 2}
+  - {fileID: 100002, guid: 14466d57de63737488597181dd92609a, type: 2}
+  - {fileID: 100002, guid: 59d95f4855660ac429acda13dfc8148c, type: 2}
+  - {fileID: 100002, guid: fd4f62583dab15b4ba4f10902fa25953, type: 2}
+  - {fileID: 100002, guid: 22617c9b19186a146a67c3dd68f44bad, type: 2}
+  - {fileID: 100002, guid: cfaa9b2f1b999d840b7e2b61c1f1b167, type: 2}
+  ChuzzleLockPrefabs:
+  - {fileID: 100004, guid: 74574940ce821cf4d8befb0ddadb534e, type: 2}
+  - {fileID: 100004, guid: aad38a3191fb785429e2329cf4425c83, type: 2}
+  - {fileID: 100004, guid: 8e878d74e8de07447a3a53ba95add26c, type: 2}
+  - {fileID: 100004, guid: 3b31fac478141c0469e5070a9f93baab, type: 2}
+  - {fileID: 100004, guid: f3a24bb6f676f7a47a429fba131b48f0, type: 2}
+  - {fileID: 100004, guid: 1864bf386aa0aed48b930564afe64a7f, type: 2}
+  - {fileID: 100004, guid: eedba00da6b82cd479d7d15fd2adef54, type: 2}
+  - {fileID: 100004, guid: 39bc1bff08a431745963c4fbb0f64a26, type: 2}
+  ChuzzleTwoTimesPrefabs:
+  - {fileID: 100004, guid: f38a4f332ca679b45ab347d6534ac3c7, type: 2}
+  - {fileID: 100004, guid: 632783c47c1477541b904aeaedba7e35, type: 2}
+  - {fileID: 100004, guid: 1100c358be0cc254d8a40b1096f2e99e, type: 2}
+  - {fileID: 100004, guid: 669b60d9c797caf43823d52c83f542f5, type: 2}
+  - {fileID: 100004, guid: 32d27f7a8b164134597e89c51fa17728, type: 2}
+  - {fileID: 100004, guid: cf072f1c521ab2942a4c71a431479695, type: 2}
+  - {fileID: 100004, guid: d304005c88fa3524180509594a7ef33e, type: 2}
+  - {fileID: 100004, guid: 0b7c092d906ed1b4da29e6a921393465, type: 2}
+  ChuzzleCounterPrefabs:
+  - {fileID: 100004, guid: d21149b0c37137b47a2fea0ebf8641ca, type: 2}
+  - {fileID: 100004, guid: f99dc01683622b447b15a177b73e40cb, type: 2}
+  - {fileID: 100002, guid: ac339d56f0c3d5a458ba19262b887dbe, type: 2}
+  - {fileID: 100002, guid: 8e4410c60d1f05840aba07a09607afce, type: 2}
+  - {fileID: 100004, guid: cb5b96c7d9fe5b84f84b5840e19b5bda, type: 2}
+  - {fileID: 100004, guid: 92c21cfb9c383cb438acdadb33a1de43, type: 2}
+  - {fileID: 100004, guid: 4b9b416c34e845544a1b57a8139a3710, type: 2}
+  - {fileID: 100004, guid: 196aecaef5ea5a94d82e53edd3ab721d, type: 2}
+  HorizontalLineChuzzlePrefabs:
+  - {fileID: 100004, guid: a0df4271124ab7c4da196b3601879d1c, type: 2}
+  - {fileID: 100004, guid: c635cca3bf3e48642b88222a8d8b4e02, type: 2}
+  - {fileID: 100004, guid: 5638ac6668a48f544b667a52b26aa590, type: 2}
+  - {fileID: 100004, guid: 9581e0f84296a2e429177520d3738a3d, type: 2}
+  - {fileID: 100004, guid: f62ea5a9863321c4095b9fb21f249876, type: 2}
+  - {fileID: 100004, guid: d786bd4a3336e2c4a870ce762fe740f9, type: 2}
+  - {fileID: 100004, guid: e45c790c692cedc4fa3f0fe0d1467568, type: 2}
+  - {fileID: 100004, guid: caee121d870e0c14ebc5f37442aa12a3, type: 2}
+  VerticalLineChuzzlePrefabs:
+  - {fileID: 100004, guid: e7aea1408e1804e438dc3048528cc761, type: 2}
+  - {fileID: 100004, guid: 05409873e24702b45bb81b5e1995ce71, type: 2}
+  - {fileID: 100004, guid: 2bd8f8b3c1d3f0c45ad4ce2a0a30e140, type: 2}
+  - {fileID: 100004, guid: f60316d3fc36d7c4abb1ac872e700266, type: 2}
+  - {fileID: 100004, guid: f89a0e668a2ece74792b6d392a50cd53, type: 2}
+  - {fileID: 100004, guid: e7c135d7806b8354b9926f91ab7ae6da, type: 2}
+  - {fileID: 100004, guid: 9b25a0cbe3faebe49825cfc4793b023b, type: 2}
+  - {fileID: 100004, guid: 6c7a4bcc158caad4eadd4824c859879c, type: 2}
+  BombChuzzlePrefabs:
+  - {fileID: 100004, guid: 57745123ebd00de4a879e67ba79d6b77, type: 2}
+  - {fileID: 100004, guid: 2fb42c04502094044aae41579157c619, type: 2}
+  - {fileID: 100004, guid: f222b8468d0b09940a94f4661b45bb68, type: 2}
+  - {fileID: 100004, guid: bf59f2c6a75c0024bb6b6626bcbbae84, type: 2}
+  - {fileID: 100004, guid: a98d77d7d0ab8c74c966f257c38a694a, type: 2}
+  - {fileID: 100004, guid: d5d86e5b5ffd2934eb01bc423e2bf208, type: 2}
+  - {fileID: 100004, guid: 3651448eb966fe442a94cf055659d60e, type: 2}
+  - {fileID: 100004, guid: f24305ffb0f88f2448e8ad1c4ae94167, type: 2}
+  InvaderPrefab: {fileID: 100002, guid: ffa0e9d22812a3a45912b333b24a07aa, type: 2}
+  PlacePrefab: {fileID: 100000, guid: 308eca18f51c18143a51ad459b205625, type: 2}
+  Explosion: {fileID: 100004, guid: c6adc1ad815f4574f9685fe727a7059d, type: 2}
+  Gamefield: {fileID: 0}
+  NumberOfColors: 8
+  ShineParticle: {fileID: 100000, guid: 68c91601acfe5f7449ae849097baee1f, type: 2}

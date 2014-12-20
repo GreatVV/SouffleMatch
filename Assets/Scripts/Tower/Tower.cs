@@ -45,8 +45,9 @@ namespace Assets.Tower
             var towerDesc = new TowerDescription();
             foreach (Floor floor in _floors)
             {
-                towerDesc.ProcessFloor(floor);
+                towerDesc.AddFloor(floor.FloorDescription);
             }
+            towerDesc.Calculate();
             return towerDesc;
         }
 

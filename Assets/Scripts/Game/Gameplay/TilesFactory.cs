@@ -56,6 +56,11 @@ namespace Assets.Game.Gameplay
                 cell.IsPlace = true;
             }
 
+            if (!Gamefield)
+            {
+                Gamefield = FindObjectOfType<Gamefield>();
+            }
+
             cellGO.transform.parent = Gamefield.transform;
 
             return cell;

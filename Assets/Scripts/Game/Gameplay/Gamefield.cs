@@ -30,19 +30,23 @@ namespace Assets.Game.Gameplay
         public ManaManager ManaManagerSystem;
 
         #region State
-
+        [NonSerialized]
         public PowerUpAnalyzeState PowerUpAnalyzeState = null;
+        [NonSerialized]
         public CreateState CreateState = null;
+        [NonSerialized]
         public FieldState FieldState = null;
+        [NonSerialized]
         public GameOverState GameOverState = null;
+        [NonSerialized]
         public DeleteState RemoveState = null;
+        [NonSerialized]
         public WinState WinState = null;
 
         [SerializeField]
         private string _currentStateName;
-
-        [SerializeField]
-        private GameState _currentState;
+        
+        private GameState _currentState = null;
         private bool _isPause;
 
 
@@ -79,6 +83,17 @@ namespace Assets.Game.Gameplay
         public event Action<Gamefield> GameStarted;
 
         public event Action<bool> Paused;
+
+        public event Action<GameState, GameState> StateChanged;
+
+        protected virtual void FireStateChanged(GameState oldState, GameState newState)
+        {
+            var handler = StateChanged;
+            if (handler != null)
+            {
+                handler(oldState, newState);
+            }
+        }
 
         public void AddEventHandlers()
         {
@@ -198,6 +213,7 @@ namespace Assets.Game.Gameplay
 
         public void SwitchStateTo(GameState newState)
         {
+            var prevState = _currentState;
             //Debug.Log("Old state: "+_currentState);
             if (_currentState != null)
             {
@@ -207,12 +223,14 @@ namespace Assets.Game.Gameplay
             _currentStateName = newState.ToString();
             //Debug.Log("Switch to: " + _currentState);
             _currentState.OnEnter();
+
+            FireStateChanged(prevState, newState);
         }
 
         public void Init()
         {
             //Debug.Log("Init");
-        
+            _currentState = null;
             ChuzzleMover.Instance = new ChuzzleMover();
 
             PowerUpAnalyzeState = new PowerUpAnalyzeState(this);

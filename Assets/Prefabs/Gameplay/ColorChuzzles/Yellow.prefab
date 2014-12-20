@@ -46,6 +46,7 @@ Transform:
   m_LocalScale: {x: .3003003, y: .3003003, z: 1}
   m_Children: []
   m_Father: {fileID: 400002}
+  m_RootOrder: 0
 --- !u!4 &400002
 Transform:
   m_ObjectHideFlags: 1
@@ -58,6 +59,7 @@ Transform:
   m_Children:
   - {fileID: 400000}
   m_Father: {fileID: 0}
+  m_RootOrder: 0
 --- !u!61 &6100000
 BoxCollider2D:
   m_ObjectHideFlags: 1
@@ -93,44 +95,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Alpha: 0
-  Arrow: {fileID: 0}
   Color: 7
-  Current:
-    Type: 0
-    Sprite: {fileID: 0}
-    PlaceSprite: {fileID: 0}
-    x: 0
-    y: 0
-    IsTemporary: 0
-    CreationType: 0
-    Position: {x: 0, y: 0, z: 0}
+  Current: {fileID: 0}
   Explosion: {fileID: 0}
-  IsCheckedForSearch: 0
-  MoveTo:
-    Type: 0
-    Sprite: {fileID: 0}
-    PlaceSprite: {fileID: 0}
-    x: 0
-    y: 0
-    IsTemporary: 0
-    CreationType: 0
-    Position: {x: 0, y: 0, z: 0}
-  Real:
-    Type: 0
-    Sprite: {fileID: 0}
-    PlaceSprite: {fileID: 0}
-    x: 0
-    y: 0
-    IsTemporary: 0
-    CreationType: 0
-    Position: {x: 0, y: 0, z: 0}
-  Velocity: {x: 0, y: 0, z: 0}
-  _shine: 0
   IsAnimationStarted: 0
-  NeedCreateNew: 1
-  Teleportable: {fileID: 0}
+  IsCheckedForSearch: 0
   IsDead: 0
   IsReplacingOnDeath: 0
+  MoveTo: {fileID: 0}
+  NeedCreateNew: 1
+  Real: {fileID: 0}
+  Teleportable: {fileID: 0}
+  Velocity: {x: 0, y: 0, z: 0}
+  ShineParticlePrefab: {fileID: 0}
+  _tipping: 0
+  EventTrigger: {fileID: 0}
 --- !u!114 &11400004
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -161,10 +140,9 @@ SpriteRenderer:
   m_UseLightProbes: 0
   m_LightProbeAnchor: {fileID: 0}
   m_ScaleInLightmap: 1
-  m_SortingLayer: 0
-  m_SortingOrder: -1
   m_SortingLayerID: 0
-  m_Sprite: {fileID: 21300000, guid: 6e89c79ee1c870e41948bc4d40ddc2b5, type: 3}
+  m_SortingOrder: -1
+  m_Sprite: {fileID: 21300000, guid: 8df8022833862154d8a7553b68ac724c, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
 --- !u!1001 &100100000
 Prefab:

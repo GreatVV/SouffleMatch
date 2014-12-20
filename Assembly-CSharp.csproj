@@ -52,6 +52,7 @@
      <Compile Include="Assets\Scripts\Game\Data\FieldDescription.cs" />
      <Compile Include="Assets\Scripts\Game\Data\IJsonSerializable.cs" />
      <Compile Include="Assets\Scripts\Game\Data\LevelDescription.cs" />
+     <Compile Include="Assets\Scripts\Game\Data\LevelFactory.cs" />
      <Compile Include="Assets\Scripts\Game\Data\LevelInfo.cs" />
      <Compile Include="Assets\Scripts\Game\Data\LevelPackStatus.cs" />
      <Compile Include="Assets\Scripts\Game\Data\LevelStatus.cs" />
@@ -136,11 +137,12 @@
      <Compile Include="Assets\Scripts\UI\Hide.cs" />
      <Compile Include="Assets\Scripts\UI\Localization\Localization.cs" />
      <Compile Include="Assets\Scripts\UI\Localization\NewUILocalize.cs" />
-     <Compile Include="Assets\Scripts\UI\MapId.cs" />
+     <Compile Include="Assets\Scripts\UI\MissionProgressUI.cs" />
      <Compile Include="Assets\Scripts\UI\PauseStateOnEnable.cs" />
      <Compile Include="Assets\Scripts\UI\PopupStar.cs" />
      <Compile Include="Assets\Scripts\UI\RandomRotationOnEnable.cs" />
      <Compile Include="Assets\Scripts\UI\TotalManaIndicator.cs" />
+     <Compile Include="Assets\Scripts\UI\UI.cs" />
      <Compile Include="Assets\Scripts\Utils\ByteReader.cs" />
      <Compile Include="Assets\Scripts\Utils\IClearable.cs" />
      <Compile Include="Assets\Scripts\Utils\Instance.cs" />

@@ -50,6 +50,8 @@
      <Compile Include="Assets\Editor\EditorExtension.cs" />
      <Compile Include="Assets\Editor\LevelEditor.cs" />
      <Compile Include="Assets\Editor\NewUILocalizeEditor.cs" />
+     <Compile Include="Assets\Editor\Tests\LevelFactoryTest.cs" />
+     <Compile Include="Assets\Editor\Tests\TowerDescriptionTest.cs" />
      <Compile Include="Assets\UnityTestTools\Assertions\Editor\AssertionComponentEditor.cs" />
      <Compile Include="Assets\UnityTestTools\Assertions\Editor\AssertionExplorerWindow.cs" />
      <Compile Include="Assets\UnityTestTools\Assertions\Editor\AssertionListRenderer.cs" />
