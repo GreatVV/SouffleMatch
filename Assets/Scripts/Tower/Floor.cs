@@ -1,6 +1,8 @@
 ﻿using Assets.Game.Data;
 using Assets.Game.Utility;
 using UnityEngine;
+using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 namespace Assets.Tower
 {
@@ -8,6 +10,13 @@ namespace Assets.Tower
     {
         [SerializeField]
         private FloorDesc floorDescription;
+
+        public SpriteRenderer SpriteRenderer;
+
+        public BoxCollider2D BoxCollider2D;
+
+        [SerializeField]
+        private Text text;
 
         public FloorDesc FloorDescription
         {
@@ -30,10 +39,13 @@ namespace Assets.Tower
         public void Init(FloorDesc floorDesc)
         {
             floorDescription = floorDesc;
-            var spriteGO = new GameObject("Sprite", typeof(SpriteRenderer));
-            spriteGO.transform.SetParent(transform, false);
-            var sprite = spriteGO.GetComponent<SpriteRenderer>();
-            sprite.sprite = floorDescription.Visual.sprite;
+            if (floorDescription.Visual.sprite)
+            {
+                SpriteRenderer.sprite = floorDescription.Visual.sprite;
+            }
+            text.text = floorDesc.ToString();
         }
+
+        
     }
 }

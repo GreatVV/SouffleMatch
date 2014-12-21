@@ -11,6 +11,9 @@ namespace Assets.Game.Player
         public LevelDescription CurrentLevel;
         public Gamefield Gamefield;
 
+        [SerializeField]
+        private bool startGameOnLoad;
+
         private void StartLevel(LevelDescription description)
         {
             CurrentLevel = description;
@@ -26,7 +29,11 @@ namespace Assets.Game.Player
             }
 
             DontDestroyOnLoad(gameObject);
-            StartLevel(CurrentLevel);
+
+            if (startGameOnLoad)
+            {
+                StartLevel(CurrentLevel);
+            }
         }
 
         public void Restart()

@@ -35,7 +35,7 @@ namespace Assets.Utils
             {
                 if (_sessionRestorer == null)
                 {
-                    _sessionRestorer = new Single<SessionRestorer>("LevelManager");
+                    _sessionRestorer = new Single<SessionRestorer>();
                 }
                 return _sessionRestorer.Get;
             }
@@ -166,6 +166,13 @@ namespace Assets.Utils
             private readonly string _name;
             private T _instance;
 
+            private bool _byType;
+
+            public Single()
+            {
+                _byType = true;
+            }
+
             public Single(string name)
             {
                 _name = name;
@@ -177,7 +184,7 @@ namespace Assets.Utils
                 {
                     if (!_instance)
                     {
-                        _instance = SafeFindGameObject<T>(_name);
+                        _instance = _byType ? Object.FindObjectOfType<T>() : SafeFindGameObject<T>(_name);
                     }
                     var clearable = _instance as IClearable;
                     if (!Clearables.Contains(clearable))
