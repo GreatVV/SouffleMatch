@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Assets.Game.Gameplay.Chuzzles.PowerUps
+namespace Game.Gameplay.Chuzzles.PowerUps
 {
     public class HorizontalLineChuzzle : Chuzzle, IPowerUp
     {

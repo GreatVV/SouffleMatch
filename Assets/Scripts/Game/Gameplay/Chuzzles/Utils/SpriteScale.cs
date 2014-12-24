@@ -1,7 +1,7 @@
-﻿using Assets.Plugins;
+﻿using Plugins;
 using UnityEngine;
 
-namespace Assets.Game.Gameplay.Chuzzles.Utils
+namespace Game.Gameplay.Chuzzles.Utils
 {
     [RequireComponent (typeof (SpriteRenderer))]
     [ExecuteInEditMode]

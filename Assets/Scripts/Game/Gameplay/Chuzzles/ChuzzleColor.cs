@@ -1,4 +1,4 @@
-﻿namespace Assets.Game.Gameplay.Chuzzles
+﻿namespace Game.Gameplay.Chuzzles
 {
     public enum ChuzzleColor
     {

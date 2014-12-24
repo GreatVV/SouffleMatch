@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Assets.Game.Utility
+namespace Game.Utility
 {
     [Serializable]
     public class IntVector2

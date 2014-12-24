@@ -1,9 +1,9 @@
 ﻿using System.Globalization;
-using Assets.Utils;
 using UnityEngine;
 using UnityEngine.UI;
+using Utils;
 
-namespace Assets.UI
+namespace UI
 {
     public class TotalManaIndicator : MonoBehaviour
     {

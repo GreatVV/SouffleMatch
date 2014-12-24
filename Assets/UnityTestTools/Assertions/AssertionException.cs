@@ -1,6 +1,6 @@
 using System;
 
-namespace Assets.UnityTestTools.Assertions
+namespace UnityTestTools.Assertions
 {
     public class AssertionException : Exception
     {

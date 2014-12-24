@@ -1,5 +1,5 @@
 ﻿using System.IO;
-using Assets.Game.Gameplay;
+using Game.Gameplay;
 using UnityEditor;
 using UnityEngine;
 
@@ -9,6 +9,12 @@ public class EditorExtension
     public static void ClearPlayerPrefs()
     {
         PlayerPrefs.DeleteAll();
+    }
+
+    [MenuItem("Custom/Create Floor Factory")]
+    public static void CreateFloorFactory()
+    {
+        CreateAssetFile<FloorFactory>();
     }
 
     [MenuItem("Custom/Create Tile Factory")]

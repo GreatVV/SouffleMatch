@@ -2,7 +2,7 @@ using System;
 using UnityEngine;
 using Object = System.Object;
 
-namespace Assets.UnityTestTools.Assertions.Comparers
+namespace UnityTestTools.Assertions.Comparers
 {
     public abstract class ComparerBase : ActionBase
     {

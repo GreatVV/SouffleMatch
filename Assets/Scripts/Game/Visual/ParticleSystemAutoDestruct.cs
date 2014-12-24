@@ -1,7 +1,7 @@
 using System.Collections;
 using UnityEngine;
 
-namespace Assets.Game.Visual
+namespace Game.Visual
 {
     [RequireComponent(typeof(ParticleSystem))]
     public class ParticleSystemAutoDestruct : MonoBehaviour

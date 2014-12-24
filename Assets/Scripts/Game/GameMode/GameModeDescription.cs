@@ -1,8 +1,8 @@
 using System;
-using Assets.Game.Utility;
+using Game.Utility;
 using UnityEngine;
 
-namespace Assets.Game.GameMode
+namespace Game.GameMode
 {
     [Serializable]
     public class GameModeDescription

@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine;
 
-namespace Assets.UI
+namespace UI
 {
     public class BackgroundChanger : MonoBehaviour
     {

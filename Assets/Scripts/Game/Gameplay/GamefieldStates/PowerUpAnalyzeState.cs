@@ -3,14 +3,14 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Assets.Game.Gameplay.Chuzzles;
-using Assets.Utils;
+using Game.Gameplay.Chuzzles;
 using UnityEngine;
+using Utils;
 using Random = UnityEngine.Random;
 
 #endregion
 
-namespace Assets.Game.Gameplay.GamefieldStates
+namespace Game.Gameplay.GamefieldStates
 {
     [Serializable]
     public class PowerUpAnalyzeState : GameState

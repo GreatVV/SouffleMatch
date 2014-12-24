@@ -1,51 +1,38 @@
-﻿using Assets.Game.Data;
-using Assets.Game.Utility;
+﻿using System;
+using System.Reflection;
 using UnityEngine;
-using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-namespace Assets.Tower
+namespace Tower
 {
-    public class Floor : MonoBehaviour, IJsonSerializable
+    public class Floor : MonoBehaviour
     {
         [SerializeField]
-        private FloorDesc floorDescription;
+        private string floorDescName;
 
-        public SpriteRenderer SpriteRenderer;
-
-        public BoxCollider2D BoxCollider2D;
+        private IFloorDesc floorDescription;
 
         [SerializeField]
         private Text text;
 
-        public FloorDesc FloorDescription
+        public IFloorDesc FloorDescription
         {
             get
             {
+                if (floorDescription == null && !string.IsNullOrEmpty(floorDescName))
+                {
+                    Type type = Assembly.GetExecutingAssembly().GetType(floorDescName);
+                    floorDescription = Activator.CreateInstance(type) as IFloorDesc;
+                }
                 return floorDescription;
             }
         }
 
-        public JSONObject Serialize()
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public void Deserialize(JSONObject json)
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public void Init(FloorDesc floorDesc)
+        public void Init(IFloorDesc floorDesc)
         {
             floorDescription = floorDesc;
-            if (floorDescription.Visual.sprite)
-            {
-                SpriteRenderer.sprite = floorDescription.Visual.sprite;
-            }
-            text.text = floorDesc.ToString();
+            floorDescName = floorDescription.GetType().FullName;
+            text.text = floorDesc.GetType().Name;
         }
-
-        
     }
 }

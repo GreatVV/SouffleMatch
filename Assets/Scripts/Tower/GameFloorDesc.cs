@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Assets.Tower
+namespace Tower
 {
     [Serializable]
     public class GameFloorDesc

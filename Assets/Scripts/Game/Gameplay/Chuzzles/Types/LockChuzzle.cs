@@ -1,4 +1,4 @@
-﻿namespace Assets.Game.Gameplay.Chuzzles.Types
+﻿namespace Game.Gameplay.Chuzzles.Types
 {
     public class LockChuzzle : Chuzzle
     {

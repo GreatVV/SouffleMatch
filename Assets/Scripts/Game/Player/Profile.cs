@@ -1,10 +1,10 @@
 ﻿//using UnityEditor;
 
-using Assets.Game.Utility;
-using Assets.Utils;
+using Game.Utility;
 using UnityEngine;
+using Utils;
 
-namespace Assets.Game.Player
+namespace Game.Player
 {
     public class Profile : MonoBehaviour
     {

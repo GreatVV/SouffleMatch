@@ -1,7 +1,7 @@
 using System;
-using Assets.UnityTestTools.Common;
+using UnityTestTools.Common;
 
-namespace Assets.UnityTestTools.IntegrationTestsFramework.TestRunner
+namespace UnityTestTools.IntegrationTestsFramework.TestRunner
 {
     [Serializable]
     internal class SerializableTestResult : ITestResult

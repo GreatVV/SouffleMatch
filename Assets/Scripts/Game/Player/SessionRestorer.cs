@@ -1,10 +1,10 @@
-﻿using Assets.Game.Data;
-using Assets.Game.Gameplay;
-using Assets.Plugins;
-using Assets.Utils;
+﻿using Game.Data;
+using Game.Gameplay;
+using Plugins;
 using UnityEngine;
+using Utils;
 
-namespace Assets.Game.Player
+namespace Game.Player
 {
     public class SessionRestorer : MonoBehaviour
     {

@@ -1,15 +1,15 @@
 ﻿#region
 
 using System;
-using Assets.Game.Data;
-using Assets.Game.Utility;
-using Assets.Utils;
+using Game.Data;
+using Game.Utility;
+using Utils;
 using Random = UnityEngine.Random;
 
 #endregion
 
 
-namespace Assets.Game.Gameplay
+namespace Game.Gameplay
 {
     [Serializable]
     public class Level : IJsonSerializable

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Assets.Game.GameMode
+namespace Game.GameMode
 {
     public class GameModeFactory
     {

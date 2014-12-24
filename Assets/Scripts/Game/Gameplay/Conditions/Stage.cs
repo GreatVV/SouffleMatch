@@ -1,7 +1,7 @@
 using System;
-using Assets.Game.Data;
+using Game.Data;
 
-namespace Assets.Game.Gameplay.Conditions
+namespace Game.Gameplay.Conditions
 {
     [Serializable]
     public class Stage

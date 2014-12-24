@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Assets.Game.Gameplay.Chuzzles
+namespace Game.Gameplay.Chuzzles
 {
     internal class ChuzzleExplosion : MonoBehaviour
     {

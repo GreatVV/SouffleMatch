@@ -1,13 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Assets.Game.Data;
-using Assets.Game.Utility;
-using Assets.Utils;
+using Game.Data;
+using Game.Utility;
 using UnityEngine;
+using Utils;
 using Object = UnityEngine.Object;
 
-namespace Assets.Game.Player
+namespace Game.Player
 {
     [ExecuteInEditMode]
     public class ProgressionManager : MonoBehaviour

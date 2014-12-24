@@ -19,7 +19,7 @@
 	<DebugType>full</DebugType>
 	<Optimize>false</Optimize>
 	<OutputPath>Temp\bin\Debug\</OutputPath>
-	<DefineConstants>DEBUG;TRACE;UNITY_4_6_0;UNITY_4_6;UNITY_WP8;ENABLE_MICROPHONE;ENABLE_TEXTUREID_MAP;ENABLE_UNITYEVENTS;ENABLE_NEW_HIERARCHY ;ENABLE_LAZY_METHOD_CACHING;ENABLE_AUDIO_FMOD;ENABLE_TERRAIN;ENABLE_GENERICS;INCLUDE_WP8SUPPORT;ENABLE_MOVIES;ENABLE_WWW;ENABLE_IMAGEEFFECTS;ENABLE_4_6_FEATURES;UNITY_WINRT;INCLUDE_WP_BLUE_SUPPORT;ENABLE_WEBCAM;INCLUDE_METROSUPPORT;RENDER_SOFTWARE_CURSOR;ENABLE_PHYSICS;ENABLE_CACHING;ENABLE_SERIALIZATION_BY_CODEGENERATION;ENABLE_CLOTH;ENABLE_2D_PHYSICS;ENABLE_SHADOWS;ENABLE_AUDIO;ENABLE_NAVMESH_CARVING;ENABLE_SINGLE_INSTANCE_BUILD_SETTING;DEVELOPMENT_BUILD;ENABLE_PROFILER;DEBUG;TRACE;UNITY_EDITOR;UNITY_EDITOR_WIN;UNITY_TEAM_LICENSE;UNITY_PRO_LICENSE</DefineConstants>
+	<DefineConstants>DEBUG;TRACE;UNITY_4_6_1;UNITY_4_6;UNITY_WP8;ENABLE_MICROPHONE;ENABLE_TEXTUREID_MAP;ENABLE_UNITYEVENTS;ENABLE_NEW_HIERARCHY ;ENABLE_LAZY_METHOD_CACHING;ENABLE_AUDIO_FMOD;ENABLE_TERRAIN;ENABLE_GENERICS;INCLUDE_WP8SUPPORT;ENABLE_MOVIES;ENABLE_WWW;ENABLE_IMAGEEFFECTS;ENABLE_4_6_FEATURES;UNITY_WINRT;INCLUDE_WP_BLUE_SUPPORT;ENABLE_WEBCAM;INCLUDE_METROSUPPORT;RENDER_SOFTWARE_CURSOR;ENABLE_PHYSICS;ENABLE_CACHING;ENABLE_SERIALIZATION_BY_CODEGENERATION;ENABLE_CLOTH;ENABLE_2D_PHYSICS;ENABLE_SHADOWS;ENABLE_AUDIO;ENABLE_NAVMESH_CARVING;ENABLE_SINGLE_INSTANCE_BUILD_SETTING;DEVELOPMENT_BUILD;ENABLE_PROFILER;DEBUG;TRACE;UNITY_EDITOR;UNITY_EDITOR_WIN;UNITY_TEAM_LICENSE;UNITY_PRO_LICENSE</DefineConstants>
 	<ErrorReport>prompt</ErrorReport>
 	<WarningLevel>4</WarningLevel>
 	<NoWarn>0169</NoWarn>
@@ -120,33 +120,36 @@
      <Compile Include="Assets\Scripts\Game\Visual\CenterCameraOnField.cs" />
      <Compile Include="Assets\Scripts\Game\Visual\ParticleSystemAutoDestruct.cs" />
      <Compile Include="Assets\Scripts\Tower\Floor.cs" />
-     <Compile Include="Assets\Scripts\Tower\FloorDesc.cs" />
+     <Compile Include="Assets\Scripts\Tower\FloorFactory.cs" />
      <Compile Include="Assets\Scripts\Tower\GameFloorDesc.cs" />
-     <Compile Include="Assets\Scripts\Tower\Menu.cs" />
+     <Compile Include="Assets\Scripts\Tower\IFloorDesc.cs" />
      <Compile Include="Assets\Scripts\Tower\Tower.cs" />
      <Compile Include="Assets\Scripts\Tower\TowerDescription.cs" />
-     <Compile Include="Assets\Scripts\Tower\VisualFloorDesc.cs" />
-     <Compile Include="Assets\Scripts\Tutorial\Tutorial.cs" />
-     <Compile Include="Assets\Scripts\Tutorial\TutorialCloud.cs" />
-     <Compile Include="Assets\Scripts\Tutorial\TutorialPage.cs" />
      <Compile Include="Assets\Scripts\UI\BackgroundChanger.cs" />
-     <Compile Include="Assets\Scripts\UI\CurrentLevelLabel.cs" />
      <Compile Include="Assets\Scripts\UI\FlyPointsManager.cs" />
      <Compile Include="Assets\Scripts\UI\FlyingLabelPool.cs" />
      <Compile Include="Assets\Scripts\UI\FlyingPoints.cs" />
+     <Compile Include="Assets\Scripts\UI\Game\MenuButton.cs" />
+     <Compile Include="Assets\Scripts\UI\Game\MenuUI.cs" />
+     <Compile Include="Assets\Scripts\UI\Game\ShopButton.cs" />
      <Compile Include="Assets\Scripts\UI\Hide.cs" />
-     <Compile Include="Assets\Scripts\UI\Localization\Localization.cs" />
-     <Compile Include="Assets\Scripts\UI\Localization\NewUILocalize.cs" />
+     <Compile Include="Assets\Scripts\UI\MainMenu\PlayButton.cs" />
      <Compile Include="Assets\Scripts\UI\MissionProgressUI.cs" />
      <Compile Include="Assets\Scripts\UI\PauseStateOnEnable.cs" />
      <Compile Include="Assets\Scripts\UI\PopupStar.cs" />
      <Compile Include="Assets\Scripts\UI\RandomRotationOnEnable.cs" />
+     <Compile Include="Assets\Scripts\UI\ScenesName.cs" />
      <Compile Include="Assets\Scripts\UI\TotalManaIndicator.cs" />
      <Compile Include="Assets\Scripts\UI\UI.cs" />
      <Compile Include="Assets\Scripts\Utils\ByteReader.cs" />
      <Compile Include="Assets\Scripts\Utils\IClearable.cs" />
      <Compile Include="Assets\Scripts\Utils\Instance.cs" />
      <Compile Include="Assets\Scripts\Utils\NGUITools.cs" />
+     <Compile Include="Assets\SmartLocalization\Examples\LoadAllLanguages.cs" />
+     <Compile Include="Assets\SmartLocalization\Scripts\NGUI\SL_NGUILabel.cs" />
+     <Compile Include="Assets\SmartLocalization\Scripts\NGUI\SL_NGUISpriteAtlas.cs" />
+     <Compile Include="Assets\SmartLocalization\Scripts\NGUI\SL_NGUISpriteName.cs" />
+     <Compile Include="Assets\SmartLocalization\Scripts\uGUI\LocalizedText.cs" />
      <Compile Include="Assets\UnityTestTools\Assertions\AssertionComponent.cs" />
      <Compile Include="Assets\UnityTestTools\Assertions\AssertionException.cs" />
      <Compile Include="Assets\UnityTestTools\Assertions\Assertions.cs" />
@@ -198,8 +201,14 @@
      <None Include="Assets\UnityTestTools\LICENSE.txt" />
      <None Include="Assets\iTweenEditor\README.txt" />
      <None Include="Assets\UnityTestTools\changelog.txt" />
+     <None Include="Assets\SmartLocalization\README.txt" />
+     <None Include="Assets\SmartLocalization\Resources\EmptyResourceHeader.txt" />
+     <None Include="Assets\SmartLocalization\license.txt" />
  <Reference Include="UnityEngine.UI">
- <HintPath>C:/Program Files (x86)/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/4.6.0/UnityEngine.UI.dll</HintPath>
+ <HintPath>C:/Program Files (x86)/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/4.6.1/UnityEngine.UI.dll</HintPath>
+ </Reference>
+ <Reference Include="SmartLocalization_Runtime">
+ <HintPath>D:/Projects/SouffleMatch/Assets/SmartLocalization/SmartLocalization_Runtime.dll</HintPath>
  </Reference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

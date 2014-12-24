@@ -1,6 +1,6 @@
-﻿using Assets.Game.Data;
-using Assets.Tower;
+﻿using Game.Data;
 using NUnit.Framework;
+using Tower;
 using UnityEngine;
 using System.Collections;
 

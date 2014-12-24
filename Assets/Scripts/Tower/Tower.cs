@@ -1,22 +1,28 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Assets.Game.Data;
-using Assets.Game.Utility;
+using Game.Data;
+using Game.Utility;
 using UnityEngine;
 using UnityEngine.EventSystems;
-using Random = UnityEngine.Random;
+using Utils;
 
-namespace Assets.Tower
+namespace Tower
 {
     public class Tower : MonoBehaviour, IJsonSerializable,IScrollHandler,IDragHandler
     {
-        public GameObject FloorPrefab;
-
         public GameObject Ground;
 
         [SerializeField]
         private List<Floor> _floors = new List<Floor>();
+
+        public IEnumerable<Floor> Floors
+        {
+            get
+            {
+                return _floors;
+            }
+        }
 
         #region IJsonSerializable Members
 
@@ -30,23 +36,12 @@ namespace Assets.Tower
             throw new NotImplementedException();
         }
 
-        #endregion
-
         public void Start()
         {
-            for (int i = 0; i < 10; i++)
-            {
-                var floorDesc = new FloorDesc
-                                {
-                                    Visual = new VisualFloorDesc
-                                             {
-                                                 heightInUnits = 1,
-                                                 widthInUnits = 1
-                                             }
-                                };
-                AddFloor(floorDesc);
-            }
+            AddFloor(new SimpleFloorDesc());
         }
+
+        #endregion
 
         public TowerDescription GetTowerDescription()
         {
@@ -59,16 +54,9 @@ namespace Assets.Tower
             return towerDesc;
         }
 
-        public void AddFloor(FloorDesc floorDesc)
+        public void AddFloor(IFloorDesc floorDesc)
         {
-            var go = Instantiate(FloorPrefab) as GameObject;
-            go.transform.parent = transform;
-            go.transform.localPosition = new Vector3(0, CountTowerHeight(), 0);
-            go.transform.localScale = new Vector3(floorDesc.Visual.widthInUnits, floorDesc.Visual.heightInUnits, 0);
-            var floor = go.GetComponent<Floor>();
-            floor.Init(floorDesc);
-            floor.SpriteRenderer.color = new Color(Random.value, Random.value, Random.value);
-            _floors.Add(floor);
+            AddFloor(Instance.FloorFactory.CreateFloor(floorDesc));
         }
 
         private float CountTowerHeight()
@@ -78,10 +66,9 @@ namespace Assets.Tower
 
         public void OnDrag(PointerEventData eventData)
         {
-            Debug.Log("Drag: " + eventData.delta);
             var position = Camera.main.transform.position;
             position.y += eventData.delta.y * Time.deltaTime;
-            position.y = Mathf.Clamp(position.y, 0, _floors.Last().BoxCollider2D.transform.position.y);
+            position.y = Mathf.Clamp(position.y, 0, _floors.Last().transform.position.y);
             Camera.main.transform.position = position;
         }
 
@@ -94,8 +81,15 @@ namespace Assets.Tower
             var position = Camera.main.transform.position;
             position.y += delta.y;
 
-            position.y = Mathf.Clamp(position.y, 0, _floors.Last().BoxCollider2D.transform.position.y);
+            position.y = Mathf.Clamp(position.y, 0, _floors.Last().transform.position.y);
             Camera.main.transform.position = position;
+        }
+
+        public void AddFloor(Floor floor)
+        {
+            floor.transform.SetParent(transform);
+            floor.transform.localPosition = new Vector3(0, CountTowerHeight(), 0);
+            _floors.Add(floor);
         }
     }
 }

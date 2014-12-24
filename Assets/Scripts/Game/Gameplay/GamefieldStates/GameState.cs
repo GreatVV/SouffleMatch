@@ -4,7 +4,7 @@ using System;
 
 #endregion
 
-namespace Assets.Game.Gameplay.GamefieldStates
+namespace Game.Gameplay.GamefieldStates
 {
     [Serializable]
     public abstract class GameState

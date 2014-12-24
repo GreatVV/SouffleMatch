@@ -1,8 +1,8 @@
 using System;
-using Assets.Game.GameMode;
-using Assets.Tower;
+using Game.GameMode;
+using Tower;
 
-namespace Assets.Game.Data
+namespace Game.Data
 {
     [Serializable]
     public class LevelFactory

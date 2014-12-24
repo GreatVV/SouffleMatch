@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
-using Assets.UnityTestTools.Common;
 using UnityEngine;
+using UnityTestTools.Common;
 
 namespace UnityTest.UnitTestRunner
 {

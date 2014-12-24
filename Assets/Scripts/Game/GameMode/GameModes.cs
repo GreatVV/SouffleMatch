@@ -1,4 +1,4 @@
-namespace Assets.Game.GameMode
+namespace Game.GameMode
 {
     public enum GameModes
     {

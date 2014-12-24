@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Assets.UI
+namespace UI
 {
     public class Hide : MonoBehaviour {
 

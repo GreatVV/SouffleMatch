@@ -40,7 +40,7 @@ using UnityEngine;
 
 #endregion
 
-namespace Assets.Plugins
+namespace Plugins
 {
     /// <summary>
     /// <para>Version: 2.0.46</para>	 

@@ -1,10 +1,10 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Assets.UnityTestTools.Common;
 using UnityEditor;
 using UnityEngine;
 using UnityTest.UnitTestRunner;
+using UnityTestTools.Common;
 
 namespace UnityTest
 {

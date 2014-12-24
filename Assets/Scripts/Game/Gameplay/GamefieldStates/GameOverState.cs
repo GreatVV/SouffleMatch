@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Assets.Game.Gameplay.GamefieldStates
+namespace Game.Gameplay.GamefieldStates
 {
     [Serializable]
     public class GameOverState : GameState

@@ -1,6 +1,6 @@
 using System;
 
-namespace Assets.UnityTestTools.Assertions
+namespace UnityTestTools.Assertions
 {
     [Flags]
     public enum CheckMethod

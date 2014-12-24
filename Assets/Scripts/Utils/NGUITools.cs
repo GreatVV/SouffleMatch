@@ -5,7 +5,7 @@
 
 using UnityEngine;
 
-namespace Assets.Utils
+namespace Utils
 {
     /// <summary>
     /// Helper class containing generic functions used throughout the UI library.

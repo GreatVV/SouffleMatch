@@ -4,8 +4,8 @@ using System.Globalization;
 using System.IO;
 using System.Security;
 using System.Text;
-using Assets.UnityTestTools.Common;
 using UnityEngine;
+using UnityTestTools.Common;
 
 namespace UnityTest
 {

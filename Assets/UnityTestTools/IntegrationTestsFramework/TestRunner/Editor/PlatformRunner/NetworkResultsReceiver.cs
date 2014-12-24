@@ -5,11 +5,11 @@ using System.Linq;
 using System.Net;
 using System.Net.Sockets;
 using System.Runtime.Serialization.Formatters.Binary;
-using Assets.UnityTestTools.Common;
-using Assets.UnityTestTools.IntegrationTestsFramework.TestRunner;
 using UnityEditor;
 using UnityEditorInternal;
 using UnityEngine;
+using UnityTestTools.Common;
+using UnityTestTools.IntegrationTestsFramework.TestRunner;
 
 namespace UnityTest
 {

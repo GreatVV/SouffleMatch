@@ -22,8 +22,8 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-using Assets.iTweenEditor;
-using Assets.Plugins;
+using iTweenEditor;
+using Plugins;
 using UnityEditor;
 using UnityEngine;
 using System.Collections;

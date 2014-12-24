@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using Assets.Utils;
 using UnityEngine;
+using Utils;
 
-namespace Assets.UI
+namespace UI
 {
     public class FlyingLabelPool : MonoBehaviour
     {

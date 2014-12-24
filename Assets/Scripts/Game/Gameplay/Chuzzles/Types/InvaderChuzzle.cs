@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using Assets.Utils;
 using UnityEngine;
+using Utils;
 
-namespace Assets.Game.Gameplay.Chuzzles.Types
+namespace Game.Gameplay.Chuzzles.Types
 {
     public class InvaderChuzzle : Chuzzle
     {

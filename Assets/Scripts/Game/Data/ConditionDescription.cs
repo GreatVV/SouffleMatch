@@ -1,7 +1,7 @@
 using System;
-using Assets.Game.GameMode;
+using Game.GameMode;
 
-namespace Assets.Game.Data
+namespace Game.Data
 {
     [Serializable]
     public class ConditionDescription

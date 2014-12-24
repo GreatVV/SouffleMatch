@@ -2,10 +2,10 @@ using System;
 using System.Collections.Generic;
 using System.Net;
 using System.Net.Sockets;
-using Assets.UnityTestTools.IntegrationTestsFramework.TestRunner;
 using UnityEditor;
 using UnityEditorInternal;
 using UnityEngine;
+using UnityTestTools.IntegrationTestsFramework.TestRunner;
 
 namespace UnityTest.IntegrationTests
 {

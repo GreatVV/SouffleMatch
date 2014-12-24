@@ -1,8 +1,8 @@
 using System;
-using Assets.UnityTestTools.Common;
 using UnityEngine;
+using UnityTestTools.Common;
 
-namespace Assets.UnityTestTools.IntegrationTestsFramework.TestRunner
+namespace UnityTestTools.IntegrationTestsFramework.TestRunner
 {
     [Serializable]
     public class TestResult : ITestResult, IComparable<TestResult>

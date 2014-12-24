@@ -2,14 +2,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using Assets.Game.Data;
-using Assets.Game.Gameplay.Cells;
-using Assets.Game.Utility;
-using Assets.Utils;
+using Game.Data;
+using Game.Gameplay.Cells;
+using Game.Utility;
 using UnityEngine;
+using Utils;
 using Object = UnityEngine.Object;
 
-namespace Assets.Game.Gameplay
+namespace Game.Gameplay
 {
     [Serializable]
     public class CellCollection : IJsonSerializable, IEnumerable<Cell>

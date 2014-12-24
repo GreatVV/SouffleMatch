@@ -22,10 +22,10 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using Assets.Plugins;
+using Plugins;
 using UnityEngine;
 
-namespace Assets.iTweenEditor
+namespace iTweenEditor
 {
     public class iTweenEvent : MonoBehaviour{
         public const string VERSION = "0.6.1";

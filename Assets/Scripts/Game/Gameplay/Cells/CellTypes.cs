@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Assets.Game.Gameplay.Cells
+namespace Game.Gameplay.Cells
 {
     [Serializable]
     public enum CellTypes

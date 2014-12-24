@@ -1,17 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Assets.Game.Data;
-using Assets.Game.GameMode;
-using Assets.Game.Gameplay.Cells;
-using Assets.Game.Gameplay.Chuzzles;
-using Assets.Game.Gameplay.Chuzzles.Types;
-using Assets.Game.Utility;
-using Assets.Utils;
+using Game.Data;
+using Game.GameMode;
+using Game.Gameplay.Cells;
+using Game.Gameplay.Chuzzles;
+using Game.Gameplay.Chuzzles.Types;
+using Game.Utility;
 using UnityEngine;
+using Utils;
 using Random = UnityEngine.Random;
 
-namespace Assets.Game.Gameplay
+namespace Game.Gameplay
 {
     [ExecuteInEditMode]
     public class TilesFactory : ScriptableObject

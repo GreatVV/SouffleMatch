@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using Assets.Game.Gameplay.Chuzzles;
+using Game.Gameplay.Chuzzles;
 using UnityEngine;
 
-namespace Assets.Game.Utility
+namespace Game.Utility
 {
     public static class Extensions
     {

@@ -2,14 +2,14 @@
 
 using System.Collections.Generic;
 using System.Linq;
-using Assets.Game.Gameplay;
-using Assets.Game.Gameplay.Chuzzles;
-using Assets.Plugins;
+using Game.Gameplay;
+using Game.Gameplay.Chuzzles;
+using Plugins;
 using UnityEngine;
 
 #endregion
 
-namespace Assets.Game.Visual
+namespace Game.Visual
 {
     [ExecuteInEditMode]
     public class CenterCameraOnField : MonoBehaviour

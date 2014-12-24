@@ -2,14 +2,14 @@
 
 using System;
 using System.Linq;
-using Assets.Game.Gameplay.Cells;
-using Assets.Game.Utility;
-using Assets.Utils;
+using Game.Gameplay.Cells;
+using Game.Utility;
 using UnityEngine;
+using Utils;
 
 #endregion
 
-namespace Assets.Game.Gameplay.GamefieldStates
+namespace Game.Gameplay.GamefieldStates
 {
     [Serializable]
     public class CreateState : GameState

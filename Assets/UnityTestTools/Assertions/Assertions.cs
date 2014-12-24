@@ -1,7 +1,6 @@
 using UnityEngine;
-using Object = UnityEngine.Object;
 
-namespace Assets.UnityTestTools.Assertions
+namespace UnityTestTools.Assertions
 {
     public static class Assertions
     {

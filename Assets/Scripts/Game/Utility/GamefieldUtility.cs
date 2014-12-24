@@ -3,19 +3,19 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Assets.Game.Gameplay;
-using Assets.Game.Gameplay.Cells;
-using Assets.Game.Gameplay.Chuzzles;
-using Assets.Game.Gameplay.Chuzzles.PowerUps;
-using Assets.Game.Gameplay.Chuzzles.Types;
-using Assets.Game.Gameplay.Chuzzles.Utils;
-using Assets.Utils;
+using Game.Gameplay;
+using Game.Gameplay.Cells;
+using Game.Gameplay.Chuzzles;
+using Game.Gameplay.Chuzzles.PowerUps;
+using Game.Gameplay.Chuzzles.Types;
+using Game.Gameplay.Chuzzles.Utils;
 using UnityEngine;
+using Utils;
 using Random = UnityEngine.Random;
 
 #endregion
 
-namespace Assets.Game.Utility
+namespace Game.Utility
 {
     public class GamefieldUtility
     {

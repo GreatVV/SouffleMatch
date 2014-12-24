@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using Assets.Game.Gameplay.Chuzzles;
-using Assets.Plugins;
+using Game.Gameplay.Chuzzles;
+using Plugins;
 using UnityEngine;
 
-namespace Assets.Game.Gameplay.GamefieldStates
+namespace Game.Gameplay.GamefieldStates
 {
     public class ChuzzleMover
     {

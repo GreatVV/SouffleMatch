@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Assets.Game.Data;
+using Game.Data;
 using UnityEngine;
 
 /*
@@ -12,7 +12,7 @@ using UnityEngine;
  * Updated by GreatVV in 2013
  */
 
-namespace Assets.Game.Utility
+namespace Game.Utility
 {
     public class JSONObject : Nullable
     {

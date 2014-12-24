@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-namespace Assets.Game.Gameplay.Chuzzles
+namespace Game.Gameplay.Chuzzles
 {
     [RequireComponent(typeof(Gamefield))]
     public class PowerUpDestroyManager : MonoBehaviour

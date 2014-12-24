@@ -7,11 +7,12 @@ using System.Collections.Generic;
 using System.Net.Sockets;
 using System.Runtime.Serialization.Formatters.Binary;
 using UnityEngine;
+
 #if UTT_SOCKETS_SUPPORTED
 
 #endif
 
-namespace Assets.UnityTestTools.IntegrationTestsFramework.TestRunner
+namespace UnityTestTools.IntegrationTestsFramework.TestRunner
 {
     public class NetworkResultSender : ITestRunnerCallback
     {

@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-namespace Assets.UnityTestTools.Assertions.Comparers
+namespace UnityTestTools.Assertions.Comparers
 {
     public class Vector2Comparer : VectorComparerBase<Vector2>
     {

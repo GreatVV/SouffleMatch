@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using Assets.Game.Visual;
+using Game.Visual;
 using UnityEngine;
 
-namespace Assets.Game.Gameplay.Conditions
+namespace Game.Gameplay.Conditions
 {
     [RequireComponent(typeof(Gamefield))]
     public class StageManager : MonoBehaviour

@@ -1,4 +1,4 @@
-namespace Assets.iTweenEditor
+namespace iTweenEditor
 {
     [System.Serializable]
     public class ArrayIndexes {

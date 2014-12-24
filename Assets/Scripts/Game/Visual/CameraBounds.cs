@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Assets.Game.Visual
+namespace Game.Visual
 {
     public class CameraBounds : MonoBehaviour {
 

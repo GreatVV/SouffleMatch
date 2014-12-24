@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Assets.Game.Gameplay.Chuzzles;
+using Game.Gameplay.Chuzzles;
 using UnityEngine;
 
-namespace Assets.Game.Player
+namespace Game.Player
 {
     public class ManaManager : MonoBehaviour
     {

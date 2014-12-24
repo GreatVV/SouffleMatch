@@ -1,8 +1,8 @@
 using System;
-using Assets.Game.Gameplay.Cells;
-using Assets.Game.Utility;
+using Game.Gameplay.Cells;
+using Game.Utility;
 
-namespace Assets.Game.Data
+namespace Game.Data
 {
     [Serializable]
     public class CellDescription

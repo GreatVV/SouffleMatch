@@ -1,7 +1,7 @@
 using System;
 using System.IO;
 
-namespace Assets.UnityTestTools.IntegrationTestsFramework.TestRunner
+namespace UnityTestTools.IntegrationTestsFramework.TestRunner
 {
     [AttributeUsage(AttributeTargets.Class, AllowMultiple = false)]
     public class IntegrationTestAttribute : Attribute

@@ -3,12 +3,12 @@
 using System;
 using System.Collections;
 using System.Linq;
-using Assets.Game.Utility;
+using Game.Utility;
 using UnityEngine;
 
 #endregion
 
-namespace Assets.Game.Gameplay.GamefieldStates
+namespace Game.Gameplay.GamefieldStates
 {
     [Serializable]
     public class DeleteState : GameState

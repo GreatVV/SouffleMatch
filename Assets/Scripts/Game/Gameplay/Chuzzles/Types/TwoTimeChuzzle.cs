@@ -1,7 +1,7 @@
-﻿using Assets.Utils;
-using UnityEngine;
+﻿using UnityEngine;
+using Utils;
 
-namespace Assets.Game.Gameplay.Chuzzles.Types
+namespace Game.Gameplay.Chuzzles.Types
 {
     public class TwoTimeChuzzle : Chuzzle
     {

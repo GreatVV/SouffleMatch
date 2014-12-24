@@ -1,4 +1,4 @@
-﻿namespace Assets.Utils
+﻿namespace Utils
 {
     public interface IClearable
     {

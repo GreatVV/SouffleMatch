@@ -1,11 +1,11 @@
 ﻿using System.Collections.Generic;
-using Assets.Game;
-using Assets.Game.Gameplay;
-using Assets.Game.Gameplay.Chuzzles.Utils;
-using Assets.Game.Player;
+using Game.Gameplay;
+using Game.Gameplay.Chuzzles.Utils;
+using Game.Player;
+using Tower;
 using UnityEngine;
 
-namespace Assets.Utils
+namespace Utils
 {
     public static class Instance
     {
@@ -26,6 +26,7 @@ namespace Assets.Utils
         {
             //Find Assets
             TilesFactory = SafeLoadAsset<TilesFactory>("TilesFactory");
+            FloorFactory = SafeLoadAsset<FloorFactory>("FloorFactory");
             ChuzzlePool.RegisterPrefabs();
         }
 
@@ -91,6 +92,9 @@ namespace Assets.Utils
 
         public static TilesFactory TilesFactory;
         public static ChuzzlePool ChuzzlePool = new ChuzzlePool();
+
+        public static FloorFactory FloorFactory;
+        
 
         private static T SafeLoadAsset<T>(string fileName) where T : ScriptableObject
         {

@@ -1,7 +1,7 @@
-﻿using Assets.Utils;
-using UnityEngine;
+﻿using UnityEngine;
+using Utils;
 
-namespace Assets.UI
+namespace UI
 {
     public class PauseStateOnEnable : MonoBehaviour {
 

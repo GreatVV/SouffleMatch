@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-namespace Assets.UnityTestTools.IntegrationTestsFramework.TestRunner
+namespace UnityTestTools.IntegrationTestsFramework.TestRunner
 {
     public interface ITestComponent : IComparable<ITestComponent>
     {

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-namespace Assets.Game.Utility
+namespace Game.Utility
 {
     public class ObjectPool
     {

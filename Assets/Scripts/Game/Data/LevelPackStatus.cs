@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Assets.Game.Utility;
+using Game.Utility;
 
-namespace Assets.Game.Data
+namespace Game.Data
 {
     public class LevelPackStatus : IJsonSerializable
     {

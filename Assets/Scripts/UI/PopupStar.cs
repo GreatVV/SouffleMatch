@@ -1,12 +1,12 @@
 ﻿#region
 
-using Assets.Plugins;
+using Plugins;
 using UnityEngine;
 using UnityEngine.UI;
 
 #endregion
 
-namespace Assets.UI
+namespace UI
 {
     public class PopupStar : MonoBehaviour
     {

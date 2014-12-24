@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Linq.Expressions;
 
-namespace Assets.Tower
+namespace Tower
 {
     [Serializable]
     public class TowerDescription
@@ -17,11 +16,11 @@ namespace Assets.Tower
         public ushort Turns;
         public ushort PointsPerTile;
 
-        private List<FloorDesc> _floors = new List<FloorDesc>();
+        private List<IFloorDesc> _floors = new List<IFloorDesc>();
         public bool IsCoinsDoubled;
         public float WinPointsСoefficient;
 
-        public void AddFloor(FloorDesc floor)
+        public void AddFloor(IFloorDesc floor)
         {
             _floors.Add(floor);
         }

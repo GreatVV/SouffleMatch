@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Assets.Game.Data
+namespace Game.Data
 {
     [Serializable]
     public class Condition

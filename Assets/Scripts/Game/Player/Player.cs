@@ -2,11 +2,11 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
-using Assets.Game.Data;
-using Assets.Game.Utility;
+using Game.Data;
+using Game.Utility;
 using UnityEngine;
 
-namespace Assets.Game.Player
+namespace Game.Player
 {
     public class Player : MonoBehaviour
     {

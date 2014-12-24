@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Assets.Game.Gameplay.Chuzzles.Utils
+namespace Game.Gameplay.Chuzzles.Utils
 {
     public class TipArrow : MonoBehaviour
     {

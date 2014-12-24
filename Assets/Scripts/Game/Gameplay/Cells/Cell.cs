@@ -1,10 +1,10 @@
 ﻿using System;
-using Assets.Game.Data;
-using Assets.Game.Gameplay.Chuzzles;
-using Assets.Game.Utility;
+using Game.Data;
+using Game.Gameplay.Chuzzles;
+using Game.Utility;
 using UnityEngine;
 
-namespace Assets.Game.Gameplay.Cells
+namespace Game.Gameplay.Cells
 {
     [ExecuteInEditMode]
     [Serializable]

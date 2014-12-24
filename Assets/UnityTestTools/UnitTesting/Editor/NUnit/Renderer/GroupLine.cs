@@ -1,10 +1,10 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Assets.UnityTestTools.Common;
 using NUnit.Core;
 using UnityEditor;
 using UnityEngine;
+using UnityTestTools.Common;
 using Event = UnityEngine.Event;
 
 namespace UnityTest

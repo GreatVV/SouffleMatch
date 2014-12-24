@@ -1,4 +1,4 @@
-namespace Assets.Game.Gameplay.Cells
+namespace Game.Gameplay.Cells
 {
     public enum CreationType
     {

@@ -21,7 +21,7 @@
 
 using UnityEngine;
 
-namespace Assets.iTweenEditor
+namespace iTweenEditor
 {
     public class Vector3OrTransform {
         public static readonly string[] choices = {"Vector3", "Transform"};

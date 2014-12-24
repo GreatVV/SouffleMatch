@@ -1,7 +1,7 @@
-using Assets.UnityTestTools.IntegrationTestsFramework.TestRunner;
 using UnityEngine;
+using UnityTestTools.IntegrationTestsFramework.TestRunner;
 
-namespace Assets.UnityTestTools.IntegrationTestsFramework.TestingAssets
+namespace UnityTestTools.IntegrationTestsFramework.TestingAssets
 {
     public class CallTesting : MonoBehaviour
     {

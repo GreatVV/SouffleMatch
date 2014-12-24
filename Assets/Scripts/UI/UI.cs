@@ -1,29 +1,31 @@
-﻿using Assets.Game.Gameplay;
-using Assets.Game.Gameplay.GamefieldStates;
+﻿using Game.Gameplay;
+using Game.Gameplay.GamefieldStates;
 using UnityEngine;
-using System.Collections;
 
-public class UI : MonoBehaviour
+namespace UI
 {
-
-    public Gamefield Gamefield;
-
-    void Start()
+    public class UI : MonoBehaviour
     {
-        Gamefield.StateChanged += OnStateChanged;
-    }
 
-    public GameObject WinScreen;
-    public MissionProgressUI MissionProgressUI;
+        public Gamefield Gamefield;
 
-    private void OnStateChanged(GameState oldState, GameState newState)
-    {
-        WinScreen.SetActive(newState is WinState || newState is GameOverState);
-
-        if (oldState == null)
+        void Start()
         {
-            MissionProgressUI.Init(Gamefield.GameMode);
+            Gamefield.StateChanged += OnStateChanged;
         }
+
+        public GameObject WinScreen;
+        public MissionProgressUI MissionProgressUI;
+
+        private void OnStateChanged(GameState oldState, GameState newState)
+        {
+            WinScreen.SetActive(newState is WinState || newState is GameOverState);
+
+            if (oldState == null)
+            {
+                MissionProgressUI.Init(Gamefield.GameMode);
+            }
         
+        }
     }
 }

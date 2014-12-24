@@ -1,15 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Assets.Game;
-using Assets.Game.GameMode;
-using Assets.Game.Gameplay;
-using Assets.Game.Gameplay.Chuzzles;
-using Assets.Game.Player;
-using Assets.Plugins;
+using Game.GameMode;
+using Game.Gameplay;
+using Game.Gameplay.Chuzzles;
+using Game.Player;
+using Plugins;
 using UnityEngine;
 
-namespace Assets.UI
+namespace UI
 {
     public class FlyPointsManager : MonoBehaviour
     {

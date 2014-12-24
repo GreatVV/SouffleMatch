@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace Assets.UnityTestTools.IntegrationTestsFramework.TestRunner
+namespace UnityTestTools.IntegrationTestsFramework.TestRunner
 {
     public interface ITestRunnerCallback
     {

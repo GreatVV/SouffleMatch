@@ -2,20 +2,19 @@
 
 using System;
 using System.Collections.Generic;
-using Assets.Game.Data;
-using Assets.Game.GameMode;
-using Assets.Game.Gameplay.Chuzzles;
-using Assets.Game.Gameplay.GamefieldStates;
-using Assets.Game.Player;
-using Assets.Game.Visual;
-using Assets.UI.Localization;
-using Assets.Utils;
+using Game.Data;
+using Game.GameMode;
+using Game.Gameplay.Chuzzles;
+using Game.Gameplay.GamefieldStates;
+using Game.Player;
+using Game.Visual;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using Utils;
 
 #endregion
 
-namespace Assets.Game.Gameplay
+namespace Game.Gameplay
 {
     [ExecuteInEditMode]
     public class Gamefield : MonoBehaviour
@@ -55,11 +54,6 @@ namespace Assets.Game.Gameplay
             get { return _currentState; }
         }
         #endregion
-
-        public string LevelName
-        {
-            get { return string.Format(Localization.Get("LevelNumber"), LevelDescription.Name); }
-        }
 
         public bool IsPause
         {
@@ -159,23 +153,6 @@ namespace Assets.Game.Gameplay
 
         public void Start()
         {
-            if (!Application.isEditor)
-            {
-                switch (Application.systemLanguage)
-                {
-                    case SystemLanguage.Russian:
-                        Localization.language = "Russian";
-                        break;
-                    default:
-                        Localization.language = "English";
-                        break;
-                }
-            }
-            else
-            {
-                Localization.language = "Russian";
-            }
-        
             Instance.ProgressionManager.Init();
         }
 
@@ -202,7 +179,7 @@ namespace Assets.Game.Gameplay
 
         #endregion
 
-        public void StartGame(LevelDescription levelDescription = null)
+        public void StartGame(LevelDescription levelDescription)
         {
             LevelDescription = Instance.Player.LastPlayedLevelDescription = levelDescription;
             Debug.Log("Start level: "+LevelDescription);

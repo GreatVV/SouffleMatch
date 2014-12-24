@@ -1,13 +1,13 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Assets.Game.Gameplay.Chuzzles.PowerUps;
-using Assets.Game.Gameplay.Chuzzles.Types;
-using Assets.Utils;
+using Game.Gameplay.Chuzzles.PowerUps;
+using Game.Gameplay.Chuzzles.Types;
 using UnityEngine;
+using Utils;
 using Object = UnityEngine.Object;
 
-namespace Assets.Game.Gameplay.Chuzzles.Utils
+namespace Game.Gameplay.Chuzzles.Utils
 {
     [ExecuteInEditMode]
     public class ChuzzlePool

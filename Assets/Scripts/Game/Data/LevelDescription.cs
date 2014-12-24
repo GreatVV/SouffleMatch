@@ -3,13 +3,13 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Assets.Game.GameMode;
-using Assets.Game.Gameplay.Conditions;
-using Assets.Game.Utility;
+using Game.GameMode;
+using Game.Gameplay.Conditions;
+using Game.Utility;
 
 #endregion
 
-namespace Assets.Game.Data
+namespace Game.Data
 {
     [Serializable]
     public class LevelDescription

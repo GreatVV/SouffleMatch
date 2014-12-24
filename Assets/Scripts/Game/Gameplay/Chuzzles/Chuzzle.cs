@@ -3,15 +3,15 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using Assets.Game.Gameplay.Cells;
-using Assets.Game.Gameplay.Chuzzles.Utils;
-using Assets.Utils;
+using Game.Gameplay.Cells;
+using Game.Gameplay.Chuzzles.Utils;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using Utils;
 
 #endregion
 
-namespace Assets.Game.Gameplay.Chuzzles
+namespace Game.Gameplay.Chuzzles
 {
     [RequireComponent(typeof (TeleportableEntity))]
     public abstract class Chuzzle : MonoBehaviour

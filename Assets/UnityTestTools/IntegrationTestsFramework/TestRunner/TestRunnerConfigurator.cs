@@ -13,11 +13,12 @@ using System.Net.Sockets;
 using System.Threading;
 using UnityEditorInternal;
 using UnityEngine;
+
 #if UNITY_EDITOR
 
 #endif
 
-namespace Assets.UnityTestTools.IntegrationTestsFramework.TestRunner
+namespace UnityTestTools.IntegrationTestsFramework.TestRunner
 {
     public class TestRunnerConfigurator
     {

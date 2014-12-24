@@ -1,9 +1,9 @@
 ﻿using System;
-using Assets.Game.Data;
-using Assets.Tower;
+using Game.Data;
+using Tower;
 using UnityEngine;
 
-namespace Assets.Game.Levels
+namespace Game.Levels
 {
     public class LevelManager : MonoBehaviour
     {

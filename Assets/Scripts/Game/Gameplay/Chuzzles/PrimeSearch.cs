@@ -1,7 +1,7 @@
 using System.Linq;
 using UnityEngine;
 
-namespace Assets.Game.Gameplay.Chuzzles
+namespace Game.Gameplay.Chuzzles
 {
     internal class PrimeSearch
     {

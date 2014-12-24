@@ -21,10 +21,10 @@
 
 using System;
 using System.Collections.Generic;
-using Assets.Plugins;
+using Plugins;
 using UnityEngine;
 
-namespace Assets.iTweenEditor
+namespace iTweenEditor
 {
     public class EventParamMappings {
 		

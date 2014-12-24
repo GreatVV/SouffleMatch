@@ -1,9 +1,9 @@
 using System;
 using System.Collections.Generic;
-using Assets.Game.Data;
-using Assets.Game.Utility;
+using Game.Data;
+using Game.Utility;
 
-namespace Assets.Game.Levels
+namespace Game.Levels
 {
     [Serializable]
     public class LevelPack

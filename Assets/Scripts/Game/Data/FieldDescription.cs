@@ -1,8 +1,8 @@
 using System;
 using System.Collections.Generic;
-using Assets.Game.Gameplay.Conditions;
+using Game.Gameplay.Conditions;
 
-namespace Assets.Game.Data
+namespace Game.Data
 {
     [Serializable]
     public class FieldDescription

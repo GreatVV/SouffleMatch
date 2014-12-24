@@ -131,9 +131,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ad95eef236f8eaf4fa8a25a7c570b928, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  floorDescription: {}
-  SpriteRenderer: {fileID: 21200000}
-  BoxCollider2D: {fileID: 6100000}
+  floorDescName: Tower.SimpleFloorDesc
   text: {fileID: 11400004}
 --- !u!114 &11400002
 MonoBehaviour:

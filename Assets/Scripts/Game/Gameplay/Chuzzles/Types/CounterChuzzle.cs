@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Assets.Game.Gameplay.Chuzzles.Types
+namespace Game.Gameplay.Chuzzles.Types
 {
     public class CounterChuzzle : Chuzzle
     {   

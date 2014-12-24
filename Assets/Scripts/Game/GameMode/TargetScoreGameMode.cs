@@ -1,7 +1,7 @@
 ﻿
 using System;
 
-namespace Assets.Game.GameMode
+namespace Game.GameMode
 {
     [Serializable]
     public class TargetScoreGameMode : GameMode

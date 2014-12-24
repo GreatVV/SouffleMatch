@@ -1,14 +1,14 @@
-﻿using Assets.Plugins;
-using Assets.Utils;
+﻿using Plugins;
+using UnityEngine;
 
 #region
-
-using UnityEngine;
 
 #endregion
 
 //[RequireComponent(typeof (Chuzzle))]
-namespace Assets.Game.Gameplay.Chuzzles
+using Utils;
+
+namespace Game.Gameplay.Chuzzles
 {
     public class TeleportableEntity : MonoBehaviour
     {

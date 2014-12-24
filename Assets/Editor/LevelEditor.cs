@@ -2,25 +2,22 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
-using System.Linq;
-using Assets.Game;
-using Assets.Game.Data;
-using Assets.Game.GameMode;
-using Assets.Game.Gameplay;
-using Assets.Game.Gameplay.Cells;
-using Assets.Game.Levels;
-using Assets.Game.Utility;
+using Game.Data;
+using Game.GameMode;
+using Game.Gameplay;
+using Game.Gameplay.Cells;
+using Game.Levels;
+using Game.Utility;
 using UnityEditor;
 using UnityEngine;
 
 public class LevelEditor : EditorWindow
 {
-    public Texture2D blockTexture;
-    public Texture2D usualTexture;
-
-    public LevelPackManager LevelPackManager;
     private readonly Dictionary<string, bool> _foldouts = new Dictionary<string, bool>();
+    public LevelPackManager LevelPackManager;
+    public Texture2D blockTexture;
     private Vector2 pos;
+    public Texture2D usualTexture;
 
     #region Event Handlers
 
@@ -36,8 +33,8 @@ public class LevelEditor : EditorWindow
         EditorGUILayout.BeginHorizontal();
         if (GUILayout.Button("Load pack"))
         {
-            var filepath = EditorUtility.OpenFilePanel("Open packed levels", "", "json");
-            var serialized = File.ReadAllText(filepath);
+            string filepath = EditorUtility.OpenFilePanel("Open packed levels", "", "json");
+            string serialized = File.ReadAllText(filepath);
             LevelPackManager = LevelPackManager.Deserialize(serialized);
         }
 
@@ -49,11 +46,11 @@ public class LevelEditor : EditorWindow
 
         if (LevelPackManager != null)
         {
-            GUILayout.Label("Loaded packs: "+LevelPackManager.Packs.Count);
+            GUILayout.Label("Loaded packs: " + LevelPackManager.Packs.Count);
 
             for (int index = 0; index < LevelPackManager.Packs.Count; index++)
             {
-                var levelPack = LevelPackManager.Packs[index];
+                LevelPack levelPack = LevelPackManager.Packs[index];
                 DrawLevelPack(levelPack);
                 if (!LevelPackManager.Packs.Contains(levelPack))
                 {
@@ -63,12 +60,16 @@ public class LevelEditor : EditorWindow
 
             if (GUILayout.Button("Add pack"))
             {
-                LevelPackManager.Packs.Add(new LevelPack() {Name = "New pack"});
+                LevelPackManager.Packs.Add(
+                                           new LevelPack
+                                           {
+                                               Name = "New pack"
+                                           });
             }
 
             if (GUILayout.Button("Save"))
             {
-                var savePath = EditorUtility.SaveFilePanel("", "", "levels", "json");
+                string savePath = EditorUtility.SaveFilePanel("", "", "levels", "json");
                 File.WriteAllText(savePath, LevelPackManager.Serialize().ToString());
             }
         }
@@ -78,7 +79,7 @@ public class LevelEditor : EditorWindow
 
     private void DrawLevelPack(LevelPack levelPack)
     {
-        var fo = LevelPackManager.Packs.IndexOf(levelPack).ToString(CultureInfo.InvariantCulture);
+        string fo = LevelPackManager.Packs.IndexOf(levelPack).ToString(CultureInfo.InvariantCulture);
         if (!_foldouts.ContainsKey(fo))
         {
             _foldouts[fo] = false;
@@ -95,7 +96,7 @@ public class LevelEditor : EditorWindow
             }
             EditorGUILayout.EndHorizontal();
 
-            foreach (var levelDescription in levelPack.LoadedLevels)
+            foreach (LevelDescription levelDescription in levelPack.LoadedLevels)
             {
                 DrawLevel(levelPack, levelDescription);
             }
@@ -109,7 +110,7 @@ public class LevelEditor : EditorWindow
 
     private void DrawLevel(LevelPack levelPack, LevelDescription levelDescription)
     {
-        var fo = LevelPackManager.Packs.IndexOf(levelPack) + "_" + levelPack.LoadedLevels.IndexOf(levelDescription);
+        string fo = LevelPackManager.Packs.IndexOf(levelPack) + "_" + levelPack.LoadedLevels.IndexOf(levelDescription);
         if (!_foldouts.ContainsKey(fo))
         {
             _foldouts[fo] = false;
@@ -124,10 +125,10 @@ public class LevelEditor : EditorWindow
             DrawFieldDescription(levelDescription.Field);
             if (GUILayout.Button("Generate"))
             {
-                var cells = FindObjectsOfType<Cell>();
+                Cell[] cells = FindObjectsOfType<Cell>();
                 for (int index = 0; index < cells.Length; index++)
                 {
-                    var cell = cells[index];
+                    Cell cell = cells[index];
                     DestroyImmediate(cell);
                 }
 
@@ -142,18 +143,18 @@ public class LevelEditor : EditorWindow
     private void DrawFieldDescription(FieldDescription field)
     {
         EditorGUILayout.BeginHorizontal();
-        field.Width = EditorGUILayout.IntSlider("Width", field.Width, 6,8);
-        field.Height = EditorGUILayout.IntSlider("Height", field.Height, 6,10);
+        field.Width = EditorGUILayout.IntSlider("Width", field.Width, 6, 8);
+        field.Height = EditorGUILayout.IntSlider("Height", field.Height, 6, 10);
         field.Seed = EditorGUILayout.IntField("Seed", field.Seed);
-        field.NumberOfColors = EditorGUILayout.IntSlider("Number of colors",field.NumberOfColors, 6, 8);
+        field.NumberOfColors = EditorGUILayout.IntSlider("Number of colors", field.NumberOfColors, 6, 8);
         EditorGUILayout.EndHorizontal();
         for (int index = 0; index < field.SpecialCells.Count; index++)
         {
-            var cell = field.SpecialCells[index];
+            CellDescription cell = field.SpecialCells[index];
             EditorGUILayout.BeginHorizontal();
             cell.Type = (CellTypes) EditorGUILayout.EnumPopup("Type", cell.Type);
-            cell.X = EditorGUILayout.IntSlider("x", cell.X, 0, field.Width-1);
-            cell.Y = EditorGUILayout.IntSlider("y", cell.Y, 0, field.Height-1);
+            cell.X = EditorGUILayout.IntSlider("x", cell.X, 0, field.Width - 1);
+            cell.Y = EditorGUILayout.IntSlider("y", cell.Y, 0, field.Height - 1);
             if (GUILayout.Button("X"))
             {
                 field.SpecialCells.Remove(cell);
@@ -161,13 +162,13 @@ public class LevelEditor : EditorWindow
             }
             EditorGUILayout.EndHorizontal();
         }
-        IntVector2 clickedOn = new IntVector2(-1,-1);
-        var prevRect = EditorGUILayout.GetControlRect();
+        var clickedOn = new IntVector2(-1, -1);
+        Rect prevRect = EditorGUILayout.GetControlRect();
         for (int i = 0; i < field.Width; i++)
         {
             for (int j = 0; j < field.Height; j++)
             {
-                var rect = new Rect(prevRect.xMin + i*50,prevRect.yMax + j * 50,50,50);
+                var rect = new Rect(prevRect.xMin + i * 50, prevRect.yMax + j * 50, 50, 50);
                 if (usualTexture)
                 {
                     EditorGUI.DrawPreviewTexture(rect, usualTexture);
@@ -175,12 +176,12 @@ public class LevelEditor : EditorWindow
 
                 if ((Event.current.type == EventType.MouseDown) && rect.Contains(Event.current.mousePosition))
                 {
-                    clickedOn = new IntVector2(i,j);
+                    clickedOn = new IntVector2(i, j);
                 }
             }
         }
 
-        foreach (var cellDescription in field.SpecialCells)
+        foreach (CellDescription cellDescription in field.SpecialCells)
         {
             var rect = new Rect(prevRect.xMin + cellDescription.X * 50, prevRect.yMax + cellDescription.Y * 50, 50, 50);
             if (blockTexture)
@@ -189,7 +190,7 @@ public class LevelEditor : EditorWindow
             }
             if ((Event.current.type == EventType.MouseDown) && rect.Contains(Event.current.mousePosition))
             {
-               // clickedOn = new IntVector2(cellDescription.X, cellDescription.Y);
+                // clickedOn = new IntVector2(cellDescription.X, cellDescription.Y);
                 field.SpecialCells.Remove(cellDescription);
             }
         }
@@ -208,7 +209,6 @@ public class LevelEditor : EditorWindow
 
     private void DrawCondition(ConditionDescription condition)
     {
-        
         EditorGUILayout.BeginHorizontal();
         condition.Star1Score = EditorGUILayout.IntField("Star 1", condition.Star1Score);
         condition.Star2Score = EditorGUILayout.IntField("Star 2", condition.Star2Score);
@@ -248,4 +248,3 @@ public class LevelEditor : EditorWindow
         window.Show();
     }
 }
-

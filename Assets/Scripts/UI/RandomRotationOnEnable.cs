@@ -1,7 +1,7 @@
 ﻿using System.Linq;
 using UnityEngine;
 
-namespace Assets.UI
+namespace UI
 {
     public class RandomRotationOnEnable : MonoBehaviour
     {
