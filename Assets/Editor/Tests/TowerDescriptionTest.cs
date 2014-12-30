@@ -1,6 +1,7 @@
 using System.Reflection.Emit;
 using NUnit.Framework;
 using Tower;
+using Tower.Floors;
 
 [TestFixture]
 public class TowerDescriptionTest

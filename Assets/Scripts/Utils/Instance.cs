@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Game.Data;
 using Game.Gameplay;
 using Game.Gameplay.Chuzzles.Utils;
 using Game.Player;
@@ -27,6 +28,7 @@ namespace Utils
             //Find Assets
             TilesFactory = SafeLoadAsset<TilesFactory>("TilesFactory");
             FloorFactory = SafeLoadAsset<FloorFactory>("FloorFactory");
+            LevelFactory = SafeLoadAsset<LevelFactory>("LevelFactory");
             ChuzzlePool.RegisterPrefabs();
         }
 
@@ -94,7 +96,7 @@ namespace Utils
         public static ChuzzlePool ChuzzlePool = new ChuzzlePool();
 
         public static FloorFactory FloorFactory;
-        
+        public static LevelFactory LevelFactory;
 
         private static T SafeLoadAsset<T>(string fileName) where T : ScriptableObject
         {

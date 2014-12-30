@@ -1,15 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using Game.Data;
-using Game.Utility;
+using Tower.Floors;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using Utils;
 
 namespace Tower
 {
-    public class Tower : MonoBehaviour, IJsonSerializable,IScrollHandler,IDragHandler
+    public class Tower : MonoBehaviour, IScrollHandler, IDragHandler
     {
         public GameObject Ground;
 
@@ -24,24 +22,39 @@ namespace Tower
             }
         }
 
-        #region IJsonSerializable Members
+        #region IDragHandler Members
 
-        public JSONObject Serialize()
+        public void OnDrag(PointerEventData eventData)
         {
-            throw new NotImplementedException();
+            Vector3 position = Camera.main.transform.position;
+            position.y += eventData.delta.y * Time.deltaTime;
+            position.y = Mathf.Clamp(position.y, 0, _floors.Last().transform.position.y);
+            Camera.main.transform.position = position;
         }
 
-        public void Deserialize(JSONObject json)
+        #endregion
+
+        #region IScrollHandler Members
+
+        public void OnScroll(PointerEventData data)
         {
-            throw new NotImplementedException();
+            Vector2 delta = data.scrollDelta;
+            // Down is positive for scroll events, while in UI system up is positive.
+            delta.y *= -1;
+
+            Vector3 position = Camera.main.transform.position;
+            position.y += delta.y;
+
+            position.y = Mathf.Clamp(position.y, 0, _floors.Last().transform.position.y);
+            Camera.main.transform.position = position;
         }
+
+        #endregion
 
         public void Start()
         {
             AddFloor(new SimpleFloorDesc());
         }
-
-        #endregion
 
         public TowerDescription GetTowerDescription()
         {
@@ -64,30 +77,14 @@ namespace Tower
             return _floors.Sum(x => x.transform.GetComponentInChildren<BoxCollider2D>().size.y);
         }
 
-        public void OnDrag(PointerEventData eventData)
-        {
-            var position = Camera.main.transform.position;
-            position.y += eventData.delta.y * Time.deltaTime;
-            position.y = Mathf.Clamp(position.y, 0, _floors.Last().transform.position.y);
-            Camera.main.transform.position = position;
-        }
-
-        public void OnScroll(PointerEventData data)
-        {
-            Vector2 delta = data.scrollDelta;
-            // Down is positive for scroll events, while in UI system up is positive.
-            delta.y *= -1;
-
-            var position = Camera.main.transform.position;
-            position.y += delta.y;
-
-            position.y = Mathf.Clamp(position.y, 0, _floors.Last().transform.position.y);
-            Camera.main.transform.position = position;
-        }
-
         public void AddFloor(Floor floor)
         {
-            floor.transform.SetParent(transform);
+            if (!floor)
+            {
+                Debug.LogError("Floor is null");
+            }
+
+            floor.transform.SetParent(transform, false);
             floor.transform.localPosition = new Vector3(0, CountTowerHeight(), 0);
             _floors.Add(floor);
         }

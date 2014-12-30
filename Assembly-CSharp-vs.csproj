@@ -19,7 +19,7 @@
 	<DebugType>full</DebugType>
 	<Optimize>false</Optimize>
 	<OutputPath>Temp\bin\Debug\</OutputPath>
-	<DefineConstants>DEBUG;TRACE;UNITY_4_6_1;UNITY_4_6;UNITY_WP8;ENABLE_MICROPHONE;ENABLE_TEXTUREID_MAP;ENABLE_UNITYEVENTS;ENABLE_NEW_HIERARCHY ;ENABLE_LAZY_METHOD_CACHING;ENABLE_AUDIO_FMOD;ENABLE_TERRAIN;ENABLE_GENERICS;INCLUDE_WP8SUPPORT;ENABLE_MOVIES;ENABLE_WWW;ENABLE_IMAGEEFFECTS;ENABLE_4_6_FEATURES;UNITY_WINRT;INCLUDE_WP_BLUE_SUPPORT;ENABLE_WEBCAM;INCLUDE_METROSUPPORT;RENDER_SOFTWARE_CURSOR;ENABLE_PHYSICS;ENABLE_CACHING;ENABLE_SERIALIZATION_BY_CODEGENERATION;ENABLE_CLOTH;ENABLE_2D_PHYSICS;ENABLE_SHADOWS;ENABLE_AUDIO;ENABLE_NAVMESH_CARVING;ENABLE_SINGLE_INSTANCE_BUILD_SETTING;DEVELOPMENT_BUILD;ENABLE_PROFILER;DEBUG;TRACE;UNITY_EDITOR;UNITY_EDITOR_WIN;UNITY_TEAM_LICENSE;UNITY_PRO_LICENSE</DefineConstants>
+	<DefineConstants>DEBUG;TRACE;UNITY_4_6_1;UNITY_4_6;UNITY_STANDALONE_WIN;ENABLE_MICROPHONE;ENABLE_TEXTUREID_MAP;ENABLE_UNITYEVENTS;ENABLE_NEW_HIERARCHY ;ENABLE_AUDIO_FMOD;UNITY_STANDALONE;ENABLE_MONO;ENABLE_TERRAIN;ENABLE_SUBSTANCE;ENABLE_GENERICS;INCLUDE_WP8SUPPORT;ENABLE_MOVIES;ENABLE_WWW;ENABLE_IMAGEEFFECTS;ENABLE_4_6_FEATURES;INCLUDE_WP_BLUE_SUPPORT;ENABLE_WEBCAM;INCLUDE_METROSUPPORT;RENDER_SOFTWARE_CURSOR;ENABLE_NETWORK;ENABLE_PHYSICS;ENABLE_CACHING;ENABLE_CLOTH;ENABLE_2D_PHYSICS;ENABLE_SHADOWS;ENABLE_AUDIO;ENABLE_NAVMESH_CARVING;ENABLE_DUCK_TYPING;ENABLE_SINGLE_INSTANCE_BUILD_SETTING;ENABLE_PROFILER;UNITY_EDITOR;UNITY_EDITOR_WIN;UNITY_TEAM_LICENSE;UNITY_PRO_LICENSE</DefineConstants>
 	<ErrorReport>prompt</ErrorReport>
 	<WarningLevel>4</WarningLevel>
 	<NoWarn>0169</NoWarn>
@@ -39,7 +39,7 @@
 	<Reference Include="System.Core" />
 	<Reference Include="System.Xml.Linq" />
 	<Reference Include="UnityEngine">
-	  <HintPath>C:/Program Files (x86)/Unity/Editor/Data/PlaybackEngines/WP8Support/Tools/UnityEngine.dll</HintPath>
+	  <HintPath>C:/Program Files (x86)/Unity/Editor/Data/Managed/UnityEngine.dll</HintPath>
 	</Reference>
 	<Reference Include="UnityEditor">
 	  <HintPath>C:/Program Files (x86)/Unity/Editor/Data/Managed/UnityEditor.dll</HintPath>
@@ -50,12 +50,8 @@
      <Compile Include="Assets\Scripts\Game\Data\Condition.cs" />
      <Compile Include="Assets\Scripts\Game\Data\ConditionDescription.cs" />
      <Compile Include="Assets\Scripts\Game\Data\FieldDescription.cs" />
-     <Compile Include="Assets\Scripts\Game\Data\IJsonSerializable.cs" />
      <Compile Include="Assets\Scripts\Game\Data\LevelDescription.cs" />
      <Compile Include="Assets\Scripts\Game\Data\LevelFactory.cs" />
-     <Compile Include="Assets\Scripts\Game\Data\LevelInfo.cs" />
-     <Compile Include="Assets\Scripts\Game\Data\LevelPackStatus.cs" />
-     <Compile Include="Assets\Scripts\Game\Data\LevelStatus.cs" />
      <Compile Include="Assets\Scripts\Game\Data\Nullable.cs" />
      <Compile Include="Assets\Scripts\Game\GameMode\GameMode.cs" />
      <Compile Include="Assets\Scripts\Game\GameMode\GameModeDescription.cs" />
@@ -102,9 +98,6 @@
      <Compile Include="Assets\Scripts\Game\Gameplay\Level.cs" />
      <Compile Include="Assets\Scripts\Game\Gameplay\TilesCollection.cs" />
      <Compile Include="Assets\Scripts\Game\Gameplay\TilesFactory.cs" />
-     <Compile Include="Assets\Scripts\Game\Levels\LevelManager.cs" />
-     <Compile Include="Assets\Scripts\Game\Levels\LevelPack.cs" />
-     <Compile Include="Assets\Scripts\Game\Levels\LevelPackManager.cs" />
      <Compile Include="Assets\Scripts\Game\Player\Economy.cs" />
      <Compile Include="Assets\Scripts\Game\Player\ManaManager.cs" />
      <Compile Include="Assets\Scripts\Game\Player\Player.cs" />
@@ -114,15 +107,20 @@
      <Compile Include="Assets\Scripts\Game\Utility\Extensions.cs" />
      <Compile Include="Assets\Scripts\Game\Utility\GamefieldUtility.cs" />
      <Compile Include="Assets\Scripts\Game\Utility\IntVector2.cs" />
-     <Compile Include="Assets\Scripts\Game\Utility\JSONObject.cs" />
      <Compile Include="Assets\Scripts\Game\Utility\ObjectPool.cs" />
      <Compile Include="Assets\Scripts\Game\Visual\CameraBounds.cs" />
      <Compile Include="Assets\Scripts\Game\Visual\CenterCameraOnField.cs" />
      <Compile Include="Assets\Scripts\Game\Visual\ParticleSystemAutoDestruct.cs" />
      <Compile Include="Assets\Scripts\Tower\Floor.cs" />
      <Compile Include="Assets\Scripts\Tower\FloorFactory.cs" />
-     <Compile Include="Assets\Scripts\Tower\GameFloorDesc.cs" />
-     <Compile Include="Assets\Scripts\Tower\IFloorDesc.cs" />
+     <Compile Include="Assets\Scripts\Tower\Floors\DecreaseWinPointsFloorDesc.cs" />
+     <Compile Include="Assets\Scripts\Tower\Floors\DoubleCoinsFloorDesc.cs" />
+     <Compile Include="Assets\Scripts\Tower\Floors\HeightFloorDesc.cs" />
+     <Compile Include="Assets\Scripts\Tower\Floors\IFloorDesc.cs" />
+     <Compile Include="Assets\Scripts\Tower\Floors\PointsPerTileFloorDesc.cs" />
+     <Compile Include="Assets\Scripts\Tower\Floors\SimpleFloorDesc.cs" />
+     <Compile Include="Assets\Scripts\Tower\Floors\TurnsFloorDesc.cs" />
+     <Compile Include="Assets\Scripts\Tower\Floors\WidthFloorDesc.cs" />
      <Compile Include="Assets\Scripts\Tower\Tower.cs" />
      <Compile Include="Assets\Scripts\Tower\TowerDescription.cs" />
      <Compile Include="Assets\Scripts\UI\BackgroundChanger.cs" />
@@ -133,7 +131,9 @@
      <Compile Include="Assets\Scripts\UI\Game\MenuUI.cs" />
      <Compile Include="Assets\Scripts\UI\Game\ShopButton.cs" />
      <Compile Include="Assets\Scripts\UI\Hide.cs" />
+     <Compile Include="Assets\Scripts\UI\MainMenu\FloorDescBuyButton.cs" />
      <Compile Include="Assets\Scripts\UI\MainMenu\PlayButton.cs" />
+     <Compile Include="Assets\Scripts\UI\MainMenu\ShopMenu.cs" />
      <Compile Include="Assets\Scripts\UI\MissionProgressUI.cs" />
      <Compile Include="Assets\Scripts\UI\PauseStateOnEnable.cs" />
      <Compile Include="Assets\Scripts\UI\PopupStar.cs" />
@@ -144,12 +144,96 @@
      <Compile Include="Assets\Scripts\Utils\ByteReader.cs" />
      <Compile Include="Assets\Scripts\Utils\IClearable.cs" />
      <Compile Include="Assets\Scripts\Utils\Instance.cs" />
+     <Compile Include="Assets\Scripts\Utils\LoadMenuOnStart.cs" />
      <Compile Include="Assets\Scripts\Utils\NGUITools.cs" />
      <Compile Include="Assets\SmartLocalization\Examples\LoadAllLanguages.cs" />
      <Compile Include="Assets\SmartLocalization\Scripts\NGUI\SL_NGUILabel.cs" />
      <Compile Include="Assets\SmartLocalization\Scripts\NGUI\SL_NGUISpriteAtlas.cs" />
      <Compile Include="Assets\SmartLocalization\Scripts\NGUI\SL_NGUISpriteName.cs" />
      <Compile Include="Assets\SmartLocalization\Scripts\uGUI\LocalizedText.cs" />
+     <Compile Include="Assets\UniRx\Examples\Sample01_ObservableWWW.cs" />
+     <Compile Include="Assets\UniRx\Examples\Sample02_TypedBehaviour.cs" />
+     <Compile Include="Assets\UniRx\Examples\Sample03_ObservableMonoBehaviour.cs" />
+     <Compile Include="Assets\UniRx\Examples\Sample04_ConvertFromUnityCallback.cs" />
+     <Compile Include="Assets\UniRx\Examples\Sample05_ConvertFromCoroutine.cs" />
+     <Compile Include="Assets\UniRx\Examples\Sample06_ConvertToCoroutine.cs" />
+     <Compile Include="Assets\UniRx\Examples\Sample07_OrchestratIEnumerator.cs" />
+     <Compile Include="Assets\UniRx\Examples\Sample08_DetectDoubleClick.cs" />
+     <Compile Include="Assets\UniRx\Examples\Sample09_EventHandling.cs" />
+     <Compile Include="Assets\UniRx\Examples\Sample10_MainThreadDispatcher.cs" />
+     <Compile Include="Assets\UniRx\Examples\Sample11_Logger.cs" />
+     <Compile Include="Assets\UniRx\Scripts\Disposables\BooleanDisposable.cs" />
+     <Compile Include="Assets\UniRx\Scripts\Disposables\CompositeDisposable.cs" />
+     <Compile Include="Assets\UniRx\Scripts\Disposables\Disposable.cs" />
+     <Compile Include="Assets\UniRx\Scripts\Disposables\DisposableExtensions.cs" />
+     <Compile Include="Assets\UniRx\Scripts\Disposables\ICancelable.cs" />
+     <Compile Include="Assets\UniRx\Scripts\Disposables\MultipleAssignmentDisposable.cs" />
+     <Compile Include="Assets\UniRx\Scripts\Disposables\RefCountDisposable.cs" />
+     <Compile Include="Assets\UniRx\Scripts\Disposables\ScheduledDisposable.cs" />
+     <Compile Include="Assets\UniRx\Scripts\Disposables\SerialDisposable.cs" />
+     <Compile Include="Assets\UniRx\Scripts\Disposables\SingleAssignmentDisposable.cs" />
+     <Compile Include="Assets\UniRx\Scripts\EventPattern.cs" />
+     <Compile Include="Assets\UniRx\Scripts\InternalUtil\ImmutableList.cs" />
+     <Compile Include="Assets\UniRx\Scripts\InternalUtil\ListObserver.cs" />
+     <Compile Include="Assets\UniRx\Scripts\InternalUtil\PriorityQueue.cs" />
+     <Compile Include="Assets\UniRx\Scripts\InternalUtil\ReflectionAccessor.cs" />
+     <Compile Include="Assets\UniRx\Scripts\InternalUtil\ScheduledItem.cs" />
+     <Compile Include="Assets\UniRx\Scripts\InternalUtil\ThreadSafeQueueWorker.cs" />
+     <Compile Include="Assets\UniRx\Scripts\Notification.cs" />
+     <Compile Include="Assets\UniRx\Scripts\Notifiers\BooleanNotifier.cs" />
+     <Compile Include="Assets\UniRx\Scripts\Notifiers\CountNotifier.cs" />
+     <Compile Include="Assets\UniRx\Scripts\Notifiers\ScheduledNotifier.cs" />
+     <Compile Include="Assets\UniRx\Scripts\Observable.Aggregate.cs" />
+     <Compile Include="Assets\UniRx\Scripts\Observable.Binding.cs" />
+     <Compile Include="Assets\UniRx\Scripts\Observable.Blocking.cs" />
+     <Compile Include="Assets\UniRx\Scripts\Observable.Concatenate.cs" />
+     <Compile Include="Assets\UniRx\Scripts\Observable.Concurrency.cs" />
+     <Compile Include="Assets\UniRx\Scripts\Observable.Conversions.cs" />
+     <Compile Include="Assets\UniRx\Scripts\Observable.Creation.cs" />
+     <Compile Include="Assets\UniRx\Scripts\Observable.ErrorHandling.cs" />
+     <Compile Include="Assets\UniRx\Scripts\Observable.Events.cs" />
+     <Compile Include="Assets\UniRx\Scripts\Observable.Joins.cs" />
+     <Compile Include="Assets\UniRx\Scripts\Observable.Paging.cs" />
+     <Compile Include="Assets\UniRx\Scripts\Observable.Time.cs" />
+     <Compile Include="Assets\UniRx\Scripts\Observable.cs" />
+     <Compile Include="Assets\UniRx\Scripts\Observer.cs" />
+     <Compile Include="Assets\UniRx\Scripts\Schedulers\CurrentThreadScheduler.cs" />
+     <Compile Include="Assets\UniRx\Scripts\Schedulers\ImmediateScheduler.cs" />
+     <Compile Include="Assets\UniRx\Scripts\Schedulers\Scheduler.cs" />
+     <Compile Include="Assets\UniRx\Scripts\Schedulers\ThreadPoolScheduler.cs" />
+     <Compile Include="Assets\UniRx\Scripts\Subjects\AsyncSubject.cs" />
+     <Compile Include="Assets\UniRx\Scripts\Subjects\BehaviorSubject.cs" />
+     <Compile Include="Assets\UniRx\Scripts\Subjects\ConnectableObservable.cs" />
+     <Compile Include="Assets\UniRx\Scripts\Subjects\ISubject.cs" />
+     <Compile Include="Assets\UniRx\Scripts\Subjects\ReplaySubject.cs" />
+     <Compile Include="Assets\UniRx\Scripts\Subjects\Subject.cs" />
+     <Compile Include="Assets\UniRx\Scripts\System\IObservable.cs" />
+     <Compile Include="Assets\UniRx\Scripts\System\IObserver.cs" />
+     <Compile Include="Assets\UniRx\Scripts\System\IProgress.cs" />
+     <Compile Include="Assets\UniRx\Scripts\System\Tuple.cs" />
+     <Compile Include="Assets\UniRx\Scripts\System\Unit.cs" />
+     <Compile Include="Assets\UniRx\Scripts\TimeInterval.cs" />
+     <Compile Include="Assets\UniRx\Scripts\Timestamped.cs" />
+     <Compile Include="Assets\UniRx\Scripts\UnityEngineBridge\AotSafeExtensions.cs" />
+     <Compile Include="Assets\UniRx\Scripts\UnityEngineBridge\AsyncOperationExtensions.cs" />
+     <Compile Include="Assets\UniRx\Scripts\UnityEngineBridge\CancellationToken.cs" />
+     <Compile Include="Assets\UniRx\Scripts\UnityEngineBridge\Diagnostics\LogEntry.cs" />
+     <Compile Include="Assets\UniRx\Scripts\UnityEngineBridge\Diagnostics\LogEntryExtensions.cs" />
+     <Compile Include="Assets\UniRx\Scripts\UnityEngineBridge\Diagnostics\Logger.cs" />
+     <Compile Include="Assets\UniRx\Scripts\UnityEngineBridge\Diagnostics\ObservableLogger.cs" />
+     <Compile Include="Assets\UniRx\Scripts\UnityEngineBridge\Diagnostics\UnityDebugSink.cs" />
+     <Compile Include="Assets\UniRx\Scripts\UnityEngineBridge\LazyTask.cs" />
+     <Compile Include="Assets\UniRx\Scripts\UnityEngineBridge\MainThreadDispatcher.cs" />
+     <Compile Include="Assets\UniRx\Scripts\UnityEngineBridge\MainThreadScheduler.cs" />
+     <Compile Include="Assets\UniRx\Scripts\UnityEngineBridge\Observable.Unity.cs" />
+     <Compile Include="Assets\UniRx\Scripts\UnityEngineBridge\ObservableMonoBehaviour.cs" />
+     <Compile Include="Assets\UniRx\Scripts\UnityEngineBridge\ObservableWWW.cs" />
+     <Compile Include="Assets\UniRx\Scripts\UnityEngineBridge\ScenePlaybackDetector.cs" />
+     <Compile Include="Assets\UniRx\Scripts\UnityEngineBridge\TypedMonoBehaviour.cs" />
+     <Compile Include="Assets\UniRx\Scripts\UnityEngineBridge\UI\ObserveExtensions.cs" />
+     <Compile Include="Assets\UniRx\Scripts\UnityEngineBridge\UnityEventExtensions.cs" />
+     <Compile Include="Assets\UniRx\Scripts\UnityWinRTBridge\Thread.cs" />
+     <Compile Include="Assets\UniRx\Scripts\UnityWinRTBridge\ThreadPoolScheduler_UnityWinRT.cs" />
      <Compile Include="Assets\UnityTestTools\Assertions\AssertionComponent.cs" />
      <Compile Include="Assets\UnityTestTools\Assertions\AssertionException.cs" />
      <Compile Include="Assets\UnityTestTools\Assertions\Assertions.cs" />
@@ -198,18 +282,102 @@
      <Compile Include="Assets\iTweenEditor\Helper Classes\Vector3OrTransformArray.cs" />
      <Compile Include="Assets\iTweenEditor\iTweenEvent.cs" />
      <Compile Include="Assets\iTweenEditor\iTweenPath.cs" />
+     <None Include="Assets\Soomla\compilations\android\android-profile-google\google-play-services_lib\res\drawable\common_signin_btn_text_light.xml" />
+     <None Include="Assets\Soomla\compilations\android\android-profile-google\google-play-services_lib\res\values-bg\common_strings.xml" />
+     <None Include="Assets\Soomla\compilations\android\android-profile-google\google-play-services_lib\res\values-ca\common_strings.xml" />
      <None Include="Assets\UnityTestTools\LICENSE.txt" />
+     <None Include="Assets\Soomla\compilations\android\android-profile-google\google-play-services_lib\res\values-ms-rMY\common_strings.xml" />
+     <None Include="Assets\Soomla\compilations\android\android-profile-google\google-play-services_lib\res\values-nb\common_strings.xml" />
+     <None Include="Assets\Soomla\compilations\android\android-profile-google\google-play-services_lib\README.txt" />
+     <None Include="Assets\Soomla\compilations\android\android-profile-google\google-play-services_lib\res\values-en-rIN\common_strings.xml" />
+     <None Include="Assets\Soomla\compilations\android\android-profile-google\google-play-services_lib\res\values-zh-rCN\common_strings.xml" />
+     <None Include="Assets\Soomla\compilations\android\android-profile-google\google-play-services_lib\res\values-lv\common_strings.xml" />
+     <None Include="Assets\Soomla\compilations\android\android-profile-google\google-play-services_lib\res\values-iw\common_strings.xml" />
+     <None Include="Assets\Soomla\compilations\android\android-profile-google\google-play-services_lib\res\values-zu\common_strings.xml" />
+     <None Include="Assets\Soomla\compilations\android\android-profile-google\google-play-services_lib\res\color\common_signin_btn_text_light.xml" />
+     <None Include="Assets\Soomla\compilations\android\android-profile-google\google-play-services_lib\res\values-en-rGB\common_strings.xml" />
+     <None Include="Assets\Soomla\compilations\android\android-profile-google\google-play-services_lib\res\color\wallet_primary_text_holo_light.xml" />
+     <None Include="Assets\Soomla\compilations\android\android-profile-google\google-play-services_lib\res\values-fr-rCA\common_strings.xml" />
+     <None Include="Assets\Soomla\compilations\android\android-profile-google\google-play-services_lib\res\values-mn-rMN\common_strings.xml" />
+     <None Include="Assets\Soomla\compilations\android\android-profile-google\google-play-services_lib\res\values\wallet_colors.xml" />
+     <None Include="Assets\Soomla\compilations\android\android-profile-google\google-play-services_lib\res\values-ja\common_strings.xml" />
+     <None Include="Assets\Soomla\compilations\android\android-profile-google\google-play-services_lib\res\values-hy-rAM\common_strings.xml" />
+     <None Include="Assets\Soomla\compilations\android\android-profile-google\google-play-services_lib\res\values-pt-rBR\common_strings.xml" />
+     <None Include="Assets\UniRx\ReadMe.txt" />
+     <None Include="Assets\Soomla\compilations\android\android-profile-google\google-play-services_lib\res\color\common_signin_btn_text_dark.xml" />
+     <None Include="Assets\Soomla\compilations\android\android-profile-google\google-play-services_lib\res\values-hr\common_strings.xml" />
+     <None Include="Assets\Soomla\compilations\android\android-profile-google\google-play-services_lib\res\values-et-rEE\common_strings.xml" />
+     <None Include="Assets\Soomla\compilations\android\android-profile-google\google-play-services_lib\res\values-fa\common_strings.xml" />
+     <None Include="Assets\Soomla\compilations\android\android-profile-google\google-play-services_lib\res\values-af\common_strings.xml" />
+     <None Include="Assets\Soomla\compilations\android\android-profile-google\google-play-services_lib\res\drawable\common_signin_btn_icon_light.xml" />
+     <None Include="Assets\Soomla\compilations\android\android-profile-google\google-play-services_lib\res\values-da\common_strings.xml" />
+     <None Include="Assets\Soomla\compilations\android\android-profile-google\google-play-services_lib\res\values\admob_ads_attrs.xml" />
+     <None Include="Assets\Soomla\compilations\android\android-profile-google\google-play-services_lib\res\values-sw\common_strings.xml" />
      <None Include="Assets\iTweenEditor\README.txt" />
+     <None Include="Assets\Soomla\compilations\android\android-profile-google\google-play-services_lib\res\values-el\common_strings.xml" />
+     <None Include="Assets\Soomla\compilations\android\android-profile-google\google-play-services_lib\res\values-lo-rLA\common_strings.xml" />
+     <None Include="Assets\Soomla\compilations\android\android-profile-google\google-play-services_lib\res\values-pt-rPT\common_strings.xml" />
+     <None Include="Assets\Soomla\compilations\android\android-profile-google\google-play-services_lib\res\values-pl\common_strings.xml" />
+     <None Include="Assets\Soomla\compilations\android\android-profile-google\google-play-services_lib\proguard.txt" />
+     <None Include="Assets\Soomla\compilations\android\android-profile-google\google-play-services_lib\res\values-sl\common_strings.xml" />
+     <None Include="Assets\Soomla\compilations\android\android-profile-google\google-play-services_lib\res\values\wallet_attrs.xml" />
+     <None Include="Assets\Soomla\compilations\android\android-profile-google\google-play-services_lib\res\values\wallet_strings.xml" />
+     <None Include="Assets\Soomla\compilations\android\android-profile-google\google-play-services_lib\res\values-de\common_strings.xml" />
+     <None Include="Assets\Soomla\compilations\android\android-profile-google\google-play-services_lib\res\values-es-rUS\common_strings.xml" />
+     <None Include="Assets\Soomla\compilations\android\android-profile-google\google-play-services_lib\res\values-es\wallet_strings.xml" />
+     <None Include="Assets\Soomla\compilations\android\android-profile-google\google-play-services_lib\res\drawable\common_signin_btn_text_dark.xml" />
+     <None Include="Assets\Soomla\compilations\android\android-profile-google\google-play-services_lib\res\values\admob_iap_style.xml" />
+     <None Include="Assets\Soomla\compilations\android\android-profile-google\google-play-services_lib\res\values-tr\common_strings.xml" />
+     <None Include="Assets\Soomla\compilations\android\android-profile-google\google-play-services_lib\res\values-am\common_strings.xml" />
+     <None Include="Assets\Soomla\compilations\android\android-profile-google\google-play-services_lib\AndroidManifest.xml" />
      <None Include="Assets\UnityTestTools\changelog.txt" />
+     <None Include="Assets\Soomla\compilations\android\android-profile-google\google-play-services_lib\res\color\wallet_secondary_text_holo_dark.xml" />
+     <None Include="Assets\Soomla\compilations\android\android-profile-google\google-play-services_lib\res\values\wallet_styles.xml" />
+     <None Include="Assets\Soomla\compilations\android\android-profile-google\google-play-services_lib\res\values-uk\common_strings.xml" />
+     <None Include="Assets\Soomla\compilations\android\android-profile-google\google-play-services_lib\res\values\common_strings.xml" />
+     <None Include="Assets\Soomla\compilations\android\android-profile-google\google-play-services_lib\res\values-pt\common_strings.xml" />
+     <None Include="Assets\Soomla\compilations\android\android-profile-google\google-play-services_lib\res\values\maps_attrs.xml" />
+     <None Include="Assets\Soomla\compilations\android\android-profile-google\google-play-services_lib\res\values\common_colors.xml" />
+     <None Include="Assets\Soomla\compilations\android\android-profile-google\google-play-services_lib\res\values-hu\common_strings.xml" />
+     <None Include="Assets\Soomla\compilations\android\android-profile-google\google-play-services_lib\res\values-it\common_strings.xml" />
+     <None Include="Assets\Soomla\compilations\android\android-profile-google\google-play-services_lib\res\values-sv\common_strings.xml" />
+     <None Include="Assets\Soomla\compilations\android\android-profile-google\google-play-services_lib\res\values-sk\common_strings.xml" />
+     <None Include="Assets\Soomla\compilations\android\android-profile-google\google-play-services_lib\res\values-tl\common_strings.xml" />
+     <None Include="Assets\Soomla\compilations\android\android-profile-google\google-play-services_lib\res\values-zh-rHK\common_strings.xml" />
+     <None Include="Assets\Soomla\compilations\android\android-profile-google\google-play-services_lib\res\values-in\common_strings.xml" />
+     <None Include="Assets\Soomla\compilations\android\android-profile-google\google-play-services_lib\res\values\version.xml" />
+     <None Include="Assets\Soomla\compilations\android\android-profile-google\google-play-services_lib\res\values-cs\common_strings.xml" />
+     <None Include="Assets\Soomla\compilations\android\android-profile-google\google-play-services_lib\res\values-th\common_strings.xml" />
+     <None Include="Assets\Soomla\compilations\android\android-profile-google\google-play-services_lib\res\values-fr\common_strings.xml" />
+     <None Include="Assets\Soomla\compilations\android\android-profile-google\google-play-services_lib\res\values-lt\common_strings.xml" />
+     <None Include="Assets\Soomla\compilations\android\android-profile-google\google-play-services_lib\res\values-ka-rGE\common_strings.xml" />
+     <None Include="Assets\Soomla\compilations\android\android-profile-google\google-play-services_lib\res\values-km-rKH\common_strings.xml" />
+     <None Include="Assets\Soomla\compilations\android\android-profile-google\google-play-services_lib\res\values-ar\common_strings.xml" />
+     <None Include="Assets\Soomla\compilations\android\android-profile-google\google-play-services_lib\res\values-es\common_strings.xml" />
+     <None Include="Assets\Soomla\compilations\android\android-profile-google\google-play-services_lib\res\values-fi\common_strings.xml" />
+     <None Include="Assets\Soomla\compilations\android\android-profile-google\google-play-services_lib\res\values-ru\common_strings.xml" />
+     <None Include="Assets\Soomla\compilations\android\android-profile-google\google-play-services_lib\res\values-sr\common_strings.xml" />
      <None Include="Assets\SmartLocalization\README.txt" />
+     <None Include="Assets\Soomla\compilations\android\android-profile-google\google-play-services_lib\res\values-nl\common_strings.xml" />
+     <None Include="Assets\Soomla\compilations\android\android-profile-google\google-play-services_lib\res\values-ro\common_strings.xml" />
      <None Include="Assets\SmartLocalization\Resources\EmptyResourceHeader.txt" />
+     <None Include="Assets\Soomla\compilations\android\android-profile-google\google-play-services_lib\res\values-be\common_strings.xml" />
+     <None Include="Assets\Soomla\compilations\android\android-profile-google\google-play-services_lib\res\values-vi\common_strings.xml" />
      <None Include="Assets\SmartLocalization\license.txt" />
+     <None Include="Assets\Soomla\compilations\android\android-profile-google\google-play-services_lib\res\values-hi\common_strings.xml" />
+     <None Include="Assets\Soomla\compilations\android\android-profile-google\google-play-services_lib\res\drawable\common_signin_btn_icon_dark.xml" />
+     <None Include="Assets\Soomla\compilations\android\android-profile-google\google-play-services_lib\res\values-ko\common_strings.xml" />
+     <None Include="Assets\Soomla\compilations\android\android-profile-google\google-play-services_lib\res\values-zh-rTW\common_strings.xml" />
  <Reference Include="UnityEngine.UI">
  <HintPath>C:/Program Files (x86)/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/4.6.1/UnityEngine.UI.dll</HintPath>
  </Reference>
  <Reference Include="SmartLocalization_Runtime">
  <HintPath>D:/Projects/SouffleMatch/Assets/SmartLocalization/SmartLocalization_Runtime.dll</HintPath>
  </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="Assembly-CSharp-firstpass-vs.csproj">
+      <Project>{15C4E3E4-5B13-5EDD-7B66-6B01DE9F6EB8}</Project>      <Name>Assembly-CSharp-firstpass-vs</Name>    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

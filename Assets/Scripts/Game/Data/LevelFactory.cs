@@ -1,16 +1,17 @@
 using System;
 using Game.GameMode;
 using Tower;
+using UnityEngine;
 
 namespace Game.Data
 {
     [Serializable]
-    public class LevelFactory
+    public class LevelFactory : ScriptableObject
     {
-        public ushort MinFieldWidth = 6;
-        public ushort MinFieldHeight = 6;
-        public ushort MinTurns = 20;
-        public ushort MinPointsPerTile;
+        public int MinFieldWidth = 6;
+        public int MinFieldHeight = 6;
+        public int MinTurns = 20;
+        public int MinPointsPerTile;
         public int AverageTileCoefficient = 5;
 
         public LevelDescription Create(int width, int height)

@@ -61,7 +61,7 @@ namespace Game.Player
 
         public void CountForCombinations(IEnumerable<Chuzzle> combination)
         {
-            int newPoints = combination.Count() * 25;
+            int newPoints = combination.Count() * SessionRestorer.CurrentLevel.PointsPerTile;
             InvokePointChangeDelta(newPoints);
             AddPoints(newPoints);
             InvokePointsForDestroy(combination, newPoints);

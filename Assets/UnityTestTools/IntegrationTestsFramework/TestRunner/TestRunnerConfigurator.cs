@@ -11,11 +11,10 @@ using System.Net;
 using System.Net.NetworkInformation;
 using System.Net.Sockets;
 using System.Threading;
-using UnityEditorInternal;
 using UnityEngine;
 
 #if UNITY_EDITOR
-
+using UnityEditorInternal;
 #endif
 
 namespace UnityTestTools.IntegrationTestsFramework.TestRunner

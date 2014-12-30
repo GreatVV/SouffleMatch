@@ -68,16 +68,6 @@ namespace Game.Player
             Instance = null;
         }
 
-        public JSONObject Serialize()
-        {
-            var json = new JSONObject(JSONObject.Type.OBJECT);
-            json.AddField("Money", CurrentMoney);
-            return json;
-        }
-
-        public void Unserialize(JSONObject json)
-        {
-            CurrentMoney = (int) json.GetField("Money").n;
-        }
+     
     }
 }

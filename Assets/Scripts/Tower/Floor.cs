@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Reflection;
+using Tower.Floors;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -21,7 +22,7 @@ namespace Tower
             {
                 if (floorDescription == null && !string.IsNullOrEmpty(floorDescName))
                 {
-                    Type type = Assembly.GetExecutingAssembly().GetType(floorDescName);
+                    Type type = Assembly.GetAssembly(typeof(IFloorDesc)).GetType(floorDescName);
                     floorDescription = Activator.CreateInstance(type) as IFloorDesc;
                 }
                 return floorDescription;
@@ -32,7 +33,10 @@ namespace Tower
         {
             floorDescription = floorDesc;
             floorDescName = floorDescription.GetType().FullName;
-            text.text = floorDesc.GetType().Name;
+            if (text)
+            {
+                text.text = floorDesc.GetType().Name;
+            }
         }
     }
 }

@@ -12,7 +12,7 @@ using Object = UnityEngine.Object;
 namespace Game.Gameplay
 {
     [Serializable]
-    public class CellCollection : IJsonSerializable, IEnumerable<Cell>
+    public class CellCollection : IEnumerable<Cell>
     {
         public List<Cell> Cells = new List<Cell>();
         public int Height;
@@ -20,15 +20,16 @@ namespace Game.Gameplay
 
         public Transform root;
 
-        #region IJsonSerializable Members
+        #region IEnumerable<Cell> Members
 
-        public JSONObject Serialize()
+        IEnumerator<Cell> IEnumerable<Cell>.GetEnumerator()
         {
-            return new JSONObject();
+            return Cells.GetEnumerator();
         }
 
-        public void Deserialize(JSONObject json)
+        public IEnumerator GetEnumerator()
         {
+            return Cells.GetEnumerator();
         }
 
         #endregion
@@ -44,7 +45,8 @@ namespace Game.Gameplay
             Cell cell = GamefieldUtility.CellAt(Cells, x, y);
             if (cell == null && createIfNotFound)
             {
-                var newCell = Instance.TilesFactory.Cell(new CellDescription(x, y, CellTypes.Usual, CreationType.Usual));
+                Cell newCell = Instance.TilesFactory.Cell(
+                                                          new CellDescription(x, y, CellTypes.Usual, CreationType.Usual));
                 AddCell(x, y, newCell);
                 return newCell;
             }
@@ -96,7 +98,7 @@ namespace Game.Gameplay
         public void DestroyCells()
         {
             //Debug.Log("Destroy all cells:"+Cells.Count);
-            foreach (var cell in Cells)
+            foreach (Cell cell in Cells)
             {
                 if (Application.isPlaying)
                 {
@@ -129,9 +131,9 @@ namespace Game.Gameplay
             Width = levelDescription.Width;
             Height = levelDescription.Height;
 
-            foreach (var cellDescription in levelDescription.SpecialCells)
+            foreach (CellDescription cellDescription in levelDescription.SpecialCells)
             {
-                var cell = Instance.TilesFactory.Cell(cellDescription);
+                Cell cell = Instance.TilesFactory.Cell(cellDescription);
                 AddCell(cellDescription.X, cellDescription.Y, cell);
             }
 
@@ -151,16 +153,6 @@ namespace Game.Gameplay
                 func = cell => true;
             }
             return Cells.Where(func);
-        }
-
-        IEnumerator<Cell> IEnumerable<Cell>.GetEnumerator()
-        {
-            return Cells.GetEnumerator();
-        }
-
-        public IEnumerator GetEnumerator()
-        {
-            return Cells.GetEnumerator();
         }
     }
 }

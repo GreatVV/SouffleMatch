@@ -8,11 +8,11 @@ namespace Game.Player
 {
     public class SessionRestorer : MonoBehaviour
     {
-        public LevelDescription CurrentLevel;
-        public Gamefield Gamefield;
+        public static LevelDescription CurrentLevel;
 
-        [SerializeField]
-        private bool startGameOnLoad;
+        public LevelDescription DebugCurrentLevel; 
+
+        public Gamefield Gamefield;
 
         private void StartLevel(LevelDescription description)
         {
@@ -22,18 +22,13 @@ namespace Game.Player
 
         public void Start()
         {
-            if (Instance.SessionRestorer != this)
+            if (Application.isEditor)
             {
-                Destroy(gameObject);
-                return;
+                CurrentLevel = DebugCurrentLevel; //TODO REMOVE!
             }
 
-            DontDestroyOnLoad(gameObject);
-
-            if (startGameOnLoad)
-            {
-                StartLevel(CurrentLevel);
-            }
+            Instance.ChuzzlePool.Clear();
+            StartLevel(CurrentLevel);
         }
 
         public void Restart()

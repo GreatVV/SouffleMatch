@@ -25,21 +25,6 @@ namespace Game.Player
             // Set current user profile
             var prefix = GetPrefix(profileName);
 
-            // Load ecomomy progress
-            var economy = PlayerPrefs.GetString(string.Format("{0}_economy", prefix), "");
-            if (!string.IsNullOrEmpty(economy))
-            {
-                Economy.Instance.Unserialize(new JSONObject(economy));
-            }
-
-            //player
-            var player = PlayerPrefs.GetString(string.Format("{0}_player", prefix));
-            if (!string.IsNullOrEmpty(player))
-            {
-                Debug.Log("Unserialize player: "+player);
-                Instance.Player.Unserialize(new JSONObject(player));
-            }
-
             // Is profile exists?
             return PlayerPrefs.HasKey(string.Format("{0}_profile", prefix));
         }
@@ -57,23 +42,13 @@ namespace Game.Player
         public void Save()
         {
             PlayerPrefs.SetString(CurrentPrefix+"_profile", Current);
-            SaveEconomy(CurrentPrefix);
-            SavePlayer(CurrentPrefix, Instance.Player.Serialize());
 
             PlayerPrefs.GetString("lastUsedProfile", Current);
 
             PlayerPrefs.Save();
         }
 
-        public static void SavePlayer(string prefix, JSONObject playerJsonObject)
-        {
-            PlayerPrefs.SetString(string.Format("{0}_player", prefix), playerJsonObject.ToString());
-        }
-
-        private static void SaveEconomy(string prefix)
-        {
-            PlayerPrefs.SetString(string.Format("{0}_economy", prefix), Economy.Instance.Serialize().ToString());
-        }
+    
 
         private void OnApplicationQuit()
         {

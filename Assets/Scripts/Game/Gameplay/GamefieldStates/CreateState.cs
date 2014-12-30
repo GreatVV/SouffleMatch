@@ -1,9 +1,12 @@
 ﻿#region
 
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using Game.Gameplay.Cells;
+using Game.Gameplay.Chuzzles;
 using Game.Utility;
+using UniRx;
 using UnityEngine;
 using Utils;
 
@@ -17,35 +20,22 @@ namespace Game.Gameplay.GamefieldStates
         #region Event Handlers
 
         public CreateState(Gamefield gamefield) : base(gamefield)
-        {
-        }
+        {}
 
-        void OnDestroy()
-        {
-            TilesCollection.AnimationFinished -= OnAnimationFinished;
-        }
         public override void OnEnter()
         {
-            TilesCollection.AnimationFinished += OnAnimationFinished;
-
-            if (CreateNew())
+            if (HasNew())
             {
-               // Debug.Log("Has new");
-                if (!TilesCollection.IsAnyAnimated)
-                {
-                  //  Debug.Log("No Moving");
-                    OnAnimationFinished();
-                }
-                else
-                {
-                   // Debug.Log("Moving: "+TilesCollection.AnimatedCount);
-                }
+                CreateNew();
+            }
+            else
+            {
+                Gamefield.SwitchStateTo(Gamefield.PowerUpAnalyzeState);
             }
         }
 
         public override void OnExit()
         {
-            TilesCollection.AnimationFinished -= OnAnimationFinished;
             if (TilesCollection.IsAnyAnimated)
             {
                 Debug.LogError("FUCK YOU FROM CREATE NEW STATE: " + TilesCollection.AnimatedCount);
@@ -53,11 +43,11 @@ namespace Game.Gameplay.GamefieldStates
             Gamefield.Level.Chuzzles.NewTilesInColumns = new int[Gamefield.Level.Cells.Width];
         }
 
-        public void OnAnimationFinished()
+        public void FinishHim()
         {
             TilesCollection.SyncFromMoveTo();
 
-            var combinations = GamefieldUtility.FindCombinations(Gamefield.Level.Chuzzles);
+            List<List<Chuzzle>> combinations = GamefieldUtility.FindCombinations(Gamefield.Level.Chuzzles);
             if (combinations.Count > 0)
             {
                 Gamefield.SwitchStateTo(Gamefield.PowerUpAnalyzeState);
@@ -73,59 +63,57 @@ namespace Game.Gameplay.GamefieldStates
                     Gamefield.GameMode.Check();
                 }
             }
-
         }
-
-
 
         #endregion
 
         public override void UpdateState()
-        {
-        }
+        {}
 
         public override void LateUpdateState()
+        {}
+
+        public bool HasNew()
         {
+            return Gamefield.Level.Chuzzles.NewTilesInColumns.Any(x => x > 0);
         }
 
-        public bool CreateNew()
+        public void CreateNew()
         {
-            var hasNew = Gamefield.Level.Chuzzles.NewTilesInColumns.Any(x => x > 0);
-            if (!hasNew)
-            {
-                Gamefield.SwitchStateTo(Gamefield.PowerUpAnalyzeState);
-                return false;
-            }
-
             //check if need create new tiles
-            for (var x = 0; x < Gamefield.Level.Chuzzles.NewTilesInColumns.Length; x++)
+            for (int x = 0; x < Gamefield.Level.Chuzzles.NewTilesInColumns.Length; x++)
             {
-                var newInColumn = Gamefield.Level.Chuzzles.NewTilesInColumns[x];
+                int newInColumn = Gamefield.Level.Chuzzles.NewTilesInColumns[x];
                 if (newInColumn > 0)
                 {
-                    for (var j = 0; j < newInColumn; j++)
+                    for (int j = 0; j < newInColumn; j++)
                     {
                         //create new tiles
-                        var chuzzle = Instance.TilesFactory.CreateChuzzle(Gamefield.Level.Cells.GetCellAt(x, Gamefield.Level.Cells.Height + j));
+                        Chuzzle chuzzle =
+                            Instance.TilesFactory.CreateChuzzle(
+                                                                Gamefield.Level.Cells.GetCellAt(
+                                                                                                x,
+                                                                                                Gamefield.Level.Cells
+                                                                                                         .Height + j));
                         chuzzle.Current.IsTemporary = true;
                     }
                 }
             }
 
             //move tiles to fill positions
-            for (var x = 0; x < Gamefield.Level.Chuzzles.NewTilesInColumns.Length; x++)
+            for (int x = 0; x < Gamefield.Level.Chuzzles.NewTilesInColumns.Length; x++)
             {
-                var newInColumn = Gamefield.Level.Chuzzles.NewTilesInColumns[x];
+                int newInColumn = Gamefield.Level.Chuzzles.NewTilesInColumns[x];
                 if (newInColumn > 0)
                 {
-                    for (var y = 0; y < Gamefield.Level.Cells.Height; y++)
+                    for (int y = 0; y < Gamefield.Level.Cells.Height; y++)
                     {
-                        var cell = Gamefield.Level.Cells.GetCellAt(x, y, false);
+                        Cell cell = Gamefield.Level.Cells.GetCellAt(x, y, false);
                         if (Gamefield.Level.Chuzzles.GetTileAt(x, y) == null && cell.Type != CellTypes.Block)
                         {
                             while (cell != null)
                             {
-                                var chuzzle = Gamefield.Level.Chuzzles.GetTileAt(cell);
+                                Chuzzle chuzzle = Gamefield.Level.Chuzzles.GetTileAt(cell);
                                 if (chuzzle != null)
                                 {
                                     chuzzle.MoveTo = chuzzle.MoveTo.GetBottomWithType();
@@ -138,14 +126,12 @@ namespace Game.Gameplay.GamefieldStates
                 }
             }
 
-            foreach (var c in TilesCollection)
+            foreach (Chuzzle c in TilesCollection.Where(c => c.MoveTo.Y != c.Current.Y))
             {
-                if (c.MoveTo.Y != c.Current.Y)
-                {
-                    ChuzzleMover.Instance.MoveTo(c, c.transform.position, c.MoveTo.Position);
-                }
+                ChuzzleMover.Instance.MoveTo(c, c.transform.position, c.MoveTo.Position);
             }
-            return true;
+
+            Observable.EveryUpdate().First(_ => !TilesCollection.IsAnyAnimated).Subscribe(_ => FinishHim());
         }
     }
 }

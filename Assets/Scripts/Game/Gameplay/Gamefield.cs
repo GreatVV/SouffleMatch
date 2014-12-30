@@ -181,7 +181,7 @@ namespace Game.Gameplay
 
         public void StartGame(LevelDescription levelDescription)
         {
-            LevelDescription = Instance.Player.LastPlayedLevelDescription = levelDescription;
+            LevelDescription = levelDescription;
             Debug.Log("Start level: "+LevelDescription);
             GameStartTime = DateTime.UtcNow;
             Init();

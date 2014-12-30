@@ -12,5 +12,19 @@ MonoBehaviour:
   m_Name: FloorFactory
   m_EditorClassIdentifier: 
   RegisteredPrefabs:
-  - FloorName: Tower.SimpleFloorDesc
+  - FloorName: Tower.Floors.DecreaseWinPointsFloorDesc
+    Prefab: {fileID: 100002, guid: 5cc8c0d996643574e82e5530961ccf39, type: 2}
+  - FloorName: Tower.Floors.DoubleCoinsFloorDesc
+    Prefab: {fileID: 100002, guid: 5cc8c0d996643574e82e5530961ccf39, type: 2}
+  - FloorName: Tower.Floors.HeightFloorDesc
+    Prefab: {fileID: 100002, guid: 5cc8c0d996643574e82e5530961ccf39, type: 2}
+  - FloorName: Tower.Floors.IFloorDesc
+    Prefab: {fileID: 100002, guid: 5cc8c0d996643574e82e5530961ccf39, type: 2}
+  - FloorName: Tower.Floors.PointsPerTileFloorDesc
+    Prefab: {fileID: 100002, guid: 5cc8c0d996643574e82e5530961ccf39, type: 2}
+  - FloorName: Tower.Floors.SimpleFloorDesc
+    Prefab: {fileID: 100002, guid: 5cc8c0d996643574e82e5530961ccf39, type: 2}
+  - FloorName: Tower.Floors.TurnsFloorDesc
+    Prefab: {fileID: 100002, guid: 5cc8c0d996643574e82e5530961ccf39, type: 2}
+  - FloorName: Tower.Floors.WidthFloorDesc
     Prefab: {fileID: 100002, guid: 5cc8c0d996643574e82e5530961ccf39, type: 2}

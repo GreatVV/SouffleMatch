@@ -19,7 +19,7 @@
 	<DebugType>full</DebugType>
 	<Optimize>false</Optimize>
 	<OutputPath>Temp\bin\Debug\</OutputPath>
-	<DefineConstants>DEBUG;TRACE;UNITY_4_6_1;UNITY_4_6;UNITY_WP8;ENABLE_MICROPHONE;ENABLE_TEXTUREID_MAP;ENABLE_UNITYEVENTS;ENABLE_NEW_HIERARCHY ;ENABLE_LAZY_METHOD_CACHING;ENABLE_AUDIO_FMOD;ENABLE_TERRAIN;ENABLE_GENERICS;INCLUDE_WP8SUPPORT;ENABLE_MOVIES;ENABLE_WWW;ENABLE_IMAGEEFFECTS;ENABLE_4_6_FEATURES;UNITY_WINRT;INCLUDE_WP_BLUE_SUPPORT;ENABLE_WEBCAM;INCLUDE_METROSUPPORT;RENDER_SOFTWARE_CURSOR;ENABLE_PHYSICS;ENABLE_CACHING;ENABLE_SERIALIZATION_BY_CODEGENERATION;ENABLE_CLOTH;ENABLE_2D_PHYSICS;ENABLE_SHADOWS;ENABLE_AUDIO;ENABLE_NAVMESH_CARVING;ENABLE_SINGLE_INSTANCE_BUILD_SETTING;DEVELOPMENT_BUILD;ENABLE_PROFILER;DEBUG;TRACE;UNITY_EDITOR;UNITY_EDITOR_WIN;UNITY_TEAM_LICENSE;UNITY_PRO_LICENSE;ENABLE_DUCK_TYPING</DefineConstants>
+	<DefineConstants>DEBUG;TRACE;UNITY_4_6_1;UNITY_4_6;UNITY_STANDALONE_WIN;ENABLE_MICROPHONE;ENABLE_TEXTUREID_MAP;ENABLE_UNITYEVENTS;ENABLE_NEW_HIERARCHY ;ENABLE_AUDIO_FMOD;UNITY_STANDALONE;ENABLE_MONO;ENABLE_TERRAIN;ENABLE_SUBSTANCE;ENABLE_GENERICS;INCLUDE_WP8SUPPORT;ENABLE_MOVIES;ENABLE_WWW;ENABLE_IMAGEEFFECTS;ENABLE_4_6_FEATURES;INCLUDE_WP_BLUE_SUPPORT;ENABLE_WEBCAM;INCLUDE_METROSUPPORT;RENDER_SOFTWARE_CURSOR;ENABLE_NETWORK;ENABLE_PHYSICS;ENABLE_CACHING;ENABLE_CLOTH;ENABLE_2D_PHYSICS;ENABLE_SHADOWS;ENABLE_AUDIO;ENABLE_NAVMESH_CARVING;ENABLE_DUCK_TYPING;ENABLE_SINGLE_INSTANCE_BUILD_SETTING;ENABLE_PROFILER;UNITY_EDITOR;UNITY_EDITOR_WIN;UNITY_TEAM_LICENSE;UNITY_PRO_LICENSE</DefineConstants>
 	<ErrorReport>prompt</ErrorReport>
 	<WarningLevel>4</WarningLevel>
 	<NoWarn>0169</NoWarn>
@@ -39,7 +39,7 @@
 	<Reference Include="System.Core" />
 	<Reference Include="System.Xml.Linq" />
 	<Reference Include="UnityEngine">
-	  <HintPath>C:/Program Files (x86)/Unity/Editor/Data/PlaybackEngines/WP8Support/Tools/UnityEngine.dll</HintPath>
+	  <HintPath>C:/Program Files (x86)/Unity/Editor/Data/Managed/UnityEngine.dll</HintPath>
 	</Reference>
 	<Reference Include="UnityEditor">
 	  <HintPath>C:/Program Files (x86)/Unity/Editor/Data/Managed/UnityEditor.dll</HintPath>
@@ -48,14 +48,18 @@
   <ItemGroup>
      <Compile Include="Assets\Editor\CFXEasyEditor.cs" />
      <Compile Include="Assets\Editor\EditorExtension.cs" />
-     <Compile Include="Assets\Editor\LevelEditor.cs" />
+     <Compile Include="Assets\Editor\FloorFactoryEditor.cs" />
+     <Compile Include="Assets\Editor\Tests\FloorDescBuilderTest.cs" />
      <Compile Include="Assets\Editor\Tests\LevelFactoryTest.cs" />
+     <Compile Include="Assets\Editor\Tests\TestBase.cs" />
      <Compile Include="Assets\Editor\Tests\TowerConstructionTest.cs" />
      <Compile Include="Assets\Editor\Tests\TowerDescriptionTest.cs" />
      <Compile Include="Assets\SmartLocalization\Scripts\NGUI\Editor\SL_NGUILabelInspector.cs" />
      <Compile Include="Assets\SmartLocalization\Scripts\NGUI\Editor\SL_NGUISpriteAtlasInspector.cs" />
      <Compile Include="Assets\SmartLocalization\Scripts\NGUI\Editor\SL_NGUISpriteNameInspector.cs" />
      <Compile Include="Assets\SmartLocalization\Scripts\uGUI\Editor\LocalizedTextInspector.cs" />
+     <Compile Include="Assets\Soomla\Editor\SoomlaPostBuild.cs" />
+     <Compile Include="Assets\Soomla\Editor\SoomlaSettingsEditor.cs" />
      <Compile Include="Assets\UnityTestTools\Assertions\Editor\AssertionComponentEditor.cs" />
      <Compile Include="Assets\UnityTestTools\Assertions\Editor\AssertionExplorerWindow.cs" />
      <Compile Include="Assets\UnityTestTools\Assertions\Editor\AssertionListRenderer.cs" />
@@ -107,12 +111,92 @@
      <Compile Include="Assets\UnityTestTools\UnitTesting\Editor\UnityUnitTest.cs" />
      <Compile Include="Assets\iTweenEditor\Editor\iTweenEventDataEditor.cs" />
      <Compile Include="Assets\iTweenEditor\Editor\iTweenPathEditor.cs" />
+     <None Include="Assets\Soomla\compilations\android\android-profile-google\google-play-services_lib\res\drawable\common_signin_btn_text_light.xml" />
+     <None Include="Assets\Soomla\compilations\android\android-profile-google\google-play-services_lib\res\values-bg\common_strings.xml" />
+     <None Include="Assets\Soomla\compilations\android\android-profile-google\google-play-services_lib\res\values-ca\common_strings.xml" />
      <None Include="Assets\UnityTestTools\LICENSE.txt" />
+     <None Include="Assets\Soomla\compilations\android\android-profile-google\google-play-services_lib\res\values-ms-rMY\common_strings.xml" />
+     <None Include="Assets\Soomla\compilations\android\android-profile-google\google-play-services_lib\res\values-nb\common_strings.xml" />
+     <None Include="Assets\Soomla\compilations\android\android-profile-google\google-play-services_lib\README.txt" />
+     <None Include="Assets\Soomla\compilations\android\android-profile-google\google-play-services_lib\res\values-en-rIN\common_strings.xml" />
+     <None Include="Assets\Soomla\compilations\android\android-profile-google\google-play-services_lib\res\values-zh-rCN\common_strings.xml" />
+     <None Include="Assets\Soomla\compilations\android\android-profile-google\google-play-services_lib\res\values-lv\common_strings.xml" />
+     <None Include="Assets\Soomla\compilations\android\android-profile-google\google-play-services_lib\res\values-iw\common_strings.xml" />
+     <None Include="Assets\Soomla\compilations\android\android-profile-google\google-play-services_lib\res\values-zu\common_strings.xml" />
+     <None Include="Assets\Soomla\compilations\android\android-profile-google\google-play-services_lib\res\color\common_signin_btn_text_light.xml" />
+     <None Include="Assets\Soomla\compilations\android\android-profile-google\google-play-services_lib\res\values-en-rGB\common_strings.xml" />
+     <None Include="Assets\Soomla\compilations\android\android-profile-google\google-play-services_lib\res\color\wallet_primary_text_holo_light.xml" />
+     <None Include="Assets\Soomla\compilations\android\android-profile-google\google-play-services_lib\res\values-fr-rCA\common_strings.xml" />
+     <None Include="Assets\Soomla\compilations\android\android-profile-google\google-play-services_lib\res\values-mn-rMN\common_strings.xml" />
+     <None Include="Assets\Soomla\compilations\android\android-profile-google\google-play-services_lib\res\values\wallet_colors.xml" />
+     <None Include="Assets\Soomla\compilations\android\android-profile-google\google-play-services_lib\res\values-ja\common_strings.xml" />
+     <None Include="Assets\Soomla\compilations\android\android-profile-google\google-play-services_lib\res\values-hy-rAM\common_strings.xml" />
+     <None Include="Assets\Soomla\compilations\android\android-profile-google\google-play-services_lib\res\values-pt-rBR\common_strings.xml" />
+     <None Include="Assets\UniRx\ReadMe.txt" />
+     <None Include="Assets\Soomla\compilations\android\android-profile-google\google-play-services_lib\res\color\common_signin_btn_text_dark.xml" />
+     <None Include="Assets\Soomla\compilations\android\android-profile-google\google-play-services_lib\res\values-hr\common_strings.xml" />
+     <None Include="Assets\Soomla\compilations\android\android-profile-google\google-play-services_lib\res\values-et-rEE\common_strings.xml" />
+     <None Include="Assets\Soomla\compilations\android\android-profile-google\google-play-services_lib\res\values-fa\common_strings.xml" />
+     <None Include="Assets\Soomla\compilations\android\android-profile-google\google-play-services_lib\res\values-af\common_strings.xml" />
+     <None Include="Assets\Soomla\compilations\android\android-profile-google\google-play-services_lib\res\drawable\common_signin_btn_icon_light.xml" />
+     <None Include="Assets\Soomla\compilations\android\android-profile-google\google-play-services_lib\res\values-da\common_strings.xml" />
+     <None Include="Assets\Soomla\compilations\android\android-profile-google\google-play-services_lib\res\values\admob_ads_attrs.xml" />
+     <None Include="Assets\Soomla\compilations\android\android-profile-google\google-play-services_lib\res\values-sw\common_strings.xml" />
      <None Include="Assets\iTweenEditor\README.txt" />
+     <None Include="Assets\Soomla\compilations\android\android-profile-google\google-play-services_lib\res\values-el\common_strings.xml" />
+     <None Include="Assets\Soomla\compilations\android\android-profile-google\google-play-services_lib\res\values-lo-rLA\common_strings.xml" />
+     <None Include="Assets\Soomla\compilations\android\android-profile-google\google-play-services_lib\res\values-pt-rPT\common_strings.xml" />
+     <None Include="Assets\Soomla\compilations\android\android-profile-google\google-play-services_lib\res\values-pl\common_strings.xml" />
+     <None Include="Assets\Soomla\compilations\android\android-profile-google\google-play-services_lib\proguard.txt" />
+     <None Include="Assets\Soomla\compilations\android\android-profile-google\google-play-services_lib\res\values-sl\common_strings.xml" />
+     <None Include="Assets\Soomla\compilations\android\android-profile-google\google-play-services_lib\res\values\wallet_attrs.xml" />
+     <None Include="Assets\Soomla\compilations\android\android-profile-google\google-play-services_lib\res\values\wallet_strings.xml" />
+     <None Include="Assets\Soomla\compilations\android\android-profile-google\google-play-services_lib\res\values-de\common_strings.xml" />
+     <None Include="Assets\Soomla\compilations\android\android-profile-google\google-play-services_lib\res\values-es-rUS\common_strings.xml" />
+     <None Include="Assets\Soomla\compilations\android\android-profile-google\google-play-services_lib\res\values-es\wallet_strings.xml" />
+     <None Include="Assets\Soomla\compilations\android\android-profile-google\google-play-services_lib\res\drawable\common_signin_btn_text_dark.xml" />
+     <None Include="Assets\Soomla\compilations\android\android-profile-google\google-play-services_lib\res\values\admob_iap_style.xml" />
+     <None Include="Assets\Soomla\compilations\android\android-profile-google\google-play-services_lib\res\values-tr\common_strings.xml" />
+     <None Include="Assets\Soomla\compilations\android\android-profile-google\google-play-services_lib\res\values-am\common_strings.xml" />
+     <None Include="Assets\Soomla\compilations\android\android-profile-google\google-play-services_lib\AndroidManifest.xml" />
      <None Include="Assets\UnityTestTools\changelog.txt" />
+     <None Include="Assets\Soomla\compilations\android\android-profile-google\google-play-services_lib\res\color\wallet_secondary_text_holo_dark.xml" />
+     <None Include="Assets\Soomla\compilations\android\android-profile-google\google-play-services_lib\res\values\wallet_styles.xml" />
+     <None Include="Assets\Soomla\compilations\android\android-profile-google\google-play-services_lib\res\values-uk\common_strings.xml" />
+     <None Include="Assets\Soomla\compilations\android\android-profile-google\google-play-services_lib\res\values\common_strings.xml" />
+     <None Include="Assets\Soomla\compilations\android\android-profile-google\google-play-services_lib\res\values-pt\common_strings.xml" />
+     <None Include="Assets\Soomla\compilations\android\android-profile-google\google-play-services_lib\res\values\maps_attrs.xml" />
+     <None Include="Assets\Soomla\compilations\android\android-profile-google\google-play-services_lib\res\values\common_colors.xml" />
+     <None Include="Assets\Soomla\compilations\android\android-profile-google\google-play-services_lib\res\values-hu\common_strings.xml" />
+     <None Include="Assets\Soomla\compilations\android\android-profile-google\google-play-services_lib\res\values-it\common_strings.xml" />
+     <None Include="Assets\Soomla\compilations\android\android-profile-google\google-play-services_lib\res\values-sv\common_strings.xml" />
+     <None Include="Assets\Soomla\compilations\android\android-profile-google\google-play-services_lib\res\values-sk\common_strings.xml" />
+     <None Include="Assets\Soomla\compilations\android\android-profile-google\google-play-services_lib\res\values-tl\common_strings.xml" />
+     <None Include="Assets\Soomla\compilations\android\android-profile-google\google-play-services_lib\res\values-zh-rHK\common_strings.xml" />
+     <None Include="Assets\Soomla\compilations\android\android-profile-google\google-play-services_lib\res\values-in\common_strings.xml" />
+     <None Include="Assets\Soomla\compilations\android\android-profile-google\google-play-services_lib\res\values\version.xml" />
+     <None Include="Assets\Soomla\compilations\android\android-profile-google\google-play-services_lib\res\values-cs\common_strings.xml" />
+     <None Include="Assets\Soomla\compilations\android\android-profile-google\google-play-services_lib\res\values-th\common_strings.xml" />
+     <None Include="Assets\Soomla\compilations\android\android-profile-google\google-play-services_lib\res\values-fr\common_strings.xml" />
+     <None Include="Assets\Soomla\compilations\android\android-profile-google\google-play-services_lib\res\values-lt\common_strings.xml" />
+     <None Include="Assets\Soomla\compilations\android\android-profile-google\google-play-services_lib\res\values-ka-rGE\common_strings.xml" />
+     <None Include="Assets\Soomla\compilations\android\android-profile-google\google-play-services_lib\res\values-km-rKH\common_strings.xml" />
+     <None Include="Assets\Soomla\compilations\android\android-profile-google\google-play-services_lib\res\values-ar\common_strings.xml" />
+     <None Include="Assets\Soomla\compilations\android\android-profile-google\google-play-services_lib\res\values-es\common_strings.xml" />
+     <None Include="Assets\Soomla\compilations\android\android-profile-google\google-play-services_lib\res\values-fi\common_strings.xml" />
+     <None Include="Assets\Soomla\compilations\android\android-profile-google\google-play-services_lib\res\values-ru\common_strings.xml" />
+     <None Include="Assets\Soomla\compilations\android\android-profile-google\google-play-services_lib\res\values-sr\common_strings.xml" />
      <None Include="Assets\SmartLocalization\README.txt" />
+     <None Include="Assets\Soomla\compilations\android\android-profile-google\google-play-services_lib\res\values-nl\common_strings.xml" />
+     <None Include="Assets\Soomla\compilations\android\android-profile-google\google-play-services_lib\res\values-ro\common_strings.xml" />
      <None Include="Assets\SmartLocalization\Resources\EmptyResourceHeader.txt" />
+     <None Include="Assets\Soomla\compilations\android\android-profile-google\google-play-services_lib\res\values-be\common_strings.xml" />
+     <None Include="Assets\Soomla\compilations\android\android-profile-google\google-play-services_lib\res\values-vi\common_strings.xml" />
      <None Include="Assets\SmartLocalization\license.txt" />
+     <None Include="Assets\Soomla\compilations\android\android-profile-google\google-play-services_lib\res\values-hi\common_strings.xml" />
+     <None Include="Assets\Soomla\compilations\android\android-profile-google\google-play-services_lib\res\drawable\common_signin_btn_icon_dark.xml" />
+     <None Include="Assets\Soomla\compilations\android\android-profile-google\google-play-services_lib\res\values-ko\common_strings.xml" />
+     <None Include="Assets\Soomla\compilations\android\android-profile-google\google-play-services_lib\res\values-zh-rTW\common_strings.xml" />
  <Reference Include="UnityEngine.UI">
  <HintPath>C:/Program Files (x86)/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/4.6.1/UnityEngine.UI.dll</HintPath>
  </Reference>
@@ -157,6 +241,8 @@
  </Reference>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="Assembly-CSharp-firstpass.csproj">
+      <Project>{15C4E3E4-5B13-5EDD-7B66-6B01DE9F6EB8}</Project>      <Name>Assembly-CSharp-firstpass</Name>    </ProjectReference>
     <ProjectReference Include="Assembly-CSharp.csproj">
       <Project>{9A6C31BE-CBCA-4613-4269-589FA8C5CD52}</Project>      <Name>Assembly-CSharp</Name>    </ProjectReference>
   </ItemGroup>

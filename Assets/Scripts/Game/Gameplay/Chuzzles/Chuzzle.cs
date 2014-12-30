@@ -14,7 +14,7 @@ using Utils;
 namespace Game.Gameplay.Chuzzles
 {
     [RequireComponent(typeof (TeleportableEntity))]
-    public abstract class Chuzzle : MonoBehaviour
+    public abstract class Chuzzle : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IDragHandler
     {
         private static ExplosionPool ExplosionPool;
         public float Alpha;
@@ -130,56 +130,9 @@ namespace Game.Gameplay.Chuzzles
                 ExplosionPool = FindObjectOfType<ExplosionPool>();
             }
 
-            if (!EventTrigger)
-            {
-                EventTrigger = gameObject.AddComponent<EventTrigger>();
-            }
-            var onPointerDownCallback = new EventTrigger.TriggerEvent();
-            onPointerDownCallback.AddListener(OnPointerDown);
-
-            var onPointerUpCallback = new EventTrigger.TriggerEvent();
-            onPointerUpCallback.AddListener(OnPointerUp);
-
-            var onMoveCallback = new EventTrigger.TriggerEvent();
-            onMoveCallback.AddListener(OnMove);
-
-            EventTrigger.delegates = new List<EventTrigger.Entry>()
-                                     {
-                                         new EventTrigger.Entry()
-                                         {
-                                             eventID = EventTriggerType.PointerDown,
-                                             callback = onPointerDownCallback
-                                         },
-                                         new EventTrigger.Entry()
-                                         {
-                                             eventID = EventTriggerType.PointerUp,
-                                             callback = onPointerUpCallback
-                                         },
-                                         new EventTrigger.Entry()
-                                         {
-                                             eventID = EventTriggerType.Drag,
-                                             callback = onMoveCallback
-                                         }
-                                     };
-
 
             Teleportable = GetComponent<TeleportableEntity>();
             OnAwake();
-        }
-
-        public void OnMove(BaseEventData eventData)
-        {
-            Instance.Gamefield.OnDrag(eventData);
-        }
-
-        private void OnPointerUp(BaseEventData arg0)
-        {
-            FirePointerUp();
-        }
-
-        private void OnPointerDown(BaseEventData arg0)
-        {
-            FirePointerDown();
         }
 
         public event Action<Chuzzle> PointerDown;
@@ -211,6 +164,21 @@ namespace Game.Gameplay.Chuzzles
         public override string ToString()
         {
             return string.Format("{0} ({1},{2}) - {3}", Color, Current.X, Current.Y, GetType());
+        }
+
+        public void OnDrag(PointerEventData eventData)
+        {
+            Instance.Gamefield.OnDrag(eventData);
+        }
+
+        public void OnPointerUp(PointerEventData eventData)
+        {
+            FirePointerUp();
+        }
+
+        public void OnPointerDown(PointerEventData eventData)
+        {
+            FirePointerDown();
         }
 
         protected virtual void Die(bool withAnimation)

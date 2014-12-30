@@ -2,7 +2,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using Game.Data;
 using Game.Gameplay.Cells;
 using Game.Gameplay.Chuzzles;
 using Game.Gameplay.Chuzzles.Types;
@@ -14,7 +13,7 @@ using Object = UnityEngine.Object;
 namespace Game.Gameplay
 {
     [Serializable]
-    public class TilesCollection : IJsonSerializable, IEnumerable<Chuzzle>
+    public class TilesCollection : IEnumerable<Chuzzle>
     {
         #region Delegates
 
@@ -22,17 +21,25 @@ namespace Game.Gameplay
 
         #endregion
 
-        [SerializeField]
-        private List<Chuzzle> _chuzzles = new List<Chuzzle>();
         public int[] NewTilesInColumns;
 
+        [SerializeField]
+        private List<Chuzzle> _chuzzles = new List<Chuzzle>();
+
+        #region Events
+
+        public event Action AnimationFinished;
+        public event Action AnimationStarted;
+        public event Action<Chuzzle> TileDestroyed;
+
+        #endregion
+
         public TilesCollection()
-        {
-        }
+        {}
 
         public TilesCollection(IEnumerable<Chuzzle> chuzzles)
         {
-            this._chuzzles = new List<Chuzzle>(chuzzles);
+            _chuzzles = new List<Chuzzle>(chuzzles);
             foreach (Chuzzle chuzzle in chuzzles)
             {
                 chuzzle.AnimationStarted += OnAnimationStarted;
@@ -42,17 +49,26 @@ namespace Game.Gameplay
 
         public int Count
         {
-            get { return _chuzzles.Count; }
+            get
+            {
+                return _chuzzles.Count;
+            }
         }
 
         public bool IsAnyAnimated
         {
-            get { return _chuzzles.Any(x => x.IsAnimationStarted); }
+            get
+            {
+                return _chuzzles.Any(x => x.IsAnimationStarted);
+            }
         }
 
         public int AnimatedCount
         {
-            get { return _chuzzles.Count(x => x.IsAnimationStarted); }
+            get
+            {
+                return _chuzzles.Count(x => x.IsAnimationStarted);
+            }
         }
 
         #region IEnumerable<Chuzzle> Members
@@ -69,54 +85,23 @@ namespace Game.Gameplay
 
         #endregion
 
-        #region IJsonSerializable Members
-
-        public JSONObject Serialize()
-        {
-            var json = new JSONObject();
-            foreach (Chuzzle chuzzle in _chuzzles)
-            {
-                json.Add(TilesFactory.Serialize(chuzzle));
-            }
-            return json;
-        }
-
-        public void Deserialize(JSONObject json)
-        {
-            if (json.type == JSONObject.Type.ARRAY)
-            {
-                foreach (JSONObject chuzzleJson in json.list)
-                {
-                    Add(Instance.TilesFactory.CreateChuzzle(chuzzleJson));
-                }
-            }
-            else
-            {
-                Debug.LogWarning("Json is not array: " + json);
-            }
-        }
-
-        #endregion
-
-        #region Events
-
-        public event Action AnimationFinished;
-
         protected virtual void InvokeAnimationFinished()
         {
             Action handler = AnimationFinished;
-            if (handler != null) handler();
+            if (handler != null)
+            {
+                handler();
+            }
         }
-
-        public event Action AnimationStarted;
 
         protected virtual void InvokeAnimationStarted()
         {
             Action handler = AnimationStarted;
-            if (handler != null) handler();
+            if (handler != null)
+            {
+                handler();
+            }
         }
-
-        public event Action<Chuzzle> TileDestroyed;
 
         public void InvokeTileDestroyed(Chuzzle destroyedChuzzle)
         {
@@ -125,10 +110,6 @@ namespace Game.Gameplay
                 TileDestroyed(destroyedChuzzle);
             }
         }
-
-        #endregion
-
-        #region Events Subscribers
 
         private void OnAnimationFinished(Chuzzle chuzzle)
         {
@@ -156,8 +137,6 @@ namespace Game.Gameplay
         {
             chuzzle.Died -= OnChuzzleDeath;
         }
-
-        #endregion
 
         public TilesCollection GetTiles(Func<Chuzzle, bool> condition = null)
         {

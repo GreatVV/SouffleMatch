@@ -1,7 +1,9 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using Tower;
+using Tower.Floors;
 using UnityEngine;
 
 public class FloorFactory : ScriptableObject
@@ -15,7 +17,11 @@ public class FloorFactory : ScriptableObject
         {
             GameObject floorPrefab = prefab.Prefab;
             var go = Instantiate(floorPrefab) as GameObject;
-            return go.GetComponent<Floor>();
+            
+            var floor = go.GetComponent<Floor>();
+            var type = Assembly.GetAssembly(typeof (IFloorDesc)).GetType(floorDescName);
+            floor.Init(Activator.CreateInstance(type) as IFloorDesc);
+            return floor;
         }
 
         return null;

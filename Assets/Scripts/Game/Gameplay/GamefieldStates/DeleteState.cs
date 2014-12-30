@@ -85,6 +85,7 @@ namespace Game.Gameplay.GamefieldStates
 
                 var combinations = GamefieldUtility.FindCombinations(TilesCollection);
                 //remove combinations
+                Debug.Log("Combination destroyed: "+combinations.Count);
                 foreach (var combination in combinations)
                 {
                     Gamefield.InvokeCombinationDestroyed(combination);

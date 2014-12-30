@@ -234,26 +234,7 @@ namespace Game.Gameplay
             return ChuzzlePrefabs.FirstOrDefault(x => x.GetComponent<Chuzzle>().Color == color);
         }
 
-        public Chuzzle CreateChuzzle(JSONObject serialized)
-        {
-            var x = serialized["x"].integer;
-            var y = serialized["y"].integer;
-            var color = (ChuzzleColor) Enum.Parse(typeof (ColorChuzzle), serialized["color"].str);
-            var tile = Cell(new CellDescription(x, y, CellTypes.Usual, CreationType.Usual));
-            return CreateChuzzle(tile, color);
-        }
-
-    
-
-        public static JSONObject Serialize(Chuzzle chuzzle)
-        {
-            var tile = new JSONObject();
-            tile.AddField("x", chuzzle.Current.X);
-            tile.AddField("y", chuzzle.Current.Y);
-            tile.AddField("color", chuzzle.Color.ToString());
-            tile.AddField("type", chuzzle.GetType().ToString());
-            return tile;
-        }
+      
 
         public void ReplaceWithRandom(Chuzzle toReplace)
         {

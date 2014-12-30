@@ -10,7 +10,7 @@ using Object = UnityEngine.Object;
 namespace Game.Gameplay.Chuzzles.Utils
 {
     [ExecuteInEditMode]
-    public class ChuzzlePool
+    public class ChuzzlePool : IClearable
     {
         public void RegisterChuzzlePrefab(ChuzzleColor color, Type type, GameObject prefab)
         {
@@ -41,12 +41,13 @@ namespace Game.Gameplay.Chuzzles.Utils
                 return null;
             }
             //Debug.Log("get: " + color + " of " + type );
-            var first = freeObjects.FirstOrDefault(x => x.Key.type == type && x.Key.color == color);
-            if (first.Value !=null && first.Value.Any())
+            var freeObjectsOfTypeAndColor = freeObjects.FirstOrDefault(x => x.Key.type == type && x.Key.color == color);
+
+            if (freeObjectsOfTypeAndColor.Value !=null && freeObjectsOfTypeAndColor.Value.Any())
             {
-                var gameObject = first.Value.First();
+                var gameObject = freeObjectsOfTypeAndColor.Value.First();
                 gameObject.SetActive(true);
-                first.Value.RemoveAt(0);
+                freeObjectsOfTypeAndColor.Value.RemoveAt(0);
                 //Debug.Log("Gameobject: "+gameObject + " of id "+gameObject.GetInstanceID());
                 return gameObject;
             }
@@ -130,6 +131,22 @@ namespace Game.Gameplay.Chuzzles.Utils
             }
 
             RegisterChuzzlePrefab(Instance.TilesFactory.InvaderPrefab.GetComponent<Chuzzle>().Color, typeof(InvaderChuzzle), Instance.TilesFactory.InvaderPrefab);
+        }
+
+        public void Clear()
+        {
+            foreach (var freeObject in freeObjects)
+            {
+                for (int index = 0; index < freeObject.Value.Count; index++)
+                {
+                    var go = freeObject.Value[index];
+                    if (!go)
+                    {
+                        freeObject.Value.RemoveAt(index);
+                        index--;
+                    }
+                }
+            }
         }
     }
 }

@@ -1,5 +1,8 @@
-﻿using UnityEngine;
+﻿using Game.Data;
+using Game.Player;
+using UnityEngine;
 using UnityEngine.EventSystems;
+using Utils;
 
 namespace UI.MainMenu
 {
@@ -7,6 +10,10 @@ namespace UI.MainMenu
     {
         public void OnPointerClick(PointerEventData eventData)
         {
+            var towerDesc = FindObjectOfType<Tower.Tower>().GetTowerDescription();
+            var levelDescription = Instance.LevelFactory.Create(towerDesc);
+            SessionRestorer.CurrentLevel = levelDescription;
+
             Application.LoadLevel(ScenesName.Game);
         }
     }

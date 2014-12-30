@@ -3,6 +3,7 @@
 // Copyright © 2011-2014 Tasharen Entertainment
 //----------------------------------------------
 
+using System.IO;
 using UnityEngine;
 
 namespace Utils

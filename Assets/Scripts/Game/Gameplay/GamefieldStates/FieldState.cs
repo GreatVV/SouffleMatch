@@ -416,15 +416,7 @@ namespace Game.Gameplay.GamefieldStates
                 return;
             }
         }
-
-        private void RevertVelocity()
-        {
-            foreach (Chuzzle selectedChuzzle in SelectedChuzzles)
-            {
-                selectedChuzzle.Velocity *= -0.9f;
-            }
-        }
-
+     
         private void MoveChuzzles(CellCollection activeCells)
         {
             foreach (Chuzzle c in SelectedChuzzles)

@@ -1,4 +1,5 @@
 ﻿using System.IO;
+using Game.Data;
 using Game.Gameplay;
 using UnityEditor;
 using UnityEngine;
@@ -15,6 +16,12 @@ public class EditorExtension
     public static void CreateFloorFactory()
     {
         CreateAssetFile<FloorFactory>();
+    }
+
+    [MenuItem("Custom/Create Level Factory")]
+    public static void CreateLevelFactory()
+    {
+        CreateAssetFile<LevelFactory>();
     }
 
     [MenuItem("Custom/Create Tile Factory")]
