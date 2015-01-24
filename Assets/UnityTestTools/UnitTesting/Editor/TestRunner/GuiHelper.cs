@@ -10,7 +10,6 @@ using Mono.Collections.Generic;
 using UnityEditor;
 using UnityEditorInternal;
 using UnityEngine;
-using UnityTestTools.Common;
 
 namespace UnityTest
 {

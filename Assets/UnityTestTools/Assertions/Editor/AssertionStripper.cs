@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEditor.Callbacks;
 using UnityEngine;
 using UnityTest;
-using UnityTestTools.Assertions;
 using Object = UnityEngine.Object;
 
 public class AssertionStripper

@@ -5,7 +5,6 @@ using System.IO;
 using System.Security;
 using System.Text;
 using UnityEngine;
-using UnityTestTools.Common;
 
 namespace UnityTest
 {

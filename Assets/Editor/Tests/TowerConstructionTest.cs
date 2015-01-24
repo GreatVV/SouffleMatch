@@ -1,7 +1,6 @@
 using System.Linq;
 using NUnit.Framework;
 using Tower;
-using Tower.Floors;
 using UnityEngine;
 
 [TestFixture]
@@ -10,10 +9,10 @@ public class TowerConstructionTest : TestBase
     [Test]
     public void AddFloor()
     {
-        Tower.Tower tower = GetTower();
+        var tower = GetTower();
 
         var floorGO = new GameObject("Floor", typeof (Floor)).GetComponent<Floor>();
-        floorGO.Init(new PointsPerTileFloorDesc());
+        floorGO.Init(FloorType.PointerPerTile);
 
         tower.AddFloor(floorGO);
 
@@ -23,31 +22,29 @@ public class TowerConstructionTest : TestBase
     [Test]
     public void CreateFloorByFloorDescFromFactory()
     {
-        FloorFactory floorFactory = GetFloorFactory();
+        var floorFactory = GetFloorFactory();
 
-        floorFactory.AddPrefabForType(typeof(DecreaseWinPointsFloorDesc).FullName, new GameObject("Floor", typeof (Floor)));
+        floorFactory.AddPrefabForType(FloorType.DecreaseWinPoints.ToString(), new GameObject("Floor", typeof (Floor)));
 
-        var floorDesc = new DecreaseWinPointsFloorDesc();
-        Floor floor = floorFactory.CreateFloor(floorDesc);
+        var floor = floorFactory.CreateFloor(FloorType.DecreaseWinPoints);
 
-        Assert.AreSame(floorDesc, floor.FloorDescription);
-        Assert.That(floor.FloorDescription is DecreaseWinPointsFloorDesc);
+        Assert.That(floor.FloorType == FloorType.DecreaseWinPoints);
     }
 
     [Test]
     public void CreateFloorByFloorDescTypeNameFromFactory()
     {
-        FloorFactory floorFactory = GetFloorFactory();
-        string floorName = typeof(DecreaseWinPointsFloorDesc).FullName;
+        var floorFactory = GetFloorFactory();
+        var floorName = FloorType.DecreaseWinPoints.ToString();
 
         var prefab = new GameObject("Floor", typeof (Floor));
-        prefab.GetComponent<Floor>().Init(new DecreaseWinPointsFloorDesc());
+        prefab.GetComponent<Floor>().Init(FloorType.DecreaseWinPoints);
 
-        floorFactory.AddPrefabForType(typeof(DecreaseWinPointsFloorDesc).FullName, prefab);
+        floorFactory.AddPrefabForType(floorName, prefab);
 
-        Floor floor = floorFactory.CreateFloor(floorName);
+        var floor = floorFactory.CreateFloor(floorName);
 
-        Assert.That(floor.FloorDescription is DecreaseWinPointsFloorDesc);
+        Assert.That(floor.FloorType == FloorType.DecreaseWinPoints);
     }
 
     [Test]
@@ -55,9 +52,9 @@ public class TowerConstructionTest : TestBase
     {
         var floorFactory = ScriptableObject.CreateInstance<FloorFactory>();
 
-        string floorName = typeof(DecreaseWinPointsFloorDesc).FullName;
+        var floorName = FloorType.DecreaseWinPoints.ToString();
 
-        Floor tryFloor = floorFactory.CreateFloor(floorName);
+        var tryFloor = floorFactory.CreateFloor(floorName);
         Assert.IsNull(tryFloor);
 
         floorFactory.AddPrefabForType(floorName, new GameObject("Floor", typeof (Floor)));

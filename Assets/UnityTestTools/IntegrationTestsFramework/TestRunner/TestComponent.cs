@@ -7,8 +7,23 @@ using UnityEngine;
 using UnityEditor;
 #endif
 
-namespace UnityTestTools.IntegrationTestsFramework.TestRunner
+namespace UnityTest
 {
+    public interface ITestComponent : IComparable<ITestComponent>
+    {
+        void EnableTest(bool enable);
+        bool IsTestGroup();
+        GameObject gameObject { get; }
+        string Name { get; }
+        ITestComponent GetTestGroup();
+        bool IsExceptionExpected(string exceptionType);
+        bool ShouldSucceedOnException();
+        double GetTimeout();
+        bool IsIgnored();
+        bool ShouldSucceedOnAssertions();
+        bool IsExludedOnThisPlatform();
+    }
+
     public class TestComponent : MonoBehaviour, ITestComponent
     {
         public static ITestComponent NullTestComponent = new NullTestComponentImpl();

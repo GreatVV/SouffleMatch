@@ -1,17 +1,20 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
 using Tower;
-using Tower.Floors;
 using UnityEngine;
 using Utils;
 
 public class ShopMenu : MonoBehaviour, IClearable
 {
+    public Transform root;
     public GameObject ShopButtonPrefab;
 
-    public Transform root;
+    public void Clear()
+    {
+        foreach (Transform child in root.transform)
+        {
+            DestroyImmediate(child.gameObject);
+        }
+    }
 
     public void Start()
     {
@@ -19,23 +22,15 @@ public class ShopMenu : MonoBehaviour, IClearable
 
         Clear();
 
-        IEnumerable<Type> types =
-            Assembly.GetExecutingAssembly().GetTypes().Where(x => typeof (IFloorDesc).IsAssignableFrom(x) && !x.IsInterface && !x.IsAbstract);
-        foreach (Type type in types)
+        var types = Enum.GetValues(typeof (FloorType));
+
+        foreach (FloorType type in types)
         {
             var button = Instantiate(ShopButtonPrefab) as GameObject;
             var floorDescButton = button.GetComponent<FloorDescBuyButton>();
-            floorDescButton.FloorName = type.FullName;
+            floorDescButton.FloorName = type.ToString();
             floorDescButton.Tower = tower;
             button.transform.SetParent(root, false);
-        }
-    }
-
-    public void Clear()
-    {
-        foreach (Transform child in root.transform)
-        {
-            DestroyImmediate(child.gameObject);
         }
     }
 }

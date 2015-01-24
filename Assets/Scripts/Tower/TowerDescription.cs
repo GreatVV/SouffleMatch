@@ -1,39 +1,40 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Tower.Floors;
+using Utils;
 
 namespace Tower
 {
     [Serializable]
     public class TowerDescription
     {
-        public float WinPoinstCoeffiecientWithOutFloor = 2;
-        public float WinPoinstCoeffiecientWithFloor = 1;
-        
-
-        public ushort Width;
+        private List<FloorType> _floors = new List<FloorType>();
         public ushort Height;
-        public ushort Turns;
-        public ushort PointsPerTile;
-
-        private List<IFloorDesc> _floors = new List<IFloorDesc>();
         public bool IsCoinsDoubled;
+        public ushort PointsPerTile;
+        public ushort Turns;
+        public ushort Width;
+        public float WinPoinstCoeffiecientWithFloor = 1;
+        public float WinPoinstCoeffiecientWithOutFloor = 2;
         public float WinPointsСoefficient;
 
-        public void AddFloor(IFloorDesc floor)
+        public void AddFloor(FloorType floor)
         {
             _floors.Add(floor);
         }
 
         public void Calculate()
         {
-            Width = (ushort)_floors.Count(x => x is WidthFloorDesc);
-            Height = (ushort)_floors.Count(x => x is HeightFloorDesc);
-            Turns = (ushort) _floors.Where(x=>x is TurnsFloorDesc).Cast<TurnsFloorDesc>().Sum(y =>y.AddTurns );
-            PointsPerTile = (ushort) _floors.Where(x=>x is PointsPerTileFloorDesc).Cast<PointsPerTileFloorDesc>().Sum(y =>y.PointsPerTile );
-            IsCoinsDoubled = _floors.Any(x => x is DoubleCoinsFloorDesc);
-            WinPointsСoefficient = _floors.Any(x => x is DecreaseWinPointsFloorDesc)
+            Width = (ushort) _floors.Count(x => x == FloorType.Width);
+            Height = (ushort) _floors.Count(x => x == FloorType.Height);
+            Turns =
+                (ushort)
+                ((ushort) _floors.Count(x => x == FloorType.AddTurns) * Instance.FloorFactory.TurnsPerFloor);
+            PointsPerTile =
+                (ushort)
+                ((ushort) _floors.Count(x => x == FloorType.PointerPerTile) * Instance.FloorFactory.PointsPerTile);
+            IsCoinsDoubled = _floors.Any(x => x == FloorType.DoubleCoins);
+            WinPointsСoefficient = _floors.Any(x => x == FloorType.DecreaseWinPoints)
                                        ? WinPoinstCoeffiecientWithFloor
                                        : WinPoinstCoeffiecientWithOutFloor;
         }

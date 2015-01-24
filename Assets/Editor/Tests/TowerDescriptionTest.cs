@@ -1,7 +1,5 @@
-using System.Reflection.Emit;
 using NUnit.Framework;
 using Tower;
-using Tower.Floors;
 
 [TestFixture]
 public class TowerDescriptionTest
@@ -11,7 +9,7 @@ public class TowerDescriptionTest
     {
         var towerDesc = GetTowerDescription();
 
-        var floor = new WidthFloorDesc();
+        var floor = FloorType.Width;
         towerDesc.AddFloor(floor);
         towerDesc.Calculate();
 
@@ -25,7 +23,7 @@ public class TowerDescriptionTest
     {
         var towerDesc = GetTowerDescription();
 
-        var floor = new HeightFloorDesc();
+        var floor = FloorType.Height;
         towerDesc.AddFloor(floor);
         towerDesc.Calculate();
 
@@ -38,12 +36,9 @@ public class TowerDescriptionTest
     public void CreateTurnFloorAndCheckTurnsChanged()
     {
         var towerDesc = GetTowerDescription();
-        const ushort additionalTurnsPerFloor = 20;
+        const ushort additionalTurnsPerFloor = 1;
 
-        var floor = new TurnsFloorDesc()
-                    {
-                        AddTurns = additionalTurnsPerFloor
-                    };
+        var floor = FloorType.AddTurns;
         towerDesc.AddFloor(floor);
         towerDesc.Calculate();
         Assert.AreEqual(additionalTurnsPerFloor, towerDesc.Turns);
@@ -55,16 +50,12 @@ public class TowerDescriptionTest
         var towerDesc = GetTowerDescription();
         const ushort pointsPerTile = 1;
 
-        var poinsPerTileFloor = new PointsPerTileFloorDesc()
-                                {
-                                    PointsPerTile = pointsPerTile
-                                };
+        var poinsPerTileFloor = FloorType.PointerPerTile;
 
         towerDesc.AddFloor(poinsPerTileFloor);
         towerDesc.Calculate();
 
         Assert.AreEqual(pointsPerTile, towerDesc.PointsPerTile);
-
     }
 
     [Test]
@@ -72,7 +63,7 @@ public class TowerDescriptionTest
     {
         var towerDesc = GetTowerDescription();
 
-        var doubleCoinsFloor = new DoubleCoinsFloorDesc();
+        var doubleCoinsFloor = FloorType.DoubleCoins;
         towerDesc.AddFloor(doubleCoinsFloor);
         towerDesc.Calculate();
 
@@ -84,10 +75,10 @@ public class TowerDescriptionTest
     {
         //with floor
         var towerDesc = GetTowerDescription();
-        var expectedWinPoints—oefficient= 99;
+        var expectedWinPoints—oefficient = 99;
         towerDesc.WinPoinstCoeffiecientWithFloor = expectedWinPoints—oefficient;
-        
-        var decreaseWinPointsFloor = new DecreaseWinPointsFloorDesc();
+
+        var decreaseWinPointsFloor = FloorType.DecreaseWinPoints;
         towerDesc.AddFloor(decreaseWinPointsFloor);
         towerDesc.Calculate();
 
@@ -101,7 +92,6 @@ public class TowerDescriptionTest
         towerDesc.Calculate();
 
         Assert.AreEqual(expectedWinPoints—oefficient, towerDesc.WinPoints—oefficient);
-
     }
 
     private TowerDescription GetTowerDescription()

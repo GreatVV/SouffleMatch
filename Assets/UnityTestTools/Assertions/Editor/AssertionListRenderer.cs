@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEditor;
 using UnityEngine;
-using UnityTestTools.Assertions;
-using UnityTestTools.Assertions.Comparers;
 
 namespace UnityTest
 {

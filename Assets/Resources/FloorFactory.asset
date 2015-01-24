@@ -11,20 +11,41 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c0152c619c58bc246a6fa298b6b1ad30, type: 3}
   m_Name: FloorFactory
   m_EditorClassIdentifier: 
+  TurnsPerFloor: 5
+  PointsPerTile: 1
   RegisteredPrefabs:
-  - FloorName: Tower.Floors.DecreaseWinPointsFloorDesc
+  - FloorName: First
+    Builder:
+      _floorType: 0
+      _maxAmount: 1
     Prefab: {fileID: 100002, guid: 5cc8c0d996643574e82e5530961ccf39, type: 2}
-  - FloorName: Tower.Floors.DoubleCoinsFloorDesc
+  - FloorName: Width
+    Builder:
+      _floorType: 1
+      _maxAmount: 3
     Prefab: {fileID: 100002, guid: 5cc8c0d996643574e82e5530961ccf39, type: 2}
-  - FloorName: Tower.Floors.HeightFloorDesc
+  - FloorName: Height
+    Builder:
+      _floorType: 2
+      _maxAmount: 4
     Prefab: {fileID: 100002, guid: 5cc8c0d996643574e82e5530961ccf39, type: 2}
-  - FloorName: Tower.Floors.IFloorDesc
+  - FloorName: DecreaseWinPoints
+    Builder:
+      _floorType: 3
+      _maxAmount: 2
     Prefab: {fileID: 100002, guid: 5cc8c0d996643574e82e5530961ccf39, type: 2}
-  - FloorName: Tower.Floors.PointsPerTileFloorDesc
+  - FloorName: DoubleCoins
+    Builder:
+      _floorType: 4
+      _maxAmount: 1
     Prefab: {fileID: 100002, guid: 5cc8c0d996643574e82e5530961ccf39, type: 2}
-  - FloorName: Tower.Floors.SimpleFloorDesc
+  - FloorName: AddTurns
+    Builder:
+      _floorType: 5
+      _maxAmount: 3
     Prefab: {fileID: 100002, guid: 5cc8c0d996643574e82e5530961ccf39, type: 2}
-  - FloorName: Tower.Floors.TurnsFloorDesc
-    Prefab: {fileID: 100002, guid: 5cc8c0d996643574e82e5530961ccf39, type: 2}
-  - FloorName: Tower.Floors.WidthFloorDesc
+  - FloorName: PointerPerTile
+    Builder:
+      _floorType: 6
+      _maxAmount: 5
     Prefab: {fileID: 100002, guid: 5cc8c0d996643574e82e5530961ccf39, type: 2}

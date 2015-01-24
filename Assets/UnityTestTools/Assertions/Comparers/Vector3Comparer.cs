@@ -1,7 +1,8 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 
-namespace UnityTestTools.Assertions.Comparers
+namespace UnityTest
 {
     public class Vector3Comparer : VectorComparerBase<Vector3>
     {

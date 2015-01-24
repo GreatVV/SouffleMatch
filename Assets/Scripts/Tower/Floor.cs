@@ -1,41 +1,33 @@
-﻿using System;
-using System.Reflection;
-using Tower.Floors;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
 namespace Tower
 {
+    public enum FloorType
+    {
+        First,
+        Width,
+        Height,
+        DecreaseWinPoints,
+        DoubleCoins,
+        AddTurns,
+        PointerPerTile
+    }
+
     public class Floor : MonoBehaviour
     {
         [SerializeField]
-        private string floorDescName;
-
-        private IFloorDesc floorDescription;
+        public FloorType FloorType;
 
         [SerializeField]
         private Text text;
 
-        public IFloorDesc FloorDescription
+        public void Init(FloorType floorType)
         {
-            get
-            {
-                if (floorDescription == null && !string.IsNullOrEmpty(floorDescName))
-                {
-                    Type type = Assembly.GetAssembly(typeof(IFloorDesc)).GetType(floorDescName);
-                    floorDescription = Activator.CreateInstance(type) as IFloorDesc;
-                }
-                return floorDescription;
-            }
-        }
-
-        public void Init(IFloorDesc floorDesc)
-        {
-            floorDescription = floorDesc;
-            floorDescName = floorDescription.GetType().FullName;
+            FloorType = floorType;
             if (text)
             {
-                text.text = floorDesc.GetType().Name;
+                text.text = floorType.ToString();
             }
         }
     }

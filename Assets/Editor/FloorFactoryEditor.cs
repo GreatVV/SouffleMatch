@@ -1,30 +1,25 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
 using Tower;
-using Tower.Floors;
 using UnityEditor;
 using UnityEngine;
-using System.Collections;
 
-[CustomEditor(typeof(FloorFactory))]
-public class FloorFactoryEditor : Editor{
+[CustomEditor(typeof (FloorFactory))]
+public class FloorFactoryEditor : Editor
+{
     public override void OnInspectorGUI()
     {
         var floorFactory = target as FloorFactory;
 
-        if (GUILayout.Button("Popuplate"))
+        if (GUILayout.Button("Populate"))
         {
-            IEnumerable<Type> types =
-           Assembly.GetAssembly(typeof(IFloorDesc)).GetTypes().Where(x => typeof(IFloorDesc).IsAssignableFrom(x));
-            Debug.Log("Count: "+types.Count());
+            var types = Enum.GetValues(typeof (FloorType));
+            Debug.Log("Count: " + types.Length);
             foreach (var type in types)
             {
-                floorFactory.AddPrefabForType(type.FullName, null);
+                floorFactory.AddPrefabForType(type.ToString(), null);
             }
         }
-        
+
         base.OnInspectorGUI();
     }
 }

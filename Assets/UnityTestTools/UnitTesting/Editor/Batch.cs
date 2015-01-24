@@ -5,7 +5,6 @@ using System.Linq;
 using UnityEditor;
 using UnityEngine;
 using UnityTest.UnitTestRunner;
-using UnityTestTools.Common;
 
 namespace UnityTest
 {

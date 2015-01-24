@@ -4,7 +4,7 @@ using System.Linq;
 using System.Reflection;
 using UnityEngine;
 
-namespace UnityTestTools.Assertions.Comparers
+namespace UnityTest
 {
     public abstract class ActionBase : ScriptableObject
     {
@@ -97,5 +97,25 @@ namespace UnityTestTools.Assertions.Comparers
         {
             return GetType().Name + " assertion failed.\n(" + go + ")." + thisPropertyPath + " failed. Value: " + m_ObjVal;
         }
+    }
+
+    public abstract class ActionBaseGeneric<T> : ActionBase
+    {
+        protected override bool Compare(object objVal)
+        {
+            return Compare((T)objVal);
+        }
+        protected abstract bool Compare(T objVal);
+
+        public override Type[] GetAccepatbleTypesForA()
+        {
+            return new[] { typeof(T) };
+        }
+
+        public override Type GetParameterType()
+        {
+            return typeof(T);
+        }
+        protected override bool UseCache { get { return true; } }
     }
 }

@@ -1068,8 +1068,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b702cc75fa7118349a7b0a8cc21d10f0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ShopButtonPrefab: {fileID: 137822, guid: d7b0ac51b1d47824c939274728c213a7, type: 2}
   root: {fileID: 1130297691}
+  ShopButtonPrefab: {fileID: 137822, guid: d7b0ac51b1d47824c939274728c213a7, type: 2}
 --- !u!1 &1933283356
 GameObject:
   m_ObjectHideFlags: 0
@@ -1164,8 +1164,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: afccfd94083b73a4fb7b30e917360bc5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Ground: {fileID: 1508383165}
   _floors: []
+  Ground: {fileID: 1508383165}
 --- !u!4 &1966390655
 Transform:
   m_ObjectHideFlags: 0

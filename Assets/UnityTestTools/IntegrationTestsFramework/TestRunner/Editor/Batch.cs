@@ -6,7 +6,6 @@ using UnityEditor;
 using UnityEditorInternal;
 using UnityEngine;
 using UnityTest.IntegrationTests;
-using UnityTestTools.IntegrationTestsFramework.TestRunner;
 
 namespace UnityTest
 {

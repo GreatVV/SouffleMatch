@@ -1,8 +1,9 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 using Object = System.Object;
 
-namespace UnityTestTools.Assertions.Comparers
+namespace UnityTest
 {
     public abstract class ComparerBase : ActionBase
     {
@@ -79,6 +80,11 @@ namespace UnityTestTools.Assertions.Comparers
             message += " Expected: " + m_ObjOtherVal + " Actual: " + m_ObjVal;
             return message;
         }
+    }
+
+    [Serializable]
+    public abstract class ComparerBaseGeneric<T> : ComparerBaseGeneric<T, T>
+    {
     }
 
     [Serializable]

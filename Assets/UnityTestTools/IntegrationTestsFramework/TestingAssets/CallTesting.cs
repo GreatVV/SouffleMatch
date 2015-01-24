@@ -1,7 +1,8 @@
+using System;
+using System.Collections.Generic;
 using UnityEngine;
-using UnityTestTools.IntegrationTestsFramework.TestRunner;
 
-namespace UnityTestTools.IntegrationTestsFramework.TestingAssets
+namespace UnityTest
 {
     public class CallTesting : MonoBehaviour
     {

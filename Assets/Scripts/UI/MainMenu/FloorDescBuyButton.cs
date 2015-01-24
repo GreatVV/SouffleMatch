@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using System;
+using Tower;
+using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using Utils;
@@ -26,6 +28,9 @@ public class FloorDescBuyButton : MonoBehaviour, IPointerClickHandler
 
     public void OnPointerClick(PointerEventData eventData)
     {
-        Tower.AddFloor(Instance.FloorFactory.CreateFloor(FloorName));
+        if (Instance.FloorFactory.CanBuildFloor(Tower, FloorName))
+        {
+            Tower.AddFloor(FloorName);
+        }
     }
 }

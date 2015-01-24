@@ -5,7 +5,6 @@ using System.Net.Sockets;
 using UnityEditor;
 using UnityEditorInternal;
 using UnityEngine;
-using UnityTestTools.IntegrationTestsFramework.TestRunner;
 
 namespace UnityTest.IntegrationTests
 {

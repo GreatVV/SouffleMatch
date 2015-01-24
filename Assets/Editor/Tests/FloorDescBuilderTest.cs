@@ -1,25 +1,14 @@
-using NSubstitute;
 using NUnit.Framework;
 using Tower;
-using Tower.Floors;
 using UnityEngine;
 
 [TestFixture]
 public class FloorDescBuilderTest : TestBase
 {
-    public class TestFloor : IFloorDesc 
-    {
-        
-    }
-
-    public class TestFloorDescBuilder : FloorDescBuilder<TestFloor> 
-    {
-    }
-
     [Test]
     public void CheckCanBuildIfCanBuild()
     {
-        var builder = new TestFloorDescBuilder();
+        var builder = new FloorDescBuilder(FloorType.First);
         builder.MaxAmount = 1;
 
         Assert.AreEqual(1, builder.MaxAmount);
@@ -28,8 +17,8 @@ public class FloorDescBuilderTest : TestBase
 
         Assert.IsTrue(builder.CanCreateInTower(tower));
 
-        var floor = new GameObject("Floor", typeof(Floor)).GetComponent<Floor>();
-        floor.Init(builder.Create());
+        var floor = new GameObject("Floor", typeof (Floor)).GetComponent<Floor>();
+        floor.Init(FloorType.First);
 
         tower.AddFloor(floor);
 

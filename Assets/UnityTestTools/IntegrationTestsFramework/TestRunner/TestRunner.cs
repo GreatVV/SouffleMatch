@@ -6,9 +6,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using UnityEngine;
-using UnityTestTools.Assertions;
+using UnityTest.IntegrationTestRunner;
 
-namespace UnityTestTools.IntegrationTestsFramework.TestRunner
+namespace UnityTest
 {
     [Serializable]
     public class TestRunner : MonoBehaviour

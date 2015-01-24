@@ -1,6 +1,8 @@
 using System;
+using System.Collections.Generic;
+using UnityEngine;
 
-namespace UnityTestTools.Assertions.Comparers
+namespace UnityTest
 {
     public class FloatComparer : ComparerBaseGeneric<float>
     {

@@ -10,8 +10,6 @@ namespace Game.Player
     {
         public static LevelDescription CurrentLevel;
 
-        public LevelDescription DebugCurrentLevel; 
-
         public Gamefield Gamefield;
 
         private void StartLevel(LevelDescription description)
@@ -22,11 +20,6 @@ namespace Game.Player
 
         public void Start()
         {
-            if (Application.isEditor)
-            {
-                CurrentLevel = DebugCurrentLevel; //TODO REMOVE!
-            }
-
             Instance.ChuzzlePool.Clear();
             StartLevel(CurrentLevel);
         }

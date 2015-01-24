@@ -4,8 +4,6 @@ using System.Linq;
 using System.Reflection;
 using UnityEditor;
 using UnityEngine;
-using UnityTestTools.Assertions;
-using UnityTestTools.Assertions.Comparers;
 
 namespace UnityTest
 {

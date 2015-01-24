@@ -4,7 +4,6 @@ using System.Linq;
 using NUnit.Core;
 using UnityEditor;
 using UnityEngine;
-using UnityTestTools.Common;
 using Event = UnityEngine.Event;
 
 namespace UnityTest

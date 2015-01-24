@@ -8,8 +8,6 @@ using System.Runtime.Serialization.Formatters.Binary;
 using UnityEditor;
 using UnityEditorInternal;
 using UnityEngine;
-using UnityTestTools.Common;
-using UnityTestTools.IntegrationTestsFramework.TestRunner;
 
 namespace UnityTest
 {
