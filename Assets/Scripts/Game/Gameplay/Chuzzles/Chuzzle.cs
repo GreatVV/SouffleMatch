@@ -8,6 +8,7 @@ using Game.Gameplay.Chuzzles.Utils;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using Utils;
+using Object = UnityEngine.Object;
 
 #endregion
 
@@ -132,6 +133,11 @@ namespace Game.Gameplay.Chuzzles
 
 
             Teleportable = GetComponent<TeleportableEntity>();
+            if (!VisualRoot)
+            {
+                VisualRoot = GetComponentInChildren<SpriteRenderer>().gameObject;
+            }
+
             OnAwake();
         }
 
@@ -152,6 +158,7 @@ namespace Game.Gameplay.Chuzzles
         }
 
         public EventTrigger EventTrigger;
+        public GameObject VisualRoot;
 
         private void OnEnable()
         {

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Game.Gameplay.Chuzzles;
 using UnityEngine;
+using Utils;
 
 namespace Game.Player
 {
@@ -61,7 +62,7 @@ namespace Game.Player
 
         public void CountForCombinations(IEnumerable<Chuzzle> combination)
         {
-            int newPoints = combination.Count() * SessionRestorer.CurrentLevel.PointsPerTile;
+            int newPoints = combination.Count() * Instance.LevelFactory.CurrentLevel.PointsPerTile;
             InvokePointChangeDelta(newPoints);
             AddPoints(newPoints);
             InvokePointsForDestroy(combination, newPoints);

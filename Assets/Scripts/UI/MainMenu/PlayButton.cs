@@ -12,7 +12,7 @@ namespace UI.MainMenu
         {
             var towerDesc = FindObjectOfType<Tower.Tower>().GetTowerDescription();
             var levelDescription = Instance.LevelFactory.Create(towerDesc);
-            SessionRestorer.CurrentLevel = levelDescription;
+            Instance.LevelFactory.CurrentLevel = levelDescription;
 
             Application.LoadLevel(ScenesName.Game);
         }

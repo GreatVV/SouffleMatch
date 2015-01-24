@@ -1,6 +1,7 @@
 ﻿using Game.Gameplay;
 using Game.Gameplay.GamefieldStates;
 using UnityEngine;
+using Utils;
 
 namespace UI
 {
@@ -14,12 +15,20 @@ namespace UI
             Gamefield.StateChanged += OnStateChanged;
         }
 
-        public GameObject WinScreen;
+        public WinScreen WinScreen;
         public MissionProgressUI MissionProgressUI;
 
         private void OnStateChanged(GameState oldState, GameState newState)
         {
-            WinScreen.SetActive(newState is WinState || newState is GameOverState);
+            if (newState is WinState || newState is GameOverState)
+            {
+                WinScreen.Init(Instance.ProgressionManager.Mana);
+                WinScreen.Show(true);
+            }
+            else
+            {
+                WinScreen.Show(false);
+            }
 
             if (oldState == null)
             {

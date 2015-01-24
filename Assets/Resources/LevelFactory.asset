@@ -16,3 +16,23 @@ MonoBehaviour:
   MinTurns: 20
   MinPointsPerTile: 10
   AverageTileCoefficient: 5
+  CurrentLevel:
+    Condition:
+      GameMode:
+        Amount: 0
+        Mode: 0
+        TargetScore: 100
+        Turns: 20
+      Star1Score: 0
+      Star2Score: 0
+      Star3Score: 0
+    Field:
+      Height: 7
+      NumberOfColors: -1
+      Seed: 0
+      SpecialCells: []
+      Stages: []
+      Width: 7
+    Name: New level
+    PointsPerTile: 10
+    IsCoinsDoubled: 0

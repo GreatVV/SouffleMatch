@@ -1,4 +1,5 @@
-﻿using Plugins;
+﻿using Game.Gameplay.Chuzzles.Utils;
+using Plugins;
 using UnityEngine;
 
 #region
@@ -32,13 +33,11 @@ namespace Game.Gameplay.Chuzzles
         {
             if (Copy == null)
             {
-                var chuzzle = gameObject.GetComponent<Chuzzle>();
-                var prefab = Instance.TilesFactory.PrefabOfColor(chuzzle.Color);
-                Copy = Instantiate(prefab) as GameObject;
+                var chuzzle = GetComponent<Chuzzle>();
+                var visualRoot = chuzzle.VisualRoot;
+                Copy = Instantiate(visualRoot) as GameObject;
                 Copy.gameObject.name += " is copy";
-                Copy.transform.parent = gameObject.transform;
-                iTween.Stop(Copy);
-                Destroy(Copy.GetComponent<Chuzzle>());
+                Copy.transform.SetParent(visualRoot.transform.parent, false);
             }
         
 

@@ -51,9 +51,18 @@ namespace Tower
 
         #endregion
 
+        void OnDestroy()
+        {
+            Serialize();
+        }
+
         public void Start()
         {
-            AddFloor(FloorType.First);
+            Deserialize();
+            if (!Floors.Any())
+            {
+                AddFloor(FloorType.First);
+            }
         }
 
         public TowerDescription GetTowerDescription()
@@ -92,6 +101,35 @@ namespace Tower
         public void AddFloor(string floorName)
         {
             AddFloor((FloorType) Enum.Parse(typeof (FloorType), floorName));
+        }
+
+        public void Serialize()
+        {
+            var tower = JSONObject.Create();
+            tower.AddField("Floors", new JSONObject(JSONObject.Type.ARRAY));
+            foreach (var floor in Floors)
+            {
+                tower["Floors"].Add(floor.FloorType.ToString());
+            }
+
+            PlayerPrefs.SetString("Tower", tower.ToString());
+        }
+
+        public void Deserialize()
+        {
+            if (!PlayerPrefs.HasKey("Tower"))
+            {
+                return;
+            }
+
+            var desc = PlayerPrefs.GetString("Tower");
+            var towerDesc = JSONObject.Create(desc,-2,false,false);
+            
+            var floors = towerDesc["Floors"];
+            foreach (var jsonObject in floors.list)
+            {
+                AddFloor(jsonObject.str);
+            }
         }
     }
 }

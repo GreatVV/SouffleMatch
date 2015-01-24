@@ -123,6 +123,7 @@
      <Compile Include="Assets\Scripts\UI\Game\MenuButton.cs" />
      <Compile Include="Assets\Scripts\UI\Game\MenuUI.cs" />
      <Compile Include="Assets\Scripts\UI\Game\ShopButton.cs" />
+     <Compile Include="Assets\Scripts\UI\Game\WinScreen.cs" />
      <Compile Include="Assets\Scripts\UI\Hide.cs" />
      <Compile Include="Assets\Scripts\UI\MainMenu\FloorDescBuyButton.cs" />
      <Compile Include="Assets\Scripts\UI\MainMenu\PlayButton.cs" />

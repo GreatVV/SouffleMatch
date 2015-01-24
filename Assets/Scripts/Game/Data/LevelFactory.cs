@@ -13,6 +13,7 @@ namespace Game.Data
         public int MinTurns = 20;
         public int MinPointsPerTile;
         public int AverageTileCoefficient = 5;
+        public LevelDescription CurrentLevel;
 
         public LevelDescription Create(int width, int height)
         {

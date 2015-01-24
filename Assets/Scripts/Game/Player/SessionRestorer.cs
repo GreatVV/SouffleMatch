@@ -8,7 +8,7 @@ namespace Game.Player
 {
     public class SessionRestorer : MonoBehaviour
     {
-        public static LevelDescription CurrentLevel;
+        public LevelDescription CurrentLevel;
 
         public Gamefield Gamefield;
 
@@ -21,7 +21,7 @@ namespace Game.Player
         public void Start()
         {
             Instance.ChuzzlePool.Clear();
-            StartLevel(CurrentLevel);
+            StartLevel(Instance.LevelFactory.CurrentLevel);
         }
 
         public void Restart()
