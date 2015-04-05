@@ -10,6 +10,7 @@ GameObject:
   - 224: {fileID: 22437820}
   - 222: {fileID: 22237820}
   - 114: {fileID: 11437814}
+  - 114: {fileID: 11407414}
   m_Layer: 5
   m_Name: Text
   m_TagString: Untagged
@@ -37,6 +38,20 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!114 &11407414
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 137820}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -900027084, guid: f5f67c52d1564df4a8936ccd202a3bd8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_EffectColor: {r: .807843208, g: .46274513, b: .65882355, a: .501960814}
+  m_EffectDistance: {x: 1, y: -1}
+  m_UseGraphicAlpha: 1
 --- !u!114 &11437814
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -49,20 +64,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: .195999995, g: .195999995, b: .195999995, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FontData:
-    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    m_Font: {fileID: 12800000, guid: adbdca3c32c8b3449815c206dfa317c1, type: 3}
     m_FontSize: 14
-    m_FontStyle: 0
-    m_BestFit: 0
+    m_FontStyle: 1
+    m_BestFit: 1
     m_MinSize: 10
-    m_MaxSize: 40
+    m_MaxSize: 100
     m_Alignment: 4
     m_RichText: 1
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Button
+  m_Text: Width
 --- !u!114 &11437816
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -77,8 +92,8 @@ MonoBehaviour:
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_Sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
-  m_Type: 1
-  m_PreserveAspect: 0
+  m_Type: 0
+  m_PreserveAspect: 1
   m_FillCenter: 1
   m_FillMethod: 4
   m_FillAmount: 1
@@ -155,6 +170,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   FloorNameLabel: {fileID: 11437814}
+  sprites:
+  - FloorType: 1
+    Sprite: {fileID: 21300000, guid: 7608965ca14cb0b47a75c99500156b33, type: 3}
+  - FloorType: 2
+    Sprite: {fileID: 21300000, guid: b134514db622f194bb4f7478d0b95b0f, type: 3}
+  - FloorType: 3
+    Sprite: {fileID: 21300000, guid: f8742c7a87db1494fb28abdc3191b1c1, type: 3}
+  - FloorType: 4
+    Sprite: {fileID: 21300000, guid: 74b1c5eb92cfe9c458572d43d0d92b36, type: 3}
+  - FloorType: 5
+    Sprite: {fileID: 21300000, guid: 1875bb084448f264fa71fb3e04621018, type: 3}
+  - FloorType: 6
+    Sprite: {fileID: 21300000, guid: f2719d2a499935240ab6d47b8288dba8, type: 3}
+  Image: {fileID: 11437816}
   Tower: {fileID: 0}
   _floorName: 
 --- !u!222 &22237820
@@ -215,4 +244,3 @@ Prefab:
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 137822}
   m_IsPrefabParent: 1
-  m_IsExploded: 1

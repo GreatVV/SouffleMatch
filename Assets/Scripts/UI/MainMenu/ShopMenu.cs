@@ -26,9 +26,14 @@ public class ShopMenu : MonoBehaviour, IClearable
 
         foreach (FloorType type in types)
         {
+            if (type == FloorType.First)
+            {
+                continue;
+            }
+
             var button = Instantiate(ShopButtonPrefab) as GameObject;
             var floorDescButton = button.GetComponent<FloorDescBuyButton>();
-            floorDescButton.FloorName = type.ToString();
+            floorDescButton.Init(type);
             floorDescButton.Tower = tower;
             button.transform.SetParent(root, false);
         }

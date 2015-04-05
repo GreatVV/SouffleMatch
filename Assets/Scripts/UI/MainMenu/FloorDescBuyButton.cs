@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using Tower;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -19,8 +21,20 @@ public class FloorDescBuyButton : MonoBehaviour, IPointerClickHandler
         {
             _floorName = value;
             FloorNameLabel.text = _floorName;
+
         }
     }
+
+    [Serializable]
+    public class SpriteForFloor
+    {
+        public FloorType FloorType;
+        public Sprite Sprite;
+    }
+
+    public List<SpriteForFloor> sprites = new List<SpriteForFloor>();
+
+    public Image Image;
 
     public Tower.Tower Tower;
     [SerializeField]
@@ -33,5 +47,11 @@ public class FloorDescBuyButton : MonoBehaviour, IPointerClickHandler
             Tower.AddFloor(FloorName);
             Tower.Create();
         }
+    }
+
+    public void Init(FloorType type)
+    {
+        FloorName = type.ToString();
+        Image.sprite = sprites.FirstOrDefault(x => x.FloorType == type).Sprite;
     }
 }
