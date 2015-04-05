@@ -754,8 +754,8 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 830175134}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -.0109385904, z: .5}
-  m_LocalScale: {x: .917401731, y: .698802173, z: 0}
+  m_LocalPosition: {x: 0, y: -.0109379999, z: .5}
+  m_LocalScale: {x: .170000002, y: .170000002, z: 0}
   m_Children: []
   m_Father: {fileID: 1025451735}
   m_RootOrder: 0
@@ -770,8 +770,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 710e705c1f0d4a646b486e3da13bea6a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  DaySprite: {fileID: 21300000, guid: 26435fae5685f1c42a1cdf591ee1f59d, type: 3}
-  NightSprite: {fileID: 21300000, guid: 09c5402ef5364144b9042612add70913, type: 3}
+  DaySprite: {fileID: 21300000, guid: 173644597ba7fe64daa2fab7bd35a009, type: 3}
+  NightSprite: {fileID: 21300000, guid: 173644597ba7fe64daa2fab7bd35a009, type: 3}
   spriteRenderer: {fileID: 830175135}
 --- !u!1 &840865126
 GameObject:
@@ -1066,7 +1066,7 @@ Transform:
   m_GameObject: {fileID: 1025451733}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: .187233925, y: .187233925, z: .187233925}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 830175136}
   m_Father: {fileID: 840865127}

@@ -76,7 +76,11 @@ namespace UnityTest
                 Transfer (ref length);
                 var bytes = new byte[length];
                 _stream.Read(bytes, 0, length);
+#if UNITY_WINRT_8_1
+                throw new NotImplementedException();
+#else
                 val = System.Text.Encoding.BigEndianUnicode.GetString(bytes);
+#endif
             }
         }
         
@@ -122,9 +126,13 @@ namespace UnityTest
         
         public object Deserialize (System.IO.Stream stream)
         {
+#if UNITY_WINRT_8_1
+            throw new NotImplementedException();
+#else
             var result = (ResultDTO)System.Runtime.Serialization.FormatterServices.GetSafeUninitializedObject(typeof(ResultDTO));
             Transfer (result, new Reader(stream));
             return result;
+#endif
         }
     }
 

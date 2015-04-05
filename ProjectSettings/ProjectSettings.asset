@@ -264,11 +264,11 @@ PlayerSettings:
   metroPackageLogo180: 
   metroPackageLogo240: 
   metroPackageVersion: 
-  metroCertificatePath: 
+  metroCertificatePath: Assets/WSATestCertificate.pfx
   metroCertificatePassword: 
-  metroCertificateSubject: 
-  metroCertificateIssuer: 
-  metroCertificateNotAfter: 0000000000000000
+  metroCertificateSubject: DiabetesGames
+  metroCertificateIssuer: DiabetesGames
+  metroCertificateNotAfter: 00e47c53df8ed101
   metroApplicationDescription: SouflleMatch
   metroStoreTileLogo80: 
   metroStoreTileLogo: 

@@ -27,39 +27,6 @@ namespace Game.Data
             Name = "New level";
         }
 
-        private static List<Stage> CreateStagesFromJsonObject(JSONObject stagesJsonObject)
-        {
-            if (stagesJsonObject == null || stagesJsonObject.list == null ||
-                stagesJsonObject.list.First().type == JSONObject.Type.NULL)
-            {
-                return null;
-            }
-
-            var stages = new List<Stage>();
-            foreach (JSONObject jsonObject in stagesJsonObject.list)
-            {
-                /*   if (jsonObject.type == JSONObject.Type.NULL)
-            {
-                return null;
-            }*/
-                var stage = new Stage
-                {
-                    Id = (int) jsonObject.GetField("Id").n,
-                    MinY = (int) jsonObject.GetField("MinY").n,
-                    MaxY = (int) jsonObject.GetField("MaxY").n,
-                    NextStage = (int) jsonObject.GetField("NextStage").n,
-                    WinOnComplete = jsonObject.GetField("WinOnComplete").b,
-                    Condition = new Condition
-                    {
-                        IsScore = jsonObject.GetField("Condition").GetField("IsScore").b,
-                        Target = (int) jsonObject.GetField("Condition").GetField("Target").n
-                    }
-                };
-                stages.Add(stage);
-            }
-            return stages;
-        }
-
         #endregion
 
         #region Events Subscribers

@@ -3,6 +3,7 @@
 #define USEFLOAT	//Use floats for numbers instead of doubles	(enable if you're getting too many significant digits in string output)
 //#define POOLING	//Currently using a build setting for this one (also it's experimental)
 
+using System;
 using System.Diagnostics;
 using UnityEngine;
 using System.Collections;
@@ -307,13 +308,13 @@ public class JSONObject : NullCheckable {
 				}
 			}
 			if(str.Length > 0) {
-				if(string.Compare(str, "true", true) == 0) {
+				if(String.Compare(str, "true", StringComparison.OrdinalIgnoreCase) == 0) {
 					type = Type.BOOL;
 					b = true;
-				} else if(string.Compare(str, "false", true) == 0) {
+				} else if(String.Compare(str, "false", StringComparison.OrdinalIgnoreCase) == 0) {
 					type = Type.BOOL;
 					b = false;
-				} else if(string.Compare(str, "null", true) == 0) {
+				} else if(String.Compare(str, "null", StringComparison.OrdinalIgnoreCase) == 0) {
 					type = Type.NULL;
 					#if USEFLOAT
 				} else if(str == INFINITY) {
