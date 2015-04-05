@@ -30,5 +30,13 @@ namespace Game.Utility
         {
             return GamefieldUtility.IsPowerUp(chuzzle);
         }
+
+        public static void RemoveChildren(this Transform transform)
+        {
+            foreach (Transform childTransform in transform)
+            {
+                Object.Destroy(childTransform.gameObject);
+            }
+        }
     }
 }

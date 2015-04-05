@@ -1,18 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Game.Utility;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using Utils;
 
 namespace Tower
 {
-    public class Tower : MonoBehaviour, IScrollHandler, IDragHandler
+    public class Tower : MonoBehaviour, IDragHandler
     {
         [SerializeField]
         private List<Floor> _floors = new List<Floor>();
 
-        public GameObject Ground;
+        public FloorDrawer Ground;
+
+        private FloorDrawer roof;
 
         public IEnumerable<Floor> Floors
         {
@@ -22,34 +25,26 @@ namespace Tower
             }
         }
 
+        public FloorDrawer firstFloorPrefab;
+        public FloorDrawer lastFloorPrefab;
+        private List<FloorType> _floorTypes = new List<FloorType>();
+
         #region IDragHandler Members
 
         public void OnDrag(PointerEventData eventData)
         {
             var position = Camera.main.transform.position;
-            position.y += eventData.delta.y * Time.deltaTime;
-            position.y = Mathf.Clamp(position.y, 0, _floors.Last().transform.position.y);
+
+            var deltaInWorld = Camera.main.ScreenToWorldPoint(eventData.position) - Camera.main.ScreenToWorldPoint(eventData.position - eventData.delta);
+            position.y += deltaInWorld.y;
+            var max = roof.transform.position.y + roof.UpperAnchor.y - Camera.main.aspect * Camera.main.orthographicSize;
+            position.y = Mathf.Clamp(position.y, 0, max);
             Camera.main.transform.position = position;
         }
 
         #endregion
 
-        #region IScrollHandler Members
-
-        public void OnScroll(PointerEventData data)
-        {
-            var delta = data.scrollDelta;
-            // Down is positive for scroll events, while in UI system up is positive.
-            delta.y *= -1;
-
-            var position = Camera.main.transform.position;
-            position.y += delta.y;
-
-            position.y = Mathf.Clamp(position.y, 0, _floors.Last().transform.position.y);
-            Camera.main.transform.position = position;
-        }
-
-        #endregion
+        
 
         void OnDestroy()
         {
@@ -59,10 +54,7 @@ namespace Tower
         public void Start()
         {
             Deserialize();
-            if (!Floors.Any())
-            {
-                AddFloor(FloorType.First);
-            }
+            Create();
         }
 
         public TowerDescription GetTowerDescription()
@@ -78,24 +70,45 @@ namespace Tower
 
         public void AddFloor(FloorType floorType)
         {
-            AddFloor(Instance.FloorFactory.CreateFloor(floorType));
+            _floorTypes.Add(floorType);
         }
 
-        private float CountTowerHeight()
+        public void Create()
         {
-            return _floors.Sum(x => x.transform.GetComponentInChildren<BoxCollider2D>().size.y);
-        }
+            transform.RemoveChildren();
+            transform.position = Ground.transform.position;
+            _floors.Clear();
 
-        public void AddFloor(Floor floor)
-        {
-            if (!floor)
+            var firstFloor = Instantiate(firstFloorPrefab);
+            DrawFloor(Ground, firstFloor);
+            var prev = firstFloor;
+            foreach (var floorType in _floorTypes)
             {
-                Debug.LogError("Floor is null");
+                var floor = Instance.FloorFactory.CreateFloor(floorType);
+                _floors.Add(floor);
+
+                var floorDrawer = floor.GetComponent<FloorDrawer>();
+                DrawFloor(prev, floorDrawer);
+                prev = floorDrawer;
             }
 
+            var lastFloor = Instantiate(lastFloorPrefab);
+            roof = lastFloor;
+            DrawFloor(prev, lastFloor);
+
+
+            var size = (roof.transform.position + roof.UpperAnchor) - Ground.transform.position;
+
+            var boxCollider = GetComponent<BoxCollider2D>();
+            boxCollider.offset = new Vector2(0, size.y / 2f);
+            boxCollider.size = new Vector2(10, size.y);
+
+        }
+
+        private void DrawFloor(FloorDrawer prev, FloorDrawer floor)
+        {
             floor.transform.SetParent(transform, false);
-            floor.transform.localPosition = new Vector3(0, CountTowerHeight(), 0);
-            _floors.Add(floor);
+            floor.transform.position = prev.transform.position + prev.UpperAnchor - floor.BottomAnchor;
         }
 
         public void AddFloor(string floorName)
@@ -121,6 +134,9 @@ namespace Tower
             {
                 return;
             }
+
+            _floorTypes.Clear();
+            _floors.Clear();
 
             var desc = PlayerPrefs.GetString("Tower");
             var towerDesc = JSONObject.Create(desc,-2,false,false);

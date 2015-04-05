@@ -31,6 +31,7 @@ public class FloorDescBuyButton : MonoBehaviour, IPointerClickHandler
         if (Instance.FloorFactory.CanBuildFloor(Tower, FloorName))
         {
             Tower.AddFloor(FloorName);
+            Tower.Create();
         }
     }
 }

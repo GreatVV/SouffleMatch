@@ -20,7 +20,6 @@ public class FloorDescBuilderTest : TestBase
         var floor = new GameObject("Floor", typeof (Floor)).GetComponent<Floor>();
         floor.Init(FloorType.First);
 
-        tower.AddFloor(floor);
 
         Assert.IsFalse(builder.CanCreateInTower(tower));
 

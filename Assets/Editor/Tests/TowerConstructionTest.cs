@@ -14,8 +14,6 @@ public class TowerConstructionTest : TestBase
         var floorGO = new GameObject("Floor", typeof (Floor)).GetComponent<Floor>();
         floorGO.Init(FloorType.PointerPerTile);
 
-        tower.AddFloor(floorGO);
-
         Assert.AreEqual(1, tower.Floors.Count());
     }
 

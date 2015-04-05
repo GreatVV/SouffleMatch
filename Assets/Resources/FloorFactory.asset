@@ -18,34 +18,34 @@ MonoBehaviour:
     Builder:
       _floorType: 0
       _maxAmount: 1
-    Prefab: {fileID: 100002, guid: 5cc8c0d996643574e82e5530961ccf39, type: 2}
+    Prefab: {fileID: 104946, guid: 90d630d5455edd548a0250366965648a, type: 2}
   - FloorName: Width
     Builder:
       _floorType: 1
       _maxAmount: 3
-    Prefab: {fileID: 100002, guid: 5cc8c0d996643574e82e5530961ccf39, type: 2}
+    Prefab: {fileID: 195616, guid: 7eb8e167a0c3b3f42bc99c64373ef5c4, type: 2}
   - FloorName: Height
     Builder:
       _floorType: 2
       _maxAmount: 4
-    Prefab: {fileID: 100002, guid: 5cc8c0d996643574e82e5530961ccf39, type: 2}
+    Prefab: {fileID: 153856, guid: a53cdad8cabe6e94abf6bf7edeaa1b03, type: 2}
   - FloorName: DecreaseWinPoints
     Builder:
       _floorType: 3
       _maxAmount: 2
-    Prefab: {fileID: 100002, guid: 5cc8c0d996643574e82e5530961ccf39, type: 2}
+    Prefab: {fileID: 153990, guid: 1275eb09dbe491f4d88a07372d407eab, type: 2}
   - FloorName: DoubleCoins
     Builder:
       _floorType: 4
       _maxAmount: 1
-    Prefab: {fileID: 100002, guid: 5cc8c0d996643574e82e5530961ccf39, type: 2}
+    Prefab: {fileID: 171898, guid: 2c82b9f376d4d25419215694037a4e1c, type: 2}
   - FloorName: AddTurns
     Builder:
       _floorType: 5
       _maxAmount: 3
-    Prefab: {fileID: 100002, guid: 5cc8c0d996643574e82e5530961ccf39, type: 2}
+    Prefab: {fileID: 162784, guid: 97d41abf84e9cb345971e7a28b3520cc, type: 2}
   - FloorName: PointerPerTile
     Builder:
       _floorType: 6
       _maxAmount: 5
-    Prefab: {fileID: 100002, guid: 5cc8c0d996643574e82e5530961ccf39, type: 2}
+    Prefab: {fileID: 119802, guid: 39d5a75824c151641ba8b64d7f02770d, type: 2}

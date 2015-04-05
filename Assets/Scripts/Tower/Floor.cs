@@ -19,16 +19,9 @@ namespace Tower
         [SerializeField]
         public FloorType FloorType;
 
-        [SerializeField]
-        private Text text;
-
         public void Init(FloorType floorType)
         {
             FloorType = floorType;
-            if (text)
-            {
-                text.text = floorType.ToString();
-            }
         }
     }
 }

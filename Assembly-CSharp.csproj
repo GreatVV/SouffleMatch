@@ -113,6 +113,7 @@
      <Compile Include="Assets\Scripts\Game\Visual\ParticleSystemAutoDestruct.cs" />
      <Compile Include="Assets\Scripts\Tower\Floor.cs" />
      <Compile Include="Assets\Scripts\Tower\FloorDescBuilder.cs" />
+     <Compile Include="Assets\Scripts\Tower\FloorDrawer.cs" />
      <Compile Include="Assets\Scripts\Tower\FloorFactory.cs" />
      <Compile Include="Assets\Scripts\Tower\Tower.cs" />
      <Compile Include="Assets\Scripts\Tower\TowerDescription.cs" />
