@@ -23,7 +23,7 @@ namespace Soomla.Profile
 
 		public string GetToolMetaData (BuildTarget target)
 		{
-			if (target == BuildTarget.iPhone) {
+			if (target == BuildTarget.iOS) {
 				return GetProfileMetaIOS();
 			}
 

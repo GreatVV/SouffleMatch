@@ -39,19 +39,19 @@ namespace Game.Data
             return levelDescription;
         }
 
-        public LevelDescription Create(TowerDescription towerDescription)
+        public LevelDescription Create(TowerDescription description)
         {
-            var width = towerDescription.Width + MinFieldWidth;
-            var height = towerDescription.Height + MinFieldHeight;
-            var turns = towerDescription.Turns + MinTurns;
-            var isCoinsDoubled = towerDescription.IsCoinsDoubled;
-            var pointsPerTile = MinPointsPerTile + towerDescription.PointsPerTile;
+            var width = description.Width + MinFieldWidth;
+            var height = description.Height + MinFieldHeight;
+            var turns = description.Turns + MinTurns;
+            var isCoinsDoubled = description.IsCoinsDoubled;
+            var pointsPerTile = MinPointsPerTile + description.PointsPerTile;
             var targetScore = CalculateTargetScore(
-                                                     width,
-                                                     height,
-                                                     turns,
-                                                     towerDescription.WinPoints—oefficient,
-                                                     AverageTileCoefficient);
+                                                   width,
+                                                   height,
+                                                   turns,
+                                                   description.WinCoefficent,
+                                                   AverageTileCoefficient);
 
             var desc =  Create(width, height);
             desc.IsCoinsDoubled = isCoinsDoubled;

@@ -49,7 +49,7 @@ namespace Game.Gameplay.Chuzzles
             
                 if (!_shineParticle)
                 {
-                    _shineParticle = ((GameObject) Instantiate(ShineParticlePrefab)).particleSystem;
+                    _shineParticle = ((GameObject) Instantiate(ShineParticlePrefab)).GetComponent<ParticleSystem>();
                     _shineParticle.transform.parent = transform;
                     _shineParticle.transform.localPosition = Vector3.zero;
                 }
@@ -227,7 +227,7 @@ namespace Game.Gameplay.Chuzzles
             while (true)
             {
                 yield return new WaitForSeconds(0.5f);
-                if (!Explosion.particleSystem.IsAlive(true))
+                if (!Explosion.GetComponent<ParticleSystem>().IsAlive(true))
                 {
                     OnDeathAnimationEnd();
                 }

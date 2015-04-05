@@ -138,7 +138,7 @@ public class LevelFactoryTest
         towerDesc.Height = 6;
         towerDesc.Width = 5;
         towerDesc.Turns = 20;
-        towerDesc.WinPointsСoefficient = 2;
+        towerDesc.WinCoefficent = 2;
 
         var desc = levelFactory.Create(towerDesc);
 

@@ -74,24 +74,24 @@ public class TowerDescriptionTest
     public void DecreaseOfWinPointsFloor()
     {
         //with floor
-        var towerDesc = GetTowerDescription();
-        var expectedWinPoints—oefficient = 99;
-        towerDesc.WinPoinstCoeffiecientWithFloor = expectedWinPoints—oefficient;
+        var description = GetTowerDescription();
+        var expectedWPC = 99;
+        description.WinPoinstCoeffiecientWithFloor = expectedWPC;
 
         var decreaseWinPointsFloor = FloorType.DecreaseWinPoints;
-        towerDesc.AddFloor(decreaseWinPointsFloor);
-        towerDesc.Calculate();
+        description.AddFloor(decreaseWinPointsFloor);
+        description.Calculate();
 
-        Assert.AreEqual(expectedWinPoints—oefficient, towerDesc.WinPoints—oefficient);
+        Assert.AreEqual(expectedWPC, description.WinPoinstCoeffiecientWithFloor);
 
         //without
-        towerDesc = GetTowerDescription();
-        expectedWinPoints—oefficient = 100;
-        towerDesc.WinPoinstCoeffiecientWithOutFloor = expectedWinPoints—oefficient;
+        description = GetTowerDescription();
+        expectedWPC = 100;
+        description.WinPoinstCoeffiecientWithOutFloor = expectedWPC;
 
-        towerDesc.Calculate();
+        description.Calculate();
 
-        Assert.AreEqual(expectedWinPoints—oefficient, towerDesc.WinPoints—oefficient);
+        Assert.AreEqual(expectedWPC, description.WinPoinstCoeffiecientWithFloor);
     }
 
     private TowerDescription GetTowerDescription()

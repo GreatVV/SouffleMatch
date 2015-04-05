@@ -19,7 +19,7 @@ namespace Game.Gameplay.Chuzzles
         {
             if (!ps)
             {
-                ps = particleSystem;
+                ps = GetComponent<ParticleSystem>();
             }
         }
 

@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 
-#if UNITY_4_6
+
 namespace SmartLocalization.Scripts.uGUI{
     [RequireComponent (typeof (Text))]
 	public class LocalizedText : MonoBehaviour {
@@ -30,4 +30,3 @@ namespace SmartLocalization.Scripts.uGUI{
 		}
 	}
 }
-#endif

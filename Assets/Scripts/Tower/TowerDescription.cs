@@ -16,7 +16,7 @@ namespace Tower
         public ushort Width;
         public float WinPoinstCoeffiecientWithFloor = 1;
         public float WinPoinstCoeffiecientWithOutFloor = 2;
-        public float WinPointsСoefficient;
+        public float WinCoefficent;
 
         public void AddFloor(FloorType floor)
         {
@@ -34,7 +34,7 @@ namespace Tower
                 (ushort)
                 ((ushort) _floors.Count(x => x == FloorType.PointerPerTile) * Instance.FloorFactory.PointsPerTile);
             IsCoinsDoubled = _floors.Any(x => x == FloorType.DoubleCoins);
-            WinPointsСoefficient = _floors.Any(x => x == FloorType.DecreaseWinPoints)
+            WinCoefficent = _floors.Any(x => x == FloorType.DecreaseWinPoints)
                                        ? WinPoinstCoeffiecientWithFloor
                                        : WinPoinstCoeffiecientWithOutFloor;
         }

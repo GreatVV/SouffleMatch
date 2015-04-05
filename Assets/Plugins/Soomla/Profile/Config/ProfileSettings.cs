@@ -42,7 +42,7 @@ namespace Soomla.Profile
 			SoomlaEditorScript.addSettings(instance);
 		}
 
-		BuildTargetGroup[] supportedPlatforms = { BuildTargetGroup.Android, BuildTargetGroup.iPhone,
+		BuildTargetGroup[] supportedPlatforms = { BuildTargetGroup.Android, BuildTargetGroup.iOS,
 			BuildTargetGroup.WebPlayer, BuildTargetGroup.Standalone};
 
 //		bool showAndroidSettings = (EditorUserBuildSettings.activeBuildTarget == BuildTarget.Android);

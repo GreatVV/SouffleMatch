@@ -1,8 +1,7 @@
 ﻿using SmartLocalization.Scripts.uGUI;
 
-#if UNITY_4_6
-
 namespace SmartLocalization.Editor{
+
 	using UnityEngine.UI;
 	using UnityEngine;
 	using UnityEditor;
@@ -34,4 +33,3 @@ namespace SmartLocalization.Editor{
 		
 	}
 }
-#endif

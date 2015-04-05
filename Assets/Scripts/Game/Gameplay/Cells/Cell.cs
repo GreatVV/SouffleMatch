@@ -41,9 +41,9 @@ namespace Game.Gameplay.Cells
             set
             {
                 _isTemporary = value;
-                if (renderer)
+                if (GetComponent<Renderer>())
                 {
-                    renderer.enabled = value;
+                    GetComponent<Renderer>().enabled = value;
                 }
             }
         }
@@ -56,7 +56,7 @@ namespace Game.Gameplay.Cells
             set
             {
                 Description.IsPlace = value;
-                PlaceSpite.renderer.enabled = value;
+                PlaceSpite.GetComponent<Renderer>().enabled = value;
             }
         }
 

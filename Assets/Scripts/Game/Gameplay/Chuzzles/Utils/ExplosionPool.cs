@@ -14,7 +14,7 @@ namespace Game.Gameplay.Chuzzles.Utils
         {
             if (!EffectsCamera)
             {
-                EffectsCamera = GameObject.Find("EffectCamera").camera;
+                EffectsCamera = GameObject.Find("EffectCamera").GetComponent<Camera>();
             }
         }
 
@@ -27,7 +27,7 @@ namespace Game.Gameplay.Chuzzles.Utils
                                        "x", 0,
                                        "y", 0,
                                        "z", 0,
-                                       "time", ps.particleSystem.duration));
+                                       "time", ps.GetComponent<ParticleSystem>().duration));
 
             ps.transform.position = EffectsCamera.ScreenToWorldPoint(Camera.main.WorldToScreenPoint(chuzzle.transform.position));
             ps.Init(chuzzle.Color);
