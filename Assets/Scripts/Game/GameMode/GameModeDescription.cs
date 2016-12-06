@@ -14,9 +14,9 @@ namespace Game.GameMode
         public int Turns;
 
 
-        public static GameModeDescription CreateFromJson(JSONObject jsonObject)
+        public static GameModeDescription CreateFromJson(string jsonObject)
         {
-            if (jsonObject == null)
+            if (string.IsNullOrEmpty(jsonObject))
             {
                 Debug.LogWarning("There is no gameMode");
                 return new GameModeDescription
@@ -38,25 +38,21 @@ namespace Game.GameMode
             };*/
             }
 
-
+            var desc = JsonUtility.FromJson<GameModeDescription>(jsonObject);
+            /*
             var desc = new GameModeDescription
                        {
                            Mode = (GameModes) Enum.Parse(typeof (GameModes), jsonObject.GetField("Mode").str),
                            Turns = (int) jsonObject.GetField("Turns").n,
                            TargetScore = jsonObject.HasField("TargetScore") ? (int) jsonObject.GetField("TargetScore").n : 0,
                            Amount = jsonObject.HasField("Amount") ? (int) jsonObject.GetField("Amount").n : 0
-                       };
+                       };*/
             return desc;
         }
 
-        public JSONObject Serialize()
+        public string Serialize()
         {
-            var json = new JSONObject();
-            json.AddField("Mode", Mode.ToString());
-            json.AddField("Turns",Turns);
-            json.AddField("TargetScore",TargetScore);
-            json.AddField("Amount",Amount);
-            return json;
+            return JsonUtility.ToJson(this);
         }
     }
 }

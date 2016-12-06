@@ -28,6 +28,7 @@ namespace Tower
         public FloorDrawer firstFloorPrefab;
         public FloorDrawer lastFloorPrefab;
         private List<FloorType> _floorTypes = new List<FloorType>();
+        private const string towerSeriazeConst = "Tower";
 
         #region IDragHandler Members
 
@@ -118,19 +119,14 @@ namespace Tower
 
         public void Serialize()
         {
-            var tower = JSONObject.Create();
-            tower.AddField("Floors", new JSONObject(JSONObject.Type.ARRAY));
-            foreach (var floor in Floors)
-            {
-                tower["Floors"].Add(floor.FloorType.ToString());
-            }
-
-            PlayerPrefs.SetString("Tower", tower.ToString());
+            var towerState = new TowerState();
+            towerState.Floors = Floors.Select(x => x.FloorType).ToArray();
+            PlayerPrefs.SetString(towerSeriazeConst, JsonUtility.ToJson(towerState));
         }
 
         public void Deserialize()
         {
-            if (!PlayerPrefs.HasKey("Tower"))
+            if (!PlayerPrefs.HasKey(towerSeriazeConst))
             {
                 return;
             }
@@ -138,14 +134,21 @@ namespace Tower
             _floorTypes.Clear();
             _floors.Clear();
 
-            var desc = PlayerPrefs.GetString("Tower");
-            var towerDesc = JSONObject.Create(desc,-2,false,false);
-            
-            var floors = towerDesc["Floors"];
-            foreach (var jsonObject in floors.list)
+            var desc = PlayerPrefs.GetString(towerSeriazeConst);
+            if (string.IsNullOrEmpty(desc))
             {
-                AddFloor(jsonObject.str);
+                var state = JsonUtility.FromJson<TowerState>(desc);
+                foreach (var floorType in state.Floors)
+                {
+                    AddFloor(floorType);
+                }
             }
         }
+    }
+
+    [Serializable]
+    public class TowerState
+    {
+        public FloorType[] Floors;
     }
 }
